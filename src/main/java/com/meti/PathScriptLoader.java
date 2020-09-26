@@ -7,6 +7,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 
+//TODO: write integration test for this class
 public class PathScriptLoader implements ScriptLoader {
     private final Path source;
 
