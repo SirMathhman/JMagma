@@ -24,7 +24,7 @@ public class Main {
     - SirMathhman, 9/26/2020
     */
     private static final Path Root = Paths.get(".");
-    static final Path Source = Root.resolve("src");
+    private static final Path Source = Root.resolve("src");
     private static final Path Build = Root.resolve(".build");
 
     public static void main(String[] args) {
