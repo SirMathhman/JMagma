@@ -6,6 +6,7 @@ import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -22,13 +23,45 @@ public class Main {
 
     - SirMathhman, 9/26/2020
     */
-    private static final Path Build = Paths.get(".", ".build");
+    private static final Path Root = Paths.get(".");
+    static final Path Source = Root.resolve("src");
+    private static final Path Build = Root.resolve(".build");
 
     public static void main(String[] args) {
         ensureBuild();
+        ensureSource();
         Properties properties = new Properties();
         load(properties);
+        String mainContent = loadMain(properties);
+
         store(properties);
+    }
+
+    private static String loadMain(Properties properties) {
+        try {
+            if (!properties.containsKey("Main")) {
+                properties.setProperty("Main", "Main");
+            }
+            String mainScript = properties.getProperty("Main");
+            List<String> mainPackage = List.of(mainScript.split("\\."));
+            return new PathScriptLoader(Source).load(mainPackage);
+        } catch (IOException e) {
+            logger.log(Level.SEVERE, "Failed to load main class.", e);
+            System.exit(-1);
+            return null;
+        }
+    }
+
+    private static void ensureSource() {
+        try {
+            if (!Files.exists(Source)) {
+                Files.createDirectories(Source);
+            }
+        } catch (IOException e) {
+            String format = "Failed to create source directory at: %s";
+            String message = String.format(format, Source.toAbsolutePath());
+            logger.log(Level.SEVERE, message, e);
+        }
     }
 
     private static void ensureBuild() {
