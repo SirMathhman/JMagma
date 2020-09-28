@@ -21,7 +21,7 @@ public class Main {
     }
 
     private static void run() {
-        readSource().map(Main::compile)
+        readSource().map(Compile::compile)
                 .ifPresentOrElse(Main::writeTarget, Main::logNoSource);
     }
 
@@ -39,16 +39,6 @@ public class Main {
         }
     }
 
-    private static String compile(String value) {
-        if (value.equals("test")) {
-            return "test";
-        } else {
-            String format = "Unable to compile '%s'";
-            String message = String.format(format, value);
-            throw new CompileException(message);
-        }
-    }
-
     private static Optional<String> readSource() {
         try {
             String value = Files.readString(Source);
@@ -63,7 +53,7 @@ public class Main {
 
     private static void ensureLogged(Path path) {
         try {
-            if (ensure(path)) {
+            if (PathUtils.ensure(path)) {
                 String format = "File did not exist at '%s' and has been created.";
                 String message = String.format(format, path.toAbsolutePath());
                 logger.log(Level.WARNING, message);
@@ -72,15 +62,6 @@ public class Main {
             String format = "Failed to create file at '%s'";
             String message = String.format(format, path.toAbsolutePath());
             logger.log(Level.SEVERE, message, e);
-        }
-    }
-
-    private static boolean ensure(Path path) throws IOException {
-        if (!Files.exists(path)) {
-            Files.createFile(path);
-            return true;
-        } else {
-            return false;
         }
     }
 }
