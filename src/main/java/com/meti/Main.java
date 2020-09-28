@@ -22,7 +22,7 @@ public class Main {
     }
 
     private static void run() {
-        readSource().map(Compiler::compile)
+        readSource().map(Compiler::compileToString)
                 .ifPresentOrElse(Main::writeTarget, Main::logNoSource);
     }
 

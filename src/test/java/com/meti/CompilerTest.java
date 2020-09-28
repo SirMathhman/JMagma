@@ -10,12 +10,12 @@ class CompilerTest {
     public static final Compiler Compiler = new Compiler();
 
     @Test
-    void variable() {
-        assertEquals("test", Compiler.compile("test"));
+    void integer(){
+        assertEquals("10", Compiler.compileToString("10"));
     }
 
     @Test
-    void invalid() {
-        assertThrows(CompileException.class, () -> Compiler.compile("temp"));
+    void variable() {
+        assertEquals("test", Compiler.compileToString("test"));
     }
 }

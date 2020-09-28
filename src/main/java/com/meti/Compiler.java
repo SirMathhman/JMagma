@@ -1,13 +1,28 @@
 package com.meti;
 
+import com.meti.feature.Int;
+import com.meti.feature.Token;
+import com.meti.feature.Variable;
+
+import java.math.BigInteger;
+import java.util.Optional;
+
 public class Compiler {
-    String compile(String value) {
-        if (value.equals("test")) {
-            return "test";
-        } else {
-            String format = "Unable to compile '%s'";
-            String message = String.format(format, value);
-            throw new CompileException(message);
+    String compileToString(String value) {
+        return tokenize(value).render();
+    }
+
+    private Optional<Token> tokenizeInteger(String value){
+        try{
+            BigInteger integer = new BigInteger(value);
+            return Optional.of(new Int(integer));
+        } catch (NumberFormatException e) {
+            return Optional.empty();
         }
+    }
+
+    private Token tokenize(String value) {
+        Optional<Token> optional = tokenizeInteger(value);
+        return optional.orElseGet(() -> new Variable(value));
     }
 }
