@@ -13,6 +13,7 @@ public class Main {
     private static final Path Source = Root.resolve(".magma");
     private static final Path Target = Root.resolve(".c");
     private static final Logger logger = Logger.getAnonymousLogger();
+    public static final Compiler Compiler = new Compiler();
 
     public static void main(String[] args) {
         ensureLogged(Source);
@@ -21,7 +22,7 @@ public class Main {
     }
 
     private static void run() {
-        readSource().map(Compile::compile)
+        readSource().map(Compiler::compile)
                 .ifPresentOrElse(Main::writeTarget, Main::logNoSource);
     }
 

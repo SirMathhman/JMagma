@@ -1,7 +1,7 @@
 package com.meti;
 
-public class Compile {
-    static String compile(String value) {
+public class Compiler {
+    String compile(String value) {
         if (value.equals("test")) {
             return "test";
         } else {
