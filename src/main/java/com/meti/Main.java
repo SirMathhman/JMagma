@@ -26,6 +26,7 @@ public class Main {
     private static final Path Root = Paths.get(".");
     private static final Path Source = Root.resolve("src");
     private static final Path Build = Root.resolve(".build");
+    private static final Path Target = Root.resolve(".output");
 
     public static void main(String[] args) {
         ensureBuild();
