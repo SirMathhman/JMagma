@@ -60,7 +60,7 @@ public class Main {
                 logger.log(Level.WARNING, message);
             }
         } catch (IOException e) {
-            String format = "Failed to create file at '%s'";
+            String format = "Failed to complete file at '%s'";
             String message = String.format(format, path.toAbsolutePath());
             logger.log(Level.SEVERE, message, e);
         }

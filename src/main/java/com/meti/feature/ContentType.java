@@ -3,16 +3,11 @@ package com.meti.feature;
 import java.util.Optional;
 import java.util.function.Function;
 
-public class Content implements Leaf, Unrenderable {
+public class ContentType implements LeafType, UnrenderableType {
     private final String content;
 
-    public Content(String content) {
+    public ContentType(String content) {
         this.content = content;
-    }
-
-    @Override
-    public boolean is(Group group) {
-        return group == Group.Content;
     }
 
     @Override

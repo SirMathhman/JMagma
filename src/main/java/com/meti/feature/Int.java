@@ -30,4 +30,14 @@ public class Int implements Token {
     public <R> Optional<R> transformContent(Function<String, R> mapping) {
         return Optional.empty();
     }
+
+    @Override
+    public Token mapByFields(Function<Field, Field> mapping) {
+        return this;
+    }
+
+    @Override
+    public Token mapByTypes(Function<Type, Type> mapping) {
+        return this;
+    }
 }

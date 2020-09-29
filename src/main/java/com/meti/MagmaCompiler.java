@@ -6,9 +6,14 @@ import java.util.stream.Stream;
 
 public class MagmaCompiler extends Compiler {
     @Override
-    protected Stream<Tokenizer> tokenizers() {
-        return Stream.of(new IntTokenizer(),
-                new FloatTokenizer(),
-                new VariableTokenizer());
+    protected Stream<TokenEvaluator> streamTokenEvaluators() {
+        return Stream.of(new IntEvaluator(),
+                new FloatEvaluator(),
+                new VariableEvaluator());
+    }
+
+    @Override
+    protected Stream<TypeEvaluator> streamTypeEvaluators() {
+        return Stream.empty();
     }
 }

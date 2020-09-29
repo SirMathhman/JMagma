@@ -3,9 +3,9 @@ package com.meti.feature;
 import java.math.BigInteger;
 import java.util.Optional;
 
-public class IntTokenizer implements Tokenizer {
+public class IntEvaluator implements TokenEvaluator {
     @Override
-    public Optional<Tokenizable> create(String content) {
+    public Optional<Evaluatable<Token>> evaluate(String content) {
         try {
             BigInteger value = new BigInteger(content);
             return Optional.of(() -> new Int(value));

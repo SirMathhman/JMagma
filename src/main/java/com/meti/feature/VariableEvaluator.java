@@ -2,9 +2,9 @@ package com.meti.feature;
 
 import java.util.Optional;
 
-public class VariableTokenizer implements Tokenizer {
+public class VariableEvaluator implements TokenEvaluator {
     @Override
-    public Optional<Tokenizable> create(String content) {
+    public Optional<Evaluatable<Token>> evaluate(String content) {
         return Optional.of(() -> new Variable(content));
     }
 }
