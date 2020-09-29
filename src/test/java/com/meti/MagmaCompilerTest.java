@@ -10,6 +10,11 @@ class MagmaCompilerTest {
     public static final Compiler Compiler = new MagmaCompiler();
 
     @Test
+    void testFloat(){
+        assertEquals("10.0", Compiler.compileToString("10.0"));
+    }
+
+    @Test
     void integer(){
         assertEquals("10", Compiler.compileToString("10"));
     }
