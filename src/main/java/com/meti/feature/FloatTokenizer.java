@@ -30,5 +30,15 @@ public class FloatTokenizer implements Tokenizer {
         public Token mapByChildren(Function<Token, Token> mapping) {
             return this;
         }
+
+        @Override
+        public boolean is(Group group) {
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public <R> Optional<R> transformContent(Function<String, R> mapping) {
+            return Optional.empty();
+        }
     }
 }
