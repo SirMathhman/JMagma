@@ -3,7 +3,7 @@ package com.meti.feature;
 import java.util.Optional;
 import java.util.function.Function;
 
-public class Content implements Leaf, Unrenderable {
+public class Content implements LeafToken, Unrenderable {
     private final String content;
 
     public Content(String content) {

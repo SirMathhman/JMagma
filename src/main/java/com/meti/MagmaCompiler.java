@@ -8,9 +8,10 @@ public class MagmaCompiler extends Compiler {
     @Override
     protected Stream<TokenEvaluator> streamTokenEvaluators() {
         return Stream.of(
-                new DeclareEvaluator(),
+                new InitializationEvaluatable(),
                 new IntEvaluator(),
                 new FloatEvaluator(),
+                new DeclareEvaluatable(),
                 new VariableEvaluator());
     }
 

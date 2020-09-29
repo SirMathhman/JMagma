@@ -3,10 +3,19 @@ package com.meti;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class MagmaCompilerTest {
     private static final Compiler Compiler = new MagmaCompiler();
+
+    @Test
+    void function(){
+        assertEquals("int main(){return 0;}", Compiler.compileToString("def main() : Int => {return 0;}"));
+    }
+
+    @Test
+    void declareEmpty(){
+        assertEquals("int x;", Compiler.compileToString("const x : I16"));
+    }
 
     @Test
     void declareConstant(){

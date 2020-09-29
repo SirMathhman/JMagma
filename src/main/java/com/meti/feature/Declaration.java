@@ -1,25 +1,28 @@
 package com.meti.feature;
 
+import java.util.Optional;
 import java.util.function.Function;
 
-public class Declaration implements EmptyToken, UntypedToken {
-    public static final String Format = "%s=%s;";
+class Declaration implements UntypedToken {
     private final Field identity;
-    private final Token value;
 
-    public Declaration(Field identity, Token value) {
+    public Declaration(Field identity) {
         this.identity = identity;
-        this.value = value;
     }
 
     @Override
     public Token mapByChildren(Function<Token, Token> mapping) {
-        return new Declaration(identity, mapping.apply(value));
+        return this;
     }
 
     @Override
     public Token mapByFields(Function<Field, Field> mapping) {
-        return new Declaration(mapping.apply(identity), value);
+        return new Declaration(mapping.apply(identity));
+    }
+
+    @Override
+    public <R> Optional<R> transformContent(Function<String, R> mapping) {
+        return Optional.empty();
     }
 
     @Override
@@ -29,6 +32,6 @@ public class Declaration implements EmptyToken, UntypedToken {
 
     @Override
     public String render() {
-        return String.format(Format, identity.render(), value.render());
+        return String.format("%s;", identity.render());
     }
 }

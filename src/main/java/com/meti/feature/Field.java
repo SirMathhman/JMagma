@@ -8,6 +8,7 @@ public interface Field extends Renderable {
     boolean isFlagged(Flag flag);
 
     enum Flag {
+        DEF,
         CONST,
         LET,
         NATIVE
