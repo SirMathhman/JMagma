@@ -19,6 +19,6 @@ public interface Token extends Renderable {
 
         Int,
         Float,
-        Variable
+        Declaration, Variable
     }
 }
