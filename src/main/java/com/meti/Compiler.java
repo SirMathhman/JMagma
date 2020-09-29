@@ -1,28 +1,31 @@
 package com.meti;
 
-import com.meti.feature.Int;
 import com.meti.feature.Token;
-import com.meti.feature.Variable;
+import com.meti.feature.Tokenizable;
+import com.meti.feature.Tokenizer;
 
-import java.math.BigInteger;
 import java.util.Optional;
+import java.util.stream.Stream;
 
-public class Compiler {
+public abstract class Compiler {
+    protected abstract Stream<Tokenizer> tokenizers();
+
     String compileToString(String value) {
         return tokenize(value).render();
     }
 
-    private Optional<Token> tokenizeInteger(String value){
-        try{
-            BigInteger integer = new BigInteger(value);
-            return Optional.of(new Int(integer));
-        } catch (NumberFormatException e) {
-            return Optional.empty();
-        }
+    private Token tokenize(String value) {
+        return tokenizers()
+                .map(tokenizer -> tokenizer.create(value))
+                .flatMap(Optional::stream)
+                .findFirst()
+                .map(Tokenizable::tokenize)
+                .orElseThrow(() -> createInvalidToken(value));
     }
 
-    private Token tokenize(String value) {
-        Optional<Token> optional = tokenizeInteger(value);
-        return optional.orElseGet(() -> new Variable(value));
+    private CompileException createInvalidToken(String value) {
+        String format = "Invalid token: %s";
+        String message = String.format(format, value);
+        return new CompileException(message);
     }
 }
