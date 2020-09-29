@@ -1,6 +1,6 @@
 package com.meti.feature;
 
-public enum Primitive implements Type {
+public enum Primitive implements EmptyType, LeafType {
     Void("void"),
     Any("void"),
     Char("char"),
