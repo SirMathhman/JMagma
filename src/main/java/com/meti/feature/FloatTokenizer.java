@@ -1,6 +1,7 @@
 package com.meti.feature;
 
 import java.util.Optional;
+import java.util.function.Function;
 
 public class FloatTokenizer implements Tokenizer {
     @Override
@@ -23,6 +24,11 @@ public class FloatTokenizer implements Tokenizer {
         @Override
         public String render() {
             return String.valueOf(value);
+        }
+
+        @Override
+        public Token mapByChildren(Function<Token, Token> mapping) {
+            return this;
         }
     }
 }
