@@ -22,6 +22,10 @@ public class Triplet<A, B, C> {
         return new Unit<>(function.apply(start, middle, end));
     }
 
+    public <R> R apply(Function3<A, B, C, R> function) {
+        return function.apply(start, middle, end);
+    }
+
     public <R> Triplet<R, B, C> flatMapStart(Function1<A, Unit<R>> function) {
         return function.apply(start)
                 .append(middle)

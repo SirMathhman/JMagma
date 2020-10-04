@@ -8,6 +8,6 @@ public class Exception extends RuntimeException {
     }
 
     public Exception(String_ message) {
-        super(message.toNative());
+        super(message.__());
     }
 }

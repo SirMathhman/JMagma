@@ -29,4 +29,12 @@ public class Unit<T> {
     public <R> R apply(Function1<T, R> function) {
         return function.apply(value);
     }
+
+    public <R> Unit<R> flatMap(Function1<T, Unit<R>> function) {
+        return function.apply(value);
+    }
+
+    public <B> Pair<T, B> unfold(Function1<T, B> function) {
+        return map(function).prepend(value);
+    }
 }
