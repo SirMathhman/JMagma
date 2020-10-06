@@ -1,4 +1,4 @@
-package com.meti.reference;
+package com.meti.api.reference;
 
 import java.util.function.Function;
 
