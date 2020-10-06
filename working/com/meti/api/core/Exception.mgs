@@ -1,7 +1,0 @@
-import *.Option;
-
-struct Exception {
-    const message : String,
-    const cause :  Option[Exception];
-}
-
