@@ -15,7 +15,7 @@ struct File {
 
 def File(path : Path) => File {
     read = [T](action : Input => T) => {
-        const file = fopen(path.asAbsolutePath.toString, "r");
+        const file = fopen(path.asAbsolute.toString, "r");
         const input = Input {
             read = () => fgetc(file);
         }
