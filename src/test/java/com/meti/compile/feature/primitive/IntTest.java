@@ -1,4 +1,4 @@
-package com.meti.compile.feature.number;
+package com.meti.compile.feature.primitive;
 
 import com.meti.compile.feature.FeatureTest;
 import org.junit.jupiter.api.Test;

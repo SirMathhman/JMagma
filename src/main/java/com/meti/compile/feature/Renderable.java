@@ -1,4 +1,4 @@
-package com.meti.compile.feature.tokenize;
+package com.meti.compile.feature;
 
 public interface Renderable {
     String render();

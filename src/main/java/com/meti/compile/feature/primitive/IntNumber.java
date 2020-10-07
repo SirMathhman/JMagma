@@ -1,10 +1,10 @@
-package com.meti.compile.feature.number;
+package com.meti.compile.feature.primitive;
 
-import com.meti.compile.feature.tokenize.Tokenizer;
+import com.meti.compile.feature.node.Node;
 
 import java.math.BigInteger;
 
-public class IntNumber implements Tokenizer.Token {
+public class IntNumber implements Node {
     private final BigInteger value;
 
     public IntNumber(BigInteger value) {

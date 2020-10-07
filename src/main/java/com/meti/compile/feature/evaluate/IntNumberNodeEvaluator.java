@@ -1,17 +1,18 @@
-package com.meti.compile.feature.tokenize;
+package com.meti.compile.feature.evaluate;
 
-import com.meti.compile.feature.number.IntNumber;
+import com.meti.compile.feature.node.Node;
+import com.meti.compile.feature.primitive.IntNumber;
 
 import java.math.BigInteger;
 import java.util.Optional;
 
-public class IntNumberTokenizer extends AbstractTokenizer {
-    public IntNumberTokenizer(String value) {
+public class IntNumberNodeEvaluator extends AbstractNodeEvaluator {
+    public IntNumberNodeEvaluator(String value) {
         super(value);
     }
 
     @Override
-    public Optional<Token> evaluate() {
+    public Optional<Node> evaluate() {
         try {
             BigInteger value = new BigInteger(content);
             return Optional.of(new IntNumber(value));

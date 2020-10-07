@@ -1,23 +1,23 @@
 package com.meti.compile;
 
-import com.meti.compile.feature.scope.VariableTokenizer;
-import com.meti.compile.feature.tokenize.Evaluator;
-import com.meti.compile.feature.tokenize.IntNumberTokenizer;
-import com.meti.compile.feature.tokenize.Tokenizer;
+import com.meti.compile.feature.node.Node;
+import com.meti.compile.feature.scope.VariableNodeEvaluator;
+import com.meti.compile.feature.evaluate.Evaluator;
+import com.meti.compile.feature.evaluate.IntNumberNodeEvaluator;
 
 import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
 public class Compiler {
-    private Stream<Function<String, Evaluator<Tokenizer.Token>>> streamTokenizers() {
+    private Stream<Function<String, Evaluator<Node>>> streamTokenizers() {
         return Stream.of(
-                IntNumberTokenizer::new,
-                VariableTokenizer::new
+                IntNumberNodeEvaluator::new,
+                VariableNodeEvaluator::new
         );
     }
 
-    public Tokenizer.Token tokenize(String content) {
+    public Node tokenize(String content) {
         return streamTokenizers()
                 .map(factory -> factory.apply(content))
                 .map(Evaluator::evaluate)
