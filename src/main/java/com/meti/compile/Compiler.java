@@ -1,10 +1,10 @@
 package com.meti.compile;
 
-import com.meti.compile.feature.evaluate.Evaluator;
-import com.meti.compile.feature.evaluate.IntNumberNodeEvaluator;
-import com.meti.compile.feature.node.Node;
-import com.meti.compile.feature.scope.DeclarationEvaluator;
-import com.meti.compile.feature.scope.VariableNodeEvaluator;
+import com.meti.compile.render.evaluate.Evaluator;
+import com.meti.compile.render.evaluate.IntNumberNodeEvaluator;
+import com.meti.compile.render.node.Node;
+import com.meti.compile.render.scope.DeclarationEvaluator;
+import com.meti.compile.render.scope.VariableNodeEvaluator;
 
 import java.util.Optional;
 import java.util.function.Function;
