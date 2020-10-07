@@ -1,4 +1,4 @@
-package com.meti.compile.render.scope;
+package com.meti.compile.render.node;
 
 import com.meti.compile.render.UntransformableException;
 import com.meti.compile.render.node.Node;

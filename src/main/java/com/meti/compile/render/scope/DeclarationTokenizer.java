@@ -11,7 +11,6 @@ public class DeclarationTokenizer extends AbstractNodeTokenizer {
         super(content);
     }
 
-
     @Override
     public Optional<Node> evaluate() {
         return new FieldTokenizer(content)

@@ -6,6 +6,8 @@ import com.meti.compile.render.field.Field;
 import java.util.function.Function;
 
 public interface Node extends Renderable {
+    Node mapByChildren(Function<Node, Node> mapper);
+
     Node mapByFields(Function<Field, Field> mapper);
 
     <T> T transformContent(Function<String, T> function);

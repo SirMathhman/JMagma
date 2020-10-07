@@ -5,7 +5,7 @@ import com.meti.compile.render.scope.UnfieldedNode;
 
 import java.util.function.Function;
 
-public class ContentNode implements UnfieldedNode {
+public class ContentNode implements LeafNode, UnfieldedNode {
     private final String content;
 
     public ContentNode(String content) {
