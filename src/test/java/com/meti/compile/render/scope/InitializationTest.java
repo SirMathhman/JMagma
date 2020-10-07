@@ -5,12 +5,17 @@ import org.junit.jupiter.api.Test;
 
 public class InitializationTest extends FeatureTest {
     @Test
-    void explicit(){
+    void explicit() {
         assertCompile("int x=10;", "const x : I16 = 10");
     }
 
     @Test
-    void implicit(){
+    void implicitChar() {
         assertCompile("char x=10;", "const x = 10");
+    }
+
+    @Test
+    void implicitInt(){
+        assertCompile("int x=128;", "const x = 128");
     }
 }
