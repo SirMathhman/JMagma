@@ -1,8 +1,8 @@
-package com.meti.compile;
+package com.meti.compile.tokenize;
 
 import java.math.BigInteger;
 
-public class IntNumber implements Tokenizer.Token  {
+public class IntNumber implements Tokenizer.Token {
     private final BigInteger value;
 
     public IntNumber(BigInteger value) {

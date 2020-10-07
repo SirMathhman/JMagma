@@ -1,4 +1,4 @@
-package com.meti.compile;
+package com.meti.compile.tokenize;
 
 import java.math.BigInteger;
 import java.util.Optional;
@@ -9,7 +9,7 @@ public class IntNumberTokenizer extends AbstractTokenizer {
     }
 
     @Override
-    public Optional<Token> tokenize() {
+    public Optional<Tokenizer.Token> tokenize() {
         try {
             BigInteger value = new BigInteger(content);
             return Optional.of(new IntNumber(value));
