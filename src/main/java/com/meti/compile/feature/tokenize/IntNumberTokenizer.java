@@ -11,7 +11,7 @@ public class IntNumberTokenizer extends AbstractTokenizer {
     }
 
     @Override
-    public Optional<Tokenizer.Token> tokenize() {
+    public Optional<Token> evaluate() {
         try {
             BigInteger value = new BigInteger(content);
             return Optional.of(new IntNumber(value));

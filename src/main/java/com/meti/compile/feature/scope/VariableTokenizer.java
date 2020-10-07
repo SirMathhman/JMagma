@@ -10,7 +10,7 @@ public class VariableTokenizer extends AbstractTokenizer {
     }
 
     @Override
-    public Optional<Token> tokenize() {
+    public Optional<Token> evaluate() {
         return Optional.of(new Variable(content));
     }
 }
