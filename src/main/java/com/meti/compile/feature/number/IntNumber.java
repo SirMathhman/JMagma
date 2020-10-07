@@ -1,4 +1,4 @@
-package com.meti.compile.feature;
+package com.meti.compile.feature.number;
 
 import com.meti.compile.feature.tokenize.Tokenizer;
 
