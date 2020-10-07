@@ -1,5 +1,6 @@
 package com.meti.compile;
 
+import com.meti.compile.feature.scope.VariableTokenizer;
 import com.meti.compile.feature.tokenize.IntNumberTokenizer;
 import com.meti.compile.feature.tokenize.Tokenizer;
 
@@ -9,7 +10,10 @@ import java.util.stream.Stream;
 
 public class Compiler {
     private Stream<Function<String, Tokenizer>> streamTokenizers() {
-        return Stream.of(IntNumberTokenizer::new);
+        return Stream.of(
+                IntNumberTokenizer::new,
+                VariableTokenizer::new
+        );
     }
 
     public Tokenizer.Token tokenize(String content) {
