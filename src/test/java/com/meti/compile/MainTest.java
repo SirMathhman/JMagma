@@ -9,6 +9,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class MainTest {
@@ -27,8 +28,9 @@ class MainTest {
     }
 
     @Test
-    void main() {
+    void main() throws IOException {
         Main.main(new String[0]);
         assertTrue(Files.exists(Output));
+        assertEquals("10", Files.readString(Output));
     }
 }
