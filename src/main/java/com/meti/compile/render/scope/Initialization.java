@@ -33,6 +33,21 @@ public class Initialization implements EmptyNode {
 
     @Override
     public boolean is(Group group) {
-        return group == Group.Declaration;
+        return group == Group.Initialization;
+    }
+
+    @Override
+    public Field identity() {
+        return identity;
+    }
+
+    @Override
+    public <T> T value(Class<T> clazz) {
+        return clazz.cast(value);
+    }
+
+    @Override
+    public Node withIdentity(Field identity) {
+        return new Initialization(identity, value);
     }
 }

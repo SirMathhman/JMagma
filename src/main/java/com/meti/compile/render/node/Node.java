@@ -16,10 +16,14 @@ public interface Node extends Renderable {
 
     Field identity();
 
+    <T> T value(Class<T> clazz);
+
+    Node withIdentity(Field identity);
+
     enum Group {
         Content,
         Declaration,
         IntNumber,
-        Variable
+        Initialization, Variable
     }
 }

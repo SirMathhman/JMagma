@@ -103,5 +103,15 @@ public class FieldTokenizer implements Tokenizer<Field> {
         public Field mapByType(Function<Type, Type> function) {
             return new EvaluatedField(name, function.apply(type));
         }
+
+        @Override
+        public String name() {
+            return name;
+        }
+
+        @Override
+        public Type type() {
+            return type;
+        }
     }
 }

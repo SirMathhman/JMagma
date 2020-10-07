@@ -19,4 +19,9 @@ public class ImplicitType implements EmptyType {
         var message = String.format(format, name);
         throw new UnrenderableException(message);
     }
+
+    @Override
+    public boolean is(Group group) {
+        return group == Group.Implicit;
+    }
 }

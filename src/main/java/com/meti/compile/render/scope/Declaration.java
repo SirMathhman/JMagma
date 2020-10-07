@@ -28,4 +28,21 @@ public class Declaration implements EmptyNode, LeafNode {
     public boolean is(Group group) {
         return group == Group.Declaration;
     }
+
+    @Override
+    public Field identity() {
+        return identity;
+    }
+
+    @Override
+    public <T> T value(Class<T> clazz) {
+        var format = "The declaration '%s' does not have a value.";
+        var message = format.formatted(identity.name());
+        throw new IllegalStateException(message);
+    }
+
+    @Override
+    public Node withIdentity(Field identity) {
+        return new Declaration(identity);
+    }
 }

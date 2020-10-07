@@ -13,4 +13,11 @@ public interface Type extends Renderable {
     default String render() {
         return render("");
     }
+
+    boolean is(Group group);
+
+    enum Group {
+        Content,
+        Primitive, Implicit,
+    }
 }

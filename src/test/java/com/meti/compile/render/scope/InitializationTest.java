@@ -8,4 +8,9 @@ public class InitializationTest extends FeatureTest {
     void explicit(){
         assertCompile("int x=10;", "const x : I16 = 10");
     }
+
+    @Test
+    void implicit(){
+        assertCompile("char x=10;", "const x = 10");
+    }
 }

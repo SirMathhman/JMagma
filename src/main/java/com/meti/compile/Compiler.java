@@ -6,6 +6,10 @@ import com.meti.compile.render.field.Field;
 import com.meti.compile.render.node.ContentNode;
 import com.meti.compile.render.node.Node;
 import com.meti.compile.render.primitive.PrimitiveTokenizer;
+import com.meti.compile.render.process.InlineState;
+import com.meti.compile.render.process.MappedStack;
+import com.meti.compile.render.process.State;
+import com.meti.compile.render.process.TypeProcessor;
 import com.meti.compile.render.scope.DeclarationTokenizer;
 import com.meti.compile.render.scope.InitializationTokenizer;
 import com.meti.compile.render.scope.VariableTokenizer;
@@ -32,7 +36,11 @@ public class Compiler {
     }
 
     private Type tokenizeType(Type type) {
-        return type.transformContent(this::tokenizeTypeString);
+        if (type.is(Type.Group.Content)) {
+            return type.transformContent(this::tokenizeTypeString);
+        } else {
+            return type;
+        }
     }
 
     private Type tokenizeTypeString(String s) {
@@ -80,6 +88,12 @@ public class Compiler {
     public String compile(String content) {
         var root = new ContentNode(content);
         var tree = tokenizeTree(root);
-        return tree.render();
+        var stack = new MappedStack();
+        var state = new InlineState(tree, stack);
+        var processor = new TypeProcessor(state);
+        return processor.process()
+                .orElse(state)
+                .current()
+                .render();
     }
 }

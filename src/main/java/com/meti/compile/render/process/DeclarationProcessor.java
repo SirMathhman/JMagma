@@ -5,12 +5,11 @@ import com.meti.compile.render.primitive.ImplicitType;
 
 import java.util.Optional;
 
-public class DeclarationProcessor implements Processor {
+public class DeclarationProcessor extends AbstractProcessor {
     public static final String Format = "Declaration for '%s' doesn't have a type.";
-    private final State state;
 
     public DeclarationProcessor(State state) {
-        this.state = state;
+        super(state);
     }
 
     @Override

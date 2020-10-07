@@ -2,10 +2,11 @@ package com.meti.compile.render.node;
 
 import com.meti.compile.render.UnrenderableException;
 import com.meti.compile.render.scope.UnfieldedNode;
+import com.meti.compile.render.scope.UnidentifiedNode;
 
 import java.util.function.Function;
 
-public class ContentNode implements LeafNode, UnfieldedNode {
+public class ContentNode implements LeafNode, UnidentifiedNode, UnfieldedNode {
     private final String content;
 
     public ContentNode(String content) {
@@ -20,6 +21,11 @@ public class ContentNode implements LeafNode, UnfieldedNode {
     @Override
     public boolean is(Group group) {
         return group == Group.Content;
+    }
+
+    @Override
+    public <T> T value(Class<T> clazz) {
+        return clazz.cast(content);
     }
 
     @Override

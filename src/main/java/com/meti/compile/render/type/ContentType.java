@@ -25,4 +25,9 @@ public class ContentType implements Type {
     public String render(String name) {
         throw new UnrenderableException(Format.formatted(content, name));
     }
+
+    @Override
+    public boolean is(Group group) {
+        return group == Group.Content;
+    }
 }

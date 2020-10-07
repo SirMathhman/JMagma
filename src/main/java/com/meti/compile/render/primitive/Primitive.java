@@ -25,4 +25,9 @@ public enum Primitive implements EmptyType {
     public String render(String name) {
         return "%s %s".formatted(value, name);
     }
+
+    @Override
+    public boolean is(Group group) {
+        return group == Group.Primitive;
+    }
 }
