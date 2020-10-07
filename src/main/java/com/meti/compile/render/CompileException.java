@@ -1,0 +1,7 @@
+package com.meti.compile.render;
+
+public class CompileException extends RuntimeException {
+    public CompileException(String message) {
+        super(message);
+    }
+}

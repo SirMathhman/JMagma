@@ -5,8 +5,8 @@ import com.meti.compile.render.node.Node;
 
 import java.util.Optional;
 
-public class VariableNodeEvaluator extends AbstractNodeEvaluator {
-    public VariableNodeEvaluator(String content) {
+public class VariableEvaluator extends AbstractNodeEvaluator {
+    public VariableEvaluator(String content) {
         super(content);
     }
 

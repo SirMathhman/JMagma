@@ -3,7 +3,9 @@ package com.meti.compile.render.scope;
 import com.meti.compile.render.field.Field;
 import com.meti.compile.render.node.Node;
 
-public class Declaration implements Node {
+import java.util.function.Function;
+
+public class Declaration implements EmptyNode {
     private final Field identity;
 
     public Declaration(Field identity) {
@@ -13,5 +15,10 @@ public class Declaration implements Node {
     @Override
     public String render() {
         return identity.render() + ";";
+    }
+
+    @Override
+    public Node mapByFields(Function<Field, Field> mapper) {
+        return new Declaration(mapper.apply(identity));
     }
 }

@@ -1,10 +1,11 @@
 package com.meti.compile.render.primitive;
 
-import com.meti.compile.render.node.Node;
+import com.meti.compile.render.scope.EmptyNode;
+import com.meti.compile.render.scope.UnfieldedNode;
 
 import java.math.BigInteger;
 
-public class IntNumber implements Node {
+public class IntNumber implements EmptyNode, UnfieldedNode {
     private final BigInteger value;
 
     public IntNumber(BigInteger value) {

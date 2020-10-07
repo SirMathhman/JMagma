@@ -1,10 +1,12 @@
 package com.meti.compile;
 
 import com.meti.compile.render.evaluate.Evaluator;
-import com.meti.compile.render.evaluate.IntNumberNodeEvaluator;
+import com.meti.compile.render.evaluate.IntEvaluator;
 import com.meti.compile.render.node.Node;
+import com.meti.compile.render.primitive.PrimitiveEvaluator;
 import com.meti.compile.render.scope.DeclarationEvaluator;
-import com.meti.compile.render.scope.VariableNodeEvaluator;
+import com.meti.compile.render.scope.VariableEvaluator;
+import com.meti.compile.render.type.Type;
 
 import java.util.Optional;
 import java.util.function.Function;
@@ -14,8 +16,14 @@ public class Compiler {
     private Stream<Function<String, Evaluator<Node>>> streamTokenizers() {
         return Stream.of(
                 DeclarationEvaluator::new,
-                IntNumberNodeEvaluator::new,
-                VariableNodeEvaluator::new
+                IntEvaluator::new,
+                VariableEvaluator::new
+        );
+    }
+
+    private Stream<Function<String, Evaluator<Type>>> streamTypeEvaluators() {
+        return Stream.of(
+                PrimitiveEvaluator::new
         );
     }
 

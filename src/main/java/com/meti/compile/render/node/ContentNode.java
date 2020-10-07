@@ -1,10 +1,11 @@
 package com.meti.compile.render.node;
 
 import com.meti.compile.render.UnrenderableException;
+import com.meti.compile.render.scope.UnfieldedNode;
 
 import java.util.function.Function;
 
-public class ContentNode implements Node{
+public class ContentNode implements UnfieldedNode {
     private final String content;
 
     public ContentNode(String content) {
