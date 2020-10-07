@@ -1,4 +1,6 @@
-package com.meti.compile.tokenize;
+package com.meti.compile.feature;
+
+import com.meti.compile.feature.tokenize.Tokenizer;
 
 import java.math.BigInteger;
 

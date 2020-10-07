@@ -1,7 +1,7 @@
 package com.meti.compile;
 
-import com.meti.compile.tokenize.IntNumberTokenizer;
-import com.meti.compile.tokenize.Tokenizer;
+import com.meti.compile.feature.tokenize.IntNumberTokenizer;
+import com.meti.compile.feature.tokenize.Tokenizer;
 
 import java.util.Optional;
 import java.util.function.Function;

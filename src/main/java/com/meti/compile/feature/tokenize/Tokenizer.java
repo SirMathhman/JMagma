@@ -1,4 +1,4 @@
-package com.meti.compile.tokenize;
+package com.meti.compile.feature.tokenize;
 
 import java.util.Optional;
 

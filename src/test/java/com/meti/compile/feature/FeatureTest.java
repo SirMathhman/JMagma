@@ -1,5 +1,6 @@
-package com.meti.compile;
+package com.meti.compile.feature;
 
+import com.meti.compile.Compiler;
 import org.junit.jupiter.api.BeforeEach;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

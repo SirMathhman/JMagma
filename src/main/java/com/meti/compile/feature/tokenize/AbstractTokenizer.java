@@ -1,4 +1,4 @@
-package com.meti.compile.tokenize;
+package com.meti.compile.feature.tokenize;
 
 public abstract class AbstractTokenizer implements Tokenizer {
     protected final String content;
