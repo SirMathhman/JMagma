@@ -9,4 +9,13 @@ public interface Node extends Renderable {
     Node mapByFields(Function<Field, Field> mapper);
 
     <T> T transformContent(Function<String, T> function);
+
+    boolean is(Group group);
+
+    enum Group {
+        Content,
+        Declaration,
+        IntNumber,
+        Variable
+    }
 }

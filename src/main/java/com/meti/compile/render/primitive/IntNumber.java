@@ -16,4 +16,9 @@ public class IntNumber implements EmptyNode, UnfieldedNode {
     public String render() {
         return value.toString();
     }
+
+    @Override
+    public boolean is(Group group) {
+        return group == Group.IntNumber;
+    }
 }

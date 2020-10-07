@@ -3,7 +3,7 @@ package com.meti.compile.render.primitive;
 import com.meti.compile.render.UnrenderableException;
 import com.meti.compile.render.type.Type;
 
-public class ImplicitType implements Type {
+public class ImplicitType implements EmptyType {
     public static final Type ImplicitType = new ImplicitType();
 
     private ImplicitType() {

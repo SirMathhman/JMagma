@@ -98,5 +98,10 @@ public class FieldTokenizer implements Tokenizer<Field> {
         public String render() {
             return type.render(name);
         }
+
+        @Override
+        public Field mapByType(Function<Type, Type> function) {
+            return new EvaluatedField(name, function.apply(type));
+        }
     }
 }

@@ -11,4 +11,9 @@ class Variable implements EmptyNode, UnfieldedNode {
     public String render() {
         return content;
     }
+
+    @Override
+    public boolean is(Group group) {
+        return group == Group.Variable;
+    }
 }

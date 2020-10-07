@@ -1,7 +1,9 @@
 package com.meti.compile;
 
-import com.meti.compile.render.evaluate.Tokenizer;
 import com.meti.compile.render.evaluate.IntTokenizer;
+import com.meti.compile.render.evaluate.Tokenizer;
+import com.meti.compile.render.field.Field;
+import com.meti.compile.render.node.ContentNode;
 import com.meti.compile.render.node.Node;
 import com.meti.compile.render.primitive.PrimitiveTokenizer;
 import com.meti.compile.render.scope.DeclarationTokenizer;
@@ -27,7 +29,43 @@ public class Compiler {
         );
     }
 
-    public Node tokenize(String content) {
+    private Type tokenizeType(Type type) {
+        return type.transformContent(s -> tokenizeTypeString(type, s));
+    }
+
+    private Type tokenizeTypeString(Type type, String s) {
+        return streamTypeEvaluators()
+                .map(tokenizer -> tokenizer.apply(s))
+                .map(Tokenizer::evaluate)
+                .flatMap(Optional::stream)
+                .findFirst()
+                .orElseThrow(() -> createInvalidTypeString(s));
+    }
+
+    private IllegalStateException createInvalidTypeString(String content) {
+        var format = "Unknown type: %s";
+        var message = format.formatted(content);
+        return new IllegalStateException(message);
+    }
+
+    private Field tokenizeField(Field field) {
+        return field.mapByType(this::tokenizeType);
+    }
+
+    private Node tokenizeTree(Node root) {
+        var tree = tokenizeNode(root);
+        return tree.mapByFields(this::tokenizeField);
+    }
+
+    private Node tokenizeNode(Node node) {
+        if (node.is(Node.Group.Content)) {
+            return node.transformContent(this::tokenizeString);
+        } else {
+            return node;
+        }
+    }
+
+    public Node tokenizeString(String content) {
         return streamTokenizers()
                 .map(factory -> factory.apply(content))
                 .map(Tokenizer::evaluate)
@@ -37,6 +75,8 @@ public class Compiler {
     }
 
     public String compile(String content) {
-        return tokenize(content).render();
+        var root = new ContentNode(content);
+        var tree = tokenizeTree(root);
+        return tree.render();
     }
 }

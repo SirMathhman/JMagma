@@ -21,4 +21,9 @@ public class Declaration implements EmptyNode {
     public Node mapByFields(Function<Field, Field> mapper) {
         return new Declaration(mapper.apply(identity));
     }
+
+    @Override
+    public boolean is(Group group) {
+        return group == Group.Declaration;
+    }
 }

@@ -6,6 +6,6 @@ import org.junit.jupiter.api.Test;
 public class DeclarationTest extends FeatureTest {
     @Test
     void test(){
-        assertCompile("int x", "const x : I16");
+        assertCompile("int x;", "const x : I16");
     }
 }

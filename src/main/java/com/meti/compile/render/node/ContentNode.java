@@ -18,6 +18,11 @@ public class ContentNode implements UnfieldedNode {
     }
 
     @Override
+    public boolean is(Group group) {
+        return group == Group.Content;
+    }
+
+    @Override
     public String render() {
         var format = "Cannot render node with content '%s'.";
         var message = format.formatted(content);

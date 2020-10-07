@@ -1,8 +1,6 @@
 package com.meti.compile.render.primitive;
 
-import com.meti.compile.render.type.Type;
-
-public enum Primitive implements Type {
+public enum Primitive implements EmptyType {
     U8("unsigned char"),
     U16("unsigned int"),
     U32("unsigned long"),
