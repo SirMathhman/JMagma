@@ -23,7 +23,11 @@ public class Main {
             try {
                 var content = Files.readString(file);
                 var output = Compiler.compile(content);
-                Files.writeString(file, output);
+                var fileName = file.getName(file.getNameCount() - 1).toString();
+                var separator = fileName.indexOf('.');
+                var name = fileName.substring(0, separator);
+                var path = file.resolveSibling(name + ".c");
+                Files.writeString(path, output);
             } catch (IOException e) {
                 Logger.log(Level.SEVERE, "Failed to read content from: " + file.toAbsolutePath(), e);
             }
