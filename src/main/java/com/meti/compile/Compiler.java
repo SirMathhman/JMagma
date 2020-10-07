@@ -1,9 +1,10 @@
 package com.meti.compile;
 
-import com.meti.compile.feature.node.Node;
-import com.meti.compile.feature.scope.VariableNodeEvaluator;
 import com.meti.compile.feature.evaluate.Evaluator;
 import com.meti.compile.feature.evaluate.IntNumberNodeEvaluator;
+import com.meti.compile.feature.node.Node;
+import com.meti.compile.feature.scope.DeclarationEvaluator;
+import com.meti.compile.feature.scope.VariableNodeEvaluator;
 
 import java.util.Optional;
 import java.util.function.Function;
@@ -12,6 +13,7 @@ import java.util.stream.Stream;
 public class Compiler {
     private Stream<Function<String, Evaluator<Node>>> streamTokenizers() {
         return Stream.of(
+                DeclarationEvaluator::new,
                 IntNumberNodeEvaluator::new,
                 VariableNodeEvaluator::new
         );
