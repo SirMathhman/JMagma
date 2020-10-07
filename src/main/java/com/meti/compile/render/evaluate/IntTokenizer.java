@@ -6,8 +6,8 @@ import com.meti.compile.render.primitive.IntNumber;
 import java.math.BigInteger;
 import java.util.Optional;
 
-public class IntEvaluator extends AbstractNodeEvaluator {
-    public IntEvaluator(String value) {
+public class IntTokenizer extends AbstractNodeTokenizer {
+    public IntTokenizer(String value) {
         super(value);
     }
 

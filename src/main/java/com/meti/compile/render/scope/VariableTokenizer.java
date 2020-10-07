@@ -1,12 +1,12 @@
 package com.meti.compile.render.scope;
 
-import com.meti.compile.render.evaluate.AbstractNodeEvaluator;
+import com.meti.compile.render.evaluate.AbstractNodeTokenizer;
 import com.meti.compile.render.node.Node;
 
 import java.util.Optional;
 
-public class VariableEvaluator extends AbstractNodeEvaluator {
-    public VariableEvaluator(String content) {
+public class VariableTokenizer extends AbstractNodeTokenizer {
+    public VariableTokenizer(String content) {
         super(content);
     }
 

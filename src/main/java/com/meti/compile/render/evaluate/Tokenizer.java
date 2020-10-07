@@ -4,6 +4,6 @@ import com.meti.compile.render.Renderable;
 
 import java.util.Optional;
 
-public interface Evaluator<T extends Renderable> {
+public interface Tokenizer<T extends Renderable> {
     Optional<T> evaluate();
 }

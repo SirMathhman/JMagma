@@ -1,14 +1,14 @@
 package com.meti.compile.render.primitive;
 
 import com.meti.compile.render.type.Type;
-import com.meti.compile.render.type.TypeEvaluator;
+import com.meti.compile.render.type.TypeTokenizer;
 
 import java.util.Optional;
 
-public class PrimitiveEvaluator implements TypeEvaluator {
+public class PrimitiveTokenizer implements TypeTokenizer {
     private final String content;
 
-    public PrimitiveEvaluator(String content) {
+    public PrimitiveTokenizer(String content) {
         this.content = content;
     }
 

@@ -1,6 +1,6 @@
 package com.meti.compile.render.field;
 
-import com.meti.compile.render.evaluate.Evaluator;
+import com.meti.compile.render.evaluate.Tokenizer;
 import com.meti.compile.render.primitive.ImplicitType;
 import com.meti.compile.render.type.ContentType;
 import com.meti.compile.render.type.Type;
@@ -10,10 +10,10 @@ import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-public class FieldEvaluator implements Evaluator<Field> {
+public class FieldTokenizer implements Tokenizer<Field> {
     private final String content;
 
-    public FieldEvaluator(String content) {
+    public FieldTokenizer(String content) {
         this.content = content;
     }
 
