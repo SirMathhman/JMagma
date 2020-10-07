@@ -10,13 +10,24 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
+import static java.util.logging.Logger.getAnonymousLogger;
+
 public class Main {
-    private static final Logger logger = Logger.getAnonymousLogger();
+    private static final Logger Logger = getAnonymousLogger();
+    private static final Compiler Compiler = new Compiler();
 
     public static void main(String[] args) {
         var root = Paths.get(".");
         var files = walkRoot(root);
-
+        for (Path file : files) {
+            try {
+                var content = Files.readString(file);
+                var output = Compiler.compile(content);
+                Files.writeString(file, output);
+            } catch (IOException e) {
+                Logger.log(Level.SEVERE, "Failed to read content from: " + file.toAbsolutePath(), e);
+            }
+        }
     }
 
     private static List<Path> walkRoot(Path root) {
@@ -26,7 +37,7 @@ public class Main {
                     .filter(Files::isRegularFile)
                     .collect(Collectors.toList());
         } catch (IOException e) {
-            logger.log(Level.SEVERE, "Failed to walk root: " + root.toAbsolutePath(), e);
+            Logger.log(Level.SEVERE, "Failed to walk root: " + root.toAbsolutePath(), e);
             return Collections.emptyList();
         }
     }
