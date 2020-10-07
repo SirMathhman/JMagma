@@ -14,6 +14,8 @@ public interface Node extends Renderable {
 
     boolean is(Group group);
 
+    Field identity();
+
     enum Group {
         Content,
         Declaration,

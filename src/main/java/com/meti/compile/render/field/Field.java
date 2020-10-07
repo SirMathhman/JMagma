@@ -8,6 +8,10 @@ import java.util.function.Function;
 public interface Field extends Renderable {
     Field mapByType(Function<Type, Type> function);
 
+    String name();
+
+    Type type();
+
     enum Flag {
         CONST,
         LET,

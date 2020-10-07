@@ -7,6 +7,8 @@ import java.util.function.Function;
 public interface State {
     State attach(Node node, Function<Node, State> function);
 
+    boolean has(Node.Group group);
+
     Node current();
 
     Stack scope();
