@@ -24,6 +24,6 @@ public interface Node extends Renderable {
         Content,
         Declaration,
         IntNumber,
-        Initialization, Variable
+        Initialization, Block, Variable
     }
 }

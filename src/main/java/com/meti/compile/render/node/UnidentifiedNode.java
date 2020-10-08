@@ -1,8 +1,6 @@
-package com.meti.compile.render.scope;
+package com.meti.compile.render.node;
 
-import com.meti.compile.render.UnidentifiedException;
 import com.meti.compile.render.field.Field;
-import com.meti.compile.render.node.Node;
 
 public interface UnidentifiedNode extends Node {
     @Override

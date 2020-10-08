@@ -1,6 +1,6 @@
 package com.meti.compile.render.type;
 
-import com.meti.compile.render.UnrenderableException;
+import com.meti.compile.render.node.UnrenderableException;
 
 import java.util.function.Function;
 

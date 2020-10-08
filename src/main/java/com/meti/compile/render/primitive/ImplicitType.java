@@ -1,6 +1,6 @@
 package com.meti.compile.render.primitive;
 
-import com.meti.compile.render.UnrenderableException;
+import com.meti.compile.render.node.UnrenderableException;
 import com.meti.compile.render.type.Type;
 
 public class ImplicitType implements EmptyType {

@@ -1,6 +1,6 @@
 package com.meti.compile.render.primitive;
 
-import com.meti.compile.render.UntransformableException;
+import com.meti.compile.render.node.UntransformableException;
 import com.meti.compile.render.type.Type;
 
 import java.util.function.Function;
