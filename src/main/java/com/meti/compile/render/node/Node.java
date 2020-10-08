@@ -7,7 +7,7 @@ import java.util.function.Function;
 import java.util.stream.Stream;
 
 public interface Node extends Renderable {
-    default Stream<Node> streamChildren() {
+    default Stream<? extends Node> streamChildren() {
         return Stream.empty();
     }
 

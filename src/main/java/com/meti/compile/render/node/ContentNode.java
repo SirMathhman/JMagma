@@ -1,10 +1,15 @@
 package com.meti.compile.render.node;
 
-public class ContentNode implements LeafNode, UnidentifiedNode, UnfieldedNode {
+public class ContentNode implements Node {
     private final String content;
 
     public ContentNode(String content) {
         this.content = content;
+    }
+
+    @Override
+    public String content() {
+        return content;
     }
 
     @Override

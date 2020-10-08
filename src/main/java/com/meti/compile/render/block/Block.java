@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Block implements EmptyNode, UnfieldedNode, UnidentifiedNode, UnvaluedNode {
     private final List<? extends Node> children;
@@ -16,6 +17,11 @@ public class Block implements EmptyNode, UnfieldedNode, UnidentifiedNode, Unvalu
 
     public Block(List<? extends Node> children) {
         this.children = Collections.unmodifiableList(children);
+    }
+
+    @Override
+    public Stream<? extends Node> streamChildren() {
+        return children.stream();
     }
 
     @Override
