@@ -6,6 +6,8 @@ import com.meti.compile.render.field.Field;
 import java.util.function.Function;
 
 public interface Node extends Renderable {
+    Node mapByIdentity(Function<Field, Field> mapper);
+
     Node mapByChildren(Function<Node, Node> mapper);
 
     Node mapByFields(Function<Field, Field> mapper);
@@ -24,6 +26,6 @@ public interface Node extends Renderable {
         Content,
         Declaration,
         IntNumber,
-        Initialization, Block, Variable
+        Initialization, Block, Function, Variable
     }
 }

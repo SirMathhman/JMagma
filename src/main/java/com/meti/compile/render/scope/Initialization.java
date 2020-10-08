@@ -22,6 +22,11 @@ public class Initialization implements EmptyNode {
     }
 
     @Override
+    public Node mapByIdentity(Function<Field, Field> mapper) {
+        return new Initialization(mapper.apply(identity), value);
+    }
+
+    @Override
     public Node mapByChildren(Function<Node, Node> mapper) {
         return new Initialization(identity, mapper.apply(value));
     }

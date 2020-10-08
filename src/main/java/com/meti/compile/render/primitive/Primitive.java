@@ -1,6 +1,8 @@
 package com.meti.compile.render.primitive;
 
-public enum Primitive implements EmptyType {
+import com.meti.compile.render.type.LeafType;
+
+public enum Primitive implements EmptyType, LeafType {
     U8("unsigned char"),
     U16("unsigned int"),
     U32("unsigned long"),

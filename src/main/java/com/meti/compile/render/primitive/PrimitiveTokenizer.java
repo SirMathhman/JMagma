@@ -15,8 +15,7 @@ public class PrimitiveTokenizer implements TypeTokenizer {
     @Override
     public Optional<Type> evaluate() {
         try {
-            var asUpper = content.toUpperCase();
-            var type = Primitive.valueOf(asUpper);
+            var type = Primitive.valueOf(content);
             return Optional.of(type);
         } catch (IllegalArgumentException e) {
             return Optional.empty();

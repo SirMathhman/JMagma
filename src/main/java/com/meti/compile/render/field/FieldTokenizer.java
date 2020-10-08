@@ -62,7 +62,7 @@ public class FieldTokenizer implements Tokenizer<Field> {
 
     private Optional<Field> complete(List<Field.Flag> flags, String name, Type type) {
         return hasValidFlags(flags) ?
-                Optional.of(new EvaluatedField(name, type)) :
+                Optional.of(new InlineField(name, type)) :
                 Optional.empty();
     }
 
@@ -85,33 +85,4 @@ public class FieldTokenizer implements Tokenizer<Field> {
                 .collect(Collectors.toList());
     }
 
-    private static final class EvaluatedField implements Field {
-        private final String name;
-        private final Type type;
-
-        private EvaluatedField(String name, Type type) {
-            this.name = name;
-            this.type = type;
-        }
-
-        @Override
-        public String render() {
-            return type.render(name);
-        }
-
-        @Override
-        public Field mapByType(Function<Type, Type> function) {
-            return new EvaluatedField(name, function.apply(type));
-        }
-
-        @Override
-        public String name() {
-            return name;
-        }
-
-        @Override
-        public Type type() {
-            return type;
-        }
-    }
 }

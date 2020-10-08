@@ -4,9 +4,9 @@ import com.meti.compile.render.node.UnrenderableException;
 
 import java.util.function.Function;
 
-public class ContentType implements Type {
+public class ContentType implements LeafType {
     public static final String Format = """
-            Cannot render content with type '%s' and '%s'. 
+            Cannot render content with type '%s' and name '%s'. 
             Not that this class can be rendered, 
             but rather this instance should have been parsed/removed in compilation 
             and a programming error has occurred.""";

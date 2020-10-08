@@ -7,6 +7,8 @@ import java.util.function.Function;
 public interface Type extends Renderable {
     <T> T transformContent(Function<String, T> transformer);
 
+    Type mapByChildren(Function<Type, Type> mapper);
+
     String render(String name);
 
     @Override
@@ -16,8 +18,10 @@ public interface Type extends Renderable {
 
     boolean is(Group group);
 
+    Type head();
+
     enum Group {
         Content,
-        Primitive, Implicit,
+        Primitive, Implicit, Function,
     }
 }

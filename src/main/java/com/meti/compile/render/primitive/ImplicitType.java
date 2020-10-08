@@ -1,9 +1,10 @@
 package com.meti.compile.render.primitive;
 
 import com.meti.compile.render.node.UnrenderableException;
+import com.meti.compile.render.type.LeafType;
 import com.meti.compile.render.type.Type;
 
-public class ImplicitType implements EmptyType {
+public class ImplicitType implements EmptyType, LeafType {
     public static final Type ImplicitType = new ImplicitType();
 
     private ImplicitType() {

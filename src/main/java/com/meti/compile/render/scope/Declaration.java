@@ -20,6 +20,11 @@ public class Declaration implements EmptyNode, LeafNode {
     }
 
     @Override
+    public Node mapByIdentity(Function<Field, Field> mapper) {
+        return new Declaration(mapper.apply(identity));
+    }
+
+    @Override
     public Node mapByFields(Function<Field, Field> mapper) {
         return new Declaration(mapper.apply(identity));
     }

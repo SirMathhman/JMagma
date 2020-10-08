@@ -4,6 +4,7 @@ import com.meti.compile.render.block.BlockTokenizer;
 import com.meti.compile.render.evaluate.IntTokenizer;
 import com.meti.compile.render.evaluate.Tokenizer;
 import com.meti.compile.render.field.Field;
+import com.meti.compile.render.function.FunctionTokenizer;
 import com.meti.compile.render.node.ContentNode;
 import com.meti.compile.render.node.Node;
 import com.meti.compile.render.primitive.PrimitiveTokenizer;
@@ -23,6 +24,7 @@ import java.util.stream.Stream;
 public class Compiler {
     private Stream<Function<String, Tokenizer<Node>>> streamTokenizers() {
         return Stream.of(
+                FunctionTokenizer::new,
                 BlockTokenizer::new,
                 InitializationTokenizer::new,
                 DeclarationTokenizer::new,
@@ -38,11 +40,13 @@ public class Compiler {
     }
 
     private Type tokenizeType(Type type) {
+        Type toReturn;
         if (type.is(Type.Group.Content)) {
-            return type.transformContent(this::tokenizeTypeString);
+            toReturn = type.transformContent(this::tokenizeTypeString);
         } else {
-            return type;
+            toReturn =  type;
         }
+        return toReturn.mapByChildren(this::tokenizeType);
     }
 
     private Type tokenizeTypeString(String s) {
@@ -67,7 +71,8 @@ public class Compiler {
     private Node tokenizeTree(Node root) {
         return tokenizeNode(root)
                 .mapByFields(this::tokenizeField)
-                .mapByChildren(this::tokenizeTree);
+                .mapByChildren(this::tokenizeTree)
+                .mapByIdentity(this::tokenizeField);
     }
 
     private Node tokenizeNode(Node node) {
