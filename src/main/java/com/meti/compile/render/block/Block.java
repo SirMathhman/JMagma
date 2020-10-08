@@ -8,9 +8,9 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class Block implements EmptyNode, UnfieldedNode, UnidentifiedNode, UnvaluedNode {
-    private final List<Node> children;
+    private final List<? extends Node> children;
 
-    public Block(List<Node> children) {
+    public Block(List<? extends Node> children) {
         this.children = Collections.unmodifiableList(children);
     }
 

@@ -1,5 +1,6 @@
 package com.meti.compile;
 
+import com.meti.compile.render.block.BlockTokenizer;
 import com.meti.compile.render.evaluate.IntTokenizer;
 import com.meti.compile.render.evaluate.Tokenizer;
 import com.meti.compile.render.field.Field;
@@ -22,6 +23,7 @@ import java.util.stream.Stream;
 public class Compiler {
     private Stream<Function<String, Tokenizer<Node>>> streamTokenizers() {
         return Stream.of(
+                BlockTokenizer::new,
                 InitializationTokenizer::new,
                 DeclarationTokenizer::new,
                 IntTokenizer::new,
