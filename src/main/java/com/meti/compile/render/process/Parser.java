@@ -19,10 +19,6 @@ public class Parser extends CollectiveProcessor {
         super(state);
     }
 
-    private Resolver resolve(Node node) {
-        return new MagmaResolver(node);
-    }
-
     @Override
     protected Stream<Function<State, Processor>> streamFactories() {
         return Factories.stream();
