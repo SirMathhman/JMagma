@@ -11,11 +11,17 @@ public interface Node extends Renderable {
         return Stream.empty();
     }
 
-    Node mapByIdentity(Function<Field, Field> mapper);
+    default Node mapByIdentity(Function<Field, Field> mapper) {
+        return this;
+    }
 
-    Node mapByChildren(Function<Node, Node> mapper);
+    default Node mapByChildren(Function<Node, Node> mapper) {
+        return this;
+    }
 
-    Node mapByFields(Function<Field, Field> mapper);
+    default Node mapByFields(Function<Field, Field> mapper) {
+        return this;
+    }
 
     default String content() {
         var format = "Instances of %s have no content.";
@@ -25,13 +31,25 @@ public interface Node extends Renderable {
 
     boolean is(Group group);
 
-    Field identity();
+    default Field identity() {
+        var format = "Instances of %s don't have identities.";
+        var message = format.formatted(getClass());
+        throw new IllegalStateException(message);
+    }
 
-    <T> T value(Class<T> clazz);
+    default <T> T value(Class<T> clazz) {
+        var format = "Instances of %s dont' have values.";
+        var message = format.formatted(getClass());
+        throw new IllegalStateException(message);
+    }
 
-    Node withIdentity(Field identity);
+    default Node withIdentity(Field identity) {
+        return this;
+    }
 
-    Node withValue(Object value);
+    default Node withValue(Object value) {
+        return this;
+    }
 
     enum Group {
         Content,
