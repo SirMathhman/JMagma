@@ -1,5 +1,6 @@
 package com.meti.compile.render.block;
 
+import com.meti.compile.render.field.Field;
 import com.meti.compile.render.node.*;
 
 import java.util.Collections;
@@ -8,7 +9,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class Block implements EmptyNode, UnfieldedNode, UnidentifiedNode, UnvaluedNode {
+public class Block implements Node {
     private final List<? extends Node> children;
 
     public Block(Node... children) {

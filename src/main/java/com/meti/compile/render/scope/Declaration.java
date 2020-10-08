@@ -1,14 +1,12 @@
 package com.meti.compile.render.scope;
 
 import com.meti.compile.render.field.Field;
-import com.meti.compile.render.node.EmptyNode;
 import com.meti.compile.render.node.LeafNode;
 import com.meti.compile.render.node.Node;
-import com.meti.compile.render.node.UnvaluedNode;
 
 import java.util.function.Function;
 
-public class Declaration implements EmptyNode, LeafNode, UnvaluedNode {
+public class Declaration implements LeafNode, Node {
     private final Field identity;
 
     public Declaration(Field identity) {

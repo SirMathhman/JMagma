@@ -2,7 +2,6 @@ package com.meti.compile.render.function;
 
 import com.meti.compile.render.field.Field;
 import com.meti.compile.render.field.InlineField;
-import com.meti.compile.render.node.EmptyNode;
 import com.meti.compile.render.node.Node;
 import com.meti.compile.render.type.Type;
 
@@ -10,7 +9,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class Function implements EmptyNode {
+public class Function implements Node {
     private final String name;
     private final List<Field> parameters;
     private final Type returnType;

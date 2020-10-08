@@ -4,7 +4,7 @@ import com.meti.compile.render.node.*;
 
 import java.math.BigInteger;
 
-public class IntNumber implements EmptyNode, LeafNode, UnidentifiedNode, UnfieldedNode {
+public class IntNumber implements LeafNode, Node {
     private final BigInteger value;
 
     public IntNumber(BigInteger value) {

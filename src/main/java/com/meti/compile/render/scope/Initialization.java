@@ -1,12 +1,11 @@
 package com.meti.compile.render.scope;
 
 import com.meti.compile.render.field.Field;
-import com.meti.compile.render.node.EmptyNode;
 import com.meti.compile.render.node.Node;
 
 import java.util.function.Function;
 
-public class Initialization implements EmptyNode {
+public class Initialization implements Node {
     private static final String Format = "%s=%s;";
     private final Field identity;
     private final Node value;

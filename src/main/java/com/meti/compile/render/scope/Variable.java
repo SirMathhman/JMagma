@@ -2,7 +2,7 @@ package com.meti.compile.render.scope;
 
 import com.meti.compile.render.node.*;
 
-class Variable implements EmptyNode, LeafNode, UnidentifiedNode, UnfieldedNode {
+class Variable implements LeafNode, Node {
     private final String content;
 
     public Variable(String content) {

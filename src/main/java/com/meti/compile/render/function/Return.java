@@ -1,13 +1,12 @@
 package com.meti.compile.render.function;
 
-import com.meti.compile.render.node.EmptyNode;
+import com.meti.compile.render.field.Field;
 import com.meti.compile.render.node.Node;
-import com.meti.compile.render.node.UnfieldedNode;
-import com.meti.compile.render.node.UnidentifiedNode;
+import com.meti.compile.render.node.UnidentifiedException;
 
 import java.util.function.Function;
 
-public class Return implements EmptyNode, UnfieldedNode, UnidentifiedNode {
+public class Return implements Node {
     private final Node value;
     public static final String Format = "return %s;";
 
@@ -38,5 +37,28 @@ public class Return implements EmptyNode, UnfieldedNode, UnidentifiedNode {
     @Override
     public String render() {
         return Format.formatted(value.render());
+    }
+
+    public Node mapByFields(Function<Field, Field> mapper) {
+        return this;
+    }
+
+    @Override
+    public Node mapByIdentity(Function<Field, Field> mapper) {
+        return this;
+    }
+
+    @Override
+    public Field identity() {
+        var format = "No identity exists for: %s";
+        var message = format.formatted(getClass());
+        throw new UnidentifiedException(message);
+    }
+
+    @Override
+    public Node withIdentity(Field identity) {
+        var format = "No identity exists for: %s";
+        var message = format.formatted(getClass());
+        throw new UnidentifiedException(message);
     }
 }
