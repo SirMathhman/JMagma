@@ -7,6 +7,7 @@ import com.meti.compile.render.type.Type;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class BlockResolver extends AbstractResolver {
     public BlockResolver(Node current) {
@@ -15,14 +16,29 @@ public class BlockResolver extends AbstractResolver {
 
     @Override
     public Optional<Type> resolve() {
-        if (current.is(Node.Group.Block)) {
-            return Optional.of(current.transformChildren(this::resolveLast));
+        return Optional.of(current)
+                .filter(this::isBlock)
+                .map(this::collectToList)
+                .map(this::validateLast);
+    }
+
+    private List<Node> collectToList(Node current) {
+        return current.streamChildren().collect(Collectors.toList());
+    }
+
+    private boolean isBlock(Node current) {
+        return current.is(Node.Group.Block);
+    }
+
+    private Type validateLast(List<? extends Node> nodes) {
+        if (nodes.isEmpty()) {
+            throw new IllegalStateException("There are no values to resolve.");
+        } else {
+            return resolveLast(nodes);
         }
-        return Optional.empty();
     }
 
     private Type resolveLast(List<? extends Node> nodes) {
-        if (nodes.isEmpty()) throw new IllegalStateException("There are no values to resolve.");
         var last = nodes.get(nodes.size() - 1);
         return new MagmaResolver(last)
                 .resolve()

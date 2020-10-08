@@ -5,9 +5,15 @@ import com.meti.compile.render.field.Field;
 
 import java.util.List;
 import java.util.function.Function;
+import java.util.stream.Stream;
 
 public interface Node extends Renderable {
+    @Deprecated
     <T> T transformChildren(Function<List<? extends Node>, T> mapper);
+
+    default Stream<Node> streamChildren() {
+        return Stream.empty();
+    }
 
     Node mapByIdentity(Function<Field, Field> mapper);
 
@@ -15,7 +21,14 @@ public interface Node extends Renderable {
 
     Node mapByFields(Function<Field, Field> mapper);
 
+    @Deprecated
     <T> T transformContent(Function<String, T> function);
+
+    default String content() {
+        var format = "Instances of %s have no content.";
+        var message = format.formatted(getClass());
+        throw new IllegalStateException(message);
+    }
 
     boolean is(Group group);
 
