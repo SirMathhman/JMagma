@@ -79,7 +79,8 @@ public class Compiler {
 
     private Node tokenizeNode(Node node) {
         if (node.is(Node.Group.Content)) {
-            return node.transformContent(this::tokenizeString);
+            var content = node.content();
+            return tokenizeString(content);
         } else {
             return node;
         }

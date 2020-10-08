@@ -17,9 +17,6 @@ public interface Node extends Renderable {
 
     Node mapByFields(Function<Field, Field> mapper);
 
-    @Deprecated
-    <T> T transformContent(Function<String, T> function);
-
     default String content() {
         var format = "Instances of %s have no content.";
         var message = format.formatted(getClass());

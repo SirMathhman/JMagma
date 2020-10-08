@@ -1,17 +1,10 @@
 package com.meti.compile.render.node;
 
-import java.util.function.Function;
-
 public class ContentNode implements LeafNode, UnidentifiedNode, UnfieldedNode {
     private final String content;
 
     public ContentNode(String content) {
         this.content = content;
-    }
-
-    @Override
-    public <T> T transformContent(Function<String, T> function) {
-        return function.apply(content);
     }
 
     @Override
