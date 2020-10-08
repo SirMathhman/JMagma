@@ -24,11 +24,6 @@ public class Function implements EmptyNode {
     }
 
     @Override
-    public <T> T transformChildren(java.util.function.Function<List<? extends Node>, T> mapper) {
-        return mapper.apply(Collections.singletonList(value));
-    }
-
-    @Override
     public Node mapByIdentity(java.util.function.Function<Field, Field> mapper) {
         return withIdentity(mapper.apply(identity()));
     }

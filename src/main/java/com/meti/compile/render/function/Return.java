@@ -5,8 +5,6 @@ import com.meti.compile.render.node.Node;
 import com.meti.compile.render.node.UnfieldedNode;
 import com.meti.compile.render.node.UnidentifiedNode;
 
-import java.util.Collections;
-import java.util.List;
 import java.util.function.Function;
 
 public class Return implements EmptyNode, UnfieldedNode, UnidentifiedNode {
@@ -15,11 +13,6 @@ public class Return implements EmptyNode, UnfieldedNode, UnidentifiedNode {
 
     public Return(Node value) {
         this.value = value;
-    }
-
-    @Override
-    public <T> T transformChildren(Function<List<? extends Node>, T> mapper) {
-        return mapper.apply(Collections.singletonList(value));
     }
 
     @Override
