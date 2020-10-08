@@ -4,10 +4,11 @@ import com.meti.compile.render.field.Field;
 import com.meti.compile.render.node.EmptyNode;
 import com.meti.compile.render.node.LeafNode;
 import com.meti.compile.render.node.Node;
+import com.meti.compile.render.node.UnvaluedNode;
 
 import java.util.function.Function;
 
-public class Declaration implements EmptyNode, LeafNode {
+public class Declaration implements EmptyNode, LeafNode, UnvaluedNode {
     private final Field identity;
 
     public Declaration(Field identity) {
@@ -37,13 +38,6 @@ public class Declaration implements EmptyNode, LeafNode {
     @Override
     public Field identity() {
         return identity;
-    }
-
-    @Override
-    public <T> T value(Class<T> clazz) {
-        var format = "The declaration '%s' does not have a value.";
-        var message = format.formatted(identity.name());
-        throw new IllegalStateException(message);
     }
 
     @Override

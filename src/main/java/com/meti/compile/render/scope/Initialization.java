@@ -55,4 +55,9 @@ public class Initialization implements EmptyNode {
     public Node withIdentity(Field identity) {
         return new Initialization(identity, value);
     }
+
+    @Override
+    public Node withValue(Object value) {
+        return new Initialization(identity, (Node) value);
+    }
 }

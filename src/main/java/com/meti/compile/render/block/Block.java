@@ -10,6 +10,10 @@ import java.util.stream.Collectors;
 public class Block implements EmptyNode, UnfieldedNode, UnidentifiedNode, UnvaluedNode {
     private final List<? extends Node> children;
 
+    public Block(Node... children) {
+        this(List.of(children));
+    }
+
     public Block(List<? extends Node> children) {
         this.children = Collections.unmodifiableList(children);
     }

@@ -1,9 +1,6 @@
 package com.meti.compile.render.primitive;
 
-import com.meti.compile.render.node.EmptyNode;
-import com.meti.compile.render.node.LeafNode;
-import com.meti.compile.render.node.UnfieldedNode;
-import com.meti.compile.render.node.UnidentifiedNode;
+import com.meti.compile.render.node.*;
 
 import java.math.BigInteger;
 
@@ -27,5 +24,10 @@ public class IntNumber implements EmptyNode, LeafNode, UnidentifiedNode, Unfield
     @Override
     public <T> T value(Class<T> clazz) {
         return clazz.cast(value);
+    }
+
+    @Override
+    public Node withValue(Object value) {
+        return new IntNumber((BigInteger) value);
     }
 }

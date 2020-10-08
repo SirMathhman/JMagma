@@ -62,8 +62,13 @@ public class Function implements EmptyNode {
     public Node withIdentity(Field identity) {
         var newName = identity.name();
         var newType = identity.type();
-        var newReturnType = newType.head();
+        var newReturnType = newType.start();
         return new Function(newName, parameters, newReturnType, value);
+    }
+
+    @Override
+    public Node withValue(Object value) {
+        return new Function(name, parameters, returnType, (Node) value);
     }
 
     @Override

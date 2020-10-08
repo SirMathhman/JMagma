@@ -1,9 +1,6 @@
 package com.meti.compile.render.scope;
 
-import com.meti.compile.render.node.EmptyNode;
-import com.meti.compile.render.node.LeafNode;
-import com.meti.compile.render.node.UnfieldedNode;
-import com.meti.compile.render.node.UnidentifiedNode;
+import com.meti.compile.render.node.*;
 
 class Variable implements EmptyNode, LeafNode, UnidentifiedNode, UnfieldedNode {
     private final String content;
@@ -27,4 +24,8 @@ class Variable implements EmptyNode, LeafNode, UnidentifiedNode, UnfieldedNode {
         return clazz.cast(content);
     }
 
+    @Override
+    public Node withValue(Object value) {
+        return new Variable(value.toString());
+    }
 }

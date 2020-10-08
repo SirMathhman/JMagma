@@ -22,6 +22,8 @@ public interface Node extends Renderable {
 
     Node withIdentity(Field identity);
 
+    Node withValue(Object value);
+
     enum Group {
         Content,
         Declaration,

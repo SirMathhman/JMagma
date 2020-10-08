@@ -7,4 +7,9 @@ public interface UnvaluedNode extends Node {
         var message = format.formatted(getClass());
         throw new UnvaluedException(message);
     }
+
+    @Override
+    default Node withValue(Object value) {
+        return this;
+    }
 }

@@ -4,7 +4,7 @@ import java.util.function.Function;
 
 public interface LeafType extends Type {
     @Override
-    default Type head(){
+    default Type start(){
         var format = "Instances of %s have no heads.";
         var message = format.formatted(getClass());
         throw new IllegalStateException(message);

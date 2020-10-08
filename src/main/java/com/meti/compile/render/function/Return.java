@@ -31,6 +31,11 @@ public class Return implements EmptyNode, UnfieldedNode, UnidentifiedNode {
     }
 
     @Override
+    public Node withValue(Object value) {
+        return new Return((Node) value);
+    }
+
+    @Override
     public String render() {
         return Format.formatted(value.render());
     }

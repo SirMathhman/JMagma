@@ -18,7 +18,7 @@ public interface Type extends Renderable {
 
     boolean is(Group group);
 
-    Type head();
+    Type start();
 
     enum Group {
         Content,

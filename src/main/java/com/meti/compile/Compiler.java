@@ -9,9 +9,10 @@ import com.meti.compile.render.function.ReturnTokenizer;
 import com.meti.compile.render.node.ContentNode;
 import com.meti.compile.render.node.Node;
 import com.meti.compile.render.primitive.PrimitiveTokenizer;
+import com.meti.compile.render.process.Formatter;
 import com.meti.compile.render.process.InlineState;
 import com.meti.compile.render.process.MappedStack;
-import com.meti.compile.render.process.TypeProcessor;
+import com.meti.compile.render.process.Parser;
 import com.meti.compile.render.scope.DeclarationTokenizer;
 import com.meti.compile.render.scope.InitializationTokenizer;
 import com.meti.compile.render.scope.VariableTokenizer;
@@ -98,10 +99,8 @@ public class Compiler {
         var tree = tokenizeTree(root);
         var stack = new MappedStack();
         var state = new InlineState(tree, stack);
-        var processor = new TypeProcessor(state);
-        return processor.process()
-                .orElse(state)
-                .current()
-                .render();
+        var parsed = new Parser(state).process().orElse(state);
+        var formatted = new Formatter(parsed).process().orElse(parsed);
+        return formatted.current().render();
     }
 }

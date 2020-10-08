@@ -10,13 +10,23 @@ public class FunctionTest extends FeatureTest {
     }
 
     @Test
-    void withoutBlock(){
+    void implicitWithoutBlock(){
         assertCompile("int supplier(){return 10;}", "def supplier() => return 10");
     }
 
     @Test
-    void withoutReturn(){
+    void implicitWithoutReturn(){
         assertCompile("int supplier(){return 10;}", "def supplier() => 10");
+    }
+
+    @Test
+    void withoutBlock(){
+        assertCompile("int supplier(){return 10;}", "def supplier() : I16 => return 10");
+    }
+
+    @Test
+    void withoutReturn(){
+        assertCompile("int supplier(){return 10;}", "def supplier() : I16 => 10");
     }
 
     @Test
