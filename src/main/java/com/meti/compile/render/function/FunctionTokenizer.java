@@ -28,7 +28,7 @@ public class FunctionTokenizer extends AbstractNodeTokenizer {
                     .map(this::tokenizeParameter)
                     .collect(Collectors.toList());
             var name = content.substring(4, paramStart).trim();
-            var returnIndex = content.indexOf(':');
+            var returnIndex = content.indexOf(':', paramEnd + 1);
             var valueIndex = content.indexOf("=>");
             var trim = content.substring(returnIndex + 1, valueIndex).trim();
             var returnType = new ContentType(trim);

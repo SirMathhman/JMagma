@@ -8,4 +8,22 @@ public class FunctionTest extends FeatureTest  {
     void simple(){
         assertCompile("void procedure(){}", "def procedure() : Void => {}");
     }
+
+    @Test
+    void returnType(){
+        assertCompile("int supplier(){}", "def supplier() : I16 => {}");
+    }
+
+    @Test
+    void singleParameter(){
+        assertCompile("void consumer(int value){}", "def consumer(const value : I16) : Void => {}");
+    }
+
+    @Test
+    void multipleParameters(){
+        assertCompile("void consumer(int value0,int value1){}", """
+                def consumer(const value0 : I16, const value1 : I16) : Void => {
+                }
+                """);
+    }
 }
