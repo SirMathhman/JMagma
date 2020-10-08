@@ -8,10 +8,10 @@ import com.meti.compile.render.type.Type;
 
 import java.util.Optional;
 
-public class InitializationProcessor extends AbstractProcessor {
+public class InitializationParser extends AbstractProcessor {
     public static final String Format = "Failed to resolve value of initialization of '%s': %s";
 
-    public InitializationProcessor(State state) {
+    public InitializationParser(State state) {
         super(state);
     }
 

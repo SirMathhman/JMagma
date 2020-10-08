@@ -11,7 +11,7 @@ import java.util.stream.Stream;
 
 public class Parser extends CollectiveProcessor {
     private final List<Function<State, Processor>> Factories = List.of(
-            InitializationProcessor::new,
+            InitializationParser::new,
             FunctionParser::new
     );
 
