@@ -5,12 +5,12 @@ import com.meti.compile.render.evaluate.IntTokenizer;
 import com.meti.compile.render.evaluate.Tokenizer;
 import com.meti.compile.render.field.Field;
 import com.meti.compile.render.function.FunctionTokenizer;
+import com.meti.compile.render.function.ReturnTokenizer;
 import com.meti.compile.render.node.ContentNode;
 import com.meti.compile.render.node.Node;
 import com.meti.compile.render.primitive.PrimitiveTokenizer;
 import com.meti.compile.render.process.InlineState;
 import com.meti.compile.render.process.MappedStack;
-import com.meti.compile.render.process.State;
 import com.meti.compile.render.process.TypeProcessor;
 import com.meti.compile.render.scope.DeclarationTokenizer;
 import com.meti.compile.render.scope.InitializationTokenizer;
@@ -24,6 +24,7 @@ import java.util.stream.Stream;
 public class Compiler {
     private Stream<Function<String, Tokenizer<Node>>> streamTokenizers() {
         return Stream.of(
+                ReturnTokenizer::new,
                 FunctionTokenizer::new,
                 BlockTokenizer::new,
                 InitializationTokenizer::new,
@@ -44,7 +45,7 @@ public class Compiler {
         if (type.is(Type.Group.Content)) {
             toReturn = type.transformContent(this::tokenizeTypeString);
         } else {
-            toReturn =  type;
+            toReturn = type;
         }
         return toReturn.mapByChildren(this::tokenizeType);
     }
