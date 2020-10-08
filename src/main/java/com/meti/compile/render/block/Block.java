@@ -19,6 +19,11 @@ public class Block implements EmptyNode, UnfieldedNode, UnidentifiedNode, Unvalu
     }
 
     @Override
+    public <T> T transformChildren(Function<List<? extends Node>, T> mapper) {
+        return mapper.apply(children);
+    }
+
+    @Override
     public Node mapByChildren(Function<Node, Node> mapper) {
         return new Block(mapChildren(mapper));
     }

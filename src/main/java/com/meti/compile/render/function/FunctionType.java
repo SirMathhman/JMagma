@@ -50,4 +50,9 @@ public class FunctionType implements EmptyType {
     public Type start() {
         return returnType;
     }
+
+    @Override
+    public Type mapByStart(Function<Type, Type> mapper) {
+        return new FunctionType(mapper.apply(returnType), parameters);
+    }
 }

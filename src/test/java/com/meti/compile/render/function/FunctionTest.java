@@ -6,17 +6,17 @@ import org.junit.jupiter.api.Test;
 public class FunctionTest extends FeatureTest {
     @Test
     void implicit(){
-        assertCompile("int supplier(){return 10;}", "def supplier() => {return 10;}");
+        assertCompile("char supplier(){return 10;}", "def supplier() => {return 10;}");
     }
 
     @Test
     void implicitWithoutBlock(){
-        assertCompile("int supplier(){return 10;}", "def supplier() => return 10");
+        assertCompile("char supplier(){return 10;}", "def supplier() => return 10");
     }
 
     @Test
     void implicitWithoutReturn(){
-        assertCompile("int supplier(){return 10;}", "def supplier() => 10");
+        assertCompile("char supplier(){return 10;}", "def supplier() => 10");
     }
 
     @Test

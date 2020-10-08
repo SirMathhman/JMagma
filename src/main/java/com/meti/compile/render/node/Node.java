@@ -3,9 +3,12 @@ package com.meti.compile.render.node;
 import com.meti.compile.render.Renderable;
 import com.meti.compile.render.field.Field;
 
+import java.util.List;
 import java.util.function.Function;
 
 public interface Node extends Renderable {
+    <T> T transformChildren(Function<List<? extends Node>, T> mapper);
+
     Node mapByIdentity(Function<Field, Field> mapper);
 
     Node mapByChildren(Function<Node, Node> mapper);

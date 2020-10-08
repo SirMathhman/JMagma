@@ -4,10 +4,15 @@ import java.util.function.Function;
 
 public interface LeafType extends Type {
     @Override
-    default Type start(){
-        var format = "Instances of %s have no heads.";
+    default Type start() {
+        var format = "Instances of %s have no children.";
         var message = format.formatted(getClass());
         throw new IllegalStateException(message);
+    }
+
+    @Override
+    default Type mapByStart(Function<Type, Type> mapper) {
+        return this;
     }
 
     @Override

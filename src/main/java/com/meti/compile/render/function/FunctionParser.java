@@ -7,6 +7,7 @@ import com.meti.compile.render.resolve.MagmaResolver;
 import com.meti.compile.render.type.Type;
 
 import java.util.Optional;
+import java.util.function.Function;
 
 public class FunctionParser extends AbstractProcessor {
     public FunctionParser(State state) {
@@ -26,7 +27,8 @@ public class FunctionParser extends AbstractProcessor {
     }
 
     private Type checkImplicit(Node current, Type type) {
-        return type.start().is(Type.Group.Implicit) ? resolveReturnType(current) : type;
+        if (type.start().is(Type.Group.Implicit)) return type.mapByStart(type1 -> resolveReturnType(current));
+        return type;
     }
 
     private Type resolveReturnType(Node current) {

@@ -1,5 +1,7 @@
 package com.meti.compile.render.resolve;
 
+import com.meti.compile.render.block.BlockResolver;
+import com.meti.compile.render.function.ReturnResolver;
 import com.meti.compile.render.node.Node;
 import com.meti.compile.render.primitive.IntNumberResolver;
 import com.meti.compile.render.type.Type;
@@ -9,7 +11,10 @@ import java.util.Optional;
 import java.util.function.Function;
 
 public class MagmaResolver implements Resolver {
-    private static final List<Function<Node, Resolver>> Factories = List.of(IntNumberResolver::new);
+    private static final List<Function<Node, Resolver>> Factories = List.of(
+            ReturnResolver::new,
+            BlockResolver::new,
+            IntNumberResolver::new);
 
     private final Node value;
 

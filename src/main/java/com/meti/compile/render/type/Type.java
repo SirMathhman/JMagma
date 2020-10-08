@@ -20,6 +20,8 @@ public interface Type extends Renderable {
 
     Type start();
 
+    Type mapByStart(Function<Type, Type> mapper);
+
     enum Group {
         Content,
         Primitive, Implicit, Function,

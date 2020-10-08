@@ -4,6 +4,8 @@ import com.meti.compile.render.field.Field;
 import com.meti.compile.render.node.EmptyNode;
 import com.meti.compile.render.node.Node;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.function.Function;
 
 public class Initialization implements EmptyNode {
@@ -19,6 +21,11 @@ public class Initialization implements EmptyNode {
     @Override
     public String render() {
         return Format.formatted(identity.render(), value.render());
+    }
+
+    @Override
+    public <T> T transformChildren(Function<List<? extends Node>, T> mapper) {
+        return mapper.apply(Collections.singletonList(value));
     }
 
     @Override

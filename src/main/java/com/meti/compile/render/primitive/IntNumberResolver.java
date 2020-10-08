@@ -1,7 +1,7 @@
 package com.meti.compile.render.primitive;
 
 import com.meti.compile.render.node.Node;
-import com.meti.compile.render.resolve.Resolver;
+import com.meti.compile.render.resolve.AbstractResolver;
 import com.meti.compile.render.type.Type;
 
 import java.math.BigInteger;
@@ -12,15 +12,14 @@ import static java.math.BigInteger.ONE;
 import static java.math.BigInteger.TWO;
 import static java.util.Optional.empty;
 
-public class IntNumberResolver implements Resolver {
+public class IntNumberResolver extends AbstractResolver {
     static final Bounds Bounds8 = Bounds.of(8);
     private static final Bounds Bounds16 = Bounds.of(16);
     private static final Bounds Bounds32 = Bounds.of(32);
     private static final Bounds Bounds64 = Bounds.of(64);
-    private final Node current;
 
     public IntNumberResolver(Node current) {
-        this.current = current;
+        super(current);
     }
 
     @Override
@@ -54,7 +53,7 @@ public class IntNumberResolver implements Resolver {
             return new Bounds(lowerBound, upperBound);
         }
 
-         boolean contains(BigInteger value) {
+        boolean contains(BigInteger value) {
             return value.compareTo(from) >= 0 && 0 >= value.compareTo(to);
         }
     }
