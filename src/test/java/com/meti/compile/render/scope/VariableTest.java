@@ -10,12 +10,17 @@ public class VariableTest extends FeatureTest {
     }
 
     @Test
-    void variable(){
+    void testVariables(){
         assertCompile("{char x=10;x}", """
                 {
                     const x = 10;
                     x
                 }
                 """);
+    }
+
+    @Test
+    void throwsUndefined(){
+        assertException(UndefinedException.class, "x");
     }
 }

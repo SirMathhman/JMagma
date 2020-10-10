@@ -14,7 +14,7 @@ public class VariableParser extends AbstractProcessor {
 
     @Override
     public Optional<State> process() {
-        if(state.has(Node.Group.Variable)) {
+        if (state.has(Node.Group.Variable)) {
             return Optional.of(check(state.value(), state.scope()));
         }
         return Optional.empty();
@@ -22,10 +22,10 @@ public class VariableParser extends AbstractProcessor {
 
     private State check(Node current, Stack scope) {
         var name = current.value(String.class);
-        if(!scope.isDefined(name)){
+        if (!scope.isDefined(name)) {
             var format = "%s is not defined in %s";
             var message = format.formatted(name, scope);
-            throw new IllegalStateException(message);
+            throw new UndefinedException(message);
         } else {
             return state;
         }
