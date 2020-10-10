@@ -4,13 +4,14 @@ import com.meti.compile.render.field.Field;
 
 import java.util.Deque;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class MappedStack implements Stack {
     private final Deque<Frame> frames;
 
     public MappedStack() {
-        this(new LinkedList<>());
+        this(new LinkedList<>(List.of(new MappedFrame())));
     }
 
     public MappedStack(Deque<Frame> frames) {

@@ -3,27 +3,32 @@ package com.meti.compile.render.process;
 import com.meti.compile.render.node.Node;
 
 public class InlineState implements State {
-    private final Node current;
+    private final Node value;
     private final Stack scope;
 
-    public InlineState(Node current, Stack scope) {
-        this.current = current;
+    public InlineState(Node value, Stack scope) {
+        this.value = value;
         this.scope = scope;
     }
 
     @Override
     public boolean has(Node.Group group) {
-        return current.is(group);
+        return value.is(group);
     }
 
     @Override
     public Node value() {
-        return current;
+        return value;
     }
 
     @Override
     public Stack scope() {
         return scope;
+    }
+
+    @Override
+    public State with(Stack scope) {
+        return new InlineState(value, scope);
     }
 
     @Override

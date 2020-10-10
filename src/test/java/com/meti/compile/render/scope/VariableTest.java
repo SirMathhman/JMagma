@@ -11,6 +11,11 @@ public class VariableTest extends FeatureTest {
 
     @Test
     void variable(){
-        assertCompile("x", "x");
+        assertCompile("{char x=10;x}", """
+                {
+                    const x = 10;
+                    x
+                }
+                """);
     }
 }

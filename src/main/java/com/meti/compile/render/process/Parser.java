@@ -1,6 +1,7 @@
 package com.meti.compile.render.process;
 
 import com.meti.compile.render.function.FunctionParser;
+import com.meti.compile.render.scope.Definer;
 import com.meti.compile.render.scope.VariableParser;
 
 import java.util.function.Function;
@@ -15,6 +16,11 @@ public class Parser extends CollectiveProcessor {
     @Override
     protected CollectiveProcessor copy(State child) {
         return new Parser(child);
+    }
+
+    @Override
+    protected Stream<Function<State, Processor>> streamPostprocessors() {
+        return Stream.of(Definer::new);
     }
 
     @Override

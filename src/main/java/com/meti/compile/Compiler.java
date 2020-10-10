@@ -25,9 +25,9 @@ import java.util.stream.Stream;
 public class Compiler {
     private Stream<Function<String, Tokenizer<Node>>> streamTokenizers() {
         return Stream.of(
+                BlockTokenizer::new,
                 ReturnTokenizer::new,
                 FunctionTokenizer::new,
-                BlockTokenizer::new,
                 InitializationTokenizer::new,
                 DeclarationTokenizer::new,
                 IntTokenizer::new,
@@ -96,7 +96,8 @@ public class Compiler {
     }
 
     public String compile(String content) {
-        var root = new ContentNode(content);
+        var trim = content.trim();
+        var root = new ContentNode(trim);
         var tree = tokenizeTree(root);
         var stack = new MappedStack();
         var state = new InlineState(tree, stack);
