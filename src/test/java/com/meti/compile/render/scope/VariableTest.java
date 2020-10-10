@@ -5,12 +5,7 @@ import org.junit.jupiter.api.Test;
 
 public class VariableTest extends FeatureTest {
     @Test
-    void test(){
-        assertCompile("{}", "{}");
-    }
-
-    @Test
-    void testVariables(){
+    void testVariables() {
         assertCompile("{char x=10;x}", """
                 {
                     const x = 10;
@@ -20,7 +15,7 @@ public class VariableTest extends FeatureTest {
     }
 
     @Test
-    void throwsUndefined(){
+    void throwsUndefined() {
         assertException(UndefinedException.class, "x");
     }
 }
