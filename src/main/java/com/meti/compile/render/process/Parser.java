@@ -1,16 +1,12 @@
 package com.meti.compile.render.process;
 
 import com.meti.compile.render.function.FunctionParser;
+import com.meti.compile.render.scope.VariableParser;
 
-import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
 public class Parser extends CollectiveProcessor {
-    private final List<Function<State, Processor>> Factories = List.of(
-            InitializationParser::new,
-            FunctionParser::new
-    );
 
     public Parser(State state) {
         super(state);
@@ -23,6 +19,10 @@ public class Parser extends CollectiveProcessor {
 
     @Override
     protected Stream<Function<State, Processor>> streamProcessors() {
-        return Factories.stream();
+        return Stream.of(
+                InitializationParser::new,
+                FunctionParser::new,
+                VariableParser::new
+        );
     }
 }
