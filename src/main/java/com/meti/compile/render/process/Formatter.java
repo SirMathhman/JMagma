@@ -16,7 +16,12 @@ public class Formatter extends CollectiveProcessor {
     }
 
     @Override
-    protected Stream<Function<State, Processor>> streamFactories() {
+    protected CollectiveProcessor copy(State child) {
+        return new Formatter(child);
+    }
+
+    @Override
+    protected Stream<Function<State, Processor>> streamProcessors() {
         return Stream.of(FunctionFormatter::new);
     }
 }

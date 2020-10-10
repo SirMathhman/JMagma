@@ -1,9 +1,6 @@
 package com.meti.compile.render.process;
 
 import com.meti.compile.render.function.FunctionParser;
-import com.meti.compile.render.node.Node;
-import com.meti.compile.render.resolve.MagmaResolver;
-import com.meti.compile.render.resolve.Resolver;
 
 import java.util.List;
 import java.util.function.Function;
@@ -20,7 +17,12 @@ public class Parser extends CollectiveProcessor {
     }
 
     @Override
-    protected Stream<Function<State, Processor>> streamFactories() {
+    protected CollectiveProcessor copy(State child) {
+        return new Parser(child);
+    }
+
+    @Override
+    protected Stream<Function<State, Processor>> streamProcessors() {
         return Factories.stream();
     }
 }

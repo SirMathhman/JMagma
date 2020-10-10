@@ -3,10 +3,15 @@ package com.meti.compile.render.node;
 import com.meti.compile.render.Renderable;
 import com.meti.compile.render.field.Field;
 
+import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
 public interface Node extends Renderable {
+    default <T> T reduce(T identity, BiFunction<T, Node, T> mapper, Function<T, T> operator) {
+        return mapper.apply(identity, this);
+    }
+
     default Stream<? extends Node> streamChildren() {
         return Stream.empty();
     }
