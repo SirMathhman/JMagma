@@ -5,6 +5,11 @@ import org.junit.jupiter.api.Test;
 
 public class VariableTest extends FeatureTest {
     @Test
+    void test(){
+        assertCompile("{}", "{}");
+    }
+
+    @Test
     void variable(){
         assertCompile("x", "x");
     }

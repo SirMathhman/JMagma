@@ -7,7 +7,6 @@ import com.meti.compile.render.resolve.MagmaResolver;
 import com.meti.compile.render.type.Type;
 
 import java.util.Optional;
-import java.util.function.Function;
 
 public class FunctionParser extends AbstractProcessor {
     public FunctionParser(State state) {
@@ -17,7 +16,7 @@ public class FunctionParser extends AbstractProcessor {
     @Override
     public Optional<State> process() {
         if (state.has(Node.Group.Function)) {
-            var current = state.current();
+            var current = state.value();
             var identity = current.identity();
             var next = current.withIdentity(identity.mapByType(type -> checkImplicit(current, type)));
             var nextState = state.with(next);

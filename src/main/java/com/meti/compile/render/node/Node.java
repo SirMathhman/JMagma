@@ -8,7 +8,7 @@ import java.util.function.Function;
 import java.util.stream.Stream;
 
 public interface Node extends Renderable {
-    default <T> T reduce(T identity, BiFunction<T, Node, T> mapper, Function<T, T> operator) {
+    default <T extends Container<T>> T reduce(T identity, BiFunction<T, Node, T> mapper, Function<T, T> operator) {
         return mapper.apply(identity, this);
     }
 
@@ -61,5 +61,11 @@ public interface Node extends Renderable {
         Declaration,
         IntNumber,
         Initialization, Block, Function, Return, Variable
+    }
+
+    interface Container<T extends Container<T>> {
+        Node value();
+
+        T with(Node value);
     }
 }

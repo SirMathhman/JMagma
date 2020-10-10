@@ -18,7 +18,7 @@ public class InitializationParser extends AbstractProcessor {
     @Override
     public Optional<State> process() {
         if (state.has(Node.Group.Initialization)) {
-            var current = state.current();
+            var current = state.value();
             var identity = current.identity();
             var field = identity.mapByType(type -> checkImplicit(current, identity, type));
             var node = current.withIdentity(field);

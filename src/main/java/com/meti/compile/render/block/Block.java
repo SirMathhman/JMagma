@@ -1,10 +1,11 @@
 package com.meti.compile.render.block;
 
-import com.meti.compile.render.field.Field;
-import com.meti.compile.render.node.*;
+import com.meti.compile.render.node.Node;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -39,6 +40,18 @@ public class Block implements Node {
     @Override
     public boolean is(Group group) {
         return group == Group.Block;
+    }
+
+    @Override
+    public <T extends Container<T>> T reduce(T identity, BiFunction<T, Node, T> mapper, Function<T, T> operator) {
+        T current = identity;
+        List<Node> newChildren = new ArrayList<>();
+        for (Node child : children) {
+            var withChild = mapper.apply(current, child);
+            current = operator.apply(withChild);
+            newChildren.add(current.value());
+        }
+        return current.with(new Block(newChildren));
     }
 
     @Override

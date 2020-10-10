@@ -17,7 +17,7 @@ public class InlineState implements State {
     }
 
     @Override
-    public Node current() {
+    public Node value() {
         return current;
     }
 

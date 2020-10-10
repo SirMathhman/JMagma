@@ -15,7 +15,7 @@ public class DeclarationProcessor extends AbstractProcessor {
     @Override
     public Optional<State> process() {
         if (state.has(Node.Group.Declaration)) {
-            var current = state.current();
+            var current = state.value();
             var identity = current.identity();
             var name = identity.name();
             var type = identity.type();

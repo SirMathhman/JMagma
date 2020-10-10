@@ -102,6 +102,6 @@ public class Compiler {
         var state = new InlineState(tree, stack);
         var parsed = new Parser(state).process().orElse(state);
         var formatted = new Formatter(parsed).process().orElse(parsed);
-        return formatted.current().render();
+        return formatted.value().render();
     }
 }

@@ -5,6 +5,11 @@ import org.junit.jupiter.api.Test;
 
 public class BlockTest extends FeatureTest {
     @Test
+    void areChildrenProcessed(){
+        assertCompile("{char x=10;}", "{const x =10}");
+    }
+
+    @Test
     void empty(){
         assertCompile("{}", "{}");
     }

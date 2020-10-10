@@ -15,7 +15,7 @@ public class FunctionFormatter extends AbstractProcessor {
     @Override
     public Optional<State> process() {
         if(state.has(Node.Group.Function)) {
-            var current = state.current();
+            var current = state.value();
             var oldValue = current.value(Node.class);
             var asReturn = wrapReturn(oldValue);
             var asBlock = wrapBlock(oldValue, asReturn);
