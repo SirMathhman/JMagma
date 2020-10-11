@@ -43,11 +43,11 @@ public class Block implements Node {
     }
 
     @Override
-    public <T extends Container<T>> T reduce(T identity, BiFunction<T, Node, T> mapper, Function<T, T> operator) {
+    public <T extends Container<T>> T reduce(T identity, Function<T, T> operator) {
         T current = identity;
         List<Node> newChildren = new ArrayList<>();
         for (Node child : children) {
-            var withChild = mapper.apply(current, child);
+            var withChild = current.with(child);
             current = operator.apply(withChild);
             newChildren.add(current.value());
         }

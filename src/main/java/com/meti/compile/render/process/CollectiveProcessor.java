@@ -15,7 +15,7 @@ public abstract class CollectiveProcessor extends AbstractProcessor {
     public Optional<State> process() {
         var preprocessed = apply(streamPreprocessors(), state).orElse(state);
         var processed = apply(streamProcessors(), preprocessed).orElse(preprocessed);
-        var withChildren = processed.value().reduce(processed, State::with, this::processChild);
+        var withChildren = processed.value().reduce(processed, this::processChild);
         var postProcessed = apply(streamPostprocessors(), withChildren).orElse(withChildren);
         return Optional.of(postProcessed);
     }
