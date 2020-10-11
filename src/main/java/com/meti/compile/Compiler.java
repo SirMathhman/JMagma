@@ -26,11 +26,11 @@ import java.util.stream.Stream;
 public class Compiler {
     private Stream<Function<String, Tokenizer<Node>>> streamTokenizers() {
         return Stream.of(
-                InvocationTokenizer::new,
                 BlockTokenizer::new,
-                ReturnTokenizer::new,
                 FunctionTokenizer::new,
                 InitializationTokenizer::new,
+                InvocationTokenizer::new,
+                ReturnTokenizer::new,
                 DeclarationTokenizer::new,
                 IntTokenizer::new,
                 VariableTokenizer::new

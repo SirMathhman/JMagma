@@ -17,7 +17,7 @@ public class InvocationTest extends FeatureTest {
 
     @Test
     void testSupplier() {
-        assertCompile("{}", """
+        assertCompile("{char supplier(){return 10;}char result()=supplier();}", """
                 {
                     def supplier() => 10;
                     const result = supplier();

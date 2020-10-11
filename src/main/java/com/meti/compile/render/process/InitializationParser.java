@@ -33,7 +33,7 @@ public class InitializationParser extends AbstractProcessor {
 
     private Type resolveImplicit(Node current, Field identity) {
         var value = current.value(Node.class);
-        return MagmaResolver.Resolver(state)
+        return MagmaResolver.Resolver(state.with(value))
                 .resolve()
                 .orElseThrow(() -> invalidateValue(value, identity));
     }
