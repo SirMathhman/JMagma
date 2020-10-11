@@ -33,7 +33,7 @@ public abstract class Invocation implements Node {
         return current.with(value);
     }
 
-    protected abstract Invocation complete(Node newCaller, List<Node> newArguments);
+    protected abstract Invocation complete(Node newCaller, List<? extends Node> newArguments);
 
     @Override
     public Stream<? extends Node> streamChildren() {

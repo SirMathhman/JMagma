@@ -1,6 +1,7 @@
 package com.meti.compile.render.block;
 
 import com.meti.compile.render.node.Node;
+import com.meti.compile.render.process.State;
 import com.meti.compile.render.resolve.AbstractResolver;
 import com.meti.compile.render.resolve.MagmaResolver;
 import com.meti.compile.render.type.Type;
@@ -10,13 +11,13 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class BlockResolver extends AbstractResolver {
-    public BlockResolver(Node current) {
-        super(current);
+    public BlockResolver(State state) {
+        super(state);
     }
 
     @Override
     public Optional<Type> resolve() {
-        return Optional.of(current)
+        return Optional.of(state.value())
                 .filter(this::isBlock)
                 .map(this::collectToList)
                 .map(this::validateLast);
@@ -40,7 +41,7 @@ public class BlockResolver extends AbstractResolver {
 
     private Type resolveLast(List<? extends Node> nodes) {
         var last = nodes.get(nodes.size() - 1);
-        return new MagmaResolver(last)
+        return MagmaResolver.Resolver(state.with(last))
                 .resolve()
                 .orElseThrow(() -> invalidateLast(last));
     }

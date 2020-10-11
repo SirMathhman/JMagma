@@ -2,30 +2,35 @@ package com.meti.compile.render.resolve;
 
 import com.meti.compile.render.block.BlockResolver;
 import com.meti.compile.render.block.function.ReturnResolver;
+import com.meti.compile.render.block.invoke.InvocationResolver;
 import com.meti.compile.render.node.Node;
 import com.meti.compile.render.primitive.IntNumberResolver;
+import com.meti.compile.render.process.State;
 import com.meti.compile.render.type.Type;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
 
-public class MagmaResolver implements Resolver {
-    private static final List<Function<Node, Resolver>> Factories = List.of(
+public class MagmaResolver extends AbstractResolver {
+    private static final List<Function<State, Resolver>> Factories = List.of(
+            InvocationResolver::new,
             ReturnResolver::new,
             BlockResolver::new,
             IntNumberResolver::new);
 
-    private final Node value;
+    public MagmaResolver(State state) {
+        super(state);
+    }
 
-    public MagmaResolver(Node value) {
-        this.value = value;
+    public static MagmaResolver Resolver(State state) {
+        return new MagmaResolver(state);
     }
 
     @Override
     public Optional<Type> resolve() {
         return Factories.stream()
-                .map(factory -> factory.apply(value))
+                .map(factory -> factory.apply(state))
                 .map(Resolver::resolve)
                 .flatMap(Optional::stream)
                 .findFirst();

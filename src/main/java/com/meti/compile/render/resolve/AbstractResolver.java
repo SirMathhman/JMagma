@@ -1,11 +1,11 @@
 package com.meti.compile.render.resolve;
 
-import com.meti.compile.render.node.Node;
+import com.meti.compile.render.process.State;
 
 public abstract class AbstractResolver implements Resolver {
-    protected final Node current;
+    protected final State state;
 
-    public AbstractResolver(Node current) {
-        this.current = current;
+    public AbstractResolver(State state) {
+        this.state = state;
     }
 }

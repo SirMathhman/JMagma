@@ -10,7 +10,7 @@ public class Procedure extends Invocation {
     }
 
     @Override
-    protected Invocation complete(Node newCaller, List<Node> newArguments) {
+    protected Invocation complete(Node newCaller, List<? extends Node> newArguments) {
         return new Procedure(newCaller, newArguments);
     }
 

@@ -1,6 +1,7 @@
 package com.meti.compile.render.primitive;
 
 import com.meti.compile.render.node.Node;
+import com.meti.compile.render.process.State;
 import com.meti.compile.render.resolve.AbstractResolver;
 import com.meti.compile.render.type.Type;
 
@@ -18,14 +19,14 @@ public class IntNumberResolver extends AbstractResolver {
     private static final Bounds Bounds32 = Bounds.of(32);
     private static final Bounds Bounds64 = Bounds.of(64);
 
-    public IntNumberResolver(Node current) {
-        super(current);
+    public IntNumberResolver(State state) {
+        super(state);
     }
 
     @Override
     public Optional<Type> resolve() {
-        if (current.is(Node.Group.IntNumber)) {
-            var value = current.value(BigInteger.class);
+        if (state.has(Node.Group.IntNumber)) {
+            var value = state.value().value(BigInteger.class);
             if (Bounds8.contains(value)) return Optional.of(I8);
             if (Bounds16.contains(value)) return Optional.of(I16);
             if (Bounds32.contains(value)) return Optional.of(I32);

@@ -1,6 +1,7 @@
 package com.meti.compile.render.block.function;
 
 import com.meti.compile.render.node.Node;
+import com.meti.compile.render.process.State;
 import com.meti.compile.render.resolve.AbstractResolver;
 import com.meti.compile.render.resolve.MagmaResolver;
 import com.meti.compile.render.type.Type;
@@ -8,17 +9,16 @@ import com.meti.compile.render.type.Type;
 import java.util.Optional;
 
 public class ReturnResolver extends AbstractResolver {
-    public ReturnResolver(Node current) {
-        super(current);
+    public ReturnResolver(State state) {
+        super(state);
     }
 
     @Override
     public Optional<Type> resolve() {
-        if (current.is(Node.Group.Return)) {
-            var value = current.value(Node.class);
-            return Optional.of(new MagmaResolver(value)
+        if (state.has(Node.Group.Return)) {
+            return Optional.of(MagmaResolver.Resolver(state)
                     .resolve()
-                    .orElseThrow(() -> invalidateReturn(value)));
+                    .orElseThrow(() -> invalidateReturn(state.value())));
         }
         return Optional.empty();
     }
