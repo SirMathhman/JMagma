@@ -12,6 +12,7 @@ import com.meti.compile.render.process.Formatter;
 import com.meti.compile.render.process.InlineState;
 import com.meti.compile.render.process.MappedStack;
 import com.meti.compile.render.process.Parser;
+import com.meti.compile.render.process.State;
 import com.meti.compile.render.scope.DeclarationTokenizer;
 import com.meti.compile.render.scope.InitializationTokenizer;
 import com.meti.compile.render.scope.VariableTokenizer;
@@ -104,10 +105,14 @@ public class Compiler {
         var tree = tokenizeTree(root);
         var stack = new MappedStack();
         var state = new InlineState(tree, stack);
-        var parsed = new Parser(state).process().orElse(state);
-        var formatted = new Formatter(parsed).process().orElse(parsed);
-        var renderedStructures = formatted.streamStructures().map(Node::render).collect(Collectors.joining(""));
-        var renderedFunctions = formatted.streamFunctions().map(Node::render).collect(Collectors.joining(""));
-        return renderedStructures + renderedFunctions + formatted.value().render();
+        var formatted = new Formatter(state).process().orElse(state);
+        var parsed = new Parser(formatted).process().orElse(formatted);
+        return render(parsed);
+    }
+
+    private String render(State parsed) {
+        var renderedStructures = parsed.streamStructures().map(Node::render).collect(Collectors.joining(""));
+        var renderedFunctions = parsed.streamFunctions().map(Node::render).collect(Collectors.joining(""));
+        return renderedStructures + renderedFunctions + parsed.value().render();
     }
 }
