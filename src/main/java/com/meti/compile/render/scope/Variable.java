@@ -2,7 +2,7 @@ package com.meti.compile.render.scope;
 
 import com.meti.compile.render.node.*;
 
-class Variable implements LeafNode, Node {
+public class Variable implements LeafNode, Node {
     private final String content;
 
     private Variable(String content) {

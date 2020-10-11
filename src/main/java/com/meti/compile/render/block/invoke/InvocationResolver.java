@@ -16,17 +16,34 @@ public class InvocationResolver extends AbstractResolver {
 
     @Override
     public Optional<Type> resolve() {
-        if (state.has(Node.Group.Mapping) || state.has(Node.Group.Procedure)) {
-            Node caller = state.value()
-                    .streamChildren()
-                    .findFirst()
-                    .orElseThrow();
-            return Optional.of(Resolver(state.with(caller))
-                    .resolve()
-                    .orElseThrow(() -> invalidateCaller(caller))
-                    .secondary());
-        }
-        return Optional.empty();
+        return Optional.of(state)
+                .filter(this::hasInvocation)
+                .map(State::value)
+                .map(this::findCaller)
+                .map(this::resolveCallerReturnType);
+    }
+
+    private boolean hasInvocation(State state) {
+        return state.has(Node.Group.Mapping) || this.state.has(Node.Group.Procedure);
+    }
+
+    private Node findCaller(Node value) {
+        return value.streamChildren()
+                .findFirst()
+                .orElseThrow(() -> noCaller(value));
+    }
+
+    private IllegalArgumentException noCaller(Node value) {
+        var format = "%s has no caller.";
+        var message = format.formatted(value);
+        return new IllegalArgumentException(message);
+    }
+
+    private Type resolveCallerReturnType(Node caller) {
+        return Resolver(state.with(caller))
+                .resolve()
+                .orElseThrow(() -> invalidateCaller(caller))
+                .secondary();
     }
 
     private IllegalStateException invalidateCaller(Node caller) {
