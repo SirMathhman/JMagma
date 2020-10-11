@@ -60,7 +60,7 @@ public class Function implements Node {
                 .map(Field::type)
                 .collect(Collectors.toList());
         var type = new FunctionType(returnType, parametersAsType);
-        return new InlineField(name, type);
+        return InlineField.Field(name, type);
     }
 
     @Override

@@ -73,7 +73,7 @@ public class FieldTokenizer implements Tokenizer<Field> {
 
     private Field complete(List<Field.Flag> flags, String name, Type type) {
         if (hasValidFlags(flags)) {
-            return new InlineField(name, type);
+            return InlineField.Field(name, type);
         } else {
             var format = "No flags are found for '%s'.";
             var message = format.formatted(name);

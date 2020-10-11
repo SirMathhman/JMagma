@@ -8,9 +8,13 @@ public final class InlineField implements Field {
     private final String name;
     private final Type type;
 
-    public InlineField(String name, Type type) {
+    private InlineField(String name, Type type) {
         this.name = name;
         this.type = type;
+    }
+
+    public static InlineField Field(String name, Type type) {
+        return new InlineField(name, type);
     }
 
     @Override
@@ -20,7 +24,7 @@ public final class InlineField implements Field {
 
     @Override
     public Field mapByType(Function<Type, Type> function) {
-        return new InlineField(name, function.apply(type));
+        return Field(name, function.apply(type));
     }
 
     @Override
