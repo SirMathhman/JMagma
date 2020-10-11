@@ -16,7 +16,7 @@ public class ReturnResolver extends AbstractResolver {
     @Override
     public Optional<Type> resolve() {
         if (state.has(Node.Group.Return)) {
-            return Optional.of(MagmaResolver.Resolver(state)
+            return Optional.of(MagmaResolver.Resolver(state.with(state.value().value(Node.class)))
                     .resolve()
                     .orElseThrow(() -> invalidateReturn(state.value())));
         }
