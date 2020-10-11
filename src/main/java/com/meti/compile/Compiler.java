@@ -113,6 +113,6 @@ public class Compiler {
     private String render(State parsed) {
         var renderedStructures = parsed.streamStructures().map(Node::render).collect(Collectors.joining(""));
         var renderedFunctions = parsed.streamFunctions().map(Node::render).collect(Collectors.joining(""));
-        return renderedStructures + renderedFunctions + parsed.value().render();
+        return renderedStructures + renderedFunctions + parsed.getValue().render();
     }
 }

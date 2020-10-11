@@ -19,7 +19,7 @@ public class ProcedureParser extends AbstractProcessor {
     @Override
     public Optional<State> process() {
         if (state.has(Node.Group.Mapping)) {
-            var value = state.value();
+            var value = state.getValue();
             var children = value.streamChildren().collect(Collectors.toList());
             var caller = children.get(0);
             var arguments = children.subList(1, children.size());
@@ -41,7 +41,7 @@ public class ProcedureParser extends AbstractProcessor {
     }
 
     private IllegalStateException invalidateValue(Node value) {
-        var format = "Unable to resolve value: %s";
+        var format = "Unable to resolve getValue: %s";
         var message = format.formatted(value);
         return new IllegalStateException(message);
     }

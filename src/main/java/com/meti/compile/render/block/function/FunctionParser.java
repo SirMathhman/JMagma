@@ -16,7 +16,7 @@ public class FunctionParser extends AbstractProcessor {
     @Override
     public Optional<State> process() {
         if (state.has(Node.Group.Function)) {
-            var current = state.value();
+            var current = state.getValue();
             var identity = current.identity();
             var next = current.withIdentity(identity.mapByType(type -> checkImplicit(current, type)));
             var nextState = state.with(next);
@@ -38,7 +38,7 @@ public class FunctionParser extends AbstractProcessor {
     }
 
     private IllegalStateException invalidateValue(Node value) {
-        var format = "Unable to resolve function value of: %s";
+        var format = "Unable to resolve function getValue of: %s";
         var message = format.formatted(value);
         return new IllegalStateException(message);
     }

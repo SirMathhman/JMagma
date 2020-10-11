@@ -16,15 +16,15 @@ public class ReturnResolver extends AbstractResolver {
     @Override
     public Optional<Type> resolve() {
         if (state.has(Node.Group.Return)) {
-            return Optional.of(MagmaResolver.Resolver(state.with(state.value().value(Node.class)))
+            return Optional.of(MagmaResolver.Resolver(state.with(state.getValue().value(Node.class)))
                     .resolve()
-                    .orElseThrow(() -> invalidateReturn(state.value())));
+                    .orElseThrow(() -> invalidateReturn(state.getValue())));
         }
         return Optional.empty();
     }
 
     private IllegalStateException invalidateReturn(Node value) {
-        var format = "Unable to resolve return value of: %s";
+        var format = "Unable to resolve return getValue of: %s";
         var message = format.formatted(value);
         return new IllegalStateException(message);
     }

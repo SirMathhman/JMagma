@@ -7,8 +7,8 @@ public class FunctionTest extends FeatureTest {
     @Test
     void inner(){
         assertCompile("", """
-                def outer(value : I16) => {
-                    def inner() => value;
+                def outer(getValue : I16) => {
+                    def inner() => getValue;
                     inner()
                 }
                 """);
@@ -51,7 +51,7 @@ public class FunctionTest extends FeatureTest {
 
     @Test
     void singleParameter() {
-        assertCompile("void consumer(int value){}", "def consumer(const value : I16) : Void => {}");
+        assertCompile("void consumer(int getValue){}", "def consumer(const getValue : I16) : Void => {}");
     }
 
     @Test

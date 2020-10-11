@@ -67,7 +67,7 @@ public interface Node extends Renderable {
     }
 
     interface Container<T extends Container<T>> {
-        Node value();
+        Node getValue();
 
         T with(Node value);
     }

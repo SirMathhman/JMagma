@@ -5,7 +5,6 @@ import com.meti.compile.render.node.Node;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -49,7 +48,7 @@ public class Block implements Node {
         for (Node child : children) {
             var withChild = current.with(child);
             current = operator.apply(withChild);
-            newChildren.add(current.value());
+            newChildren.add(current.getValue());
         }
         return current.with(new Block(newChildren));
     }

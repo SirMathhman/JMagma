@@ -27,9 +27,9 @@ public class InvocationTest extends FeatureTest {
 
     @Test
     void consumer(){
-        assertCompile("{void consumer(int value){}consumer(10);}", """
+        assertCompile("{void consumer(int getValue){}consumer(10);}", """
                 {
-                    def consumer(value : I16) => {}
+                    def consumer(getValue : I16) => {}
                     consumer(10)
                 }
                 """);
@@ -37,10 +37,10 @@ public class InvocationTest extends FeatureTest {
 
     @Test
     void mapping(){
-        assertCompile("{int mapping(int value){return value;}int result=mapping(420);}", """
+        assertCompile("{int mapping(int getValue){return getValue;}int result=mapping(420);}", """
                 {
                 
-                    def mapping(value : I16) => value;
+                    def mapping(getValue : I16) => getValue;
                     const result = mapping(420);
                 }
                 """);

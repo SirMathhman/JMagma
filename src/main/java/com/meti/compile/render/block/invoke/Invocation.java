@@ -20,13 +20,13 @@ public abstract class Invocation implements Node {
     @Override
     public <T extends Container<T>> T reduce(T identity, Function<T, T> operator) {
         var withCaller = operator.apply(identity.with(caller));
-        var newCaller = withCaller.value();
+        var newCaller = withCaller.getValue();
         var newArguments = new ArrayList<Node>();
         var current = withCaller;
         for (Node argument : arguments) {
             var processedArgument = current.with(argument);
             var apply = operator.apply(processedArgument);
-            newArguments.add(apply.value());
+            newArguments.add(apply.getValue());
             current = processedArgument;
         }
         var value = complete(newCaller, newArguments);

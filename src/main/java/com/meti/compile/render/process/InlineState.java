@@ -57,7 +57,7 @@ public class InlineState implements State {
     }
 
     @Override
-    public Node value() {
+    public Node getValue() {
         return value;
     }
 

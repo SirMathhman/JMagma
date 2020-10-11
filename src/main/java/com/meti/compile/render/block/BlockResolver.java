@@ -6,7 +6,6 @@ import com.meti.compile.render.process.State;
 import com.meti.compile.render.resolve.AbstractResolver;
 import com.meti.compile.render.resolve.MagmaResolver;
 import com.meti.compile.render.type.Type;
-import com.sun.jdi.PrimitiveValue;
 
 import java.util.List;
 import java.util.Optional;
@@ -19,7 +18,7 @@ public class BlockResolver extends AbstractResolver {
 
     @Override
     public Optional<Type> resolve() {
-        return Optional.of(state.value())
+        return Optional.of(state.getValue())
                 .filter(this::isBlock)
                 .map(this::collectToList)
                 .map(this::validateLast);

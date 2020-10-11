@@ -18,7 +18,7 @@ public class InvocationResolver extends AbstractResolver {
     public Optional<Type> resolve() {
         return Optional.of(state)
                 .filter(this::hasInvocation)
-                .map(State::value)
+                .map(State::getValue)
                 .map(this::findCaller)
                 .map(this::resolveCallerReturnType);
     }

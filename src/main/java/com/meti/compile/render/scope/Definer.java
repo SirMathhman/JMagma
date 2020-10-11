@@ -15,7 +15,7 @@ public class Definer extends AbstractProcessor {
     @Override
     public Optional<State> process() {
         if (state.has(Node.Group.Declaration) || state.has(Node.Group.Initialization)) {
-            Stack define = define(state.scope(), state.value());
+            Stack define = define(state.scope(), state.getValue());
             return Optional.of(state.with(define));
         }
         return Optional.empty();

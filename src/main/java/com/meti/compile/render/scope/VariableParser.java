@@ -15,7 +15,7 @@ public class VariableParser extends AbstractProcessor {
     @Override
     public Optional<State> process() {
         if (state.has(Node.Group.Variable)) {
-            return Optional.of(check(state.value(), state.scope()));
+            return Optional.of(check(state.getValue(), state.scope()));
         }
         return Optional.empty();
     }

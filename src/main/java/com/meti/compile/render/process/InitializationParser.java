@@ -3,7 +3,6 @@ package com.meti.compile.render.process;
 import com.meti.compile.render.field.Field;
 import com.meti.compile.render.node.Node;
 import com.meti.compile.render.primitive.ImplicitType;
-import com.meti.compile.render.resolve.MagmaResolver;
 import com.meti.compile.render.type.Type;
 
 import java.util.Optional;
@@ -11,7 +10,7 @@ import java.util.Optional;
 import static com.meti.compile.render.resolve.MagmaResolver.Resolver;
 
 public class InitializationParser extends AbstractProcessor {
-    public static final String Format = "Failed to resolve value of initialization of '%s': %s";
+    public static final String Format = "Failed to resolve getValue of initialization of '%s': %s";
 
     public InitializationParser(State state) {
         super(state);
@@ -20,7 +19,7 @@ public class InitializationParser extends AbstractProcessor {
     @Override
     public Optional<State> process() {
         if (state.has(Node.Group.Initialization)) {
-            var current = state.value();
+            var current = state.getValue();
             var identity = current.identity();
             var field = identity.mapByType(type -> checkImplicit(current, identity, type));
             var node = current.withIdentity(field);

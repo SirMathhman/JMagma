@@ -26,7 +26,7 @@ public class IntNumberResolver extends AbstractResolver {
     @Override
     public Optional<Type> resolve() {
         if (state.has(Node.Group.IntNumber)) {
-            var value = state.value().value(BigInteger.class);
+            var value = state.getValue().value(BigInteger.class);
             if (Bounds8.contains(value)) return Optional.of(I8);
             if (Bounds16.contains(value)) return Optional.of(I16);
             if (Bounds32.contains(value)) return Optional.of(I32);
