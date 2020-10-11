@@ -5,9 +5,9 @@ import java.util.function.Function;
 public interface LeafType extends Type {
     @Override
     default Type secondary() {
-        var format = "Instances of %s have no children.";
+        var format = "Instances of %s have no secondary types.";
         var message = format.formatted(getClass());
-        throw new IllegalStateException(message);
+        throw new TypeException(message);
     }
 
     @Override

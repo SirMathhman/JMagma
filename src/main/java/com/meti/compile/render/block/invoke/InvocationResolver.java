@@ -3,6 +3,7 @@ package com.meti.compile.render.block.invoke;
 import com.meti.compile.render.node.Node;
 import com.meti.compile.render.process.State;
 import com.meti.compile.render.resolve.AbstractResolver;
+import com.meti.compile.render.resolve.ResolutionException;
 import com.meti.compile.render.type.Type;
 
 import java.util.Optional;
@@ -33,10 +34,10 @@ public class InvocationResolver extends AbstractResolver {
                 .orElseThrow(() -> noCaller(value));
     }
 
-    private IllegalArgumentException noCaller(Node value) {
+    private ResolutionException noCaller(Node value) {
         var format = "%s has no caller.";
         var message = format.formatted(value);
-        return new IllegalArgumentException(message);
+        return new ResolutionException(message);
     }
 
     private Type resolveCallerReturnType(Node caller) {
@@ -46,9 +47,9 @@ public class InvocationResolver extends AbstractResolver {
                 .secondary();
     }
 
-    private IllegalStateException invalidateCaller(Node caller) {
+    private ResolutionException invalidateCaller(Node caller) {
         var format = "Unable to resolve caller: %s";
         var message = format.formatted(caller);
-        return new IllegalStateException(message);
+        return new ResolutionException(message);
     }
 }

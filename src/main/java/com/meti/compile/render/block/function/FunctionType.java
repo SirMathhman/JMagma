@@ -3,6 +3,7 @@ package com.meti.compile.render.block.function;
 import com.meti.compile.render.primitive.EmptyType;
 import com.meti.compile.render.type.Type;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -11,16 +12,24 @@ public class FunctionType implements EmptyType {
     private final Type returnType;
     private final List<Type> parameters;
 
-    public FunctionType(Type returnType, List<Type> parameters) {
+    private FunctionType(Type returnType, List<Type> parameters) {
         this.returnType = returnType;
         this.parameters = parameters;
+    }
+
+    public static FunctionType FunctionType(Type returnType) {
+        return FunctionType(returnType, Collections.emptyList());
+    }
+
+    public static FunctionType FunctionType(Type returnType, List<Type> parameters) {
+        return new FunctionType(returnType, parameters);
     }
 
     @Override
     public Type mapByChildren(Function<Type, Type> mapper) {
         var newReturnType = mapReturnType(mapper);
         var newParameters = mapParameters(mapper);
-        return new FunctionType(newReturnType, newParameters);
+        return FunctionType(newReturnType, newParameters);
     }
 
     private Type mapReturnType(Function<Type, Type> mapper) {
@@ -53,6 +62,6 @@ public class FunctionType implements EmptyType {
 
     @Override
     public Type mapByStart(Function<Type, Type> mapper) {
-        return new FunctionType(mapper.apply(returnType), parameters);
+        return FunctionType(mapper.apply(returnType), parameters);
     }
 }

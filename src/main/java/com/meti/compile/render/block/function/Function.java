@@ -59,7 +59,7 @@ public class Function implements Node {
                 .stream()
                 .map(Field::type)
                 .collect(Collectors.toList());
-        var type = new FunctionType(returnType, parametersAsType);
+        var type = FunctionType.FunctionType(returnType, parametersAsType);
         return InlineField.Field(name, type);
     }
 

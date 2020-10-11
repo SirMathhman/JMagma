@@ -24,7 +24,7 @@ public class InvocationTokenizer extends AbstractNodeTokenizer {
                     .map(String::trim)
                     .map(ContentNode::new)
                     .collect(Collectors.toList());
-            return Optional.of(new Mapping(caller, arguments));
+            return Optional.of(Mapping.Mapping(caller, arguments));
         }
         return Optional.empty();
     }
