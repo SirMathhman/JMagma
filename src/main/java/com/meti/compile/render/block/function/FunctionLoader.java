@@ -17,7 +17,7 @@ public class FunctionLoader extends AbstractProcessor {
         if (state.has(Node.Group.Function)) {
             var value = state.getValue();
             var fields = value.streamFields().collect(Collectors.toList());
-            var newScope = state.scope().enter().defineAll(fields);
+            var newScope = state.getScope().enter().defineAll(fields);
             return Optional.of(state.with(newScope));
         }
         return Optional.empty();

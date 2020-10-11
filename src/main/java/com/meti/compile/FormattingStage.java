@@ -4,7 +4,7 @@ import com.meti.compile.render.process.Formatter;
 import com.meti.compile.render.process.State;
 
 public class FormattingStage implements Stage<State, State> {
-    public static final Stage<State, State> FormattingStage = new FormattingStage();
+    public static final Stage<State, State> FormattingStage_ = new FormattingStage();
 
     public FormattingStage() {
     }

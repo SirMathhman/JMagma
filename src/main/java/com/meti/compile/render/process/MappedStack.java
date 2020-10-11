@@ -6,6 +6,7 @@ import com.meti.compile.render.scope.UndefinedException;
 import java.util.Deque;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class MappedStack implements Stack {
@@ -19,6 +20,19 @@ public class MappedStack implements Stack {
 
     public MappedStack(Deque<Frame> frames) {
         this.frames = frames;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        MappedStack that = (MappedStack) o;
+        return frames.containsAll(that.frames) && that.frames.containsAll(frames);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(frames);
     }
 
     @Override

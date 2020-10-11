@@ -16,7 +16,7 @@ public class VariableResolver extends AbstractResolver {
     public Optional<Type> resolve() {
         if (state.has(Node.Group.Variable)) {
             var name = state.getValue().value(String.class);
-            var scope = state.scope();
+            var scope = state.getScope();
             var definition = scope.getDefinition(name);
             return Optional.of(definition.type());
         }

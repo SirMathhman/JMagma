@@ -1,6 +1,7 @@
 package com.meti.compile.render.primitive;
 
-import com.meti.compile.render.node.*;
+import com.meti.compile.render.node.LeafNode;
+import com.meti.compile.render.node.Node;
 
 import java.math.BigInteger;
 
@@ -9,6 +10,10 @@ public class IntNumber implements LeafNode, Node {
 
     private IntNumber(BigInteger value) {
         this.value = value;
+    }
+
+    public static IntNumber Int(long value) {
+        return Int(BigInteger.valueOf(value));
     }
 
     public static IntNumber Int(BigInteger value) {

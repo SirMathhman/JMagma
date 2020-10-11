@@ -16,7 +16,7 @@ public class ReturnTokenizer extends AbstractNodeTokenizer {
         if(content.startsWith("return ")) {
             var valueString = content.substring(7).trim();
             var value = ContentNode.ContentNode(valueString);
-            return Optional.of(new Return(value));
+            return Optional.of(Return.Return(value));
         }
         return Optional.empty();
     }

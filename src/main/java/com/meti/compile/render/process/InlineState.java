@@ -62,7 +62,7 @@ public class InlineState implements State {
     }
 
     @Override
-    public Stack scope() {
+    public Stack getScope() {
         return scope;
     }
 

@@ -14,7 +14,7 @@ public class FunctionUnloader extends AbstractProcessor {
     @Override
     public Optional<State> process() {
         if (state.has(Node.Group.Function)) {
-            var newScope = state.scope()
+            var newScope = state.getScope()
                     .exit()
                     .define(state.getValue().identity());
             return Optional.of(state.with(newScope));

@@ -37,7 +37,7 @@ public class FunctionFormatter extends AbstractProcessor {
     private Node wrapReturn(Node oldValue) {
         Node inReturn;
         if(!oldValue.is(Node.Group.Block) && !oldValue.is(Node.Group.Return)) {
-            inReturn = new Return(oldValue);
+            inReturn = Return.Return(oldValue);
         } else {
             inReturn = oldValue;
         }
