@@ -1,7 +1,6 @@
 package com.meti.compile.render.block;
 
 import com.meti.compile.render.tokenize.AbstractNodeTokenizer;
-import com.meti.compile.render.node.ContentNode;
 import com.meti.compile.render.node.Node;
 
 import java.util.ArrayList;
@@ -46,7 +45,7 @@ public class BlockTokenizer extends AbstractNodeTokenizer {
                     .map(String::trim)
                     .map(ContentNode_)
                     .collect(Collectors.toList());
-            return Optional.of(new Block(nodes));
+            return Optional.of(Block.Block(nodes));
         }
         return Optional.empty();
     }

@@ -10,14 +10,24 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Block implements Node {
+    public static final Node Block_ = Block();
     private final List<? extends Node> children;
 
+    @Deprecated
     public Block(Node... children) {
         this(List.of(children));
     }
 
-    public Block(List<? extends Node> children) {
+    private Block(List<? extends Node> children) {
         this.children = Collections.unmodifiableList(children);
+    }
+
+    public static Node Block(List<? extends Node> children) {
+        return new Block(children);
+    }
+
+    public static Node Block(Node... children) {
+        return new Block(children);
     }
 
     @Override
@@ -27,7 +37,7 @@ public class Block implements Node {
 
     @Override
     public Node mapByChildren(Function<Node, Node> mapper) {
-        return new Block(mapChildren(mapper));
+        return Block(mapChildren(mapper));
     }
 
     private List<Node> mapChildren(Function<Node, Node> mapper) {
@@ -50,7 +60,7 @@ public class Block implements Node {
             current = operator.apply(withChild);
             newChildren.add(current.getValue());
         }
-        return current.with(new Block(newChildren));
+        return current.with(Block(newChildren));
     }
 
     @Override

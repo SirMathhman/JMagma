@@ -16,11 +16,24 @@ public class Function implements Node {
     private final Type returnType;
     private final Node value;
 
-    public Function(String name, List<Field> parameters, Type returnType, Node value) {
+    private Function(String name, Type returnType, Node value, List<Field> parameters) {
         this.name = name;
         this.parameters = Collections.unmodifiableList(parameters);
         this.returnType = returnType;
         this.value = value;
+    }
+
+    public static Function Function(String name, Type returnType, Node value, Field... parameters) {
+        return Function(name, returnType, value, List.of(parameters));
+    }
+
+    public static Function Function(String name, Type returnType, Node value, List<Field> parameters) {
+        return new Function(name, returnType, value, parameters);
+    }
+
+    @Override
+    public Stream<? extends Node> streamChildren() {
+        return Stream.of(value);
     }
 
     @Override
@@ -30,12 +43,12 @@ public class Function implements Node {
 
     @Override
     public Node mapByChildren(java.util.function.Function<Node, Node> mapper) {
-        return new Function(name, parameters, returnType, mapper.apply(value));
+        return Function(name, returnType, mapper.apply(value), parameters);
     }
 
     @Override
     public Node mapByFields(java.util.function.Function<Field, Field> mapper) {
-        return new Function(name, parameters.stream().map(mapper).collect(Collectors.toList()), returnType, value);
+        return Function(name, returnType, value, parameters.stream().map(mapper).collect(Collectors.toList()));
     }
 
     @Override
@@ -73,12 +86,12 @@ public class Function implements Node {
         var newName = identity.name();
         var newType = identity.type();
         var newReturnType = newType.secondary();
-        return new Function(newName, parameters, newReturnType, value);
+        return Function(newName, newReturnType, value, parameters);
     }
 
     @Override
     public Node withValue(Object value) {
-        return new Function(name, parameters, returnType, (Node) value);
+        return Function(name, returnType, (Node) value, parameters);
     }
 
     @Override
