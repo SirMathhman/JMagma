@@ -1,6 +1,6 @@
 package com.meti.compile.render.scope;
 
-import com.meti.compile.render.evaluate.AbstractNodeTokenizer;
+import com.meti.compile.render.tokenize.AbstractNodeTokenizer;
 import com.meti.compile.render.node.Node;
 
 import java.util.Optional;

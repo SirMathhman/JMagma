@@ -1,8 +1,8 @@
 package com.meti.compile;
 
 import com.meti.compile.render.block.BlockTokenizer;
-import com.meti.compile.render.evaluate.IntTokenizer;
-import com.meti.compile.render.evaluate.Tokenizer;
+import com.meti.compile.render.tokenize.IntTokenizer;
+import com.meti.compile.render.tokenize.Tokenizer;
 import com.meti.compile.render.field.Field;
 import com.meti.compile.render.function.FunctionTokenizer;
 import com.meti.compile.render.function.ReturnTokenizer;
