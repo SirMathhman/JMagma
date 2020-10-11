@@ -5,7 +5,7 @@ import com.meti.compile.render.node.Node;
 import java.util.List;
 
 public class Procedure extends Invocation {
-    public Procedure(Node caller, List<Node> arguments) {
+    public Procedure(Node caller, List<? extends Node> arguments) {
         super(caller, arguments);
     }
 

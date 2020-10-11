@@ -10,9 +10,9 @@ import java.util.stream.Stream;
 
 public abstract class Invocation implements Node {
     protected final Node caller;
-    protected final List<Node> arguments;
+    protected final List<? extends Node> arguments;
 
-    public Invocation(Node caller, List<Node> arguments) {
+    public Invocation(Node caller, List<? extends Node> arguments) {
         this.caller = caller;
         this.arguments = arguments;
     }

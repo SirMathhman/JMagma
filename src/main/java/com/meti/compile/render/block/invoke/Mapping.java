@@ -5,7 +5,7 @@ import com.meti.compile.render.node.Node;
 import java.util.List;
 
 public class Mapping extends Invocation {
-    public Mapping(Node caller, List<Node> arguments) {
+    public Mapping(Node caller, List<? extends Node> arguments) {
         super(caller, arguments);
     }
 
