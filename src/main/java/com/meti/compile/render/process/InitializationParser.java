@@ -10,7 +10,7 @@ import java.util.Optional;
 import static com.meti.compile.render.resolve.MagmaResolver.Resolver;
 
 public class InitializationParser extends AbstractProcessor {
-    public static final String Format = "Failed to resolve getValue of initialization of '%s': %s";
+    public static final String Format = "Failed to resolve value of initialization of '%s': %s";
 
     public InitializationParser(State state) {
         super(state);
