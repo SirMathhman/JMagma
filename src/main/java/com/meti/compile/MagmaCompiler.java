@@ -2,11 +2,15 @@ package com.meti.compile;
 
 import com.meti.compile.render.node.ContentNode;
 import com.meti.compile.render.node.Node;
-import com.meti.compile.render.process.*;
+import com.meti.compile.render.process.State;
 
 import java.util.stream.Collectors;
 
-import static com.meti.compile.TokenizerStage.TokenizerStage_;
+import static com.meti.compile.FormattingStage.FormattingStage;
+import static com.meti.compile.ParsingStage.ParsingStage;
+import static com.meti.compile.TokenizerStage.TokenizerStage;
+import static com.meti.compile.render.process.InlineState.State;
+import static com.meti.compile.render.process.MappedStack.Stack_;
 
 public class MagmaCompiler implements Compiler {
     public static final Compiler Compiler_ = new MagmaCompiler();
@@ -17,14 +21,17 @@ public class MagmaCompiler implements Compiler {
 
     @Override
     public String compile(String content) {
+        var tree = tokenize(content);
+        var state = State(tree, Stack_);
+        var formatted = FormattingStage.apply(state);
+        var parsed = ParsingStage.apply(formatted);
+        return render(parsed);
+    }
+
+    private Node tokenize(String content) {
         var trim = content.trim();
         var root = new ContentNode(trim);
-        var tree = TokenizerStage_.apply(root);
-        var stack = new MappedStack();
-        var state = InlineState.State(tree, stack);
-        var formatted = new Formatter(state).process().orElse(state);
-        var parsed = new Parser(formatted).process().orElse(formatted);
-        return render(parsed);
+        return TokenizerStage.apply(root);
     }
 
     private String render(State parsed) {

@@ -9,8 +9,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class MappedStack implements Stack {
+    public static Stack Stack_ = new MappedStack();
     private final Deque<Frame> frames;
 
+    @Deprecated
     public MappedStack() {
         this(new LinkedList<>(List.of(new MappedFrame())));
     }

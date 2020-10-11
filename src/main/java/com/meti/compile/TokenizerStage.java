@@ -19,7 +19,7 @@ import java.util.function.Function;
 import java.util.stream.Stream;
 
 public class TokenizerStage implements Stage<Node, Node> {
-    public static final Stage<Node, Node> TokenizerStage_ = new TokenizerStage();
+    public static final Stage<Node, Node> TokenizerStage = new TokenizerStage();
 
     @Deprecated
     public TokenizerStage() {
@@ -74,8 +74,8 @@ public class TokenizerStage implements Stage<Node, Node> {
     }
 
     @Override
-    public Node apply(Node root) {
-        return tokenizeNode(root)
+    public Node apply(Node value) {
+        return tokenizeNode(value)
                 .mapByFields(this::tokenizeField)
                 .mapByChildren(this::apply)
                 .mapByIdentity(this::tokenizeField);
