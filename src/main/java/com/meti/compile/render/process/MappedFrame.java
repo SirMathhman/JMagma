@@ -35,4 +35,9 @@ public class MappedFrame implements Frame {
     public boolean isDefined(String name) {
         return map.containsKey(name);
     }
+
+    @Override
+    public Field getDefinition(String name) {
+        return map.get(name);
+    }
 }

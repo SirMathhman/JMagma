@@ -6,6 +6,7 @@ import com.meti.compile.render.block.invoke.InvocationResolver;
 import com.meti.compile.render.node.Node;
 import com.meti.compile.render.primitive.IntNumberResolver;
 import com.meti.compile.render.process.State;
+import com.meti.compile.render.scope.VariableResolver;
 import com.meti.compile.render.type.Type;
 
 import java.util.List;
@@ -14,6 +15,7 @@ import java.util.function.Function;
 
 public class MagmaResolver extends AbstractResolver {
     private static final List<Function<State, Resolver>> Factories = List.of(
+            VariableResolver::new,
             InvocationResolver::new,
             ReturnResolver::new,
             BlockResolver::new,

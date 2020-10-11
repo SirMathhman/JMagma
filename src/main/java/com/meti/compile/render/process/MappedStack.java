@@ -1,6 +1,7 @@
 package com.meti.compile.render.process;
 
 import com.meti.compile.render.field.Field;
+import com.meti.compile.render.scope.UndefinedException;
 
 import java.util.Deque;
 import java.util.LinkedList;
@@ -37,5 +38,20 @@ public class MappedStack implements Stack {
     @Override
     public boolean isDefined(String name) {
         return frames.stream().anyMatch(frame -> frame.isDefined(name));
+    }
+
+    @Override
+    public Field getDefinition(String name) {
+        return frames.stream()
+                .filter(frame -> frame.isDefined(name))
+                .map(frame -> frame.getDefinition(name))
+                .findFirst()
+                .orElseThrow(() -> invalidateName(name));
+    }
+
+    private UndefinedException invalidateName(String name) {
+        var format = "%s is not defined in %s";
+        var message = format.formatted(name, this);
+        return new UndefinedException(message);
     }
 }
