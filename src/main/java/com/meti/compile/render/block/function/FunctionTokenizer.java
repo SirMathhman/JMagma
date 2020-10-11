@@ -27,7 +27,7 @@ public class FunctionTokenizer extends AbstractNodeTokenizer {
             var returnIndex = content.indexOf(':', content.indexOf(')') + 1);
             var returnType = tokenizeReturnType(returnIndex);
             var valueString = content.substring(content.indexOf("=>") + 2).trim();
-            var value = new ContentNode(valueString);
+            var value = ContentNode.ContentNode(valueString);
             return Optional.of(new Function(name, parameters, returnType, value));
         }
         return Optional.empty();

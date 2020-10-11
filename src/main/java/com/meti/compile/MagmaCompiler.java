@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 
 import static com.meti.compile.FormattingStage.FormattingStage;
 import static com.meti.compile.ParsingStage.ParsingStage;
-import static com.meti.compile.TokenizerStage.TokenizerStage;
+import static com.meti.compile.TokenizerStage.TokenizerStage_;
 import static com.meti.compile.render.process.InlineState.State;
 import static com.meti.compile.render.process.MappedStack.Stack_;
 
@@ -30,8 +30,8 @@ public class MagmaCompiler implements Compiler {
 
     private Node tokenize(String content) {
         var trim = content.trim();
-        var root = new ContentNode(trim);
-        return TokenizerStage.apply(root);
+        var root = ContentNode.ContentNode(trim);
+        return TokenizerStage_.apply(root);
     }
 
     private String render(State parsed) {

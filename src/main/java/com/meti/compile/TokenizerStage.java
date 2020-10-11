@@ -19,10 +19,14 @@ import java.util.function.Function;
 import java.util.stream.Stream;
 
 public class TokenizerStage implements Stage<Node, Node> {
-    public static final Stage<Node, Node> TokenizerStage = new TokenizerStage();
-
     @Deprecated
-    public TokenizerStage() {
+    public static final Stage<Node, Node> TokenizerStage_ = new TokenizerStage();
+
+    private TokenizerStage() {
+    }
+
+    public static Node Tokenize(Node node) {
+        return TokenizerStage_.apply(node);
     }
 
     private Stream<Function<String, Tokenizer<Node>>> streamTokenizers() {
@@ -38,7 +42,7 @@ public class TokenizerStage implements Stage<Node, Node> {
         );
     }
 
-    private  Stream<Function<String, Tokenizer<Type>>> streamTypeEvaluators() {
+    private Stream<Function<String, Tokenizer<Type>>> streamTypeEvaluators() {
         return Stream.of(
                 PrimitiveTokenizer::new
         );
@@ -81,7 +85,7 @@ public class TokenizerStage implements Stage<Node, Node> {
                 .mapByIdentity(this::tokenizeField);
     }
 
-   private Node tokenizeNode(Node node) {
+    private Node tokenizeNode(Node node) {
         if (node.is(Node.Group.Content)) {
             String content = node.content();
             return tokenizeString(content);

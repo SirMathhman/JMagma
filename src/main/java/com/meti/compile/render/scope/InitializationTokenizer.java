@@ -29,7 +29,7 @@ public class InitializationTokenizer extends AbstractNodeTokenizer {
 
     private ContentNode evaluateValue(String right) {
         var trim = right.trim();
-        return new ContentNode(trim);
+        return ContentNode.ContentNode(trim);
     }
 
     private Field evaluateIdentity(String left) {

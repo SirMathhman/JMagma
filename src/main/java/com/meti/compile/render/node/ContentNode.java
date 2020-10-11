@@ -1,10 +1,17 @@
 package com.meti.compile.render.node;
 
+import java.util.function.Function;
+
 public class ContentNode implements Node {
+    public static Function<String, Node> ContentNode_ = ContentNode::ContentNode;
     private final String content;
 
-    public ContentNode(String content) {
+    private ContentNode(String content) {
         this.content = content;
+    }
+
+    public static ContentNode ContentNode(String content) {
+        return new ContentNode(content);
     }
 
     @Override
@@ -24,7 +31,7 @@ public class ContentNode implements Node {
 
     @Override
     public Node withValue(Object value) {
-        return new ContentNode(value.toString());
+        return ContentNode(value.toString());
     }
 
     @Override

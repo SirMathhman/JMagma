@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import static com.meti.compile.render.node.ContentNode.ContentNode_;
+
 public class BlockTokenizer extends AbstractNodeTokenizer {
     public BlockTokenizer(String content) {
         super(content);
@@ -42,7 +44,7 @@ public class BlockTokenizer extends AbstractNodeTokenizer {
             var nodes = buffer.stream()
                     .filter(s -> !s.isBlank())
                     .map(String::trim)
-                    .map(ContentNode::new)
+                    .map(ContentNode_)
                     .collect(Collectors.toList());
             return Optional.of(new Block(nodes));
         }
