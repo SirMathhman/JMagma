@@ -28,7 +28,7 @@ public class ProcedureParser extends AbstractProcessor {
                     .resolve()
                     .orElseThrow(() -> invalidateValue(value));
             if(!type.is(Type.Group.Function)) {
-                var format = "Caller of %s, '%s', isn't a functional type.";
+                var format = "Caller of %s, '%s', isn't a function.";
                 var message = format.formatted(value, caller);
                 throw new IllegalStateException(message);
             }
