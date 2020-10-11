@@ -14,7 +14,7 @@ import static java.util.logging.Logger.getAnonymousLogger;
 
 public class Main {
     private static final Logger Logger = getAnonymousLogger();
-    private static final Compiler Compiler = new Compiler();
+    private static final Compiler Compiler = new MagmaCompiler();
 
     public static void main(String[] args) {
         var root = Paths.get(".");

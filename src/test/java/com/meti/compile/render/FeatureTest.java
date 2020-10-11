@@ -1,6 +1,7 @@
 package com.meti.compile.render;
 
 import com.meti.compile.Compiler;
+import com.meti.compile.MagmaCompiler;
 import org.junit.jupiter.api.BeforeEach;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -11,7 +12,7 @@ public abstract class FeatureTest {
 
     @BeforeEach
     void setUp() {
-        compiler = new Compiler();
+        compiler = new MagmaCompiler();
     }
 
     protected void assertCompile(String expected, String content) {
