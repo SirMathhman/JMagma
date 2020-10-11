@@ -29,7 +29,7 @@ public class InitializationParser extends AbstractProcessor {
     }
 
     private Type checkImplicit(Node current, Field identity, Type type) {
-        return type == ImplicitType.ImplicitType ? resolveImplicit(current, identity) : type;
+        return type == ImplicitType.ImplicitType_ ? resolveImplicit(current, identity) : type;
     }
 
     private Type resolveImplicit(Node current, Field identity) {

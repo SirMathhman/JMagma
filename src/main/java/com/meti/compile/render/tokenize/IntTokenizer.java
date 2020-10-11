@@ -15,7 +15,7 @@ public class IntTokenizer extends AbstractNodeTokenizer {
     public Optional<Node> evaluate() {
         try {
             BigInteger value = new BigInteger(content);
-            return Optional.of(new IntNumber(value));
+            return Optional.of(IntNumber.Int(value));
         } catch (Exception e) {
             return Optional.empty();
         }

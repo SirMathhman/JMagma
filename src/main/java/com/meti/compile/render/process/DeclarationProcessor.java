@@ -19,7 +19,7 @@ public class DeclarationProcessor extends AbstractProcessor {
             var identity = current.identity();
             var name = identity.name();
             var type = identity.type();
-            if (type == ImplicitType.ImplicitType) {
+            if (type == ImplicitType.ImplicitType_) {
                 var message = Format.formatted(name);
                 throw new IllegalStateException(message);
             }

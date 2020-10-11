@@ -7,8 +7,12 @@ import java.math.BigInteger;
 public class IntNumber implements LeafNode, Node {
     private final BigInteger value;
 
-    public IntNumber(BigInteger value) {
+    private IntNumber(BigInteger value) {
         this.value = value;
+    }
+
+    public static IntNumber Int(BigInteger value) {
+        return new IntNumber(value);
     }
 
     @Override
@@ -28,6 +32,6 @@ public class IntNumber implements LeafNode, Node {
 
     @Override
     public Node withValue(Object value) {
-        return new IntNumber((BigInteger) value);
+        return Int((BigInteger) value);
     }
 }

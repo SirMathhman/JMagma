@@ -68,7 +68,7 @@ public class FieldTokenizer implements Tokenizer<Field> {
         }
         var flags = extractFlags(flagString);
         var name = content.substring(lastSpace + 1).trim();
-        return complete(flags, name, ImplicitType.ImplicitType);
+        return complete(flags, name, ImplicitType.ImplicitType_);
     }
 
     private Field complete(List<Field.Flag> flags, String name, Type type) {

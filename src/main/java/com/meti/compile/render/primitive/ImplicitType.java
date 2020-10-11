@@ -5,7 +5,7 @@ import com.meti.compile.render.type.LeafType;
 import com.meti.compile.render.type.Type;
 
 public class ImplicitType implements EmptyType, LeafType {
-    public static final Type ImplicitType = new ImplicitType();
+    public static final Type ImplicitType_ = new ImplicitType();
 
     private ImplicitType() {
     }

@@ -36,7 +36,7 @@ public class FunctionTokenizer extends AbstractNodeTokenizer {
     private Type tokenizeReturnType(int returnIndex) {
         Type returnType;
         if (returnIndex == -1) {
-            returnType = ImplicitType.ImplicitType;
+            returnType = ImplicitType.ImplicitType_;
         } else {
             String trim;
             trim = content.substring(returnIndex + 1, content.indexOf("=>")).trim();
