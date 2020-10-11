@@ -24,4 +24,25 @@ public class InvocationTest extends FeatureTest {
                 }
                 """);
     }
+
+    @Test
+    void consumer(){
+        assertCompile("{void consumer(int value){}consumer(10);}", """
+                {
+                    def consumer(value : I16) => {}
+                    consumer(10)
+                }
+                """);
+    }
+
+    @Test
+    void mapping(){
+        assertCompile("{}", """
+                {
+                
+                    def mapping(value : I16) => value;
+                    const result = mapping(420);
+                }
+                """);
+    }
 }

@@ -1,10 +1,12 @@
 package com.meti.compile.render.block;
 
 import com.meti.compile.render.node.Node;
+import com.meti.compile.render.primitive.Primitive;
 import com.meti.compile.render.process.State;
 import com.meti.compile.render.resolve.AbstractResolver;
 import com.meti.compile.render.resolve.MagmaResolver;
 import com.meti.compile.render.type.Type;
+import com.sun.jdi.PrimitiveValue;
 
 import java.util.List;
 import java.util.Optional;
@@ -33,7 +35,7 @@ public class BlockResolver extends AbstractResolver {
 
     private Type validateLast(List<? extends Node> nodes) {
         if (nodes.isEmpty()) {
-            throw new IllegalStateException("There are no values to resolve.");
+            return Primitive.Void;
         } else {
             return resolveLast(nodes);
         }

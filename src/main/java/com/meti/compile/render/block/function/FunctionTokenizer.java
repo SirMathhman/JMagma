@@ -1,11 +1,11 @@
 package com.meti.compile.render.block.function;
 
-import com.meti.compile.render.tokenize.AbstractNodeTokenizer;
 import com.meti.compile.render.field.Field;
 import com.meti.compile.render.field.FieldTokenizer;
 import com.meti.compile.render.node.ContentNode;
 import com.meti.compile.render.node.Node;
 import com.meti.compile.render.primitive.ImplicitType;
+import com.meti.compile.render.tokenize.AbstractNodeTokenizer;
 import com.meti.compile.render.type.ContentType;
 import com.meti.compile.render.type.Type;
 
@@ -77,6 +77,12 @@ public class FunctionTokenizer extends AbstractNodeTokenizer {
 
     private Field tokenizeParameter(String s) {
         return new FieldTokenizer(s).evaluate()
-                .orElseThrow(() -> new IllegalArgumentException("Invalid parameter syntax."));
+                .orElseThrow(() -> invalidateParameter(s));
+    }
+
+    private IllegalArgumentException invalidateParameter(String s) {
+        var format = "Invalid parameter syntax: %s";
+        var message = format.formatted(s);
+        return new IllegalArgumentException(message);
     }
 }

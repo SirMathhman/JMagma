@@ -19,28 +19,34 @@ public class FieldTokenizer implements Tokenizer<Field> {
 
     @Override
     public Optional<Field> evaluate() {
-        return content.contains(":") ?
-                evaluateExplicitly() :
-                evaluateImplicitly();
+        if (content.contains(":") || content.contains(" ")) {
+            return Optional.of(content.contains(":") ?
+                    evaluateExplicitly() :
+                    evaluateImplicitly());
+        } else {
+            return Optional.empty();
+        }
     }
 
-    private Optional<Field> evaluateExplicitly() {
+    private Field evaluateExplicitly() {
         int typeSeparator = content.indexOf(':');
         var keyString = content.substring(0, typeSeparator).trim();
         var typeString = content.substring(typeSeparator + 1).trim();
         return evaluateWithSeparator(keyString, space -> complete(keyString, typeString, space));
     }
 
-    private Optional<Field> evaluateWithSeparator(String keyString, Function<Integer, Optional<Field>> function) {
+    private Field evaluateWithSeparator(String keyString, Function<Integer, Field> function) {
         var lastSpace = keyString.lastIndexOf(' ');
-        if (lastSpace == -1) {
-            return Optional.empty();
-        }
         return function.apply(lastSpace);
     }
 
-    private Optional<Field> complete(String keyString, String typeString, int lastSpace) {
-        var flagString = keyString.substring(0, lastSpace);
+    private Field complete(String keyString, String typeString, int lastSpace) {
+        String flagString;
+        if (lastSpace != -1) {
+            flagString = keyString.substring(0, lastSpace);
+        } else {
+            flagString = "const";
+        }
         var formattedFlags = flagString.trim();
         var flags = extractFlags(formattedFlags);
         var nameString = keyString.substring(lastSpace + 1);
@@ -49,21 +55,30 @@ public class FieldTokenizer implements Tokenizer<Field> {
         return complete(flags, formattedName, type);
     }
 
-    private Optional<Field> evaluateImplicitly() {
+    private Field evaluateImplicitly() {
         return evaluateWithSeparator(content, this::complete);
     }
 
-    private Optional<Field> complete(int lastSpace) {
-        var flagString = content.substring(0, lastSpace).trim();
+    private Field complete(int lastSpace) {
+        String flagString;
+        if (lastSpace != -1) {
+            flagString = content.substring(0, lastSpace).trim();
+        } else {
+            flagString = "const";
+        }
         var flags = extractFlags(flagString);
         var name = content.substring(lastSpace + 1).trim();
         return complete(flags, name, ImplicitType.ImplicitType);
     }
 
-    private Optional<Field> complete(List<Field.Flag> flags, String name, Type type) {
-        return hasValidFlags(flags) ?
-                Optional.of(new InlineField(name, type)) :
-                Optional.empty();
+    private Field complete(List<Field.Flag> flags, String name, Type type) {
+        if (hasValidFlags(flags)) {
+            return new InlineField(name, type);
+        } else {
+            var format = "No flags are found for '%s'.";
+            var message = format.formatted(name);
+            throw new IllegalStateException(message);
+        }
     }
 
     private boolean hasValidFlags(List<Field.Flag> flags) {
