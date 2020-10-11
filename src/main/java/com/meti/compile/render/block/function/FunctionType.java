@@ -1,4 +1,4 @@
-package com.meti.compile.render.function;
+package com.meti.compile.render.block.function;
 
 import com.meti.compile.render.primitive.EmptyType;
 import com.meti.compile.render.type.Type;

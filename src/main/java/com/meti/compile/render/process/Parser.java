@@ -1,6 +1,6 @@
 package com.meti.compile.render.process;
 
-import com.meti.compile.render.function.FunctionParser;
+import com.meti.compile.render.block.function.FunctionParser;
 import com.meti.compile.render.scope.Definer;
 import com.meti.compile.render.scope.VariableParser;
 

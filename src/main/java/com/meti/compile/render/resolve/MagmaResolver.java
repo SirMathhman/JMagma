@@ -1,7 +1,7 @@
 package com.meti.compile.render.resolve;
 
 import com.meti.compile.render.block.BlockResolver;
-import com.meti.compile.render.function.ReturnResolver;
+import com.meti.compile.render.block.function.ReturnResolver;
 import com.meti.compile.render.node.Node;
 import com.meti.compile.render.primitive.IntNumberResolver;
 import com.meti.compile.render.type.Type;

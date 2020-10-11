@@ -1,12 +1,7 @@
 package com.meti.compile.render.process;
 
-import com.meti.compile.render.function.FunctionFormatter;
-import com.meti.compile.render.node.Node;
-import com.meti.compile.render.resolve.MagmaResolver;
-import com.meti.compile.render.resolve.Resolver;
+import com.meti.compile.render.block.function.FunctionFormatter;
 
-import java.util.List;
-import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
