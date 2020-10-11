@@ -8,11 +8,7 @@ import com.meti.compile.render.field.Field;
 import com.meti.compile.render.node.ContentNode;
 import com.meti.compile.render.node.Node;
 import com.meti.compile.render.primitive.PrimitiveTokenizer;
-import com.meti.compile.render.process.Formatter;
-import com.meti.compile.render.process.InlineState;
-import com.meti.compile.render.process.MappedStack;
-import com.meti.compile.render.process.Parser;
-import com.meti.compile.render.process.State;
+import com.meti.compile.render.process.*;
 import com.meti.compile.render.scope.DeclarationTokenizer;
 import com.meti.compile.render.scope.InitializationTokenizer;
 import com.meti.compile.render.scope.VariableTokenizer;
@@ -26,6 +22,12 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class MagmaCompiler implements Compiler {
+    public static final Compiler Compiler_ = new MagmaCompiler();
+
+    @Deprecated
+    public MagmaCompiler() {
+    }
+
     private Stream<Function<String, Tokenizer<Node>>> streamTokenizers() {
         return Stream.of(
                 BlockTokenizer::new,
