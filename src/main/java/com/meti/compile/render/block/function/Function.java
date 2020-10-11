@@ -7,6 +7,7 @@ import com.meti.compile.render.type.Type;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -29,6 +30,16 @@ public class Function implements Node {
 
     public static Function Function(String name, Type returnType, Node value, List<Field> parameters) {
         return new Function(name, returnType, value, parameters);
+    }
+
+    @Override
+    public String toString() {
+        return "Function{" +
+                "name='" + name + '\'' +
+                ", parameters=" + parameters +
+                ", returnType=" + returnType +
+                ", value=" + value +
+                '}';
     }
 
     @Override
@@ -58,7 +69,9 @@ public class Function implements Node {
 
     @Override
     public <T extends Container<T>> T reduce(T identity, java.util.function.Function<T, T> operator) {
-        return operator.apply(identity.with(value));
+        var newContainer = operator.apply(identity.with(value));
+        var copy = new Function(name, returnType, newContainer.getValue(), parameters);
+        return newContainer.with(copy);
     }
 
     @Override
@@ -104,5 +117,21 @@ public class Function implements Node {
         return parameters.stream()
                 .map(Field::render)
                 .collect(Collectors.joining(",", "(", ")"));
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Function function = (Function) o;
+        return Objects.equals(name, function.name) &&
+                Objects.equals(parameters, function.parameters) &&
+                Objects.equals(returnType, function.returnType) &&
+                Objects.equals(value, function.value);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, parameters, returnType, value);
     }
 }

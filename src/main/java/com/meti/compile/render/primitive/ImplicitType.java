@@ -11,6 +11,11 @@ public class ImplicitType implements EmptyType, LeafType {
     }
 
     @Override
+    public String toString() {
+        return "ImplicitType";
+    }
+
+    @Override
     public String render(String name) {
         var format = """
                 Unable to render implicit types with name '%s', 

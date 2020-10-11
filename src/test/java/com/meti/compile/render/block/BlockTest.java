@@ -1,31 +1,19 @@
 package com.meti.compile.render.block;
 
-import com.meti.compile.render.FeatureTest;
+import com.meti.compile.render.block.function.Return;
+import com.meti.compile.render.primitive.IntNumber;
 import org.junit.jupiter.api.Test;
 
-public class BlockTest extends FeatureTest {
-    @Test
-    void areChildrenProcessed(){
-        assertCompile("{char x=10;}", "{const x =10}");
-    }
+import static com.meti.compile.render.block.Block.Block;
+import static com.meti.compile.render.block.function.Return.Return;
+import static com.meti.compile.render.primitive.IntNumber.Int;
+import static org.junit.jupiter.api.Assertions.*;
 
+class BlockTest {
     @Test
-    void empty(){
-        assertCompile("{}", "{}");
-    }
-
-    @Test
-    void withChild(){
-        assertCompile("{10}", "{10}");
-    }
-
-    @Test
-    void withChildren(){
-        assertCompile("{1020}", "{10;20}");
-    }
-
-    @Test
-    void withInner(){
-        assertCompile("{{}{}}", "{{}{}}");
+    void testEquals(){
+        var expected= Block(Return(Int(10)));
+        var actual = Block(Return(Int(10)));
+        assertEquals(expected, actual);
     }
 }

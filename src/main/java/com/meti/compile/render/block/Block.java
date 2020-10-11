@@ -5,6 +5,7 @@ import com.meti.compile.render.node.Node;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -28,6 +29,27 @@ public class Block implements Node {
 
     public static Node Block(Node... children) {
         return new Block(children);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Block block = (Block) o;
+        return children.containsAll(block.children) &&
+                block.children.containsAll(children);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(children);
+    }
+
+    @Override
+    public String toString() {
+        return "Block{" +
+                "children=" + children +
+                '}';
     }
 
     @Override

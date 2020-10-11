@@ -4,6 +4,7 @@ import com.meti.compile.render.field.Field;
 import com.meti.compile.render.node.Node;
 import com.meti.compile.render.node.UnidentifiedException;
 
+import java.util.Objects;
 import java.util.function.Function;
 
 public class Return implements Node {
@@ -16,6 +17,26 @@ public class Return implements Node {
 
     public static Return Return(Node value) {
         return new Return(value);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Return aReturn = (Return) o;
+        return Objects.equals(value, aReturn.value);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(value);
+    }
+
+    @Override
+    public String toString() {
+        return "Return{" +
+                "value=" + value +
+                '}';
     }
 
     @Override
