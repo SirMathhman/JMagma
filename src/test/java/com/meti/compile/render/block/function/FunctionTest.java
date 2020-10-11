@@ -5,6 +5,16 @@ import org.junit.jupiter.api.Test;
 
 public class FunctionTest extends FeatureTest {
     @Test
+    void inner(){
+        assertCompile("", """
+                def outer(value : I16) => {
+                    def inner() => value;
+                    inner()
+                }
+                """);
+    }
+
+    @Test
     void implicit(){
         assertCompile("char supplier(){return 10;}", "def supplier() => {return 10;}");
     }

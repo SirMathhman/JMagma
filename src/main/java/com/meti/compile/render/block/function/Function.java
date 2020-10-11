@@ -44,6 +44,11 @@ public class Function implements Node {
     }
 
     @Override
+    public <T extends Container<T>> T reduce(T identity, java.util.function.Function<T, T> operator) {
+        return operator.apply(identity.with(value));
+    }
+
+    @Override
     public boolean is(Group group) {
         return group == Group.Function;
     }
