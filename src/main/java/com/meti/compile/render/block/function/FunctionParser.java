@@ -32,7 +32,7 @@ public class FunctionParser extends AbstractProcessor {
 
     private Type resolveReturnType(Node current) {
         var value = current.value(Node.class);
-        return MagmaResolver.Resolver(state)
+        return MagmaResolver.Resolver(state.with(value))
                 .resolve()
                 .orElseThrow(() -> invalidateValue(value));
     }
