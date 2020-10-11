@@ -1,12 +1,10 @@
 package com.meti.compile;
 
 import com.meti.compile.render.block.BlockTokenizer;
-import com.meti.compile.render.block.invoke.InvocationTokenizer;
-import com.meti.compile.render.tokenize.IntTokenizer;
-import com.meti.compile.render.tokenize.Tokenizer;
-import com.meti.compile.render.field.Field;
 import com.meti.compile.render.block.function.FunctionTokenizer;
 import com.meti.compile.render.block.function.ReturnTokenizer;
+import com.meti.compile.render.block.invoke.InvocationTokenizer;
+import com.meti.compile.render.field.Field;
 import com.meti.compile.render.node.ContentNode;
 import com.meti.compile.render.node.Node;
 import com.meti.compile.render.primitive.PrimitiveTokenizer;
@@ -17,10 +15,13 @@ import com.meti.compile.render.process.Parser;
 import com.meti.compile.render.scope.DeclarationTokenizer;
 import com.meti.compile.render.scope.InitializationTokenizer;
 import com.meti.compile.render.scope.VariableTokenizer;
+import com.meti.compile.render.tokenize.IntTokenizer;
+import com.meti.compile.render.tokenize.Tokenizer;
 import com.meti.compile.render.type.Type;
 
 import java.util.Optional;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Compiler {
@@ -105,6 +106,8 @@ public class Compiler {
         var state = new InlineState(tree, stack);
         var parsed = new Parser(state).process().orElse(state);
         var formatted = new Formatter(parsed).process().orElse(parsed);
-        return formatted.value().render();
+        var renderedStructures = formatted.streamStructures().map(Node::render).collect(Collectors.joining(""));
+        var renderedFunctions = formatted.streamFunctions().map(Node::render).collect(Collectors.joining(""));
+        return renderedStructures + renderedFunctions + formatted.value().render();
     }
 }
