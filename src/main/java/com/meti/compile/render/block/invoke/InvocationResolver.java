@@ -23,7 +23,8 @@ public class InvocationResolver extends AbstractResolver {
                     .orElseThrow();
             return Optional.of(Resolver(state.with(caller))
                     .resolve()
-                    .orElseThrow(() -> invalidateCaller(caller)));
+                    .orElseThrow(() -> invalidateCaller(caller))
+                    .secondary());
         }
         return Optional.empty();
     }

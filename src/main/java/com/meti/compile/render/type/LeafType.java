@@ -4,7 +4,7 @@ import java.util.function.Function;
 
 public interface LeafType extends Type {
     @Override
-    default Type start() {
+    default Type secondary() {
         var format = "Instances of %s have no children.";
         var message = format.formatted(getClass());
         throw new IllegalStateException(message);

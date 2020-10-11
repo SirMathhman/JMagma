@@ -18,7 +18,7 @@ public interface Type extends Renderable {
 
     boolean is(Group group);
 
-    Type start();
+    Type secondary();
 
     Type mapByStart(Function<Type, Type> mapper);
 

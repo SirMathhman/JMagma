@@ -8,6 +8,7 @@ import com.meti.compile.render.type.Type;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Function implements Node {
     private final String name;
@@ -38,6 +39,11 @@ public class Function implements Node {
     }
 
     @Override
+    public Stream<Field> streamFields() {
+        return parameters.stream();
+    }
+
+    @Override
     public boolean is(Group group) {
         return group == Group.Function;
     }
@@ -61,7 +67,7 @@ public class Function implements Node {
     public Node withIdentity(Field identity) {
         var newName = identity.name();
         var newType = identity.type();
-        var newReturnType = newType.start();
+        var newReturnType = newType.secondary();
         return new Function(newName, parameters, newReturnType, value);
     }
 

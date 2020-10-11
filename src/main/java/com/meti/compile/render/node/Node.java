@@ -3,7 +3,6 @@ package com.meti.compile.render.node;
 import com.meti.compile.render.Renderable;
 import com.meti.compile.render.field.Field;
 
-import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
@@ -54,6 +53,10 @@ public interface Node extends Renderable {
 
     default Node withValue(Object value) {
         return this;
+    }
+
+    default Stream<Field> streamFields() {
+        return Stream.empty();
     }
 
     enum Group {

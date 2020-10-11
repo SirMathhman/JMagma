@@ -8,6 +8,8 @@ import com.meti.compile.render.type.Type;
 
 import java.util.Optional;
 
+import static com.meti.compile.render.resolve.MagmaResolver.Resolver;
+
 public class InitializationParser extends AbstractProcessor {
     public static final String Format = "Failed to resolve value of initialization of '%s': %s";
 
@@ -33,7 +35,7 @@ public class InitializationParser extends AbstractProcessor {
 
     private Type resolveImplicit(Node current, Field identity) {
         var value = current.value(Node.class);
-        return MagmaResolver.Resolver(state.with(value))
+        return Resolver(state.with(value))
                 .resolve()
                 .orElseThrow(() -> invalidateValue(value, identity));
     }

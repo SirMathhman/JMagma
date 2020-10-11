@@ -1,7 +1,8 @@
 package com.meti.compile.render.process;
 
-import com.meti.compile.render.block.function.FunctionDefiner;
+import com.meti.compile.render.block.function.FunctionLoader;
 import com.meti.compile.render.block.function.FunctionParser;
+import com.meti.compile.render.block.function.FunctionUnloader;
 import com.meti.compile.render.block.invoke.ProcedureParser;
 import com.meti.compile.render.scope.Definer;
 import com.meti.compile.render.scope.VariableParser;
@@ -21,9 +22,14 @@ public class Parser extends CollectiveProcessor {
     }
 
     @Override
+    protected Stream<Function<State, Processor>> streamPreprocessors() {
+        return Stream.of(FunctionLoader::new);
+    }
+
+    @Override
     protected Stream<Function<State, Processor>> streamPostprocessors() {
         return Stream.of(Definer::new,
-                FunctionDefiner::new);
+                FunctionUnloader::new);
     }
 
     @Override

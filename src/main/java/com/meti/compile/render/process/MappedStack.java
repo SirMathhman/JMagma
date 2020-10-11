@@ -29,9 +29,10 @@ public class MappedStack implements Stack {
     @Override
     public Stack define(Field field) {
         var newFrames = new LinkedList<>(frames);
-        var oldLast = newFrames.pop();
+        var oldLast = newFrames.pollLast();
+        assert oldLast != null;
         var newLast = oldLast.define(field);
-        newFrames.push(newLast);
+        newFrames.add(newLast);
         return new MappedStack(newFrames);
     }
 
@@ -47,6 +48,29 @@ public class MappedStack implements Stack {
                 .map(frame -> frame.getDefinition(name))
                 .findFirst()
                 .orElseThrow(() -> invalidateName(name));
+    }
+
+    @Override
+    public Stack enter() {
+        Deque<Frame> newFrames = new LinkedList<>(frames);
+        newFrames.push(new MappedFrame());
+        return new MappedStack(newFrames);
+    }
+
+    @Override
+    public Stack defineAll(List<Field> fields) {
+        Stack current = this;
+        for (Field field : fields) {
+            current = define(field);
+        }
+        return current;
+    }
+
+    @Override
+    public Stack exit() {
+        Deque<Frame> newFrames = new LinkedList<>(frames);
+        newFrames.pollLast();
+        return new MappedStack(newFrames);
     }
 
     private UndefinedException invalidateName(String name) {

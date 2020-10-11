@@ -47,7 +47,7 @@ public class FunctionType implements EmptyType {
     }
 
     @Override
-    public Type start() {
+    public Type secondary() {
         return returnType;
     }
 

@@ -37,7 +37,7 @@ public class InvocationTest extends FeatureTest {
 
     @Test
     void mapping(){
-        assertCompile("{}", """
+        assertCompile("{int mapping(int value){return value;}int result=mapping(420);}", """
                 {
                 
                     def mapping(value : I16) => value;

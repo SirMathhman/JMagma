@@ -26,7 +26,7 @@ public class FunctionParser extends AbstractProcessor {
     }
 
     private Type checkImplicit(Node current, Type type) {
-        if (type.start().is(Type.Group.Implicit)) return type.mapByStart(type1 -> resolveReturnType(current));
+        if (type.secondary().is(Type.Group.Implicit)) return type.mapByStart(type1 -> resolveReturnType(current));
         return type;
     }
 

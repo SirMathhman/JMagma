@@ -6,7 +6,6 @@ import com.meti.compile.render.process.AbstractProcessor;
 import com.meti.compile.render.process.State;
 import com.meti.compile.render.type.Type;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -32,7 +31,7 @@ public class ProcedureParser extends AbstractProcessor {
                 var message = format.formatted(value, caller);
                 throw new IllegalStateException(message);
             }
-            if (type.start().equals(Primitive.Void)) {
+            if (type.secondary().equals(Primitive.Void)) {
                 return Optional.of(state.with(new Procedure(caller, arguments)));
             } else {
                 return Optional.of(state);

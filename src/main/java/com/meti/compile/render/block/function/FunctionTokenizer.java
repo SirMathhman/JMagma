@@ -65,7 +65,7 @@ public class FunctionTokenizer extends AbstractNodeTokenizer {
         } else if(!content.contains("(") && !content.contains(")")) {
             return Collections.emptyList();
         } else if(!content.contains("(")) {
-            var format = "'%s' does not have a parameter start indicator.";
+            var format = "'%s' does not have a parameter secondary indicator.";
             var message = format.formatted(content);
             throw new IllegalStateException(message);
         } else {
