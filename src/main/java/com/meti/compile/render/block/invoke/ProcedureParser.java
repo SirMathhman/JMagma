@@ -23,12 +23,12 @@ public class ProcedureParser extends AbstractProcessor {
             var children = value.streamChildren().collect(Collectors.toList());
             var caller = children.get(0);
             var arguments = children.subList(1, children.size());
-            var type = Resolver(state)
+            var type = Resolver(state.with(caller))
                     .resolve()
                     .orElseThrow(() -> invalidateValue(value));
             if(!type.is(Type.Group.Function)) {
-                var format = "Caller of %s, '%s', isn't a function.";
-                var message = format.formatted(value, caller);
+                var format = "Caller of %s, '%s', isn't a function, and actually has a type of '%s'.";
+                var message = format.formatted(value, caller, type);
                 throw new IllegalStateException(message);
             }
             if (type.secondary().equals(Primitive.Void)) {
