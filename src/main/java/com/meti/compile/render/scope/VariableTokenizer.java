@@ -12,6 +12,6 @@ public class VariableTokenizer extends AbstractNodeTokenizer {
 
     @Override
     public Optional<Node> evaluate() {
-        return Optional.of(new Variable(content));
+        return Optional.of(Variable.Variable(content));
     }
 }

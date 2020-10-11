@@ -5,8 +5,12 @@ import com.meti.compile.render.node.*;
 class Variable implements LeafNode, Node {
     private final String content;
 
-    public Variable(String content) {
+    private Variable(String content) {
         this.content = content;
+    }
+
+    public static Variable Variable(String content) {
+        return new Variable(content);
     }
 
     @Override
@@ -26,6 +30,6 @@ class Variable implements LeafNode, Node {
 
     @Override
     public Node withValue(Object value) {
-        return new Variable(value.toString());
+        return Variable(value.toString());
     }
 }

@@ -104,7 +104,7 @@ public class Compiler {
         var root = new ContentNode(trim);
         var tree = tokenizeTree(root);
         var stack = new MappedStack();
-        var state = new InlineState(tree, stack);
+        var state = InlineState.State(tree, stack);
         var formatted = new Formatter(state).process().orElse(state);
         var parsed = new Parser(formatted).process().orElse(formatted);
         return render(parsed);

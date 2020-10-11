@@ -12,7 +12,7 @@ public class InlineState implements State {
     private final List<Node> functions;
     private final List<Node> structures;
 
-    public InlineState(Node value, Stack scope) {
+    private InlineState(Node value, Stack scope) {
         this(value, scope, new ArrayList<>(), new ArrayList<>());
     }
 
@@ -21,6 +21,10 @@ public class InlineState implements State {
         this.scope = scope;
         this.functions = functions;
         this.structures = structures;
+    }
+
+    public static InlineState State(Node value, Stack scope) {
+        return new InlineState(value, scope);
     }
 
     @Override
@@ -64,11 +68,11 @@ public class InlineState implements State {
 
     @Override
     public State with(Stack scope) {
-        return new InlineState(value, scope);
+        return State(value, scope);
     }
 
     @Override
     public State with(Node node) {
-        return new InlineState(node, scope);
+        return State(node, scope);
     }
 }
