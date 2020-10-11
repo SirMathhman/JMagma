@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 
 public class InvocationTest extends FeatureTest {
     @Test
-    void testAction(){
+    void action(){
         assertCompile("{void action(){}action();}", """
                 {
                     def action() : Void => {
@@ -16,7 +16,7 @@ public class InvocationTest extends FeatureTest {
     }
 
     @Test
-    void testSupplier() {
+    void supplier() {
         assertCompile("{char supplier(){return 10;}char result()=supplier();}", """
                 {
                     def supplier() => 10;
