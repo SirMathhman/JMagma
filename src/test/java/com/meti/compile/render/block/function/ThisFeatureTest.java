@@ -13,7 +13,7 @@ public class ThisFeatureTest extends FeatureTest {
                     return this;
                 }
                 """, """
-                def Dummy() => this;
+                def Dummy() => this
                 """);
     }
 }
