@@ -63,7 +63,7 @@ public interface Node extends Renderable {
         Content,
         Declaration,
         IntNumber,
-        Initialization, Block, Function, Return, Procedure, Mapping, Variable
+        Initialization, Block, Function, Return, Procedure, Mapping, Construction, Variable
     }
 
     interface Container<T extends Container<T>> {
