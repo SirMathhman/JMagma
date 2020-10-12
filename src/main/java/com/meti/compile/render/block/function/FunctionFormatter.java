@@ -7,6 +7,8 @@ import com.meti.compile.render.process.State;
 
 import java.util.Optional;
 
+import static com.meti.compile.render.block.Block.Block;
+
 public class FunctionFormatter extends AbstractProcessor {
     public FunctionFormatter(State state) {
         super(state);
@@ -25,22 +27,12 @@ public class FunctionFormatter extends AbstractProcessor {
     }
 
     private Node wrapBlock(Node oldValue, Node inReturn) {
-        Node newValue;
-        if(!oldValue.is(Node.Group.Block)) {
-            newValue = new Block(inReturn);
-        } else {
-            newValue = inReturn;
-        }
-        return newValue;
+        return oldValue.is(Node.Group.Block) ?
+                inReturn : Block(inReturn);
     }
 
     private Node wrapReturn(Node oldValue) {
-        Node inReturn;
-        if(!oldValue.is(Node.Group.Block) && !oldValue.is(Node.Group.Return)) {
-            inReturn = Return.Return(oldValue);
-        } else {
-            inReturn = oldValue;
-        }
-        return inReturn;
+        return oldValue.is(Node.Group.Block) || oldValue.is(Node.Group.Return) ?
+                oldValue : Return.Return(oldValue);
     }
 }
