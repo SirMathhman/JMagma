@@ -38,7 +38,7 @@ public final class SimpleField implements Field {
     }
 
     @Override
-    public Field mapByType(Function<Type, Type> function) {
+    public Field mapType(Function<Type, Type> function) {
         return Field(name, function.apply(type));
     }
 

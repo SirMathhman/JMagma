@@ -39,7 +39,7 @@ public class FunctionParser extends AbstractProcessor {
         if (state.has(Node.Group.Function)) {
             var current = state.getValue();
             var identity = current.identity();
-            var newIdentity = identity.mapByType(this::resolveValue);
+            var newIdentity = identity.mapType(this::resolveValue);
             var next = current.withIdentity(newIdentity);
             var formatted = isSuperFunction(next) ? formatSuperFunction(next) : next;
             var nextState = state.with(formatted);

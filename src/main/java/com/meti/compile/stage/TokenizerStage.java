@@ -75,7 +75,7 @@ public class TokenizerStage implements Stage<Node, Node> {
     }
 
     private Field tokenizeField(Field field) {
-        return field.mapByType(this::tokenizeType);
+        return field.mapType(this::tokenizeType);
     }
 
     @Override

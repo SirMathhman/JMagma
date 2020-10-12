@@ -6,7 +6,7 @@ import com.meti.compile.render.type.Type;
 import java.util.function.Function;
 
 public interface Field extends Renderable {
-    Field mapByType(Function<Type, Type> function);
+    Field mapType(Function<Type, Type> function);
 
     String name();
 
