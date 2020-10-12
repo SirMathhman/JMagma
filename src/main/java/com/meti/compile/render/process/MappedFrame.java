@@ -5,7 +5,7 @@ import com.meti.compile.render.field.Field;
 import java.util.HashMap;
 import java.util.Map;
 
-public class MappedFrame implements Frame {
+public abstract class MappedFrame implements Frame {
     protected final Map<String, Field> map;
 
     public MappedFrame(Map<String, Field> map) {
@@ -16,8 +16,10 @@ public class MappedFrame implements Frame {
     public Frame define(Field field) {
         Map<String, Field> copy = new HashMap<>(map);
         copy.put(field.name(), field);
-        return new MappedFrame(copy);
+        return complete(copy);
     }
+
+    protected abstract Frame complete(Map<String, Field> copy);
 
     @Override
     public boolean isDefined(String name) {

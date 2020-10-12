@@ -37,4 +37,9 @@ public class EmptyFrame extends MappedFrame {
     public int hashCode() {
         return Objects.hash(map);
     }
+
+    @Override
+    protected Frame complete(Map<String, Field> copy) {
+        return new EmptyFrame(copy);
+    }
 }
