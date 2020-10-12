@@ -9,6 +9,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+import static com.meti.compile.render.process.IdentifiedFrame.IdentifiedFrame;
+
 public class MappedStack implements Stack {
     public static Stack Stack_ = new MappedStack();
     private final Deque<Frame> frames;
@@ -96,7 +98,9 @@ public class MappedStack implements Stack {
     }
 
     @Override
-    public Stack enterWithIdentity(Field identity){
-        throw new UnsupportedOperationException();
+    public Stack enterWithIdentity(Field identity) {
+        Deque<Frame> newFrames = new LinkedList<>(frames);
+        newFrames.addLast(IdentifiedFrame(identity));
+        return new MappedStack(newFrames);
     }
 }
