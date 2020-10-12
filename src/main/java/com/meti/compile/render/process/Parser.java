@@ -1,7 +1,6 @@
 package com.meti.compile.render.process;
 
 import com.meti.compile.render.block.function.FunctionLoader;
-import com.meti.compile.render.block.function.FunctionParser;
 import com.meti.compile.render.block.function.FunctionUnloader;
 import com.meti.compile.render.block.invoke.ProcedureParser;
 import com.meti.compile.render.scope.Definer;
@@ -9,6 +8,8 @@ import com.meti.compile.render.scope.VariableParser;
 
 import java.util.function.Function;
 import java.util.stream.Stream;
+
+import static com.meti.compile.render.block.function.FunctionParser.FunctionParser_;
 
 public class Parser extends CollectiveProcessor {
 
@@ -37,7 +38,7 @@ public class Parser extends CollectiveProcessor {
         return Stream.of(
                 ProcedureParser::new,
                 InitializationParser::new,
-                FunctionParser::new,
+                FunctionParser_,
                 VariableParser::new
         );
     }

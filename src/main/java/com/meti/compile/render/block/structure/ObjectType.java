@@ -14,7 +14,7 @@ public class ObjectType extends StructureType {
         this.fields = fields;
     }
 
-    public static Type StructureType(String structureName, Field... fields) {
+    public static Type ObjectType(String structureName, Field... fields) {
         return StructureType(structureName, List.of(fields));
     }
 

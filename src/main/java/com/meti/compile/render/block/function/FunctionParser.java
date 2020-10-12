@@ -2,17 +2,25 @@ package com.meti.compile.render.block.function;
 
 import com.meti.compile.render.node.Node;
 import com.meti.compile.render.process.AbstractProcessor;
+import com.meti.compile.render.process.Processor;
 import com.meti.compile.render.process.State;
 import com.meti.compile.render.type.Type;
 
 import java.util.Optional;
+import java.util.function.Function;
 
 import static com.meti.compile.render.resolve.MagmaResolver.Resolver;
 import static com.meti.compile.render.type.Type.Group.Implicit;
 
 public class FunctionParser extends AbstractProcessor {
-    public FunctionParser(State state) {
+    public static final Function<State, Processor> FunctionParser_ = FunctionParser::FunctionParser;
+
+    private FunctionParser(State state) {
         super(state);
+    }
+
+    public static FunctionParser FunctionParser(State state) {
+        return new FunctionParser(state);
     }
 
     @Override
