@@ -7,7 +7,7 @@ public class FunctionFeatureTest extends FeatureTest {
     @Test
     void inner() {
         assertCompile("""
-                struct outer {A
+                struct outer {
                     int value;
                     int (*inner)(void*);
                 }

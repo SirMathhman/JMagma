@@ -6,6 +6,7 @@ import com.meti.compile.render.node.UnidentifiedException;
 
 import java.util.Objects;
 import java.util.function.Function;
+import java.util.stream.Stream;
 
 public class Return implements Node {
     private final Node value;
@@ -13,6 +14,11 @@ public class Return implements Node {
 
     private Return(Node value) {
         this.value = value;
+    }
+
+    @Override
+    public Stream<? extends Node> streamChildren() {
+        return Stream.of(value);
     }
 
     public static Return Return(Node value) {

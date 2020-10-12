@@ -12,6 +12,11 @@ public abstract class StructureType implements Type {
     }
 
     @Override
+    public String getContent() {
+        return structureName;
+    }
+
+    @Override
     public String render(String name) {
         var format = "struct %s %s";
         return format.formatted(structureName, name);

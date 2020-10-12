@@ -1,11 +1,20 @@
 package com.meti.compile.render.block.function;
 
-import com.meti.compile.render.FeatureTest;
 import org.junit.jupiter.api.Test;
 
-public class ReturnTest extends FeatureTest {
+import java.util.List;
+import java.util.stream.Collectors;
+
+import static com.meti.compile.render.primitive.IntNumber.Int;
+import static org.junit.jupiter.api.Assertions.assertIterableEquals;
+
+public class ReturnTest {
     @Test
-    void test(){
-        assertCompile("return 10;", "return 10");
+    void streamChildren() {
+        var value = Int(10);
+        var root = Return.Return(value);
+        var expected = List.of(value);
+        var actual = root.streamChildren().collect(Collectors.toList());
+        assertIterableEquals(expected, actual);
     }
 }

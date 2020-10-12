@@ -22,7 +22,7 @@ class FunctionParserTest {
 
     @Test
     void validateThisKeyword() {
-        var node = Function("Dummy", StructureType("Dummy"), This);
+        var node = Function("Dummy", StructureType("Dummy"), Block(Return(This)));
         var state = State(node, Stack_);
         var actual = FunctionParser(state)
                 .process()
