@@ -11,11 +11,6 @@ public interface LeafType extends Type {
     }
 
     @Override
-    default Type mapByStart(Function<Type, Type> mapper) {
-        return this;
-    }
-
-    @Override
     default Type mapByChildren(Function<Type, Type> mapper) {
         return this;
     }
