@@ -20,7 +20,14 @@ public interface Type extends Renderable {
 
     Type secondary();
 
+    @Deprecated
     Type mapByStart(Function<Type, Type> mapper);
+
+    default Type withSecondary(Type secondary) {
+        var format = "Instances of %s don't have secondary types.";
+        var message = format.formatted(getClass());
+        throw new UnsupportedOperationException(message);
+    }
 
     enum Group {
         Content,

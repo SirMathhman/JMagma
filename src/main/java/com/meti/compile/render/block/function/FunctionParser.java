@@ -3,10 +3,12 @@ package com.meti.compile.render.block.function;
 import com.meti.compile.render.node.Node;
 import com.meti.compile.render.process.AbstractProcessor;
 import com.meti.compile.render.process.State;
-import com.meti.compile.render.resolve.MagmaResolver;
 import com.meti.compile.render.type.Type;
 
 import java.util.Optional;
+
+import static com.meti.compile.render.resolve.MagmaResolver.Resolver;
+import static com.meti.compile.render.type.Type.Group.Implicit;
 
 public class FunctionParser extends AbstractProcessor {
     public FunctionParser(State state) {
@@ -18,21 +20,27 @@ public class FunctionParser extends AbstractProcessor {
         if (state.has(Node.Group.Function)) {
             var current = state.getValue();
             var identity = current.identity();
-            var next = current.withIdentity(identity.mapByType(type -> checkImplicit(current, type)));
+            var newIdentity = identity.mapByType(this::resolveValue);
+            var next = current.withIdentity(newIdentity);
             var nextState = state.with(next);
             return Optional.of(nextState);
         }
         return Optional.empty();
     }
 
-    private Type checkImplicit(Node current, Type type) {
-        if (type.secondary().is(Type.Group.Implicit)) return type.mapByStart(type1 -> resolveReturnType(current));
-        return type;
+    private Type resolveValue(Type type) {
+        if (type.secondary().is(Implicit)) {
+            return type.withSecondary(resolveReturnType());
+        } else {
+            return type;
+        }
     }
 
-    private Type resolveReturnType(Node current) {
-        var value = current.value(Node.class);
-        return MagmaResolver.Resolver(state.with(value))
+    private Type resolveReturnType() {
+        var root = state.getValue();
+        var value = root.value(Node.class);
+        var withValue = state.with(value);
+        return Resolver(withValue)
                 .resolve()
                 .orElseThrow(() -> invalidateValue(value));
     }
