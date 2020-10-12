@@ -11,6 +11,7 @@ public interface Type extends Renderable {
         return Stream.empty();
     }
 
+    @Deprecated
     default <T> T transformContent(Function<String, T> transformer) {
         var format = "Instances of '%s' have no content.";
         var message = format.formatted(getClass());
@@ -38,6 +39,12 @@ public interface Type extends Renderable {
 
     default Type withSecondary(Type secondary) {
         var format = "Instances of %s don't have secondary types.";
+        var message = format.formatted(getClass());
+        throw new UnsupportedOperationException(message);
+    }
+
+    default String getContent() {
+        var format = "Instances of '%s' have no content.";
         var message = format.formatted(getClass());
         throw new UnsupportedOperationException(message);
     }

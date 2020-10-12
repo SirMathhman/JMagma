@@ -1,5 +1,6 @@
 package com.meti.compile.render.block.function;
 
+import com.meti.compile.render.block.structure.ObjectType;
 import com.meti.compile.render.node.Node;
 import com.meti.compile.render.process.AbstractProcessor;
 import com.meti.compile.render.process.Processor;
@@ -9,8 +10,11 @@ import com.meti.compile.render.type.Type;
 import java.util.Optional;
 import java.util.function.Function;
 
+import static com.meti.compile.render.block.structure.ObjectType.ObjectType;
 import static com.meti.compile.render.resolve.MagmaResolver.Resolver;
+import static com.meti.compile.render.scope.Variable.This;
 import static com.meti.compile.render.type.Type.Group.Implicit;
+import static com.meti.compile.render.type.Type.Group.Structure;
 
 public class FunctionParser extends AbstractProcessor {
     public static final Function<State, Processor> FunctionParser_ = FunctionParser::FunctionParser;
@@ -30,6 +34,20 @@ public class FunctionParser extends AbstractProcessor {
             var identity = current.identity();
             var newIdentity = identity.mapByType(this::resolveValue);
             var next = current.withIdentity(newIdentity);
+            Node formatted;
+            if (next.walkChildren().anyMatch(node -> node.equals(This))) {
+                var structureType = next.identity().type();
+                if (structureType.is(Structure)) {
+                    var content = structureType.getContent();
+                    var objectType = ObjectType(content, null);
+                } else {
+                    var format = "%s is not a structure.";
+                    var message = format.formatted(structureType);
+                    throw new IllegalStateException(message);
+                }
+            } else {
+                formatted = next;
+            }
             var nextState = state.with(next);
             return Optional.of(nextState);
         }

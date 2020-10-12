@@ -59,6 +59,14 @@ public interface Node extends Renderable {
         return Stream.empty();
     }
 
+    default Stream<Node> walkChildren() {
+        return streamChildren().flatMap(Node::walkTree);
+    }
+
+    default Stream<Node> walkTree() {
+        return Stream.concat(Stream.of(this), walkChildren());
+    }
+
     enum Group {
         Content,
         Declaration,

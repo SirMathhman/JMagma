@@ -6,9 +6,22 @@ import org.junit.jupiter.api.Test;
 public class FunctionFeatureTest extends FeatureTest {
     @Test
     void inner() {
-        assertCompile("", """
-                def outer(getValue : I16) => {
-                    def inner() => getValue;
+        assertCompile("""
+                struct outer {A
+                    int value;
+                    int (*inner)(void*);
+                }
+                int outer_inner(void* ref_){
+                    struct outer* this=ref_;
+                    return this->value;
+                }
+                int outer(int value){
+                    struct outer this={value,outer_inner};
+                    return this.inner(&this);
+                }
+                """, """
+                def outer(value : I16) => {
+                    def inner() => value;
                     inner()
                 }
                 """);
