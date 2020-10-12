@@ -15,7 +15,7 @@ public class MappedStack implements Stack {
 
     @Deprecated
     public MappedStack() {
-        this(new LinkedList<>(List.of(new MappedFrame())));
+        this(new LinkedList<>(List.of(new EmptyFrame())));
     }
 
     public MappedStack(Deque<Frame> frames) {
@@ -69,7 +69,7 @@ public class MappedStack implements Stack {
     @Override
     public Stack enter() {
         Deque<Frame> newFrames = new LinkedList<>(frames);
-        newFrames.push(new MappedFrame());
+        newFrames.push(new EmptyFrame());
         return new MappedStack(newFrames);
     }
 
