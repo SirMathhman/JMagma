@@ -4,11 +4,10 @@ import com.meti.compile.render.primitive.Primitive;
 import com.meti.compile.render.process.MappedStack;
 import com.meti.compile.render.type.TypeException;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.function.Executable;
 
 import static com.meti.compile.render.block.function.FunctionType.FunctionType;
 import static com.meti.compile.render.block.invoke.Mapping.Mapping;
-import static com.meti.compile.render.field.InlineField.Field;
+import static com.meti.compile.render.field.SimpleField.Field;
 import static com.meti.compile.render.process.InlineState.State;
 import static com.meti.compile.render.scope.Variable.Variable;
 import static org.junit.jupiter.api.Assertions.assertSame;

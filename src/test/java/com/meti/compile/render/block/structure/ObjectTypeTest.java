@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.meti.compile.render.field.InlineField.Field;
+import static com.meti.compile.render.field.SimpleField.Field;
 import static com.meti.compile.render.primitive.Primitive.I16;
 import static org.junit.jupiter.api.Assertions.assertIterableEquals;
 

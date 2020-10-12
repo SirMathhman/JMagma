@@ -1,14 +1,12 @@
 package com.meti.compile.render.resolve;
 
-import com.meti.compile.render.block.invoke.InvocationResolver;
-import com.meti.compile.render.block.invoke.Mapping;
 import com.meti.compile.render.primitive.Primitive;
 import com.meti.compile.render.process.MappedStack;
 import org.junit.jupiter.api.Test;
 
 import static com.meti.compile.render.block.function.FunctionType.FunctionType;
 import static com.meti.compile.render.block.invoke.Mapping.Mapping;
-import static com.meti.compile.render.field.InlineField.Field;
+import static com.meti.compile.render.field.SimpleField.Field;
 import static com.meti.compile.render.process.InlineState.State;
 import static com.meti.compile.render.resolve.MagmaResolver.Resolver;
 import static com.meti.compile.render.scope.Variable.Variable;

@@ -3,10 +3,10 @@ package com.meti.compile.render.field;
 import com.meti.compile.render.primitive.Primitive;
 import org.junit.jupiter.api.Test;
 
-import static com.meti.compile.render.field.InlineField.Field;
+import static com.meti.compile.render.field.SimpleField.Field;
 import static org.junit.jupiter.api.Assertions.*;
 
-class InlineFieldTest {
+class SimpleFieldTest {
 
     @Test
     void testEquals() {

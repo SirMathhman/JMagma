@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 import static com.meti.compile.render.block.Block.Block;
 import static com.meti.compile.render.block.function.Function.Function;
 import static com.meti.compile.render.block.structure.ObjectType.ObjectType;
-import static com.meti.compile.render.field.InlineField.Field;
+import static com.meti.compile.render.field.SimpleField.Field;
 import static com.meti.compile.render.resolve.MagmaResolver.Resolver;
 import static com.meti.compile.render.scope.Initialization.Initialize;
 import static com.meti.compile.render.scope.Variable.this_;

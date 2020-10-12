@@ -5,24 +5,24 @@ import com.meti.compile.render.type.Type;
 import java.util.Objects;
 import java.util.function.Function;
 
-public final class InlineField implements Field {
+public final class SimpleField implements Field {
     private final String name;
     private final Type type;
 
-    private InlineField(String name, Type type) {
+    private SimpleField(String name, Type type) {
         this.name = name;
         this.type = type;
     }
 
-    public static InlineField Field(String name, Type type) {
-        return new InlineField(name, type);
+    public static Field Field(String name, Type type) {
+        return new SimpleField(name, type);
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        InlineField that = (InlineField) o;
+        SimpleField that = (SimpleField) o;
         return Objects.equals(name, that.name) &&
                 Objects.equals(type, that.type);
     }

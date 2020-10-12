@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import java.math.BigInteger;
 
-import static com.meti.compile.render.field.InlineField.Field;
+import static com.meti.compile.render.field.SimpleField.Field;
 import static com.meti.compile.render.primitive.ImplicitType.ImplicitType_;
 import static com.meti.compile.render.primitive.IntNumber.Int;
 import static com.meti.compile.render.process.InlineState.State;

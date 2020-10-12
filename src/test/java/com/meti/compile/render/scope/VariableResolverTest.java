@@ -1,15 +1,10 @@
 package com.meti.compile.render.scope;
 
-import com.meti.compile.render.field.InlineField;
 import com.meti.compile.render.primitive.Primitive;
-import com.meti.compile.render.process.InlineState;
 import com.meti.compile.render.process.MappedStack;
-import com.meti.compile.render.resolve.Resolver;
-import com.meti.compile.render.type.Type;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import static com.meti.compile.render.field.InlineField.Field;
+import static com.meti.compile.render.field.SimpleField.Field;
 import static com.meti.compile.render.process.InlineState.State;
 import static com.meti.compile.render.scope.Variable.Variable;
 import static org.junit.jupiter.api.Assertions.*;

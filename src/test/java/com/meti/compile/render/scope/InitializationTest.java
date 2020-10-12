@@ -2,7 +2,7 @@ package com.meti.compile.render.scope;
 
 import org.junit.jupiter.api.Test;
 
-import static com.meti.compile.render.field.InlineField.Field;
+import static com.meti.compile.render.field.SimpleField.Field;
 import static com.meti.compile.render.primitive.IntNumber.Int;
 import static com.meti.compile.render.primitive.Primitive.I16;
 import static com.meti.compile.render.scope.Initialization.Initialize;

@@ -1,7 +1,7 @@
 package com.meti.compile.render.block.function;
 
 import com.meti.compile.render.field.Field;
-import com.meti.compile.render.field.InlineField;
+import com.meti.compile.render.field.SimpleField;
 import com.meti.compile.render.node.Node;
 import com.meti.compile.render.type.Type;
 
@@ -86,7 +86,7 @@ public class Function implements Node {
                 .map(Field::type)
                 .collect(Collectors.toList());
         var type = FunctionType.FunctionType(returnType, parametersAsType);
-        return InlineField.Field(name, type);
+        return SimpleField.Field(name, type);
     }
 
     @Override
