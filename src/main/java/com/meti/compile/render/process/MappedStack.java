@@ -94,4 +94,9 @@ public class MappedStack implements Stack {
         var message = format.formatted(name, this);
         return new UndefinedException(message);
     }
+
+    @Override
+    public Stack enterWithIdentity(Field identity){
+        throw new UnsupportedOperationException();
+    }
 }

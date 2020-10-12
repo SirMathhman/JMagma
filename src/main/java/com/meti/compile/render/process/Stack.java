@@ -13,6 +13,8 @@ public interface Stack {
 
     Stack enter();
 
+    Stack enterWithIdentity(Field identity);
+
     Stack defineAll(List<Field> fields);
 
     Stack exit();
