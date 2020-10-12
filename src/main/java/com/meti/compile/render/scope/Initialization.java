@@ -10,9 +10,13 @@ public class Initialization implements Node {
     private final Field identity;
     private final Node value;
 
-    public Initialization(Field identity, Node value) {
+    private Initialization(Field identity, Node value) {
         this.identity = identity;
         this.value = value;
+    }
+
+    public static Initialization Initialization(Field identity, Node value) {
+        return new Initialization(identity, value);
     }
 
     @Override
@@ -22,17 +26,17 @@ public class Initialization implements Node {
 
     @Override
     public Node mapByIdentity(Function<Field, Field> mapper) {
-        return new Initialization(mapper.apply(identity), value);
+        return Initialization(mapper.apply(identity), value);
     }
 
     @Override
     public Node mapByChildren(Function<Node, Node> mapper) {
-        return new Initialization(identity, mapper.apply(value));
+        return Initialization(identity, mapper.apply(value));
     }
 
     @Override
     public Node mapByFields(Function<Field, Field> mapper) {
-        return new Initialization(mapper.apply(identity), value);
+        return Initialization(mapper.apply(identity), value);
     }
 
     @Override
@@ -52,11 +56,11 @@ public class Initialization implements Node {
 
     @Override
     public Node withIdentity(Field identity) {
-        return new Initialization(identity, value);
+        return Initialization(identity, value);
     }
 
     @Override
     public Node withValue(Object value) {
-        return new Initialization(identity, (Node) value);
+        return Initialization(identity, (Node) value);
     }
 }

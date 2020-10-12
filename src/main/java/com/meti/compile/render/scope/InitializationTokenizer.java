@@ -23,7 +23,7 @@ public class InitializationTokenizer extends AbstractNodeTokenizer {
         } else {
             var identity = evaluateIdentity(content.substring(0, separator));
             var value = evaluateValue(content.substring(separator + 1));
-            return Optional.of(new Initialization(identity, value));
+            return Optional.of(Initialization.Initialization(identity, value));
         }
     }
 
