@@ -1,9 +1,9 @@
-package com.meti.compile;
+package com.meti.compile.stage;
 
 import com.meti.compile.render.node.Node;
 import org.junit.jupiter.api.Test;
 
-import static com.meti.compile.TokenizerStage.Tokenize;
+import static com.meti.compile.stage.TokenizerStage.Tokenize;
 import static com.meti.compile.render.node.ContentNode.ContentNode;
 import static com.meti.compile.render.node.Node.Group.Function;
 import static com.meti.compile.render.primitive.ImplicitType.ImplicitType_;

@@ -1,8 +1,8 @@
-package com.meti.compile;
+package com.meti.compile.stage;
 
 import org.junit.jupiter.api.Test;
 
-import static com.meti.compile.FormattingStage.FormattingStage_;
+import static com.meti.compile.stage.FormattingStage.FormattingStage_;
 import static com.meti.compile.render.block.Block.Block;
 import static com.meti.compile.render.block.function.Function.Function;
 import static com.meti.compile.render.block.function.Return.Return;

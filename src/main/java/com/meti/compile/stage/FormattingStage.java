@@ -1,5 +1,6 @@
-package com.meti.compile;
+package com.meti.compile.stage;
 
+import com.meti.compile.Stage;
 import com.meti.compile.render.process.Formatter;
 import com.meti.compile.render.process.State;
 

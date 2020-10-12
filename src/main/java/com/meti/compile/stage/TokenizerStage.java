@@ -1,5 +1,6 @@
-package com.meti.compile;
+package com.meti.compile.stage;
 
+import com.meti.compile.Stage;
 import com.meti.compile.render.block.BlockTokenizer;
 import com.meti.compile.render.block.function.FunctionTokenizer;
 import com.meti.compile.render.block.function.ReturnTokenizer;

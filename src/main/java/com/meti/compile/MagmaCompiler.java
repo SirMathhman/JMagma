@@ -6,9 +6,9 @@ import com.meti.compile.render.process.State;
 
 import java.util.stream.Collectors;
 
-import static com.meti.compile.FormattingStage.FormattingStage_;
-import static com.meti.compile.ParsingStage.ParsingStage;
-import static com.meti.compile.TokenizerStage.TokenizerStage_;
+import static com.meti.compile.stage.FormattingStage.FormattingStage_;
+import static com.meti.compile.stage.ParsingStage.ParsingStage;
+import static com.meti.compile.stage.TokenizerStage.TokenizerStage_;
 import static com.meti.compile.render.process.InlineState.State;
 import static com.meti.compile.render.process.MappedStack.Stack_;
 
