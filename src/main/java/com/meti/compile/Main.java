@@ -15,10 +15,11 @@ import static java.util.logging.Logger.getAnonymousLogger;
 public class Main {
     private static final Logger Logger = getAnonymousLogger();
     private static final Compiler Compiler = new MagmaCompiler();
+    public static final Path Root = Paths.get(".");
+    public static final Path Source = Root.resolve("source");
 
     public static void main(String[] args) {
-        var root = Paths.get(".");
-        var files = walkRoot(root);
+        var files = walkSource(Source);
         for (Path file : files) {
             try {
                 var content = Files.readString(file);
@@ -34,7 +35,7 @@ public class Main {
         }
     }
 
-    private static List<Path> walkRoot(Path root) {
+    private static List<Path> walkSource(Path root) {
         try {
             return Files.walk(root)
                     .filter(s -> s.toString().endsWith(".mg"))
