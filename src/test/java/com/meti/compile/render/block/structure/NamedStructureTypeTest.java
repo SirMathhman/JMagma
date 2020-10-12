@@ -22,6 +22,6 @@ class NamedStructureTypeTest {
 
     @Test
     void hasEmptyChildren() {
-        assertTrue(StructureType("Dummy").subFields().findAny().isEmpty());
+        assertTrue(StructureType("Dummy").streamFields().findAny().isEmpty());
     }
 }

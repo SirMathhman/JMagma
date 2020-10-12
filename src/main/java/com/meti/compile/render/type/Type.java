@@ -7,7 +7,7 @@ import java.util.function.Function;
 import java.util.stream.Stream;
 
 public interface Type extends Renderable {
-    default Stream<Field> subFields() {
+    default Stream<Field> streamFields() {
         return Stream.empty();
     }
 
