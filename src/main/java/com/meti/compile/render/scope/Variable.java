@@ -1,8 +1,10 @@
 package com.meti.compile.render.scope;
 
-import com.meti.compile.render.node.*;
+import com.meti.compile.render.node.LeafNode;
+import com.meti.compile.render.node.Node;
 
 public class Variable implements LeafNode, Node {
+    public static final Node This = Variable("this");
     private final String content;
 
     private Variable(String content) {
