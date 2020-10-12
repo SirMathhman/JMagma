@@ -21,6 +21,14 @@ public class Initialization implements Node {
     }
 
     @Override
+    public String toString() {
+        return "Initialization{" +
+               "identity=" + identity +
+               ", value=" + value +
+               '}';
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;

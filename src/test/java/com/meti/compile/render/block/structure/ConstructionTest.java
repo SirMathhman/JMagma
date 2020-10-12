@@ -12,19 +12,26 @@ class ConstructionTest {
 
     @Test
     void is() {
-        var node = Construction.Construct();
+        var node = Construct();
         assertTrue(node.is(Node.Group.Construction));
     }
 
     @Test
     void renderSingle() {
-        var node = Construction.Construct(Int(10));
+        var node = Construct(Int(10));
         assertEquals("{10}", node.render());
     }
 
     @Test
     void renderMultiple() {
-        var node = Construction.Construct(Int(10), Int(20));
+        var node = Construct(Int(10), Int(20));
         assertEquals("{10,20}", node.render());
+    }
+
+    @Test
+    void testEquals() {
+        var expected = Construct(Int(10));
+        var actual = Construct(Int(10));
+        assertEquals(expected, actual);
     }
 }
