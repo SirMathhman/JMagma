@@ -16,7 +16,7 @@ class InitializationParserTest {
     @Test
     void process() {
         var identity = Field("test", ImplicitType_);
-        var node = Initialization.Initialization(identity, Int(BigInteger.ONE));
+        var node = Initialization.Initialize(identity, Int(BigInteger.ONE));
         var stack = new MappedStack();
         var state = State(node, stack);
         var value = new InitializationParser(state)

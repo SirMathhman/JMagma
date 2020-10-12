@@ -12,13 +12,15 @@ public class Construction implements Node {
         this.arguments = arguments;
     }
 
-    public static Node Construction(Node... arguments) {
-        return Construction(List.of(arguments));
+    public static Node Construct(Node... arguments) {
+        return Construct(List.of(arguments));
     }
 
-    public static Node Construction(List<Node> arguments) {
+    public static Node Construct(List<Node> arguments) {
         return new Construction(arguments);
     }
+
+
 
     @Override
     public boolean is(Group group) {

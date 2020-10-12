@@ -1,5 +1,6 @@
 package com.meti.compile.render.block.function;
 
+import com.meti.compile.render.block.structure.Construction;
 import com.meti.compile.render.node.Node;
 import com.meti.compile.render.process.AbstractProcessor;
 import com.meti.compile.render.process.Processor;
@@ -14,11 +15,11 @@ import java.util.stream.Collectors;
 
 import static com.meti.compile.render.block.Block.Block;
 import static com.meti.compile.render.block.function.Function.Function;
-import static com.meti.compile.render.block.structure.Construction.Construction;
+import static com.meti.compile.render.block.structure.Construction.Construct;
 import static com.meti.compile.render.block.structure.ObjectType.ObjectType;
 import static com.meti.compile.render.field.InlineField.Field;
 import static com.meti.compile.render.resolve.MagmaResolver.Resolver;
-import static com.meti.compile.render.scope.Initialization.Initialization;
+import static com.meti.compile.render.scope.Initialization.Initialize;
 import static com.meti.compile.render.scope.Variable.This;
 import static com.meti.compile.render.type.Type.Group.Implicit;
 import static com.meti.compile.render.type.Type.Group.Structure;
@@ -54,7 +55,7 @@ public class FunctionParser extends AbstractProcessor {
                   if(block.is(Node.Group.Block)) {
                       List<? extends Node> lines = block.streamChildren().collect(Collectors.toList());
                       List<Node> newLines = new ArrayList<>();
-                      newLines.add(Initialization(Field("this", objectType), Construction()));
+                      newLines.add(Initialize(Field("this", objectType), Construction.Construct()));
                       newLines.addAll(lines);
                       var newBlock = Block(newLines);
                       formatted = Function(name, objectType, newBlock);

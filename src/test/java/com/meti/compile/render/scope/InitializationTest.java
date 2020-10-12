@@ -1,21 +1,18 @@
 package com.meti.compile.render.scope;
 
-import com.meti.compile.render.FeatureTest;
 import org.junit.jupiter.api.Test;
 
-public class InitializationTest extends FeatureTest {
-    @Test
-    void explicit() {
-        assertCompile("int x=10;", "const x : I16 = 10");
-    }
+import static com.meti.compile.render.field.InlineField.Field;
+import static com.meti.compile.render.primitive.IntNumber.Int;
+import static com.meti.compile.render.primitive.Primitive.I16;
+import static com.meti.compile.render.scope.Initialization.Initialize;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
+class InitializationTest {
     @Test
-    void implicitChar() {
-        assertCompile("char x=10;", "const x = 10");
-    }
-
-    @Test
-    void implicitInt(){
-        assertCompile("int x=128;", "const x = 128");
+    void testEquals() {
+        var expected = Initialize(Field("x", I16), Int(10));
+        var actual = Initialize(Field("x", I16), Int(10));
+        assertEquals(expected, actual);
     }
 }
