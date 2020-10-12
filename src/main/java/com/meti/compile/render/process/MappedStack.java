@@ -3,10 +3,7 @@ package com.meti.compile.render.process;
 import com.meti.compile.render.field.Field;
 import com.meti.compile.render.scope.UndefinedException;
 
-import java.util.Deque;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static com.meti.compile.render.process.IdentifiedFrame.IdentifiedFrame;
@@ -89,6 +86,12 @@ public class MappedStack implements Stack {
         Deque<Frame> newFrames = new LinkedList<>(frames);
         newFrames.pollLast();
         return new MappedStack(newFrames);
+    }
+
+    @Override
+    public Optional<Context> getContext() {
+        
+        return Optional.empty();
     }
 
     private UndefinedException invalidateName(String name) {
