@@ -14,14 +14,14 @@ import static com.meti.compile.render.field.InlineField.Field;
 import static com.meti.compile.render.process.InlineState.State;
 import static com.meti.compile.render.process.MappedStack.Stack_;
 import static com.meti.compile.render.scope.Initialization.Initialize;
-import static com.meti.compile.render.scope.Variable.This;
+import static com.meti.compile.render.scope.Variable.this_;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class FunctionParserTest {
 
     @Test
     void validateThisKeyword() {
-        var node = Function("Dummy", StructureType("Dummy"), Block(Return(This)));
+        var node = Function("Dummy", StructureType("Dummy"), Block(Return(this_)));
         var state = State(node, Stack_);
         var actual = FunctionParser(state)
                 .process()
@@ -30,7 +30,7 @@ class FunctionParserTest {
         var returnType = ObjectType("Dummy");
         var value = Block(
                 Initialize(Field("this", returnType), Construction.Construct()),
-                Return(This)
+                Return(this_)
         );
         var expected = Function("Dummy", returnType, value);
         assertEquals(expected, actual);

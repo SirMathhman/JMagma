@@ -20,7 +20,7 @@ import static com.meti.compile.render.block.structure.ObjectType.ObjectType;
 import static com.meti.compile.render.field.InlineField.Field;
 import static com.meti.compile.render.resolve.MagmaResolver.Resolver;
 import static com.meti.compile.render.scope.Initialization.Initialize;
-import static com.meti.compile.render.scope.Variable.This;
+import static com.meti.compile.render.scope.Variable.this_;
 import static com.meti.compile.render.type.Type.Group.Implicit;
 import static com.meti.compile.render.type.Type.Group.Structure;
 
@@ -43,7 +43,7 @@ public class FunctionParser extends AbstractProcessor {
             var newIdentity = identity.mapByType(this::resolveValue);
             var next = current.withIdentity(newIdentity);
             Node formatted;
-            if (next.walkChildren().anyMatch(node -> node.equals(This))) {
+            if (next.walkChildren().anyMatch(node -> node.equals(this_))) {
                 var structureType = next.identity().type().secondary();
                 if (structureType.is(Structure)) {
                     var content = structureType.getContent();

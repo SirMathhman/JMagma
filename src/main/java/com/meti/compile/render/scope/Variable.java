@@ -4,7 +4,7 @@ import com.meti.compile.render.node.LeafNode;
 import com.meti.compile.render.node.Node;
 
 public class Variable implements LeafNode, Node {
-    public static final Node This = Variable("this");
+    public static final Node this_ = Variable("this");
     private final String content;
 
     private Variable(String content) {
