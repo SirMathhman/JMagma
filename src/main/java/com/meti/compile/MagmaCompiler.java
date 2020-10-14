@@ -10,7 +10,7 @@ import static com.meti.compile.stage.FormattingStage.FormattingStage_;
 import static com.meti.compile.stage.ParsingStage.ParsingStage;
 import static com.meti.compile.stage.TokenizerStage.TokenizerStage_;
 import static com.meti.compile.render.process.InlineState.State;
-import static com.meti.compile.render.process.MappedStack.Stack_;
+import static com.meti.compile.render.process.MappedCallStack.Stack_;
 
 public class MagmaCompiler implements Compiler {
     public static final Compiler Compiler_ = new MagmaCompiler();

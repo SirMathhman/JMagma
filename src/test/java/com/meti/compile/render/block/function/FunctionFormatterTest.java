@@ -8,7 +8,7 @@ import static com.meti.compile.render.block.function.Return.Return;
 import static com.meti.compile.render.primitive.ImplicitType.ImplicitType_;
 import static com.meti.compile.render.primitive.IntNumber.Int;
 import static com.meti.compile.render.process.InlineState.State;
-import static com.meti.compile.render.process.MappedStack.Stack_;
+import static com.meti.compile.render.process.MappedCallStack.Stack_;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class FunctionFormatterTest {

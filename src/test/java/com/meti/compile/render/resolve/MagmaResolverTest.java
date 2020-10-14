@@ -1,7 +1,7 @@
 package com.meti.compile.render.resolve;
 
 import com.meti.compile.render.primitive.Primitive;
-import com.meti.compile.render.process.MappedStack;
+import com.meti.compile.render.process.MappedCallStack;
 import org.junit.jupiter.api.Test;
 
 import static com.meti.compile.render.block.function.FunctionType.FunctionType;
@@ -20,7 +20,7 @@ class MagmaResolverTest {
         var expected = Primitive.I16;
         var type = FunctionType(expected);
         var declaration = Field("test", type);
-        var stack = new MappedStack()
+        var stack = new MappedCallStack()
                 .define(declaration);
         var state = State(value, stack);
         var actual = Resolver(state)
@@ -33,7 +33,7 @@ class MagmaResolverTest {
     void variables() {
         var expected = Primitive.I8;
         var definition = Field("test", expected);
-        var stack = new MappedStack().define(definition);
+        var stack = new MappedCallStack().define(definition);
         var state = State(Variable("test"), stack);
         var actual = Resolver(state)
                 .resolve()

@@ -4,14 +4,14 @@ import org.junit.jupiter.api.Test;
 
 import static com.meti.compile.render.field.SimpleField.Field;
 import static com.meti.compile.render.primitive.Primitive.*;
-import static com.meti.compile.render.process.MappedStack.Stack_;
+import static com.meti.compile.render.process.MappedCallStack.Stack_;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 
-class MappedStackTest {
+class MappedCallStackTest {
     @Test
     void define(){
-        var message = new MappedStack()
+        var message = new MappedCallStack()
                 .define(Field("supplier", I8))
                 .toString();
         assertEquals("[(supplier)]", message);
@@ -20,7 +20,7 @@ class MappedStackTest {
     @Test
     void getDefinition() {
         var expected = Field("supplier", I8);
-        var actual = new MappedStack()
+        var actual = new MappedCallStack()
                 .define(expected)
                 .getDefinition("supplier");
         assertSame(actual, expected);

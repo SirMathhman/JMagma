@@ -15,7 +15,7 @@ public interface State extends Node.Container<State> {
 
     boolean has(Node.Group group);
 
-    Stack getScope();
+    CallStack getScope();
 
-    State with(Stack scope);
+    State with(CallStack scope);
 }

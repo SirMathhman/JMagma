@@ -12,7 +12,7 @@ import static com.meti.compile.render.block.structure.NamedStructureType.Structu
 import static com.meti.compile.render.block.structure.ObjectType.ObjectType;
 import static com.meti.compile.render.field.SimpleField.Field;
 import static com.meti.compile.render.process.InlineState.State;
-import static com.meti.compile.render.process.MappedStack.Stack_;
+import static com.meti.compile.render.process.MappedCallStack.Stack_;
 import static com.meti.compile.render.scope.Initialization.Initialize;
 import static com.meti.compile.render.scope.Variable.this_;
 import static org.junit.jupiter.api.Assertions.assertEquals;

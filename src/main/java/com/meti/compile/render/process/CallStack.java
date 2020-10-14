@@ -7,20 +7,20 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
-public interface Stack {
-    Stack define(Field field);
+public interface CallStack {
+    CallStack define(Field field);
 
     boolean isDefined(String name);
 
     Field getDefinition(String name);
 
-    Stack enter();
+    CallStack enter();
 
-    Stack enterWithIdentity(Field identity);
+    CallStack enterWithIdentity(Field identity);
 
-    Stack defineAll(List<Field> fields);
+    CallStack defineAll(List<Field> fields);
 
-    Stack exit();
+    CallStack exit();
 
     Optional<Context> getContext();
 

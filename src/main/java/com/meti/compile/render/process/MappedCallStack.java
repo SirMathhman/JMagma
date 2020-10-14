@@ -8,16 +8,18 @@ import java.util.stream.Collectors;
 
 import static com.meti.compile.render.process.IdentifiedFrame.IdentifiedFrame;
 
-public class MappedStack implements Stack {
-    public static Stack Stack_ = new MappedStack();
+@Deprecated
+public class MappedCallStack implements CallStack {
+    @Deprecated
+    public static CallStack Stack_ = new MappedCallStack();
     private final Deque<Frame> frames;
 
     @Deprecated
-    public MappedStack() {
+    public MappedCallStack() {
         this(new LinkedList<>(List.of(new EmptyFrame())));
     }
 
-    public MappedStack(Deque<Frame> frames) {
+    public MappedCallStack(Deque<Frame> frames) {
         this.frames = frames;
     }
 
@@ -25,7 +27,7 @@ public class MappedStack implements Stack {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        MappedStack that = (MappedStack) o;
+        MappedCallStack that = (MappedCallStack) o;
         return frames.containsAll(that.frames) && that.frames.containsAll(frames);
     }
 
@@ -42,13 +44,13 @@ public class MappedStack implements Stack {
     }
 
     @Override
-    public Stack define(Field field) {
+    public CallStack define(Field field) {
         var newFrames = new LinkedList<>(frames);
         var oldLast = newFrames.pollLast();
         assert oldLast != null;
         var newLast = oldLast.define(field);
         newFrames.add(newLast);
-        return new MappedStack(newFrames);
+        return new MappedCallStack(newFrames);
     }
 
     @Override
@@ -66,15 +68,15 @@ public class MappedStack implements Stack {
     }
 
     @Override
-    public Stack enter() {
+    public CallStack enter() {
         Deque<Frame> newFrames = new LinkedList<>(frames);
         newFrames.push(new EmptyFrame());
-        return new MappedStack(newFrames);
+        return new MappedCallStack(newFrames);
     }
 
     @Override
-    public Stack defineAll(List<Field> fields) {
-        Stack current = this;
+    public CallStack defineAll(List<Field> fields) {
+        CallStack current = this;
         for (Field field : fields) {
             current = define(field);
         }
@@ -82,15 +84,15 @@ public class MappedStack implements Stack {
     }
 
     @Override
-    public Stack exit() {
+    public CallStack exit() {
         Deque<Frame> newFrames = new LinkedList<>(frames);
         newFrames.pollLast();
-        return new MappedStack(newFrames);
+        return new MappedCallStack(newFrames);
     }
 
     @Override
     public Optional<Context> getContext() {
-        
+
         return Optional.empty();
     }
 
@@ -101,9 +103,9 @@ public class MappedStack implements Stack {
     }
 
     @Override
-    public Stack enterWithIdentity(Field identity) {
+    public CallStack enterWithIdentity(Field identity) {
         Deque<Frame> newFrames = new LinkedList<>(frames);
         newFrames.addLast(IdentifiedFrame(identity));
-        return new MappedStack(newFrames);
+        return new MappedCallStack(newFrames);
     }
 }

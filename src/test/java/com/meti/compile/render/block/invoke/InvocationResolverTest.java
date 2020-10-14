@@ -1,7 +1,7 @@
 package com.meti.compile.render.block.invoke;
 
 import com.meti.compile.render.primitive.Primitive;
-import com.meti.compile.render.process.MappedStack;
+import com.meti.compile.render.process.MappedCallStack;
 import com.meti.compile.render.type.TypeException;
 import org.junit.jupiter.api.Test;
 
@@ -20,7 +20,7 @@ class InvocationResolverTest {
         var caller = Variable("test");
         var value = Mapping(caller);
         var declaration = Field("test", Primitive.I16);
-        var stack = new MappedStack()
+        var stack = new MappedCallStack()
                 .define(declaration);
         var state = State(value, stack);
         assertThrows(TypeException.class, () -> new InvocationResolver(state).resolve());
@@ -33,7 +33,7 @@ class InvocationResolverTest {
         var expected = Primitive.I16;
         var type = FunctionType(expected);
         var declaration = Field("test", type);
-        var stack = new MappedStack()
+        var stack = new MappedCallStack()
                 .define(declaration);
         var state = State(value, stack);
         var actual = new InvocationResolver(state)

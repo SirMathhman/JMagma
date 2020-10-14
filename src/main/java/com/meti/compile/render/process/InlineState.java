@@ -8,22 +8,22 @@ import java.util.stream.Stream;
 
 public class InlineState implements State {
     private final Node value;
-    private final Stack scope;
+    private final CallStack scope;
     private final List<Node> functions;
     private final List<Node> structures;
 
-    private InlineState(Node value, Stack scope) {
+    private InlineState(Node value, CallStack scope) {
         this(value, scope, new ArrayList<>(), new ArrayList<>());
     }
 
-    public InlineState(Node value, Stack scope, List<Node> functions, List<Node> structures) {
+    public InlineState(Node value, CallStack scope, List<Node> functions, List<Node> structures) {
         this.value = value;
         this.scope = scope;
         this.functions = functions;
         this.structures = structures;
     }
 
-    public static InlineState State(Node value, Stack scope) {
+    public static InlineState State(Node value, CallStack scope) {
         return new InlineState(value, scope);
     }
 
@@ -62,12 +62,12 @@ public class InlineState implements State {
     }
 
     @Override
-    public Stack getScope() {
+    public CallStack getScope() {
         return scope;
     }
 
     @Override
-    public State with(Stack scope) {
+    public State with(CallStack scope) {
         return State(value, scope);
     }
 

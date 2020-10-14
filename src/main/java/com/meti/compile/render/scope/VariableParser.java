@@ -2,7 +2,7 @@ package com.meti.compile.render.scope;
 
 import com.meti.compile.render.node.Node;
 import com.meti.compile.render.process.AbstractProcessor;
-import com.meti.compile.render.process.Stack;
+import com.meti.compile.render.process.CallStack;
 import com.meti.compile.render.process.State;
 
 import java.util.Optional;
@@ -20,7 +20,7 @@ public class VariableParser extends AbstractProcessor {
         return Optional.empty();
     }
 
-    private State check(Node current, Stack scope) {
+    private State check(Node current, CallStack scope) {
         var name = current.value(String.class);
         if (!scope.isDefined(name)) {
             var format = "%s is not defined in %s";
