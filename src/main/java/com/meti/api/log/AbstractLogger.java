@@ -1,15 +1,15 @@
 package com.meti.api.log;
 
-import java.io.IOException;
+import com.meti.api.core.Exception;
 
 public abstract class AbstractLogger implements Logger {
     @Override
-    public void logWithException(Level level, final String message, IOException exception) {
+    public void logWithException(Level level, final String message, Exception exception) {
         String formatted = formatWithCause(level, message, exception);
         System.err.println(formatted);
     }
 
-    protected abstract String formatWithCause(Level level, String message, IOException exception);
+    protected abstract String formatWithCause(Level level, String message, Exception exception);
 
     @Override
     public void log(Level level, final String message) {

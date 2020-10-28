@@ -1,13 +1,13 @@
 package com.meti.api.log;
 
-import java.io.IOException;
+import com.meti.api.core.Exception;
 
 public interface Logger {
-    void logWithException(Level level, String message, IOException exception);
+    void logWithException(Level level, String message, Exception exception);
 
     void log(Level level, String message);
 
-    public enum Level {
+    enum Level {
         Info,
         Warning,
         Severe

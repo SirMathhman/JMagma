@@ -41,7 +41,11 @@ public class JavaPath implements Path {
     }
 
     @Override
-    public void createAsFile() throws IOException {
-        Files.createFile(path);
+    public void createAsFile() throws com.meti.api.io.IOException {
+        try {
+            Files.createFile(path);
+        } catch (IOException e) {
+            throw new com.meti.api.io.IOException(e);
+        }
     }
 }

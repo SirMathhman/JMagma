@@ -1,15 +1,12 @@
 package com.meti.api.log;
 
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.io.StringWriter;
+import com.meti.api.core.Exception;
 
 public class SimpleLogger extends AbstractLogger {
     @Override
-    protected String formatWithCause(Level level, String message, IOException exception) {
-        StringWriter writer = new StringWriter();
-        exception.printStackTrace(new PrintWriter(writer));
-        return "%s: %s:\n%s".formatted(level.name(), message, writer.toString());
+    protected String formatWithCause(Level level, String message, Exception exception) {
+        String stackTrace = exception.renderStackTrace();
+        return "%s: %s:\n%s".formatted(level.name(), message, stackTrace);
     }
 
     @Override

@@ -1,10 +1,9 @@
 package com.meti.app.compile;
 
+import com.meti.api.core.Exception;
 import com.meti.api.io.Path;
 import com.meti.api.log.Logger;
 import com.meti.api.log.SimpleLogger;
-
-import java.io.IOException;
 
 import static com.meti.api.io.JavaPath.Root;
 import static com.meti.api.log.Logger.Level.Severe;
@@ -20,7 +19,7 @@ public class Main {
                 String format = "Build did not exist at '%s' and will be created.";
                 logger.log(Warning, format.formatted(path.toString()));
                 path.createAsFile();
-            } catch (IOException e) {
+            } catch (Exception e) {
                 logger.logWithException(Severe, "Failed to create build file", e);
             }
         }

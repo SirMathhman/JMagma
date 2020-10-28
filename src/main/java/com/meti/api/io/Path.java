@@ -1,7 +1,5 @@
 package com.meti.api.io;
 
-import java.io.IOException;
-
 public interface Path {
     Path resolveName(String name);
 
