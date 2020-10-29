@@ -10,25 +10,27 @@ import static com.meti.ImmutableStrategyBuffer.EmptyBuffer;
 public class MagmaCompiler implements Compiler {
     static final Compiler MagmaCompiler_ = new MagmaCompiler();
 
-    @Override
-    public String compile(String value) {
-        return split(value)
-                .map(this::tokenize)
-                .collect(Collectors.joining());
-    }
-
-     static Stream<String> split(String value) {
+    static Stream<String> split(String value) {
         return IntStream.range(0, value.length())
                 .mapToObj(value::charAt)
                 .reduce(EmptyBuffer, BracketStrategy_::process, (oldBuffer, newBuffer) -> newBuffer)
                 .complete().trim();
     }
 
-    private String tokenize(String value) {
-        if (value.equals("def main() : Int => {return 0;}")) {
-            return "int main(){return 0;}";
-        } else {
-            throw new IllegalArgumentException("Cannot tokenize '" + value + "'.");
-        }
+    @Override
+    public String compile(String value) {
+        return split(value)
+                .map(MagmaTokenizer::new)
+                .map(Tokenizer::tokenize)
+                .map(s -> s.orElseThrow(() -> invalidateToken(value)))
+                .map(Node::render)
+                .collect(Collectors.joining());
     }
+
+    private IllegalArgumentException invalidateToken(String value) {
+        String format = "Cannot tokenize '%s'.";
+        String message = format.formatted(value);
+        return new IllegalArgumentException(message);
+    }
+
 }
