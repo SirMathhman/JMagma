@@ -1,7 +1,7 @@
 package com.meti;
 
 public class BracketStrategy implements Strategy {
-    public static final Strategy BracketStrategy_ = new BracketStrategy();
+    static final Strategy BracketStrategy_ = new BracketStrategy();
 
     @Override
     public StrategyBuffer process(StrategyBuffer buffer, char c) {

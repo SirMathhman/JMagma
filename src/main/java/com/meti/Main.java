@@ -9,12 +9,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
-import java.util.stream.Stream;
 
-import static com.meti.BracketStrategy.BracketStrategy_;
-import static com.meti.ImmutableStrategyBuffer.ImmutableStrategyBuffer_;
+import static com.meti.MagmaCompiler.MagmaCompiler_;
 
 public class Main {
     private static final Path Root = Paths.get(".");
@@ -103,8 +99,7 @@ public class Main {
     private static String compile(Path mainFile) {
         if (Files.exists(mainFile)) {
             String value = readContent(mainFile);
-            Stream<String> itemStream = streamItems(value);
-            return tokenize(itemStream);
+            return MagmaCompiler_.compile(value);
         } else {
             logger.log(Level.SEVERE, "Entry point at '" + mainFile + "' did not exist.");
             return "";
@@ -118,28 +113,6 @@ public class Main {
             logger.log(Level.SEVERE, "Failed to read main file at '" + mainFile + "'.", e);
             return "";
         }
-    }
-
-    private static Stream<String> streamItems(String value) {
-        return IntStream.range(0, value.length())
-                .mapToObj(value::charAt)
-                .reduce(ImmutableStrategyBuffer_, BracketStrategy_::process, (oldBuffer, newBuffer) -> newBuffer)
-                .complete().trim();
-    }
-
-    private static String tokenize(Stream<String> stream) {
-        return stream.map(Main::tokenize)
-                .collect(Collectors.joining());
-    }
-
-    private static String tokenize(String s) {
-        String str;
-        if (s.equals("def main() : Int => {return 0;}")) {
-            str = "int main(){return 0;}";
-        } else {
-            throw new IllegalArgumentException("Cannot tokenize '" + s + "'.");
-        }
-        return str;
     }
 
     private static void deletePreviousTarget() {
