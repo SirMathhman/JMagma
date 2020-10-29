@@ -7,7 +7,7 @@ public interface StrategyBuffer {
 
     boolean isLevel();
 
-    boolean isSurface();
+    boolean isShallow();
 
     StrategyBuffer descend();
 

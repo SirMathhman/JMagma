@@ -3,22 +3,46 @@ package com.meti;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Objects;
 import java.util.stream.Stream;
 
 public class ImmutableStrategyBuffer implements StrategyBuffer {
-    public static final StrategyBuffer ImmutableStrategyBuffer_ = new ImmutableStrategyBuffer();
+    static final StrategyBuffer EmptyBuffer = new ImmutableStrategyBuffer();
     private final Collection<String> list;
-    private final StringBuilder buffer;
+    private final String buffer;
     private final int depth;
 
-    private ImmutableStrategyBuffer() {
-        this(Collections.emptyList(), new StringBuilder(), 0);
+    ImmutableStrategyBuffer() {
+        this(Collections.emptyList());
     }
 
-    private ImmutableStrategyBuffer(Collection<String> list, StringBuilder buffer, int depth) {
+    ImmutableStrategyBuffer(Collection<String> list) {
+        this(list, 0);
+    }
+
+    private ImmutableStrategyBuffer(Collection<String> list, int depth) {
+        this(list, depth, "");
+    }
+
+    ImmutableStrategyBuffer(Collection<String> list, int depth, String buffer) {
         this.list = list;
         this.buffer = buffer;
         this.depth = depth;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ImmutableStrategyBuffer that = (ImmutableStrategyBuffer) o;
+        return depth == that.depth &&
+               Objects.equals(list, that.list) &&
+               Objects.equals(buffer, that.buffer);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(list, buffer, depth);
     }
 
     @Override
@@ -33,31 +57,29 @@ public class ImmutableStrategyBuffer implements StrategyBuffer {
     }
 
     @Override
-    public boolean isSurface() {
+    public boolean isShallow() {
         return depth == 1;
     }
 
     @Override
     public StrategyBuffer descend() {
-        return new ImmutableStrategyBuffer(list, buffer, depth - 1);
+        return new ImmutableStrategyBuffer(list, depth - 1, buffer);
     }
 
     @Override
     public StrategyBuffer ascend() {
-        return new ImmutableStrategyBuffer(list, buffer, depth + 1);
+        return new ImmutableStrategyBuffer(list, depth + 1, buffer);
     }
 
     @Override
     public StrategyBuffer append(char c) {
-        return new ImmutableStrategyBuffer(list, buffer.append(c), depth + 1);
+        return new ImmutableStrategyBuffer(list, depth, buffer + c);
     }
 
     @Override
     public StrategyBuffer complete() {
         Collection<String> newList = new ArrayList<>(list);
-        String bufferAsString = buffer.toString();
-        newList.add(bufferAsString);
-        StringBuilder buffer = new StringBuilder();
-        return new ImmutableStrategyBuffer(newList, buffer, depth);
+        newList.add(buffer);
+        return new ImmutableStrategyBuffer(newList, depth);
     }
 }

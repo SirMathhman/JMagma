@@ -5,17 +5,18 @@ public class BracketStrategy implements Strategy {
 
     @Override
     public StrategyBuffer process(StrategyBuffer buffer, char c) {
-        if (c == '}' && buffer.isSurface()) {
-            buffer = buffer.descend()
+        if (c == '}' && buffer.isShallow()) {
+            return buffer.descend()
                     .append('}')
                     .complete();
         } else if (c == ';' && buffer.isLevel()) {
-            buffer = buffer.complete();
+            return buffer.complete();
         } else if (c == '{') {
-            buffer = buffer.ascend().append(c);
+            return buffer.ascend().append(c);
         } else if (c == '}') {
-            buffer = buffer.descend().append(c);
+            return buffer.descend().append(c);
+        } else {
+            return buffer.append(c);
         }
-        return buffer;
     }
 }
