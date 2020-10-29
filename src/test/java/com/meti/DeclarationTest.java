@@ -28,4 +28,11 @@ class DeclarationTest {
     void render() {
         assertEquals("int value;", createDeclaration().render());
     }
+
+    @Test
+    void testEquals() {
+        Node expected = createDeclaration();
+        Node actual = createDeclaration();
+        assertEquals(expected, actual);
+    }
 }

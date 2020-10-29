@@ -1,11 +1,26 @@
 package com.meti;
 
+import java.util.Objects;
+
 public class Declaration implements Node {
     private static final String Format = "%s;";
     private final Field identity;
 
     public Declaration(Field identity) {
         this.identity = identity;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Declaration that = (Declaration) o;
+        return Objects.equals(identity, that.identity);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(identity);
     }
 
     @Override
