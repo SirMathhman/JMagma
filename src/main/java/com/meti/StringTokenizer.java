@@ -1,6 +1,6 @@
 package com.meti;
 
-public abstract class StringTokenizer implements Tokenizer {
+public abstract class StringTokenizer<T> implements Tokenizer<T> {
     protected final String content;
 
     public StringTokenizer(String content) {

@@ -7,9 +7,9 @@ import java.util.function.Function;
 import java.util.stream.Stream;
 
 public class ListTokenizer extends CompoundTokenizer {
-    private final List<Function<String, Tokenizer>> factories;
+    private final List<Function<String, Tokenizer<Node>>> factories;
 
-    private ListTokenizer(String content, List<Function<String, Tokenizer>> factories) {
+    private ListTokenizer(String content, List<Function<String, Tokenizer<Node>>> factories) {
         super(content);
         this.factories = factories;
     }
@@ -19,28 +19,28 @@ public class ListTokenizer extends CompoundTokenizer {
     }
 
     @Override
-    protected Stream<Function<String, Tokenizer>> streamFactories() {
+    protected Stream<Function<String, Tokenizer<Node>>> streamFactories() {
         return factories.stream();
     }
 
     static class Builder {
-        private final List<Function<String, Tokenizer>> cache;
+        private final List<Function<String, Tokenizer<Node>>> cache;
 
         Builder() {
             this(Collections.emptyList());
         }
 
-        Builder(List<Function<String, Tokenizer>> cache) {
+        Builder(List<Function<String, Tokenizer<Node>>> cache) {
             this.cache = cache;
         }
 
-        Builder with(Function<String, Tokenizer> factory) {
-            List<Function<String, Tokenizer>> newCache = new ArrayList<>(cache);
+        Builder with(Function<String, Tokenizer<Node>> factory) {
+            List<Function<String, Tokenizer<Node>>> newCache = new ArrayList<>(cache);
             newCache.add(factory);
             return new Builder(newCache);
         }
 
-        Tokenizer build(String content) {
+        Tokenizer<Node> build(String content) {
             return new ListTokenizer(content, cache);
         }
     }

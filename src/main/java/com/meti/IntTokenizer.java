@@ -3,7 +3,7 @@ package com.meti;
 import java.math.BigInteger;
 import java.util.Optional;
 
-public class IntTokenizer extends StringTokenizer {
+public class IntTokenizer extends StringTokenizer<Node> {
     public IntTokenizer(String value) {
         super(value);
     }

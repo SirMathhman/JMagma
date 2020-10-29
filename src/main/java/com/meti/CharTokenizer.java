@@ -2,7 +2,7 @@ package com.meti;
 
 import java.util.Optional;
 
-public class CharTokenizer extends StringTokenizer{
+public class CharTokenizer extends StringTokenizer<Node> {
     public CharTokenizer(String content) {
         super(content);
     }
