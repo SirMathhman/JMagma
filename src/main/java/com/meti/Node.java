@@ -2,7 +2,7 @@ package com.meti;
 
 import java.util.function.Function;
 
-public interface Node {
+public interface Node extends Renderable {
     boolean is(Group group);
 
     default <T, R> R mapValue(Class<T> clazz, Function<T, R> function) {
@@ -16,11 +16,9 @@ public interface Node {
         return this;
     }
 
-    String render();
-
     enum Group {
         Char,
         Int,
-        Content,
+        Content, Declaration,
     }
 }
