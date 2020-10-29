@@ -17,7 +17,7 @@ public class MagmaCompiler implements Compiler {
                 .complete().trim()
                 .map(this::tokenize)
                 .collect(Collectors.joining());
-    }E
+    }
 
     private String tokenize(String value) {
         if (value.equals("def main() : Int => {return 0;}")) {
