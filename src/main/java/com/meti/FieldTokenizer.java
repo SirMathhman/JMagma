@@ -14,15 +14,24 @@ public class FieldTokenizer extends StringTokenizer<Field> {
     @Override
     public Optional<Field> tokenize() {
         //const x : Int
-        if (content.contains(":")) {
-            Field.Both both = Field()
-                    .withName(extractName())
-                    .withType(extractType());
-            return Optional.of(foldFlags(both));
+        if (isField()) {
+            if (content.contains(":")) {
+                Field.Both both = Field()
+                        .withName(extractName())
+                        .withType(extractType());
+                return Optional.of(foldFlags(both));
+            } else {
+                //TODO: implicit fields
+                throw new IllegalStateException("Implicit types in '" + content + "' aren't supported yet.");
+            }
         } else {
-            //TODO: implicit fields
-            throw new IllegalStateException("Implicit types in '" + content + "' aren't supported yet.");
+            return Optional.empty();
         }
+    }
+
+    private boolean isField() {
+        String formatted = content.trim();
+        return formatted.contains(":") || formatted.contains(" ");
     }
 
     private Field foldFlags(Field.Both both) {

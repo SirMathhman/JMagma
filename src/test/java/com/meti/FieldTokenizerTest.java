@@ -1,16 +1,22 @@
 package com.meti;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import static com.meti.Field.Field;
 import static com.meti.Field.Flag.CONST;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class FieldTokenizerTest {
+    @Test
+    void tokenizeInvalid() {
+        assertTrue(new FieldTokenizer("test")
+                .tokenize()
+                .isEmpty());
+    }
 
     @Test
-    void tokenize() {
+    void tokenizeValid() {
         Field expected = Field()
                 .withName("x")
                 .withType(new ContentType("I16"))
