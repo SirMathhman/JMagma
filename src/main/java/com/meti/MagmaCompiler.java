@@ -6,6 +6,7 @@ import java.util.stream.Stream;
 
 import static com.meti.BracketStrategy.BracketStrategy_;
 import static com.meti.ImmutableStrategyBuffer.EmptyBuffer;
+import static com.meti.Node.Group.Content;
 
 public class MagmaCompiler implements Compiler {
     static final Compiler MagmaCompiler_ = new MagmaCompiler();
@@ -20,11 +21,20 @@ public class MagmaCompiler implements Compiler {
     @Override
     public String compile(String value) {
         return split(value)
-                .map(MagmaTokenizer::new)
-                .map(Tokenizer::tokenize)
-                .map(s -> s.orElseThrow(() -> invalidateToken(value)))
+                .map(this::tokenize)
                 .map(Node::render)
                 .collect(Collectors.joining());
+    }
+
+    private Node tokenize(String content) {
+        return new MagmaTokenizer(content)
+                .tokenize()
+                .orElseThrow(() -> invalidateToken(content))
+                .mapByChild(this::tokenize);
+    }
+
+    private Node tokenize(Node node) {
+        return node.is(Content) ? node.mapValue(String.class, this::tokenize) : node;
     }
 
     private IllegalArgumentException invalidateToken(String value) {

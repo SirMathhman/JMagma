@@ -13,4 +13,9 @@ class Int implements Node {
     public String render() {
         return value.toString();
     }
+
+    @Override
+    public boolean is(Group group) {
+        throw new UnsupportedOperationException();
+    }
 }

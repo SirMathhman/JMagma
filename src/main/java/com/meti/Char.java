@@ -12,4 +12,9 @@ class Char implements Node {
     public String render() {
         return Format.formatted(value);
     }
+
+    @Override
+    public boolean is(Group group) {
+        throw new UnsupportedOperationException();
+    }
 }

@@ -5,7 +5,7 @@ import java.util.function.Function;
 import java.util.stream.Stream;
 
 public abstract class CompoundTokenizer extends StringTokenizer {
-    public CompoundTokenizer(String content) {
+    CompoundTokenizer(String content) {
         super(content);
     }
 
