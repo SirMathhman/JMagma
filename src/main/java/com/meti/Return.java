@@ -1,6 +1,7 @@
 package com.meti;
 
 import java.util.Objects;
+import java.util.function.Function;
 
 public class Return implements Node {
     private static final String Format = "return %s;";
@@ -8,6 +9,11 @@ public class Return implements Node {
 
     public Return(Node value) {
         this.value = value;
+    }
+
+    @Override
+    public Node mapByChild(Function<Node, Node> mapping) {
+        return new Return(mapping.apply(value));
     }
 
     @Override

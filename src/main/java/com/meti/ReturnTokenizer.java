@@ -9,7 +9,7 @@ public class ReturnTokenizer extends StringTokenizer<Node> {
 
     @Override
     public Optional<Node> tokenize() {
-        if(content.startsWith("return ")) {
+        if (content.startsWith("return ")) {
             String returnSlice = content.substring(7);
             String returnTrim = returnSlice.trim();
             Node value = new ContentNode(returnTrim);

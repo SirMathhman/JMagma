@@ -11,6 +11,7 @@ public class NodeTokenizer extends CompoundTokenizer<Node> {
     @Override
     protected Stream<Function<String, Tokenizer<Node>>> streamFactories() {
         return Stream.of(
+                ReturnTokenizer::new,
                 InitializationTokenizer::new,
                 DeclarationTokenizer::new,
                 AssignmentTokenizer::new,
