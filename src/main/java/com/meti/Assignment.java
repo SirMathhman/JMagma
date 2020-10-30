@@ -1,5 +1,6 @@
 package com.meti;
 
+import java.util.Objects;
 import java.util.function.Function;
 
 public class Assignment implements Node {
@@ -10,6 +11,20 @@ public class Assignment implements Node {
     public Assignment(Node to, Node from) {
         this.from = from;
         this.to = to;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Assignment that = (Assignment) o;
+        return Objects.equals(from, that.from) &&
+               Objects.equals(to, that.to);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(from, to);
     }
 
     @Override

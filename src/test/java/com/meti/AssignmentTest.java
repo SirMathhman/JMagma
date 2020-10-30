@@ -6,6 +6,12 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class AssignmentTest {
+    @Test
+    void testEquals() {
+        Node expected = createNode();
+        Node actual = createNode();
+        assertEquals(expected, actual);
+    }
 
     @Test
     void is() {
