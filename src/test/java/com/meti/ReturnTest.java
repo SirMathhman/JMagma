@@ -9,7 +9,7 @@ class ReturnTest {
 
     @Test
     void is() {
-        assertTrue(createNode().is(Node.Group.Return);
+        assertTrue(createNode().is(Node.Group.Return));
     }
 
     private Return createNode() {
