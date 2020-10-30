@@ -14,7 +14,7 @@ public interface Type extends Renderable {
 
     enum Group {
         Content,
-        Primitive
+        Function, Primitive
     }
 
     default String render(String name){
