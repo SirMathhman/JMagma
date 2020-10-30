@@ -1,12 +1,18 @@
 package com.meti;
 
 import java.util.Objects;
+import java.util.function.Function;
 
 public class ContentNode implements Node {
     private final String value;
 
     public ContentNode(String value) {
         this.value = value;
+    }
+
+    @Override
+    public <T, R> R mapValue(Class<T> clazz, Function<T, R> function) {
+        return function.apply(clazz.cast(value));
     }
 
     @Override

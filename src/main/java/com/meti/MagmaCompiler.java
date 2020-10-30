@@ -1,6 +1,5 @@
 package com.meti;
 
-import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
@@ -22,16 +21,16 @@ public class MagmaCompiler implements Compiler {
     @Override
     public String compile(String value) {
         return split(value)
-                .map(this::tokenize)
+                .map(this::tokenizeStringAsNode)
                 .map(Node::render)
                 .collect(Collectors.joining());
     }
 
-    private Node tokenize(String content) {
+    private Node tokenizeStringAsNode(String content) {
         return new NodeTokenizer(content)
                 .tokenize()
                 .orElseThrow(() -> invalidateToken(content))
-                .mapByChild(this::tokenize)
+                .mapByChild(this::tokenizeNode)
                 .mapByIdentity(this::tokenizeField);
     }
 
@@ -40,10 +39,10 @@ public class MagmaCompiler implements Compiler {
     }
 
     private Type tokenizeType(Type type) {
-        return type.is(Type.Group.Content) ? type.mapContent(String.class, MagmaCompiler.this::tokenizeTypeString) : type;
+        return type.is(Type.Group.Content) ? type.mapContent(String.class, MagmaCompiler.this::tokenizeStringAsType) : type;
     }
 
-    private Type tokenizeTypeString(String s) {
+    private Type tokenizeStringAsType(String s) {
         return new TypeTokenizer(s)
                 .tokenize()
                 .orElseThrow(() -> invalidateType(s));
@@ -55,8 +54,8 @@ public class MagmaCompiler implements Compiler {
         return new IllegalArgumentException(message);
     }
 
-    private Node tokenize(Node node) {
-        return node.is(Content) ? node.mapValue(String.class, this::tokenize) : node;
+    private Node tokenizeNode(Node node) {
+        return node.is(Content) ? node.mapValue(String.class, this::tokenizeStringAsNode) : node;
     }
 
     private IllegalArgumentException invalidateToken(String value) {
