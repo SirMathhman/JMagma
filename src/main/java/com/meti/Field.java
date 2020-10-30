@@ -15,7 +15,7 @@ public interface Field extends Renderable {
 
     boolean is(Flag flag);
 
-    String render(String more);
+    String render(String parameters);
 
     enum Flag {
         NATIVE,
@@ -68,8 +68,8 @@ public interface Field extends Renderable {
         }
 
         @Override
-        public String render(String more) {
-            return type.render(name + more);
+        public String render(String parameters) {
+            return type.secondary().render(name + parameters);
         }
     }
 

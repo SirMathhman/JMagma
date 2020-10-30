@@ -26,6 +26,11 @@ public class FunctionType implements Type {
         return returnType.render(message);
     }
 
+    @Override
+    public Type secondary() {
+        return returnType;
+    }
+
     private String renderParameters() {
         return parameters.stream()
                 .map(Type::render)
