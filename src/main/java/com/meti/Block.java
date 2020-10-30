@@ -4,10 +4,27 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class Block implements Node {
     private final List<Node> children;
+
+    Block(List<Node> children) {
+        this.children = children;
+    }
+
+    static Builder Block() {
+        return new Builder();
+    }
+
+    @Override
+    public Node mapByChild(Function<Node, Node> mapping) {
+        return children.stream()
+                .map(mapping)
+                .reduce(Block(), Builder::append, (builder, builder2) -> builder2)
+                .complete();
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -22,8 +39,16 @@ public class Block implements Node {
         return Objects.hash(children);
     }
 
-    static Builder Block(){
-        return new Builder();
+    @Override
+    public boolean is(Group group) {
+        return group == Group.Block;
+    }
+
+    @Override
+    public String render() {
+        return children.stream()
+                .map(Node::render)
+                .collect(Collectors.joining("", "{", "}"));
     }
 
     static class Builder {
@@ -43,24 +68,8 @@ public class Block implements Node {
             return new Builder(newCache);
         }
 
-        Node complete(){
+        Node complete() {
             return new Block(cache);
         }
-    }
-
-    Block(List<Node> children) {
-        this.children = children;
-    }
-
-    @Override
-    public boolean is(Group group) {
-        return group == Group.Block;
-    }
-
-    @Override
-    public String render() {
-        return children.stream()
-                .map(Node::render)
-                .collect(Collectors.joining("", "{", "}"));
     }
 }
