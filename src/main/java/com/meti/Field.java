@@ -4,11 +4,14 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Function;
 
 public interface Field extends Renderable {
     static None Field() {
         return new None(Collections.emptySet());
     }
+
+    Field mapByType(Function<Type, Type> mapping);
 
     boolean is(Flag flag);
 
@@ -50,6 +53,11 @@ public interface Field extends Renderable {
         @Override
         public String render() {
             return type.render(name);
+        }
+
+        @Override
+        public Field mapByType(Function<Type, Type> mapping) {
+            return new FieldImpl(flags, name, mapping.apply(type));
         }
 
         @Override

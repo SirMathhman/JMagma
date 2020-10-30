@@ -27,4 +27,9 @@ public class ContentType implements Type {
     public <T, R> R mapContent(Class<T> clazz, Function<T, R> function) {
         return function.apply(clazz.cast(content));
     }
+
+    @Override
+    public boolean is(Group group){
+        return group == Group.Content;
+    }
 }

@@ -1,6 +1,7 @@
 package com.meti;
 
 import java.util.Objects;
+import java.util.function.Function;
 
 public class Declaration implements Node {
     private static final String Format = "%s;";
@@ -8,6 +9,11 @@ public class Declaration implements Node {
 
     public Declaration(Field identity) {
         this.identity = identity;
+    }
+
+    @Override
+    public Node mapByIdentity(Function<Field, Field> mapping) {
+        return new Declaration(mapping.apply(identity));
     }
 
     @Override

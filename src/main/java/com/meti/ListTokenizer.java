@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
-public class ListTokenizer extends CompoundTokenizer {
+public class ListTokenizer extends CompoundTokenizer<Node> {
     private final List<Function<String, Tokenizer<Node>>> factories;
 
     private ListTokenizer(String content, List<Function<String, Tokenizer<Node>>> factories) {

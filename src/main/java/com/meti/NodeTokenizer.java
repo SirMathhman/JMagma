@@ -3,8 +3,8 @@ package com.meti;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
-public class MagmaTokenizer extends CompoundTokenizer {
-    public MagmaTokenizer(String value) {
+public class NodeTokenizer extends CompoundTokenizer<Node> {
+    public NodeTokenizer(String value) {
         super(value);
     }
 

@@ -12,7 +12,11 @@ public interface Node extends Renderable {
         throw new IllegalStateException(formatted);
     }
 
-    default Node mapByChild(Function<Node, Node> function) {
+    default Node mapByIdentity(Function<Field, Field> mapping) {
+        return this;
+    }
+
+    default Node mapByChild(Function<Node, Node> mapping) {
         return this;
     }
 

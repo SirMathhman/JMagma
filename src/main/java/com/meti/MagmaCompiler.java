@@ -1,5 +1,6 @@
 package com.meti;
 
+import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
@@ -27,10 +28,31 @@ public class MagmaCompiler implements Compiler {
     }
 
     private Node tokenize(String content) {
-        return new MagmaTokenizer(content)
+        return new NodeTokenizer(content)
                 .tokenize()
                 .orElseThrow(() -> invalidateToken(content))
-                .mapByChild(this::tokenize);
+                .mapByChild(this::tokenize)
+                .mapByIdentity(this::tokenizeField);
+    }
+
+    private Field tokenizeField(Field field) {
+        return field.mapByType(MagmaCompiler.this::tokenizeType);
+    }
+
+    private Type tokenizeType(Type type) {
+        return type.is(Type.Group.Content) ? type.mapContent(String.class, MagmaCompiler.this::tokenizeTypeString) : type;
+    }
+
+    private Type tokenizeTypeString(String s) {
+        return new TypeTokenizer(s)
+                .tokenize()
+                .orElseThrow(() -> invalidateType(s));
+    }
+
+    private IllegalArgumentException invalidateType(String s) {
+        String format = "Unable to tokenize type: %s";
+        String message = format.formatted(s);
+        return new IllegalArgumentException(message);
     }
 
     private Node tokenize(Node node) {

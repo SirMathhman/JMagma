@@ -10,6 +10,13 @@ public interface Type extends Renderable {
         throw new IllegalStateException(message);
     }
 
+    boolean is(Group group);
+
+    enum Group {
+        Content,
+        Primitive
+    }
+
     default String render(String name){
         Class<? extends Type> clazz = getClass();
         String format = "Cannot render instances of '%s' with name '%s'.";

@@ -24,4 +24,9 @@ public enum Primitive implements Type {
     public String render(String name) {
         return Format.formatted(value, name);
     }
+
+    @Override
+    public boolean is(Group group){
+        return false;
+    }
 }

@@ -4,15 +4,15 @@ import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
-public abstract class CompoundTokenizer extends StringTokenizer<Node> {
+public abstract class CompoundTokenizer<T> extends StringTokenizer<T> {
     CompoundTokenizer(String content) {
         super(content);
     }
 
-    protected abstract Stream<Function<String, Tokenizer<Node>>> streamFactories();
+    protected abstract Stream<Function<String, Tokenizer<T>>> streamFactories();
 
     @Override
-    public Optional<Node> tokenize() {
+    public Optional<T> tokenize() {
         return streamFactories()
                 .map(factory -> factory.apply(content))
                 .map(Tokenizer::tokenize)
