@@ -6,13 +6,19 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class ReturnTest {
+    @Test
+    void testEquals() {
+        Node expected = createNode();
+        Node actual = createNode();
+        assertEquals(expected, actual);
+    }
 
     @Test
     void is() {
         assertTrue(createNode().is(Node.Group.Return));
     }
 
-    private Return createNode() {
+    private Node createNode() {
         return new Return(new Variable("test"));
     }
 
