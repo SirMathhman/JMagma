@@ -10,6 +10,9 @@ public class MagmaTokenizer extends CompoundTokenizer {
 
     @Override
     protected Stream<Function<String, Tokenizer<Node>>> streamFactories() {
-        return Stream.of(IntTokenizer::new);
+        return Stream.of(
+                DeclarationTokenizer::new,
+                CharTokenizer::new,
+                IntTokenizer::new);
     }
 }
