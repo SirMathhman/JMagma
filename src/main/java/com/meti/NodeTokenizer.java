@@ -13,6 +13,7 @@ public class NodeTokenizer extends CompoundTokenizer<Node> {
         return Stream.of(
                 InitializationTokenizer::new,
                 DeclarationTokenizer::new,
+                AssignmentTokenizer::new,
                 CharTokenizer::new,
                 IntTokenizer::new,
                 VariableTokenizer::new);
