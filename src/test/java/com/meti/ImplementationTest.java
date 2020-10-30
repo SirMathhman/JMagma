@@ -14,14 +14,23 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class ImplementationTest {
+    @Test
+    void testEquals() {
+        Node expected = createNode();
+        Node actual = createNode();
+        assertEquals(expected, actual);
+    }
+
+    private Node createNode() {
+        return Implementation()
+                .withIdentity(createIdentity())
+                .withValue(createValue())
+                .complete();
+    }
 
     @Test
     void implementation() {
-        assertEquals("int main(){return 0;}", Implementation()
-                .withIdentity(createIdentity())
-                .withValue(createValue())
-                .complete()
-                .render());
+        assertEquals("int main(){return 0;}", createNode().render());
     }
 
     @Test

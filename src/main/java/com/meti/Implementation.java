@@ -3,6 +3,7 @@ package com.meti;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class Implementation implements Node {
@@ -18,6 +19,21 @@ public class Implementation implements Node {
 
     static None Implementation() {
         return new None(Collections.emptyList());
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Implementation that = (Implementation) o;
+        return Objects.equals(identity, that.identity) &&
+               Objects.equals(value, that.value) &&
+               Objects.equals(parameters, that.parameters);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(identity, value, parameters);
     }
 
     @Override

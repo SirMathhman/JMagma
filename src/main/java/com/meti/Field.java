@@ -17,6 +17,8 @@ public interface Field extends Renderable {
 
     String render(String parameters);
 
+    Type type();
+
     enum Flag {
         NATIVE,
         DEF,
@@ -70,6 +72,11 @@ public interface Field extends Renderable {
         @Override
         public String render(String parameters) {
             return type.secondary().render(name + parameters);
+        }
+
+        @Override
+        public Type type() {
+            return type;
         }
     }
 

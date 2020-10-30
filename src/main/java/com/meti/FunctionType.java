@@ -3,6 +3,7 @@ package com.meti;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class FunctionType implements Type {
@@ -42,17 +43,31 @@ public class FunctionType implements Type {
         return group == Group.Function;
     }
 
-    static class Complete extends FunctionTypeBuilder<Complete> {
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        FunctionType that = (FunctionType) o;
+        return Objects.equals(returnType, that.returnType) &&
+               Objects.equals(parameters, that.parameters);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(returnType, parameters);
+    }
+
+    static class WithReturn extends FunctionTypeBuilder<WithReturn> {
         private final Type returnType;
 
-        Complete(Type returnType, List<Type> parameters) {
+        WithReturn(Type returnType, List<Type> parameters) {
             super(parameters);
             this.returnType = returnType;
         }
 
         @Override
-        protected Complete complete(List<Type> newParameters) {
-            return new Complete(returnType, newParameters);
+        protected WithReturn complete(List<Type> newParameters) {
+            return new WithReturn(returnType, newParameters);
         }
 
         public Type complete() {
@@ -70,8 +85,8 @@ public class FunctionType implements Type {
             return new None(newParameters);
         }
 
-        public Complete withReturnType(Type returnType) {
-            return new Complete(returnType, parameters);
+        public WithReturn withReturnType(Type returnType) {
+            return new WithReturn(returnType, parameters);
         }
     }
 

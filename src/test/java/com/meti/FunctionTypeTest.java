@@ -14,12 +14,23 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 class FunctionTypeTest {
     @Test
     void builder() {
-        assertEquals("void (*myFunction)(unsigned char ,long long )", FunctionType()
+        assertEquals("void (*myFunction)(unsigned char ,long long )", createType()
+                .render("myFunction"));
+    }
+
+    private Type createType() {
+        return FunctionType()
                 .withReturnType(Void)
                 .withParameter(U8)
                 .withParameter(I64)
-                .complete()
-                .render("myFunction"));
+                .complete();
+    }
+
+    @Test
+    void testEquals() {
+        Type expected = createType();
+        Type actual = createType();
+        assertEquals(expected, actual);
     }
 
     @Test
