@@ -22,7 +22,7 @@ public class FieldTokenizer extends StringTokenizer<Field> {
                 return Optional.of(foldFlags(both));
             } else {
                 //TODO: implicit fields
-                throw new IllegalStateException("Implicit types in '" + content + "' aren't supported yet.");
+                return Optional.empty();
             }
         } else {
             return Optional.empty();
