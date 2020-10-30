@@ -23,6 +23,6 @@ public interface Node extends Renderable {
     enum Group {
         Char,
         Int,
-        Content, Declaration,
+        Content, Declaration, Variable,
     }
 }
