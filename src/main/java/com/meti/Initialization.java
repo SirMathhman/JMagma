@@ -8,6 +8,21 @@ public class Initialization implements Node {
     private final Field identity;
     private final Node value;
 
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Initialization that = (Initialization) o;
+        return Objects.equals(identity, that.identity) &&
+               Objects.equals(value, that.value);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(identity, value);
+    }
+
     Initialization(Field identity, Node value) {
         this.identity = identity;
         this.value = value;
@@ -21,19 +36,6 @@ public class Initialization implements Node {
     @Override
     public Node mapByChild(Function<Node, Node> mapping) {
         return new Initialization(identity, mapping.apply(value));
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Initialization that = (Initialization) o;
-        return Objects.equals(identity, that.identity);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(identity);
     }
 
     @Override
