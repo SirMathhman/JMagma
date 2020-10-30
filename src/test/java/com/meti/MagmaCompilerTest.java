@@ -13,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.assertIterableEquals;
 class MagmaCompilerTest {
     @Test
     void testMain() {
-        String result = MagmaCompiler_.compile("def main() : Int => {return 0;}");
+        String result = MagmaCompiler_.compile("def main() : I16 => {return 0;}");
         assertEquals("int main(){return 0;}", result);
     }
 
