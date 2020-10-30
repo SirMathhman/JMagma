@@ -21,7 +21,8 @@ public class MagmaCompiler implements Compiler {
                 .tokenize()
                 .orElseThrow(() -> invalidateToken(content))
                 .mapByChild(this::tokenizeNode)
-                .mapByIdentity(this::tokenizeField);
+                .mapByIdentity(this::tokenizeField)
+                .mapByMembers(this::tokenizeField);
     }
 
     private Field tokenizeField(Field field) {
@@ -29,7 +30,13 @@ public class MagmaCompiler implements Compiler {
     }
 
     private Type tokenizeType(Type type) {
-        return type.is(Type.Group.Content) ? type.mapContent(String.class, MagmaCompiler.this::tokenizeStringAsType) : type;
+        return tokenizeTypeContent(type).mapByChild(this::tokenizeType);
+    }
+
+    private Type tokenizeTypeContent(Type type) {
+        return type.is(Type.Group.Content) ?
+                type.mapContent(String.class, MagmaCompiler.this::tokenizeStringAsType) :
+                type;
     }
 
     private Type tokenizeStringAsType(String s) {

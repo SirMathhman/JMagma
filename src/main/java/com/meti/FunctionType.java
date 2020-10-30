@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class FunctionType implements Type {
@@ -18,6 +19,16 @@ public class FunctionType implements Type {
 
     static None FunctionType() {
         return new None(Collections.emptyList());
+    }
+
+    @Override
+    public Type mapByChild(Function<Type, Type> mapping) {
+        Type newReturnType = mapping.apply(returnType);
+        WithReturn identity = FunctionType().withReturnType(newReturnType);
+        return parameters.stream()
+                .map(mapping)
+                .reduce(identity, FunctionTypeBuilder::withParameter, (withReturn, withReturn2) -> withReturn2)
+                .complete();
     }
 
     @Override

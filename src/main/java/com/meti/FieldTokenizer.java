@@ -1,5 +1,6 @@
 package com.meti;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Stream;
@@ -37,10 +38,15 @@ public class FieldTokenizer extends StringTokenizer<Field> {
     private Field foldFlags(Field.Both both) {
         String header = extractHeader();
         int separator = header.lastIndexOf(' ');
-        String slice = header.substring(0, separator);
-        String formatted = slice.trim();
-        String[] flagArray = formatted.split(" ");
-        List<String> flagList = List.of(flagArray);
+        List<String> flagList;
+        if (separator == -1) {
+            flagList = Collections.emptyList();
+        } else {
+            String slice = header.substring(0, separator);
+            String formatted = slice.trim();
+            String[] flagArray = formatted.split(" ");
+            flagList = List.of(flagArray);
+        }
         return foldFlagsStreamed(both, flagList.stream());
     }
 

@@ -83,8 +83,8 @@ public class FunctionTokenizer extends StringTokenizer<Node> {
     }
 
     private Type extractReturnType() {
-        int typeIndex = content.indexOf(':');
         int valueIndex = content.indexOf("=>");
+        int typeIndex = content.substring(0, valueIndex).lastIndexOf(':');
         String typeSlice = formatTypeSlice(typeIndex, valueIndex);
         String typeTrim = typeSlice.trim();
         return new ContentType(typeTrim);

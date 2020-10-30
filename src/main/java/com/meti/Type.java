@@ -3,6 +3,10 @@ package com.meti;
 import java.util.function.Function;
 
 public interface Type extends Renderable {
+    default Type mapByChild(Function<Type, Type> mapping) {
+        return this;
+    }
+
     default <T, R> R mapContent(Class<T> clazz, Function<T, R> function) {
         Class<? extends Type> thisClass = getClass();
         String format = "Instances of '%s' have no content.";

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class Implementation implements Node {
@@ -19,6 +20,27 @@ public class Implementation implements Node {
 
     static None Implementation() {
         return new None(Collections.emptyList());
+    }
+
+    @Override
+    public Node mapByMembers(Function<Field, Field> mapping) {
+        Both builder = Implementation()
+                .withIdentity(identity)
+                .withValue(value);
+        return parameters.stream()
+                .map(mapping)
+                .reduce(builder, Both::withParameter, (both, both2) -> both2)
+                .complete();
+    }
+
+    @Override
+    public Node mapByIdentity(Function<Field, Field> mapping) {
+        return new Implementation(mapping.apply(identity), value, parameters);
+    }
+
+    @Override
+    public Node mapByChild(Function<Node, Node> mapping) {
+        return new Implementation(identity, mapping.apply(value), parameters);
     }
 
     @Override

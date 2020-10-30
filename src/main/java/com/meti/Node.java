@@ -5,6 +5,10 @@ import java.util.function.Function;
 public interface Node extends Renderable {
     boolean is(Group group);
 
+    default Node mapByMembers(Function<Field, Field> mapping) {
+        return this;
+    }
+
     default <T, R> R mapValue(Class<T> clazz, Function<T, R> function) {
         Class<? extends Node> thisClass = getClass();
         String format = "Instances of '%s' have no value.";
