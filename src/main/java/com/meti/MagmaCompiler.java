@@ -1,26 +1,16 @@
 package com.meti;
 
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
-import java.util.stream.Stream;
 
-import static com.meti.BracketStrategy.BracketStrategy_;
-import static com.meti.ImmutableStrategyBuffer.EmptyBuffer;
 import static com.meti.Node.Group.Content;
 
 public class MagmaCompiler implements Compiler {
     static final Compiler MagmaCompiler_ = new MagmaCompiler();
 
-    static Stream<String> split(String value) {
-        return IntStream.range(0, value.length())
-                .mapToObj(value::charAt)
-                .reduce(EmptyBuffer, BracketStrategy_::process, (oldBuffer, newBuffer) -> newBuffer)
-                .complete().trim();
-    }
-
     @Override
     public String compile(String value) {
-        return split(value)
+        return new BracketSplitter(value)
+                .split()
                 .map(this::tokenizeStringAsNode)
                 .map(Node::render)
                 .collect(Collectors.joining());

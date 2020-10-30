@@ -19,28 +19,28 @@ class MagmaCompilerTest {
 
     @Test
     void splitSimple() {
-        Stream<String> stream = MagmaCompiler.split("{}");
+        Stream<String> stream = new BracketSplitter("{}").split();
         List<String> actual = stream.collect(Collectors.toList());
         assertIterableEquals(List.of("{}"), actual);
     }
 
     @Test
     void streamBoth() {
-        Stream<String> stream = MagmaCompiler.split("{}{}");
+        Stream<String> stream = new BracketSplitter("{}{}").split();
         List<String> actual = stream.collect(Collectors.toList());
         assertIterableEquals(List.of("{}", "{}"), actual);
     }
 
     @Test
     void splitDelimiterIn(){
-        Stream<String> stream = MagmaCompiler.split("{10;20}");
+        Stream<String> stream = new BracketSplitter("{10;20}").split();
         List<String> actual = stream.collect(Collectors.toList());
         assertIterableEquals(List.of("{10;20}"), actual);
     }
 
     @Test
     void splitDelimiterOut(){
-        Stream<String> stream = MagmaCompiler.split("10;20");
+        Stream<String> stream = new BracketSplitter("10;20").split();
         List<String> actual = stream.collect(Collectors.toList());
         assertIterableEquals(List.of("10", "20"), actual);
     }

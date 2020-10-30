@@ -3,10 +3,24 @@ package com.meti;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class Block implements Node {
     private final List<Node> children;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Block block = (Block) o;
+        return Objects.equals(children, block.children);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(children);
+    }
 
     static Builder Block(){
         return new Builder();

@@ -3,18 +3,24 @@ package com.meti;
 import com.meti.Node.Group;
 import org.junit.jupiter.api.Test;
 
-import javax.swing.text.html.BlockView;
 import java.util.Collections;
 import java.util.List;
 
+import static com.meti.Block.Block;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class BlockTest {
+    @Test
+    void testEquals() {
+        Node expected = Block().append(new Variable("test")).complete();
+        Node actual = Block().append(new Variable("test")).complete();
+        assertEquals(expected, actual);
+    }
 
     @Test
     void block() {
-        assertEquals("{firstsecond}", Block.Block()
+        assertEquals("{firstsecond}", Block()
                 .append(new Variable("first"))
                 .append(new Variable("second"))
                 .complete()
