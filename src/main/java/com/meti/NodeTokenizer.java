@@ -14,6 +14,7 @@ public class NodeTokenizer extends CompoundTokenizer<Node> {
                 InitializationTokenizer::new,
                 DeclarationTokenizer::new,
                 CharTokenizer::new,
-                IntTokenizer::new);
+                IntTokenizer::new,
+                VariableTokenizer::new);
     }
 }
