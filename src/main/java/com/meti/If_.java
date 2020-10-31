@@ -1,8 +1,9 @@
 package com.meti;
 
 import java.util.Objects;
+import java.util.function.Function;
 
-public class If_ implements Node{
+public class If_ implements Node {
     private static final String Format = "if(%s)%s";
     private final Node condition;
     private final Node value;
@@ -10,6 +11,13 @@ public class If_ implements Node{
     public If_(Node condition, Node value) {
         this.condition = condition;
         this.value = value;
+    }
+
+    @Override
+    public Node mapByChild(Function<Node, Node> mapping) {
+        Node newCondition = mapping.apply(condition);
+        Node newValue = mapping.apply(value);
+        return new If_(newCondition, newValue);
     }
 
     @Override
