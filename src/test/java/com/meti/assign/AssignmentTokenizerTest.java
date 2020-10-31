@@ -1,8 +1,8 @@
-package com.meti;
+package com.meti.assign;
 
+import com.meti.ContentNode;
+import com.meti.Node;
 import org.junit.jupiter.api.Test;
-
-import java.math.BigInteger;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
