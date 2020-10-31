@@ -1,5 +1,7 @@
 package com.meti;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -11,6 +13,10 @@ public class Structure implements Node {
     public Structure(String name, List<Field> members) {
         this.name = name;
         this.members = members;
+    }
+
+    static None Structure() {
+        return new None(Collections.emptyList());
     }
 
     @Override
@@ -43,5 +49,54 @@ public class Structure implements Node {
                 .map(Field::render)
                 .map("%s;"::formatted)
                 .collect(Collectors.joining("", "{", "}"));
+    }
+
+    static class None extends Builder<None> {
+        public None(List<Field> members) {
+            super(members);
+        }
+
+        @Override
+        None complete(List<Field> copy) {
+            return new None(copy);
+        }
+
+        public Complete withName(String name) {
+            return new Complete(members, name);
+        }
+    }
+
+    static abstract class Builder<T> {
+        protected final List<Field> members;
+
+        Builder(List<Field> members) {
+            this.members = members;
+        }
+
+        abstract T complete(List<Field> copy);
+
+        T withField(Field field) {
+            List<Field> newMembers = new ArrayList<>(members);
+            newMembers.add(field);
+            return complete(newMembers);
+        }
+    }
+
+    static class Complete extends Builder<Complete> {
+        private final String name;
+
+        public Complete(List<Field> members, String name) {
+            super(members);
+            this.name = name;
+        }
+
+        @Override
+        Complete complete(List<Field> copy) {
+            return new Complete(copy, name);
+        }
+
+        public Node complete() {
+            return new Structure(name, members);
+        }
     }
 }
