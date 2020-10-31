@@ -8,6 +8,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class Block implements Node {
+    public static final Node EmptyBlock = new Block(Collections.emptyList());
     private final List<Node> children;
 
     Block(List<Node> children) {

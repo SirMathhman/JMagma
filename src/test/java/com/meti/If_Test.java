@@ -8,6 +8,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class If_Test {
+    @Test
+    void testEquals() {
+        assertEquals(createNode(), createNode());
+    }
 
     @Test
     void is() {
