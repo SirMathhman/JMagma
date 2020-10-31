@@ -1,12 +1,15 @@
-package com.meti;
+package com.meti.block;
 
+import com.meti.Node;
 import com.meti.Node.Group;
+import com.meti.Renderable;
+import com.meti.Variable;
 import org.junit.jupiter.api.Test;
 
 import java.util.Collections;
 import java.util.List;
 
-import static com.meti.Block.Block;
+import static com.meti.block.Block.Block;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 

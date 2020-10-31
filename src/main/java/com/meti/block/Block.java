@@ -1,4 +1,6 @@
-package com.meti;
+package com.meti.block;
+
+import com.meti.Node;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -15,7 +17,7 @@ public class Block implements Node {
         this.children = children;
     }
 
-    static Builder Block() {
+    public static Builder Block() {
         return new Builder();
     }
 
@@ -52,7 +54,7 @@ public class Block implements Node {
                 .collect(Collectors.joining("", "{", "}"));
     }
 
-    static class Builder {
+    public static class Builder {
         private final List<Node> cache;
 
         Builder() {
@@ -63,13 +65,13 @@ public class Block implements Node {
             this.cache = cache;
         }
 
-        Builder append(Node child) {
+        public Builder append(Node child) {
             List<Node> newCache = new ArrayList<>(cache);
             newCache.add(child);
             return new Builder(newCache);
         }
 
-        Node complete() {
+        public Node complete() {
             return new Block(cache);
         }
     }

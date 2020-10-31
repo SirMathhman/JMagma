@@ -1,5 +1,7 @@
-package com.meti;
+package com.meti.block;
 
+import com.meti.ContentNode;
+import com.meti.Node;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

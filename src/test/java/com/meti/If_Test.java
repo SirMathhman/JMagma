@@ -2,7 +2,7 @@ package com.meti;
 
 import org.junit.jupiter.api.Test;
 
-import static com.meti.Block.Block;
+import static com.meti.block.Block.Block;
 import static com.meti.True.true_;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;

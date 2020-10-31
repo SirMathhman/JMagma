@@ -1,8 +1,13 @@
-package com.meti;
+package com.meti.block;
+
+import com.meti.BracketSplitter;
+import com.meti.ContentNode;
+import com.meti.Node;
+import com.meti.StringTokenizer;
 
 import java.util.Optional;
 
-import static com.meti.Block.Block;
+import static com.meti.block.Block.Block;
 
 public class BlockTokenizer extends StringTokenizer<Node> {
     public BlockTokenizer(String content) {
