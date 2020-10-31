@@ -48,7 +48,8 @@ public class ImmutableStrategyBuffer implements StrategyBuffer {
     @Override
     public Stream<String> trim() {
         return list.stream()
-                .filter(s -> !s.isBlank());
+                .filter(s -> !s.isBlank())
+                .map(String::trim);
     }
 
     @Override
