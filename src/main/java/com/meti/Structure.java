@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class Structure implements Node {
@@ -49,6 +50,15 @@ public class Structure implements Node {
                 .map(Field::render)
                 .map("%s;"::formatted)
                 .collect(Collectors.joining("", "{", "}"));
+    }
+
+    @Override
+    public Node mapByMembers(Function<Field, Field> mapping) {
+        return members.stream()
+                .map(mapping)
+                .reduce(Structure().withName(name), Builder::withField, (complete, complete2) -> complete2)
+                .complete();
+
     }
 
     static class None extends Builder<None> {
