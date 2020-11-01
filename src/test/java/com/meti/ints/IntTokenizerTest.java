@@ -1,5 +1,6 @@
-package com.meti;
+package com.meti.ints;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -8,7 +9,7 @@ class IntTokenizerTest {
 
     @Test
     void tokenizePositive() {
-        assertEquals("10", new IntTokenizer("10")
+        Assertions.assertEquals("10", new IntTokenizer("10")
                 .tokenize()
                 .orElseThrow()
                 .render());
@@ -16,7 +17,7 @@ class IntTokenizerTest {
 
     @Test
     void tokenizeNegative() {
-        assertEquals("-10", new IntTokenizer("-10")
+        Assertions.assertEquals("-10", new IntTokenizer("-10")
                 .tokenize()
                 .orElseThrow()
                 .render());

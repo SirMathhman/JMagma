@@ -1,5 +1,7 @@
-package com.meti;
+package com.meti.ints;
 
+import com.meti.Node;
+import com.meti.Renderable;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigInteger;

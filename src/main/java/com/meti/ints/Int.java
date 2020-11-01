@@ -1,4 +1,6 @@
-package com.meti;
+package com.meti.ints;
+
+import com.meti.Node;
 
 import java.math.BigInteger;
 import java.util.Objects;

@@ -1,5 +1,6 @@
-package com.meti;
+package com.meti.ints;
 
+import com.meti.FeatureTest;
 import org.junit.jupiter.api.Test;
 
 class IntFeatureTest extends FeatureTest {

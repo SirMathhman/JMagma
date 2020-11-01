@@ -7,6 +7,7 @@ import com.meti.declare.DeclarationTokenizer;
 import com.meti.function.FunctionTokenizer;
 import com.meti.ifs.IfTokenizer;
 import com.meti.initialize.InitializationTokenizer;
+import com.meti.ints.IntTokenizer;
 import com.meti.invoke.MappingTokenizer;
 
 import java.util.function.Function;
