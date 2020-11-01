@@ -1,4 +1,7 @@
-package com.meti;
+package com.meti.bracket;
+
+import com.meti.Strategy;
+import com.meti.StrategyBuffer;
 
 public class BracketStrategy implements Strategy {
     static final Strategy BracketStrategy_ = new BracketStrategy();

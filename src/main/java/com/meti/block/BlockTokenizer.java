@@ -1,6 +1,6 @@
 package com.meti.block;
 
-import com.meti.BracketSplitter;
+import com.meti.bracket.BracketSplitter;
 import com.meti.ContentNode;
 import com.meti.Node;
 import com.meti.StringTokenizer;

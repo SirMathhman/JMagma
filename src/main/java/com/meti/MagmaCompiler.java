@@ -1,5 +1,7 @@
 package com.meti;
 
+import com.meti.bracket.BracketSplitter;
+
 import java.util.stream.Collectors;
 
 import static com.meti.Node.Group.Content;

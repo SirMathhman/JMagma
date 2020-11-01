@@ -1,9 +1,11 @@
-package com.meti;
+package com.meti.bracket;
+
+import com.meti.Splitter;
 
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
-import static com.meti.BracketStrategy.BracketStrategy_;
+import static com.meti.bracket.BracketStrategy.BracketStrategy_;
 import static com.meti.ImmutableStrategyBuffer.EmptyBuffer;
 
 public class BracketSplitter implements Splitter {

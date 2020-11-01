@@ -7,7 +7,7 @@ import java.util.Objects;
 import java.util.stream.Stream;
 
 public class ImmutableStrategyBuffer implements StrategyBuffer {
-    static final StrategyBuffer EmptyBuffer = new ImmutableStrategyBuffer();
+    public static final StrategyBuffer EmptyBuffer = new ImmutableStrategyBuffer();
     private final Collection<String> list;
     private final String buffer;
     private final int depth;
