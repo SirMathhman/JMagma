@@ -1,6 +1,7 @@
 package com.meti;
 
 import com.meti.bracket.BracketSplitter;
+import com.meti.field.Field;
 
 import java.util.stream.Collectors;
 

@@ -1,6 +1,8 @@
 package com.meti;
 
 import com.meti.content.ContentNode;
+import com.meti.field.Field;
+import com.meti.field.FieldTokenizer;
 
 import java.util.Optional;
 

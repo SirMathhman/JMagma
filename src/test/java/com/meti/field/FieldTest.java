@@ -1,9 +1,9 @@
-package com.meti;
+package com.meti.field;
 
-import com.meti.Field.FieldImpl;
+import com.meti.field.Field.FieldImpl;
 import org.junit.jupiter.api.Test;
 
-import static com.meti.Field.Field;
+import static com.meti.field.Field.Field;
 import static com.meti.Primitive.I8;
 import static java.util.Collections.singleton;
 import static org.junit.jupiter.api.Assertions.assertEquals;

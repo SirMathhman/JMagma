@@ -1,5 +1,7 @@
 package com.meti;
 
+import com.meti.field.Field;
+
 import java.util.Objects;
 import java.util.function.Function;
 

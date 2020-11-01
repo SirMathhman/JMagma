@@ -1,5 +1,7 @@
-package com.meti;
+package com.meti.field;
 
+import com.meti.StringTokenizer;
+import com.meti.Type;
 import com.meti.content.ContentType;
 
 import java.util.Collections;
@@ -7,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Stream;
 
-import static com.meti.Field.Field;
+import static com.meti.field.Field.Field;
 
 public class FieldTokenizer extends StringTokenizer<Field> {
     public FieldTokenizer(String content) {

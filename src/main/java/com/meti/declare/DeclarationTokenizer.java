@@ -1,7 +1,7 @@
 package com.meti.declare;
 
-import com.meti.Field;
-import com.meti.FieldTokenizer;
+import com.meti.field.Field;
+import com.meti.field.FieldTokenizer;
 import com.meti.Node;
 import com.meti.StringTokenizer;
 

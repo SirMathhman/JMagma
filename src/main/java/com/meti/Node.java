@@ -1,5 +1,7 @@
 package com.meti;
 
+import com.meti.field.Field;
+
 import java.util.function.Function;
 
 public interface Node extends Renderable {

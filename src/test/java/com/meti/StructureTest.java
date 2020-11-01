@@ -1,10 +1,11 @@
 package com.meti;
 
+import com.meti.field.Field;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-import static com.meti.Field.Field;
+import static com.meti.field.Field.Field;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 

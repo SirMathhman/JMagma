@@ -1,12 +1,13 @@
 package com.meti;
 
+import com.meti.field.Field;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigInteger;
 import java.util.Collections;
 
 import static com.meti.block.Block.Block;
-import static com.meti.Field.Field;
+import static com.meti.field.Field.Field;
 import static com.meti.FunctionType.FunctionType;
 import static com.meti.Implementation.Implementation;
 import static com.meti.Primitive.I16;

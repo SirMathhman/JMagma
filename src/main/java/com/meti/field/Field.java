@@ -1,4 +1,7 @@
-package com.meti;
+package com.meti.field;
+
+import com.meti.Renderable;
+import com.meti.Type;
 
 import java.util.Collections;
 import java.util.HashSet;

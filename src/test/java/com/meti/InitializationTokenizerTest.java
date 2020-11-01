@@ -2,6 +2,7 @@ package com.meti;
 
 import com.meti.content.ContentNode;
 import com.meti.content.ContentType;
+import com.meti.field.Field;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
