@@ -3,11 +3,11 @@ package com.meti.declare;
 import com.meti.field.Field;
 import com.meti.field.FieldTokenizer;
 import com.meti.Node;
-import com.meti.StringTokenizer;
+import com.meti.AbstractTokenizer;
 
 import java.util.Optional;
 
-public class DeclarationTokenizer extends StringTokenizer<Node> {
+public class DeclarationTokenizer extends AbstractTokenizer<Node> {
     public DeclarationTokenizer(String content) {
         super(content);
     }

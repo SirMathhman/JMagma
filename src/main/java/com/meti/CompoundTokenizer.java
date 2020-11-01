@@ -4,7 +4,7 @@ import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
-public abstract class CompoundTokenizer<T> extends StringTokenizer<T> {
+public abstract class CompoundTokenizer<T> extends AbstractTokenizer<T> {
     CompoundTokenizer(String content) {
         super(content);
     }

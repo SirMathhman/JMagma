@@ -1,7 +1,7 @@
 package com.meti.function;
 
 import com.meti.Node;
-import com.meti.StringTokenizer;
+import com.meti.AbstractTokenizer;
 import com.meti.Type;
 import com.meti.function.FunctionType.FunctionTypeBuilder;
 import com.meti.content.ContentNode;
@@ -25,7 +25,7 @@ import static com.meti.function.Implementation.Both;
 import static com.meti.function.Implementation.Implementation;
 import static com.meti.ParameterStrategy.ParameterStrategy_;
 
-public class FunctionTokenizer extends StringTokenizer<Node> {
+public class FunctionTokenizer extends AbstractTokenizer<Node> {
     public FunctionTokenizer(String content) {
         super(content);
     }

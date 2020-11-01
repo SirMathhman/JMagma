@@ -1,12 +1,12 @@
 package com.meti.ints;
 
 import com.meti.Node;
-import com.meti.StringTokenizer;
+import com.meti.AbstractTokenizer;
 
 import java.math.BigInteger;
 import java.util.Optional;
 
-public class IntTokenizer extends StringTokenizer<Node> {
+public class IntTokenizer extends AbstractTokenizer<Node> {
     public IntTokenizer(String value) {
         super(value);
     }

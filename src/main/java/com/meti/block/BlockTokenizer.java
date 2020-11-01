@@ -3,13 +3,13 @@ package com.meti.block;
 import com.meti.bracket.BracketSplitter;
 import com.meti.content.ContentNode;
 import com.meti.Node;
-import com.meti.StringTokenizer;
+import com.meti.AbstractTokenizer;
 
 import java.util.Optional;
 
 import static com.meti.block.Block.Block;
 
-public class BlockTokenizer extends StringTokenizer<Node> {
+public class BlockTokenizer extends AbstractTokenizer<Node> {
     public BlockTokenizer(String content) {
         super(content);
     }

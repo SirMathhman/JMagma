@@ -1,11 +1,11 @@
 package com.meti.primitive;
 
-import com.meti.StringTokenizer;
+import com.meti.AbstractTokenizer;
 import com.meti.Type;
 
 import java.util.Optional;
 
-public class PrimitiveTokenizer extends StringTokenizer<Type> {
+public class PrimitiveTokenizer extends AbstractTokenizer<Type> {
     public PrimitiveTokenizer(String content) {
         super(content);
     }

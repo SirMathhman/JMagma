@@ -1,14 +1,14 @@
 package com.meti.initialize;
 
 import com.meti.Node;
-import com.meti.StringTokenizer;
+import com.meti.AbstractTokenizer;
 import com.meti.content.ContentNode;
 import com.meti.field.Field;
 import com.meti.field.FieldTokenizer;
 
 import java.util.Optional;
 
-public class InitializationTokenizer extends StringTokenizer<Node> {
+public class InitializationTokenizer extends AbstractTokenizer<Node> {
     public InitializationTokenizer(String content) {
         super(content);
     }

@@ -1,12 +1,12 @@
 package com.meti.returns;
 
 import com.meti.Node;
-import com.meti.StringTokenizer;
+import com.meti.AbstractTokenizer;
 import com.meti.content.ContentNode;
 
 import java.util.Optional;
 
-public class ReturnTokenizer extends StringTokenizer<Node> {
+public class ReturnTokenizer extends AbstractTokenizer<Node> {
     public ReturnTokenizer(String content) {
         super(content);
     }

@@ -1,6 +1,6 @@
 package com.meti.field;
 
-import com.meti.StringTokenizer;
+import com.meti.AbstractTokenizer;
 import com.meti.Type;
 import com.meti.content.ContentType;
 
@@ -11,7 +11,7 @@ import java.util.stream.Stream;
 
 import static com.meti.field.Field.Field;
 
-public class FieldTokenizer extends StringTokenizer<Field> {
+public class FieldTokenizer extends AbstractTokenizer<Field> {
     public FieldTokenizer(String content) {
         super(content);
     }

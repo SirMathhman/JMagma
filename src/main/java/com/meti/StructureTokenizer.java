@@ -10,7 +10,7 @@ import static com.meti.ImmutableStrategyBuffer.EmptyBuffer;
 import static com.meti.ParameterStrategy.ParameterStrategy_;
 import static com.meti.Structure.Structure;
 
-public class StructureTokenizer extends StringTokenizer<Node> {
+public class StructureTokenizer extends AbstractTokenizer<Node> {
     public StructureTokenizer(String content) {
         super(content);
     }

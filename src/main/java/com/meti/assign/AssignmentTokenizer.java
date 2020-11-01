@@ -2,11 +2,11 @@ package com.meti.assign;
 
 import com.meti.content.ContentNode;
 import com.meti.Node;
-import com.meti.StringTokenizer;
+import com.meti.AbstractTokenizer;
 
 import java.util.Optional;
 
-public class AssignmentTokenizer extends StringTokenizer<Node> {
+public class AssignmentTokenizer extends AbstractTokenizer<Node> {
     public AssignmentTokenizer(String content) {
         super(content);
     }

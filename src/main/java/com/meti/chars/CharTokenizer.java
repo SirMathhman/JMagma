@@ -1,11 +1,11 @@
 package com.meti.chars;
 
 import com.meti.Node;
-import com.meti.StringTokenizer;
+import com.meti.AbstractTokenizer;
 
 import java.util.Optional;
 
-public class CharTokenizer extends StringTokenizer<Node> {
+public class CharTokenizer extends AbstractTokenizer<Node> {
     public CharTokenizer(String content) {
         super(content);
     }

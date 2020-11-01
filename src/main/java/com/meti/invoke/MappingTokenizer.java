@@ -3,14 +3,14 @@ package com.meti.invoke;
 import com.meti.ImmutableStrategyBuffer;
 import com.meti.Node;
 import com.meti.ParameterStrategy;
-import com.meti.StringTokenizer;
+import com.meti.AbstractTokenizer;
 import com.meti.content.ContentNode;
 
 import java.util.Optional;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
-public class MappingTokenizer extends StringTokenizer<Node> {
+public class MappingTokenizer extends AbstractTokenizer<Node> {
     public MappingTokenizer(String content) {
         super(content);
     }
