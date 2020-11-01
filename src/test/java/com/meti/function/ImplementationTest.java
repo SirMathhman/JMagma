@@ -1,5 +1,6 @@
-package com.meti;
+package com.meti.function;
 
+import com.meti.*;
 import com.meti.field.Field;
 import org.junit.jupiter.api.Test;
 
@@ -8,8 +9,8 @@ import java.util.Collections;
 
 import static com.meti.block.Block.Block;
 import static com.meti.field.Field.Field;
-import static com.meti.FunctionType.FunctionType;
-import static com.meti.Implementation.Implementation;
+import static com.meti.function.FunctionType.FunctionType;
+import static com.meti.function.Implementation.Implementation;
 import static com.meti.Primitive.I16;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;

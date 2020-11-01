@@ -3,7 +3,7 @@ package com.meti;
 import java.math.BigInteger;
 import java.util.Objects;
 
-class Int implements Node {
+public class Int implements Node {
     private final BigInteger value;
 
     public Int(BigInteger value) {

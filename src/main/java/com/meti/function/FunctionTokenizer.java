@@ -1,6 +1,9 @@
-package com.meti;
+package com.meti.function;
 
-import com.meti.FunctionType.FunctionTypeBuilder;
+import com.meti.Node;
+import com.meti.StringTokenizer;
+import com.meti.Type;
+import com.meti.function.FunctionType.FunctionTypeBuilder;
 import com.meti.content.ContentNode;
 import com.meti.content.ContentType;
 import com.meti.field.Field;
@@ -15,11 +18,11 @@ import java.util.stream.Stream;
 
 import static com.meti.field.Field.Field;
 import static com.meti.field.Field.*;
-import static com.meti.FunctionType.FunctionType;
-import static com.meti.FunctionType.WithReturn;
+import static com.meti.function.FunctionType.FunctionType;
+import static com.meti.function.FunctionType.WithReturn;
 import static com.meti.ImmutableStrategyBuffer.EmptyBuffer;
-import static com.meti.Implementation.Both;
-import static com.meti.Implementation.Implementation;
+import static com.meti.function.Implementation.Both;
+import static com.meti.function.Implementation.Implementation;
 import static com.meti.ParameterStrategy.ParameterStrategy_;
 
 public class FunctionTokenizer extends StringTokenizer<Node> {

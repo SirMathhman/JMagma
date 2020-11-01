@@ -1,5 +1,6 @@
-package com.meti;
+package com.meti.function;
 
+import com.meti.Node;
 import com.meti.field.Field;
 
 import java.util.ArrayList;

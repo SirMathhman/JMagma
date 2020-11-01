@@ -4,6 +4,7 @@ import com.meti.assign.AssignmentTokenizer;
 import com.meti.block.BlockTokenizer;
 import com.meti.chars.CharTokenizer;
 import com.meti.declare.DeclarationTokenizer;
+import com.meti.function.FunctionTokenizer;
 
 import java.util.function.Function;
 import java.util.stream.Stream;

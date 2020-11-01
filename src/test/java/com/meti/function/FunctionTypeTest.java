@@ -1,11 +1,13 @@
-package com.meti;
+package com.meti.function;
 
+import com.meti.Type;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.Collections;
 import java.util.List;
 
-import static com.meti.FunctionType.FunctionType;
+import static com.meti.function.FunctionType.FunctionType;
 import static com.meti.Primitive.Void;
 import static com.meti.Primitive.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -14,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 class FunctionTypeTest {
     @Test
     void builder() {
-        assertEquals("void (*myFunction)(unsigned char ,long long )", createType()
+        Assertions.assertEquals("void (*myFunction)(unsigned char ,long long )", createType()
                 .render("myFunction"));
     }
 
