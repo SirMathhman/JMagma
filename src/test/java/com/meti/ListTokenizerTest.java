@@ -1,5 +1,6 @@
 package com.meti;
 
+import com.meti.chars.CharTokenizer;
 import org.junit.jupiter.api.Test;
 
 import static com.meti.ListTokenizer.ListTokenizer;

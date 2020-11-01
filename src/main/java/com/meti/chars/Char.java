@@ -1,4 +1,6 @@
-package com.meti;
+package com.meti.chars;
+
+import com.meti.Node;
 
 class Char implements Node {
     public static final String Format = "'%s'";

@@ -1,4 +1,7 @@
-package com.meti;
+package com.meti.chars;
+
+import com.meti.Node;
+import com.meti.StringTokenizer;
 
 import java.util.Optional;
 
