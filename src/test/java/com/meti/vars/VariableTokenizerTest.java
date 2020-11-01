@@ -1,4 +1,4 @@
-package com.meti;
+package com.meti.vars;
 
 import org.junit.jupiter.api.Test;
 

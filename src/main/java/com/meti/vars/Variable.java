@@ -1,4 +1,6 @@
-package com.meti;
+package com.meti.vars;
+
+import com.meti.Node;
 
 import java.util.Objects;
 

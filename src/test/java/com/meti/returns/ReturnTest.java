@@ -1,7 +1,7 @@
 package com.meti.returns;
 
 import com.meti.Node;
-import com.meti.Variable;
+import com.meti.vars.Variable;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

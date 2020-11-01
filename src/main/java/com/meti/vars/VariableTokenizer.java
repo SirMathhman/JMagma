@@ -1,4 +1,7 @@
-package com.meti;
+package com.meti.vars;
+
+import com.meti.AbstractTokenizer;
+import com.meti.Node;
 
 import java.util.Optional;
 
