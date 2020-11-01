@@ -1,10 +1,12 @@
-package com.meti;
+package com.meti.invoke;
 
+import com.meti.Node;
+import com.meti.Variable;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-import static com.meti.Mapping.Mapping;
+import static com.meti.invoke.Mapping.Mapping;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 

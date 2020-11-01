@@ -1,8 +1,9 @@
-package com.meti;
+package com.meti.invoke;
 
+import com.meti.FeatureTest;
 import org.junit.jupiter.api.Test;
 
-public class MappingFeatureTest extends FeatureTest{
+public class MappingFeatureTest extends FeatureTest {
     @Test
     void arity0(){
         assertCompile("caller()", "caller()");

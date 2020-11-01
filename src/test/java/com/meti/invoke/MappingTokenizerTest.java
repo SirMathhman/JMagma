@@ -1,9 +1,10 @@
-package com.meti;
+package com.meti.invoke;
 
+import com.meti.Node;
 import com.meti.content.ContentNode;
 import org.junit.jupiter.api.Test;
 
-import static com.meti.Mapping.Mapping;
+import static com.meti.invoke.Mapping.Mapping;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class MappingTokenizerTest {
