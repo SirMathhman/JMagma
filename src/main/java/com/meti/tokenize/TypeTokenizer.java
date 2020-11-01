@@ -1,12 +1,13 @@
-package com.meti;
+package com.meti.tokenize;
 
+import com.meti.Type;
 import com.meti.primitive.PrimitiveTokenizer;
 
 import java.util.function.Function;
 import java.util.stream.Stream;
 
 public class TypeTokenizer extends CompoundTokenizer<Type> {
-    TypeTokenizer(String content) {
+    public TypeTokenizer(String content) {
         super(content);
     }
 

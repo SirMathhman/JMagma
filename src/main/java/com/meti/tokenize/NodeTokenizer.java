@@ -1,5 +1,6 @@
-package com.meti;
+package com.meti.tokenize;
 
+import com.meti.Node;
 import com.meti.assign.AssignmentTokenizer;
 import com.meti.block.BlockTokenizer;
 import com.meti.chars.CharTokenizer;

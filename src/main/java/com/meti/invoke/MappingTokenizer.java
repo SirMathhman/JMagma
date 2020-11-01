@@ -1,9 +1,9 @@
 package com.meti.invoke;
 
-import com.meti.slice.ImmutableStrategyBuffer;
+import com.meti.tokenize.slice.ImmutableStrategyBuffer;
 import com.meti.Node;
-import com.meti.slice.ParameterStrategy;
-import com.meti.AbstractTokenizer;
+import com.meti.tokenize.slice.ParameterStrategy;
+import com.meti.tokenize.AbstractTokenizer;
 import com.meti.content.ContentNode;
 
 import java.util.Optional;

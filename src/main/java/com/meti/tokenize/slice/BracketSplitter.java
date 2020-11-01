@@ -1,10 +1,10 @@
-package com.meti.slice;
+package com.meti.tokenize.slice;
 
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
-import static com.meti.slice.BracketStrategy.BracketStrategy_;
-import static com.meti.slice.ImmutableStrategyBuffer.EmptyBuffer;
+import static com.meti.tokenize.slice.BracketStrategy.BracketStrategy_;
+import static com.meti.tokenize.slice.ImmutableStrategyBuffer.EmptyBuffer;
 
 public class BracketSplitter implements Splitter {
     private final String value;

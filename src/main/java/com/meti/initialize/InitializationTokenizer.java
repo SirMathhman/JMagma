@@ -1,7 +1,7 @@
 package com.meti.initialize;
 
 import com.meti.Node;
-import com.meti.AbstractTokenizer;
+import com.meti.tokenize.AbstractTokenizer;
 import com.meti.content.ContentNode;
 import com.meti.field.Field;
 import com.meti.field.FieldTokenizer;

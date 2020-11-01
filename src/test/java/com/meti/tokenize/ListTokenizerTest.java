@@ -1,10 +1,10 @@
-package com.meti;
+package com.meti.tokenize;
 
 import com.meti.chars.CharTokenizer;
 import com.meti.ints.IntTokenizer;
 import org.junit.jupiter.api.Test;
 
-import static com.meti.ListTokenizer.ListTokenizer;
+import static com.meti.tokenize.ListTokenizer.ListTokenizer;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 

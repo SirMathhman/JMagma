@@ -1,7 +1,7 @@
 package com.meti.ints;
 
 import com.meti.Node;
-import com.meti.AbstractTokenizer;
+import com.meti.tokenize.AbstractTokenizer;
 
 import java.math.BigInteger;
 import java.util.Optional;

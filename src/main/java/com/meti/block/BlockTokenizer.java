@@ -1,9 +1,9 @@
 package com.meti.block;
 
-import com.meti.slice.BracketSplitter;
+import com.meti.tokenize.slice.BracketSplitter;
 import com.meti.content.ContentNode;
 import com.meti.Node;
-import com.meti.AbstractTokenizer;
+import com.meti.tokenize.AbstractTokenizer;
 
 import java.util.Optional;
 

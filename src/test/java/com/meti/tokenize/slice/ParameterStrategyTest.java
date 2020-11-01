@@ -1,13 +1,12 @@
-package com.meti.slice;
+package com.meti.tokenize.slice;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import static com.meti.slice.ImmutableStrategyBuffer.EmptyBuffer;
+import static com.meti.tokenize.slice.ImmutableStrategyBuffer.EmptyBuffer;
 import static org.junit.jupiter.api.Assertions.*;
 
 class ParameterStrategyTest {

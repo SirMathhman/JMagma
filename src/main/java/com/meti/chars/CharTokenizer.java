@@ -1,7 +1,7 @@
 package com.meti.chars;
 
 import com.meti.Node;
-import com.meti.AbstractTokenizer;
+import com.meti.tokenize.AbstractTokenizer;
 
 import java.util.Optional;
 

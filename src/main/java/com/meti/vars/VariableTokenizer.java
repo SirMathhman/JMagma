@@ -1,6 +1,6 @@
 package com.meti.vars;
 
-import com.meti.AbstractTokenizer;
+import com.meti.tokenize.AbstractTokenizer;
 import com.meti.Node;
 
 import java.util.Optional;

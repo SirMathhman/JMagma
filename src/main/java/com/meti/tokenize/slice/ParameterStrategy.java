@@ -1,4 +1,4 @@
-package com.meti.slice;
+package com.meti.tokenize.slice;
 
 public class ParameterStrategy implements Strategy {
     public static final Strategy ParameterStrategy_ = new ParameterStrategy();

@@ -1,5 +1,6 @@
-package com.meti;
+package com.meti.tokenize;
 
+import com.meti.Node;
 import com.meti.content.ContentNode;
 
 public abstract class ConditionTokenizer extends AbstractTokenizer<Node> {

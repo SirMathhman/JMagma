@@ -1,6 +1,6 @@
 package com.meti.field;
 
-import com.meti.AbstractTokenizer;
+import com.meti.tokenize.AbstractTokenizer;
 import com.meti.Type;
 import com.meti.content.ContentType;
 

@@ -1,6 +1,6 @@
 package com.meti.structure;
 
-import com.meti.AbstractTokenizer;
+import com.meti.tokenize.AbstractTokenizer;
 import com.meti.Node;
 import com.meti.field.Field;
 import com.meti.field.FieldTokenizer;
@@ -8,8 +8,8 @@ import com.meti.field.FieldTokenizer;
 import java.util.Optional;
 import java.util.stream.IntStream;
 
-import static com.meti.slice.ImmutableStrategyBuffer.EmptyBuffer;
-import static com.meti.slice.ParameterStrategy.ParameterStrategy_;
+import static com.meti.tokenize.slice.ImmutableStrategyBuffer.EmptyBuffer;
+import static com.meti.tokenize.slice.ParameterStrategy.ParameterStrategy_;
 import static com.meti.structure.Structure.Structure;
 
 public class StructureTokenizer extends AbstractTokenizer<Node> {

@@ -3,7 +3,7 @@ package com.meti.declare;
 import com.meti.field.Field;
 import com.meti.field.FieldTokenizer;
 import com.meti.Node;
-import com.meti.AbstractTokenizer;
+import com.meti.tokenize.AbstractTokenizer;
 
 import java.util.Optional;
 

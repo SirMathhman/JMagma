@@ -1,4 +1,4 @@
-package com.meti.slice;
+package com.meti.tokenize.slice;
 
 import java.util.stream.Stream;
 

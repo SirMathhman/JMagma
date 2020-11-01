@@ -1,7 +1,7 @@
 package com.meti.function;
 
 import com.meti.Node;
-import com.meti.AbstractTokenizer;
+import com.meti.tokenize.AbstractTokenizer;
 import com.meti.Type;
 import com.meti.function.FunctionType.FunctionTypeBuilder;
 import com.meti.content.ContentNode;
@@ -20,10 +20,10 @@ import static com.meti.field.Field.Field;
 import static com.meti.field.Field.*;
 import static com.meti.function.FunctionType.FunctionType;
 import static com.meti.function.FunctionType.WithReturn;
-import static com.meti.slice.ImmutableStrategyBuffer.EmptyBuffer;
+import static com.meti.tokenize.slice.ImmutableStrategyBuffer.EmptyBuffer;
 import static com.meti.function.Implementation.Both;
 import static com.meti.function.Implementation.Implementation;
-import static com.meti.slice.ParameterStrategy.ParameterStrategy_;
+import static com.meti.tokenize.slice.ParameterStrategy.ParameterStrategy_;
 
 public class FunctionTokenizer extends AbstractTokenizer<Node> {
     public FunctionTokenizer(String content) {

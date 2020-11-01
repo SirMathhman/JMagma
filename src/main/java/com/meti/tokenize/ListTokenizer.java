@@ -1,4 +1,6 @@
-package com.meti;
+package com.meti.tokenize;
+
+import com.meti.Node;
 
 import java.util.ArrayList;
 import java.util.Collections;

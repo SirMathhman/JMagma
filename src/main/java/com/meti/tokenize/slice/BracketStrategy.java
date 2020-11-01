@@ -1,4 +1,4 @@
-package com.meti.slice;
+package com.meti.tokenize.slice;
 
 public class BracketStrategy implements Strategy {
     static final Strategy BracketStrategy_ = new BracketStrategy();

@@ -1,6 +1,6 @@
 package com.meti.primitive;
 
-import com.meti.AbstractTokenizer;
+import com.meti.tokenize.AbstractTokenizer;
 import com.meti.Type;
 
 import java.util.Optional;
