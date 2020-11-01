@@ -1,4 +1,4 @@
-package com.meti;
+package com.meti.slice;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import static com.meti.ImmutableStrategyBuffer.EmptyBuffer;
+import static com.meti.slice.ImmutableStrategyBuffer.EmptyBuffer;
 import static org.junit.jupiter.api.Assertions.*;
 
 class ParameterStrategyTest {

@@ -1,6 +1,6 @@
 package com.meti;
 
-import com.meti.bracket.BracketSplitter;
+import com.meti.slice.BracketSplitter;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
