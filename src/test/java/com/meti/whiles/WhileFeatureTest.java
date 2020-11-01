@@ -1,5 +1,6 @@
-package com.meti;
+package com.meti.whiles;
 
+import com.meti.FeatureTest;
 import org.junit.jupiter.api.Test;
 
 class WhileFeatureTest extends FeatureTest {

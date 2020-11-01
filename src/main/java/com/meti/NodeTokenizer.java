@@ -12,6 +12,7 @@ import com.meti.invoke.MappingTokenizer;
 import com.meti.returns.ReturnTokenizer;
 import com.meti.structure.StructureTokenizer;
 import com.meti.vars.VariableTokenizer;
+import com.meti.whiles.WhileTokenizer;
 
 import java.util.function.Function;
 import java.util.stream.Stream;
