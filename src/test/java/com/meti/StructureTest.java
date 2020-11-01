@@ -1,6 +1,7 @@
 package com.meti;
 
 import com.meti.field.Field;
+import com.meti.primitive.Primitive;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;

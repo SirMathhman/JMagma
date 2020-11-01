@@ -1,7 +1,7 @@
 package com.meti.initialize;
 
 import com.meti.ints.Int;
-import com.meti.Primitive;
+import com.meti.primitive.Primitive;
 import com.meti.Renderable;
 import com.meti.field.Field;
 import org.junit.jupiter.api.Test;

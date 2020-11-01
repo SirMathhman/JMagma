@@ -12,7 +12,7 @@ import static com.meti.block.Block.Block;
 import static com.meti.field.Field.Field;
 import static com.meti.function.FunctionType.FunctionType;
 import static com.meti.function.Implementation.Implementation;
-import static com.meti.Primitive.I16;
+import static com.meti.primitive.Primitive.I16;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 

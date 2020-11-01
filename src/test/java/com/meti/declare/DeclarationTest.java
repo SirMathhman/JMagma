@@ -3,7 +3,7 @@ package com.meti.declare;
 import com.meti.field.Field;
 import com.meti.Node;
 import com.meti.Node.Group;
-import com.meti.Primitive;
+import com.meti.primitive.Primitive;
 import org.junit.jupiter.api.Test;
 
 import static com.meti.field.Field.Field;

@@ -1,5 +1,6 @@
-package com.meti;
+package com.meti.primitive;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -9,7 +10,7 @@ class PrimitiveTokenizerTest {
 
     @Test
     void tokenizeValid() {
-        assertEquals("int x", new PrimitiveTokenizer("I16")
+        Assertions.assertEquals("int x", new PrimitiveTokenizer("I16")
                 .tokenize()
                 .orElseThrow()
                 .render("x"));
