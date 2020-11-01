@@ -1,5 +1,7 @@
-package com.meti;
+package com.meti.declare;
 
+import com.meti.Field;
+import com.meti.Node;
 import com.meti.content.ContentType;
 import org.junit.jupiter.api.Test;
 

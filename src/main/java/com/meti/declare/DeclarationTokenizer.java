@@ -1,4 +1,9 @@
-package com.meti;
+package com.meti.declare;
+
+import com.meti.Field;
+import com.meti.FieldTokenizer;
+import com.meti.Node;
+import com.meti.StringTokenizer;
 
 import java.util.Optional;
 

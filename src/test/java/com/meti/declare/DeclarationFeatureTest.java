@@ -1,8 +1,9 @@
-package com.meti;
+package com.meti.declare;
 
+import com.meti.FeatureTest;
 import org.junit.jupiter.api.Test;
 
-class DeclarationFeatureTest  extends FeatureTest{
+class DeclarationFeatureTest  extends FeatureTest {
     @Test
     void immutable(){
         assertCompile("int x;", "const x : I16");

@@ -1,4 +1,7 @@
-package com.meti;
+package com.meti.declare;
+
+import com.meti.Field;
+import com.meti.Node;
 
 import java.util.Objects;
 import java.util.function.Function;

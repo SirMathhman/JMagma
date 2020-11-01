@@ -1,6 +1,9 @@
-package com.meti;
+package com.meti.declare;
 
+import com.meti.Field;
+import com.meti.Node;
 import com.meti.Node.Group;
+import com.meti.Primitive;
 import org.junit.jupiter.api.Test;
 
 import static com.meti.Field.Field;
