@@ -4,7 +4,7 @@ import com.meti.Node;
 import org.junit.jupiter.api.Test;
 
 import static com.meti.call.block.Block.Block;
-import static com.meti.True.true_;
+import static com.meti.primitive.True.true_;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 

@@ -2,7 +2,7 @@ package com.meti.call.function;
 
 import com.meti.*;
 import com.meti.scope.field.Field;
-import com.meti.ints.Int;
+import com.meti.primitive.ints.Int;
 import com.meti.call.returns.Return;
 import org.junit.jupiter.api.Test;
 

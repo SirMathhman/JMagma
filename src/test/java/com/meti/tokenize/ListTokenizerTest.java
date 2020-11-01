@@ -1,7 +1,7 @@
 package com.meti.tokenize;
 
-import com.meti.chars.CharTokenizer;
-import com.meti.ints.IntTokenizer;
+import com.meti.primitive.chars.CharTokenizer;
+import com.meti.primitive.ints.IntTokenizer;
 import org.junit.jupiter.api.Test;
 
 import static com.meti.tokenize.ListTokenizer.ListTokenizer;

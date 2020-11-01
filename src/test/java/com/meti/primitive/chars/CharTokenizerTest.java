@@ -1,4 +1,4 @@
-package com.meti.chars;
+package com.meti.primitive.chars;
 
 import org.junit.jupiter.api.Test;
 

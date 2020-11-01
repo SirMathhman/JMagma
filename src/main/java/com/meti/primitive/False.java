@@ -1,4 +1,6 @@
-package com.meti;
+package com.meti.primitive;
+
+import com.meti.Node;
 
 public class False implements Node {
     public static final Node false_ = new False();

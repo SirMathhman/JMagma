@@ -1,5 +1,6 @@
 package com.meti.primitive;
 
+import com.meti.primitive.PrimitiveTokenizer;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

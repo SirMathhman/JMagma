@@ -1,4 +1,4 @@
-package com.meti.ints;
+package com.meti.primitive.ints;
 
 import com.meti.Node;
 

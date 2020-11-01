@@ -1,6 +1,6 @@
 package com.meti.scope.initialize;
 
-import com.meti.ints.Int;
+import com.meti.primitive.ints.Int;
 import com.meti.primitive.Primitive;
 import com.meti.Renderable;
 import com.meti.scope.field.Field;
