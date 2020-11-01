@@ -6,6 +6,7 @@ import com.meti.chars.CharTokenizer;
 import com.meti.declare.DeclarationTokenizer;
 import com.meti.function.FunctionTokenizer;
 import com.meti.ifs.IfTokenizer;
+import com.meti.initialize.InitializationTokenizer;
 
 import java.util.function.Function;
 import java.util.stream.Stream;

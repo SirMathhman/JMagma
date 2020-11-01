@@ -1,5 +1,6 @@
-package com.meti;
+package com.meti.initialize;
 
+import com.meti.Node;
 import com.meti.content.ContentNode;
 import com.meti.content.ContentType;
 import com.meti.field.Field;

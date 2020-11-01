@@ -1,5 +1,6 @@
-package com.meti;
+package com.meti.initialize;
 
+import com.meti.Node;
 import com.meti.field.Field;
 
 import java.util.Objects;
