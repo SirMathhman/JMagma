@@ -1,0 +1,11 @@
+package com.meti.call.returns;
+
+import com.meti.FeatureTest;
+import org.junit.jupiter.api.Test;
+
+class ReturnFeatureTest extends FeatureTest {
+    @Test
+    void simple(){
+        assertCompile("return 10;", "return 10");
+    }
+}

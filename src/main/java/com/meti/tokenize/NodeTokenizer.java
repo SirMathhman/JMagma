@@ -2,18 +2,18 @@ package com.meti.tokenize;
 
 import com.meti.Node;
 import com.meti.scope.assign.AssignmentTokenizer;
-import com.meti.block.BlockTokenizer;
+import com.meti.call.block.BlockTokenizer;
 import com.meti.chars.CharTokenizer;
 import com.meti.scope.declare.DeclarationTokenizer;
-import com.meti.function.FunctionTokenizer;
-import com.meti.ifs.IfTokenizer;
+import com.meti.call.function.FunctionTokenizer;
+import com.meti.call.ifs.IfTokenizer;
 import com.meti.scope.initialize.InitializationTokenizer;
 import com.meti.ints.IntTokenizer;
-import com.meti.invoke.MappingTokenizer;
-import com.meti.returns.ReturnTokenizer;
-import com.meti.structure.StructureTokenizer;
+import com.meti.call.invoke.MappingTokenizer;
+import com.meti.call.returns.ReturnTokenizer;
+import com.meti.call.structure.StructureTokenizer;
 import com.meti.scope.vars.VariableTokenizer;
-import com.meti.whiles.WhileTokenizer;
+import com.meti.call.whiles.WhileTokenizer;
 
 import java.util.function.Function;
 import java.util.stream.Stream;
