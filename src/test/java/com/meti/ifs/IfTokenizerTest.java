@@ -1,6 +1,9 @@
-package com.meti;
+package com.meti.ifs;
 
+import com.meti.Node;
 import com.meti.content.ContentNode;
+import com.meti.ifs.IfTokenizer;
+import com.meti.ifs.If_;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

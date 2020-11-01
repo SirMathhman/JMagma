@@ -1,4 +1,6 @@
-package com.meti;
+package com.meti.ifs;
+
+import com.meti.Node;
 
 import java.util.Objects;
 import java.util.function.Function;
