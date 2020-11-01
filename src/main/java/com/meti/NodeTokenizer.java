@@ -10,6 +10,7 @@ import com.meti.initialize.InitializationTokenizer;
 import com.meti.ints.IntTokenizer;
 import com.meti.invoke.MappingTokenizer;
 import com.meti.returns.ReturnTokenizer;
+import com.meti.structure.StructureTokenizer;
 import com.meti.vars.VariableTokenizer;
 
 import java.util.function.Function;
