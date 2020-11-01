@@ -1,5 +1,6 @@
 package com.meti;
 
+import com.meti.content.ContentNode;
 import org.junit.jupiter.api.Test;
 
 import static com.meti.Mapping.Mapping;

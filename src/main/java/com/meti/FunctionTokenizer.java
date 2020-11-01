@@ -1,6 +1,8 @@
 package com.meti;
 
 import com.meti.FunctionType.FunctionTypeBuilder;
+import com.meti.content.ContentNode;
+import com.meti.content.ContentType;
 
 import java.util.Collection;
 import java.util.List;

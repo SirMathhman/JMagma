@@ -1,5 +1,6 @@
-package com.meti;
+package com.meti.content;
 
+import com.meti.Type;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

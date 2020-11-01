@@ -1,12 +1,13 @@
 package com.meti;
 
+import com.meti.content.ContentNode;
+import com.meti.content.ContentType;
 import org.junit.jupiter.api.Test;
 
 import static com.meti.Field.Field;
 import static com.meti.Field.Flag.DEF;
 import static com.meti.FunctionType.FunctionType;
 import static com.meti.Implementation.Implementation;
-import static com.meti.Primitive.I16;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class FunctionTokenizerTest {

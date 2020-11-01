@@ -1,7 +1,8 @@
 package com.meti;
 
+import com.meti.content.ContentNode;
+
 import java.util.Optional;
-import java.util.function.Function;
 
 public class InitializationTokenizer extends StringTokenizer<Node> {
     public InitializationTokenizer(String content) {

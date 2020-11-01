@@ -1,5 +1,7 @@
 package com.meti;
 
+import com.meti.content.ContentType;
+
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;

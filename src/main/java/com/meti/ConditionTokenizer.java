@@ -1,5 +1,7 @@
 package com.meti;
 
+import com.meti.content.ContentNode;
+
 public abstract class ConditionTokenizer extends StringTokenizer<Node> {
     public ConditionTokenizer(String content) {
         super(content);
