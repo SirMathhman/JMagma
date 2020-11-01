@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import static com.meti.MagmaCompiler.MagmaCompiler_;
+import static com.meti.compile.MagmaCompiler.MagmaCompiler_;
 
 public class Main {
     private static final Path Root = Paths.get(".");
