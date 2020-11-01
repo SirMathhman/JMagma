@@ -6,8 +6,8 @@ import com.meti.Type;
 import com.meti.function.FunctionType.FunctionTypeBuilder;
 import com.meti.content.ContentNode;
 import com.meti.content.ContentType;
-import com.meti.field.Field;
-import com.meti.field.FieldTokenizer;
+import com.meti.scope.field.Field;
+import com.meti.scope.field.FieldTokenizer;
 
 import java.util.Collection;
 import java.util.List;
@@ -16,8 +16,8 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
-import static com.meti.field.Field.Field;
-import static com.meti.field.Field.*;
+import static com.meti.scope.field.Field.Field;
+import static com.meti.scope.field.Field.*;
 import static com.meti.function.FunctionType.FunctionType;
 import static com.meti.function.FunctionType.WithReturn;
 import static com.meti.tokenize.slice.ImmutableStrategyBuffer.EmptyBuffer;

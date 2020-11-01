@@ -1,7 +1,7 @@
 package com.meti.structure;
 
 import com.meti.Node;
-import com.meti.field.Field;
+import com.meti.scope.field.Field;
 
 import java.util.ArrayList;
 import java.util.Collections;

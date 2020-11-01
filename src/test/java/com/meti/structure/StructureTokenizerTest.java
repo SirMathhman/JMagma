@@ -2,10 +2,10 @@ package com.meti.structure;
 
 import com.meti.Node;
 import com.meti.content.ContentType;
-import com.meti.field.Field;
+import com.meti.scope.field.Field;
 import org.junit.jupiter.api.Test;
 
-import static com.meti.field.Field.Field;
+import static com.meti.scope.field.Field.Field;
 import static com.meti.structure.Structure.Structure;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

@@ -3,7 +3,7 @@ package com.meti.block;
 import com.meti.Node;
 import com.meti.Node.Group;
 import com.meti.Renderable;
-import com.meti.vars.Variable;
+import com.meti.scope.vars.Variable;
 import org.junit.jupiter.api.Test;
 
 import java.util.Collections;

@@ -1,13 +1,13 @@
 package com.meti.structure;
 
 import com.meti.Node;
-import com.meti.field.Field;
+import com.meti.scope.field.Field;
 import com.meti.primitive.Primitive;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-import static com.meti.field.Field.Field;
+import static com.meti.scope.field.Field.Field;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 

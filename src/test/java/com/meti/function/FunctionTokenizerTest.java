@@ -5,8 +5,8 @@ import com.meti.content.ContentNode;
 import com.meti.content.ContentType;
 import org.junit.jupiter.api.Test;
 
-import static com.meti.field.Field.Field;
-import static com.meti.field.Field.Flag.DEF;
+import static com.meti.scope.field.Field.Field;
+import static com.meti.scope.field.Field.Flag.DEF;
 import static com.meti.function.FunctionType.FunctionType;
 import static com.meti.function.Implementation.Implementation;
 import static org.junit.jupiter.api.Assertions.assertEquals;

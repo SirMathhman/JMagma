@@ -1,7 +1,7 @@
 package com.meti.invoke;
 
 import com.meti.Node;
-import com.meti.vars.Variable;
+import com.meti.scope.vars.Variable;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;

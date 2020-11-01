@@ -1,4 +1,4 @@
-package com.meti.returns;
+package com.meti.scope.assign;
 
 import com.meti.Node;
 import com.meti.scope.vars.Variable;
@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-class ReturnTest {
+class AssignmentTest {
     @Test
     void testEquals() {
         Node expected = createNode();
@@ -17,15 +17,17 @@ class ReturnTest {
 
     @Test
     void is() {
-        assertTrue(createNode().is(Node.Group.Return));
+        assertTrue(createNode().is(Node.Group.Assignment));
     }
 
     private Node createNode() {
-        return new Return(new Variable("test"));
+        Node to = new Variable("to");
+        Node from = new Variable("from");
+        return new Assignment(to, from);
     }
 
     @Test
     void render() {
-        assertEquals("return test;", createNode().render());
+        assertEquals("to=from;", createNode().render());
     }
 }

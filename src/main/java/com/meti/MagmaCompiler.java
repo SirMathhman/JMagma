@@ -3,7 +3,7 @@ package com.meti;
 import com.meti.tokenize.NodeTokenizer;
 import com.meti.tokenize.TypeTokenizer;
 import com.meti.tokenize.slice.BracketSplitter;
-import com.meti.field.Field;
+import com.meti.scope.field.Field;
 
 import java.util.stream.Collectors;
 

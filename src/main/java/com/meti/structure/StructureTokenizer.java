@@ -2,8 +2,8 @@ package com.meti.structure;
 
 import com.meti.tokenize.AbstractTokenizer;
 import com.meti.Node;
-import com.meti.field.Field;
-import com.meti.field.FieldTokenizer;
+import com.meti.scope.field.Field;
+import com.meti.scope.field.FieldTokenizer;
 
 import java.util.Optional;
 import java.util.stream.IntStream;

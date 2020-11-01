@@ -1,6 +1,6 @@
 package com.meti;
 
-import com.meti.field.Field;
+import com.meti.scope.field.Field;
 
 import java.util.function.Function;
 
