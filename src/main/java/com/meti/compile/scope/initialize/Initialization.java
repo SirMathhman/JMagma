@@ -26,7 +26,7 @@ public class Initialization implements Node {
         return Objects.hash(identity, value);
     }
 
-    Initialization(Field identity, Node value) {
+    public Initialization(Field identity, Node value) {
         this.identity = identity;
         this.value = value;
     }

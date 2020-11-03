@@ -3,6 +3,12 @@ package com.meti.compile;
 import java.util.function.Function;
 
 public interface Type extends Renderable {
+    default Node createDefault() {
+        Class<? extends Type> thisClass = getClass();
+        String message = "%s has no default type.".formatted(thisClass);
+        throw new UnsupportedOperationException(message);
+    }
+
     default Type mapByChild(Function<Type, Type> mapping) {
         return this;
     }
@@ -36,6 +42,6 @@ public interface Type extends Renderable {
 
     enum Group {
         Content,
-        Function, Primitive
+        Function, Void, Primitive
     }
 }

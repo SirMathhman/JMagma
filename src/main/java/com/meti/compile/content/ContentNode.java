@@ -13,7 +13,7 @@ public class ContentNode implements Node {
     }
 
     @Override
-    public <T, R> R mapValue(Class<T> clazz, Function<T, R> function) {
+    public <T, R> R transformValue(Class<T> clazz, Function<T, R> function) {
         return function.apply(clazz.cast(value));
     }
 

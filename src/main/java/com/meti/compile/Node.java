@@ -11,7 +11,7 @@ public interface Node extends Renderable {
         return this;
     }
 
-    default <T, R> R mapValue(Class<T> clazz, Function<T, R> function) {
+    default <T, R> R transformValue(Class<T> clazz, Function<T, R> function) {
         Class<? extends Node> thisClass = getClass();
         String format = "Instances of '%s' have no value.";
         String formatted = format.formatted(thisClass);

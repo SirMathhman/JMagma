@@ -1,23 +1,22 @@
 package com.meti.compile.scope.vars;
 
+import com.meti.compile.AbstractParser;
 import com.meti.compile.Node;
 import com.meti.compile.state.Stack;
 import com.meti.compile.state.State;
 
 import java.util.Optional;
-import java.util.function.Function;
 
-public class VariableParser {
-    private final State previous;
-
+public class VariableParser extends AbstractParser {
     public VariableParser(State previous) {
-        this.previous = previous;
+        super(previous);
     }
 
+    @Override
     public Optional<State> process() {
         if (previous.has(Node.Group.Variable)) {
-            if (!previous.map(this::isDefined)) {
-                throw previous.mapCurrent(this::createUndefinedNode);
+            if (!previous.transformBoth(this::isDefined)) {
+                throw previous.transformCurrent(this::createUndefinedNode);
             }
             return Optional.of(previous);
         } else {
@@ -26,11 +25,11 @@ public class VariableParser {
     }
 
     private boolean isDefined(Node node, Stack stack) {
-        return node.mapValue(String.class, stack::isDefined);
+        return node.transformValue(String.class, stack::isDefined);
     }
 
     private IllegalStateException createUndefinedNode(Node node) {
-        return node.mapValue(String.class, this::createUndefined);
+        return node.transformValue(String.class, this::createUndefined);
     }
 
     private IllegalStateException createUndefined(String value) {

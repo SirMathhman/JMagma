@@ -66,7 +66,7 @@ public class MagmaCompiler implements Compiler {
     }
 
     private Node tokenizeNode(Node node) {
-        return node.is(Content) ? node.mapValue(String.class, this::tokenizeStringAsNode) : node;
+        return node.is(Content) ? node.transformValue(String.class, this::tokenizeStringAsNode) : node;
     }
 
     private IllegalArgumentException invalidateToken(String value) {

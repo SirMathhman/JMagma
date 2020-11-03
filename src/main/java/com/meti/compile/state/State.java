@@ -24,15 +24,29 @@ public class State {
         this.cache = cache;
     }
 
-    public <T> T map(BiFunction<Node, Stack, T> mapping) {
+    public <T> T transformBoth(BiFunction<Node, Stack, T> mapping) {
         return mapping.apply(current, stack);
     }
 
-    public <T> T mapCurrent(Function<Node, T> function) {
+    public <T> T transformCurrent(Function<Node, T> function) {
         return function.apply(current);
     }
 
     public boolean has(Node.Group group) {
         return current.is(group);
+    }
+
+    public State mapByStack(BiFunction<Node, Stack, Stack> mapper) {
+        Stack newStack = mapper.apply(current, stack);
+        return new State(current, newStack, cache);
+    }
+
+    public State mapByCurrent(Function<Node, Node> mapper) {
+        Node newCurrent = mapper.apply(current);
+        return new State(newCurrent, stack, cache);
+    }
+
+    public <T> T transformStack(Function<Stack, T> mapper) {
+        return mapper.apply(stack);
     }
 }

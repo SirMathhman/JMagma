@@ -26,6 +26,6 @@ class VariableTest {
 
     @Test
     void mapValue() {
-        assertEquals(5, new Variable("dummy").mapValue(String.class, String::length));
+        assertEquals(5, new Variable("dummy").transformValue(String.class, String::length));
     }
 }

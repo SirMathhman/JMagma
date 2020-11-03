@@ -1,5 +1,6 @@
 package com.meti.compile.scope.field;
 
+import com.meti.compile.Node;
 import com.meti.compile.Renderable;
 import com.meti.compile.Type;
 
@@ -23,6 +24,10 @@ public interface Field extends Renderable {
     Type type();
 
     boolean isNamed(String name);
+
+    String formatName(String format);
+
+    Node createDefault();
 
     enum Flag {
         NATIVE,
@@ -87,6 +92,16 @@ public interface Field extends Renderable {
         @Override
         public boolean isNamed(String name) {
             return this.name.equals(name);
+        }
+
+        @Override
+        public String formatName(String format) {
+            return format.formatted(this.name);
+        }
+
+        @Override
+        public Node createDefault() {
+            return type.createDefault();
         }
     }
 

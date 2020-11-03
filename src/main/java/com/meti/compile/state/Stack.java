@@ -42,6 +42,10 @@ public class Stack {
         return frames.stream().anyMatch(frame -> frame.isDefined(name));
     }
 
+    public Boolean isDefined(Field field) {
+        return frames.stream().anyMatch(frame -> frame.isDefined(field));
+    }
+
     static class Frame {
         private final Set<Field> entries;
 
@@ -58,6 +62,10 @@ public class Stack {
         boolean isDefined(String name) {
             return entries.stream()
                     .anyMatch(entry -> entry.isNamed(name));
+        }
+
+        public boolean isDefined(Field field) {
+            return entries.contains(field);
         }
     }
 }

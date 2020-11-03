@@ -6,12 +6,12 @@ import org.junit.jupiter.api.Test;
 class FunctionFeatureTest extends FeatureTest {
     @Test
     void empty() {
-        assertCompile("void empty(){}", "def empty() : Void => {}");
+        assertCompile("void empty(){}", "def empty() : Void_ => {}");
     }
 
     @Test
     void consume() {
-        assertCompile("void consume(int value){}", "def consume(value : I16) : Void => {}");
+        assertCompile("void consume(int value){}", "def consume(value : I16) : Void_ => {}");
     }
 
     @Test
