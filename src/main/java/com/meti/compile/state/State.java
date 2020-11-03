@@ -49,4 +49,11 @@ public class State {
     public <T> T transformStack(Function<Stack, T> mapper) {
         return mapper.apply(stack);
     }
+
+    public String render() {
+        return cache.render(Cache.Group.Include)
+               + cache.render(Cache.Group.Structure)
+               + cache.render(Cache.Group.Function)
+               + current.render();
+    }
 }

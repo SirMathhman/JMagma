@@ -61,8 +61,12 @@ public class FunctionTokenizer extends AbstractTokenizer<Node> {
     private WithName extractHeader() {
         String headerSlice = content.substring(0, content.indexOf('('));
         String headerTrim = headerSlice.trim();
-        WithName withName = extractName(Field(), headerTrim);
-        return extractFlags(withName, headerTrim);
+        try {
+            WithName withName = extractName(Field(), headerTrim);
+            return extractFlags(withName, headerTrim);
+        } catch (IllegalArgumentException e) {
+            throw new IllegalStateException("Bad header: '%s'".formatted(headerTrim));
+        }
     }
 
     private WithName extractName(None builder, String headerTrim) {
@@ -144,6 +148,14 @@ public class FunctionTokenizer extends AbstractTokenizer<Node> {
     }
 
     private WithName reduceFlags(WithName builder, String flagTrim) {
+        try {
+            return reduceFlagsExceptionally(builder, flagTrim);
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException("Invalid flags: '%s'".formatted(flagTrim), e);
+        }
+    }
+
+    private WithName reduceFlagsExceptionally(WithName builder, String flagTrim) {
         return Stream.of(flagTrim.split(" "))
                 .filter(s -> !s.isBlank())
                 .map(String::trim)
