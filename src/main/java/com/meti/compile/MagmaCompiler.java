@@ -1,16 +1,25 @@
 package com.meti.compile;
 
+import com.meti.compile.path.ScriptPath;
+import com.meti.compile.scope.field.Field;
 import com.meti.compile.tokenize.NodeTokenizer;
 import com.meti.compile.tokenize.TypeTokenizer;
 import com.meti.compile.tokenize.slice.BracketSplitter;
-import com.meti.compile.scope.field.Field;
 
 import java.util.stream.Collectors;
 
 import static com.meti.compile.Node.Group.Content;
 
 public class MagmaCompiler implements Compiler {
-    public static final Compiler MagmaCompiler_ = new MagmaCompiler();
+    private final ScriptPath scriptPath;
+
+    public MagmaCompiler(ScriptPath scriptPath) {
+        this.scriptPath = scriptPath;
+    }
+
+    public static Compiler MagmaCompiler(ScriptPath scriptPath) {
+        return new MagmaCompiler(scriptPath);
+    }
 
     @Override
     public String compile(String value) {
@@ -22,7 +31,7 @@ public class MagmaCompiler implements Compiler {
     }
 
     private Node tokenizeStringAsNode(String content) {
-        return new NodeTokenizer(content)
+        return new NodeTokenizer(content, scriptPath)
                 .tokenize()
                 .orElseThrow(() -> invalidateToken(content))
                 .mapByChild(this::tokenizeNode)

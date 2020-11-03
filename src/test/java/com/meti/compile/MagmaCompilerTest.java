@@ -1,20 +1,21 @@
 package com.meti.compile;
 
+import com.meti.compile.path.JavaScriptPath;
 import com.meti.compile.tokenize.slice.BracketSplitter;
 import org.junit.jupiter.api.Test;
 
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static com.meti.compile.MagmaCompiler.MagmaCompiler_;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertIterableEquals;
 
 class MagmaCompilerTest {
     @Test
     void testMain() {
-        String result = MagmaCompiler_.compile("def main() : I16 => {return 0;}");
+        String result = MagmaCompiler.MagmaCompiler(new JavaScriptPath(Paths.get(".").resolve("source"))).compile("def main() : I16 => {return 0;}");
         assertEquals("int main(){return 0;}", result);
     }
 
@@ -33,14 +34,14 @@ class MagmaCompilerTest {
     }
 
     @Test
-    void splitDelimiterIn(){
+    void splitDelimiterIn() {
         Stream<String> stream = new BracketSplitter("{10;20}").split();
         List<String> actual = stream.collect(Collectors.toList());
         assertIterableEquals(List.of("{10;20}"), actual);
     }
 
     @Test
-    void splitDelimiterOut(){
+    void splitDelimiterOut() {
         Stream<String> stream = new BracketSplitter("10;20").split();
         List<String> actual = stream.collect(Collectors.toList());
         assertIterableEquals(List.of("10", "20"), actual);

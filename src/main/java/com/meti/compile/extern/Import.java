@@ -15,7 +15,7 @@ public class Import implements Node {
         this.children = children;
     }
 
-    static Builder Import() {
+    public static Builder Import() {
         return new Builder(Collections.emptyList());
     }
 
@@ -44,7 +44,7 @@ public class Import implements Node {
                 .collect(Collectors.joining());
     }
 
-    static class Builder {
+    public static class Builder {
         private final List<Node> cache;
 
         Builder(List<Node> cache) {

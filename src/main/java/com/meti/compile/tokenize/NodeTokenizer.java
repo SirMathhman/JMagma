@@ -1,6 +1,8 @@
 package com.meti.compile.tokenize;
 
 import com.meti.compile.Node;
+import com.meti.compile.extern.ImportTokenizer;
+import com.meti.compile.path.ScriptPath;
 import com.meti.compile.scope.assign.AssignmentTokenizer;
 import com.meti.compile.call.block.BlockTokenizer;
 import com.meti.compile.primitive.chars.CharTokenizer;
@@ -19,13 +21,17 @@ import java.util.function.Function;
 import java.util.stream.Stream;
 
 public class NodeTokenizer extends CompoundTokenizer<Node> {
-    public NodeTokenizer(String value) {
+    private final ScriptPath scriptPath;
+
+    public NodeTokenizer(String value, ScriptPath scriptPath) {
         super(value);
+        this.scriptPath = scriptPath;
     }
 
     @Override
     protected Stream<Function<String, Tokenizer<Node>>> streamFactories() {
         return Stream.of(
+                content1 -> new ImportTokenizer(content1, scriptPath),
                 StructureTokenizer::new,
                 WhileTokenizer::new,
                 IfTokenizer::new,

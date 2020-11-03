@@ -1,5 +1,8 @@
 package com.meti.compile;
 
+import com.meti.compile.path.ScriptPath;
+import com.meti.compile.path.JavaScriptPath;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -9,8 +12,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import static com.meti.compile.MagmaCompiler.MagmaCompiler_;
 
 public class Main {
     private static final Path Root = Paths.get(".");
@@ -99,7 +100,8 @@ public class Main {
     private static String compile(Path mainFile) {
         if (Files.exists(mainFile)) {
             String value = readContent(mainFile);
-            return MagmaCompiler_.compile(value);
+            ScriptPath scriptPath = new JavaScriptPath(SourceDirectory);
+            return MagmaCompiler.MagmaCompiler(scriptPath).compile(value);
         } else {
             logger.log(Level.SEVERE, "Entry point at '" + mainFile + "' did not exist.");
             return "";
