@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import java.math.BigInteger;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class IntTest {
     @Test
@@ -20,5 +21,10 @@ class IntTest {
     void render() {
         Renderable node = new Int(BigInteger.TEN);
         assertEquals("10", node.render());
+    }
+
+    @Test
+    void is() {
+        assertTrue(new Int(BigInteger.ZERO).is(Node.Group.Int));
     }
 }

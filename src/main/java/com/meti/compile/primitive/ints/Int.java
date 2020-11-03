@@ -32,6 +32,6 @@ public class Int implements Node {
 
     @Override
     public boolean is(Group group) {
-        throw new UnsupportedOperationException();
+        return group == Group.Int;
     }
 }

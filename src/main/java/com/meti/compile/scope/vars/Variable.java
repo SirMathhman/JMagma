@@ -3,6 +3,7 @@ package com.meti.compile.scope.vars;
 import com.meti.compile.Node;
 
 import java.util.Objects;
+import java.util.function.Function;
 
 public class Variable implements Node {
     private final String value;
@@ -17,6 +18,11 @@ public class Variable implements Node {
         if (o == null || getClass() != o.getClass()) return false;
         Variable variable = (Variable) o;
         return Objects.equals(value, variable.value);
+    }
+
+    @Override
+    public <T, R> R mapValue(Class<T> clazz, Function<T, R> function) {
+        return function.apply(clazz.cast(value));
     }
 
     @Override

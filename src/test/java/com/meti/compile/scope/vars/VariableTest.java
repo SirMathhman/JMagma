@@ -23,4 +23,9 @@ class VariableTest {
     void render() {
         assertEquals("test", new Variable("test").render());
     }
+
+    @Test
+    void mapValue() {
+        assertEquals(5, new Variable("dummy").mapValue(String.class, String::length));
+    }
 }
