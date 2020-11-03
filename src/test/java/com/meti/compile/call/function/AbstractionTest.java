@@ -3,23 +3,24 @@ package com.meti.compile.call.function;
 import com.meti.compile.Node;
 import com.meti.compile.Renderable;
 import com.meti.compile.Type;
-import com.meti.compile.scope.field.Field;
-import com.meti.compile.primitive.ints.Int;
 import com.meti.compile.call.returns.Return;
+import com.meti.compile.primitive.ints.Int;
+import com.meti.compile.scope.field.Field;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigInteger;
 import java.util.Collections;
 
 import static com.meti.compile.call.block.Block.Block;
-import static com.meti.compile.scope.field.Field.Field;
+import static com.meti.compile.call.function.Abstraction.Abstraction;
 import static com.meti.compile.call.function.FunctionType.FunctionType;
-import static com.meti.compile.call.function.Implementation.Implementation;
 import static com.meti.compile.primitive.Primitive.I16;
+import static com.meti.compile.scope.field.Field.Field;
+import static java.util.Collections.emptyList;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-class ImplementationT6est {
+class AbstractionTest {
     @Test
     void testEquals() {
         Node expected = createNode();
@@ -28,23 +29,21 @@ class ImplementationT6est {
     }
 
     private Node createNode() {
-        return Implementation()
+        return Abstraction()
                 .withIdentity(createIdentity())
-                .withValue(createValue())
                 .complete();
     }
 
     @Test
     void implementation() {
-        assertEquals("int main(){return 0;}", createNode().render());
+        assertEquals("int main();", createNode().render());
     }
 
     @Test
     void is() {
         Field identity = createIdentity();
-        Node value = createValue();
-        Node node = new Implementation(identity, value, Collections.emptyList());
-        assertTrue(node.is(Node.Group.Implementation));
+        Node node = new Abstraction(identity, emptyList());
+        assertTrue(node.is(Node.Group.Abstraction));
     }
 
     private Field createIdentity() {
@@ -60,17 +59,10 @@ class ImplementationT6est {
                 .complete();
     }
 
-    private Node createValue() {
-        return Block()
-                .append(new Return(new Int(BigInteger.ZERO)))
-                .complete();
-    }
-
     @Test
     void render() {
         Field identity = createIdentity();
-        Node value = createValue();
-        Renderable node = new Implementation(identity, value, Collections.emptyList());
-        assertEquals("int main(){return 0;}", node.render());
+        Renderable node = new Abstraction(identity, emptyList());
+        assertEquals("int main();", node.render());
     }
 }

@@ -29,6 +29,6 @@ public interface Node extends Renderable {
     enum Group {
         Char,
         Int,
-        Content, Declaration, Variable, Assignment, Return, Block, Implementation, Mapping, If, True, False, While, Structure, Import,
+        Content, Declaration, Variable, Assignment, Return, Block, Implementation, Mapping, If, True, False, While, Structure, Import, Abstraction,
     }
 }
