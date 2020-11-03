@@ -22,6 +22,8 @@ public interface Field extends Renderable {
 
     Type type();
 
+    boolean isNamed(String name);
+
     enum Flag {
         NATIVE,
         DEF,
@@ -80,6 +82,11 @@ public interface Field extends Renderable {
         @Override
         public Type type() {
             return type;
+        }
+
+        @Override
+        public boolean isNamed(String name) {
+            return this.name.equals(name);
         }
     }
 
