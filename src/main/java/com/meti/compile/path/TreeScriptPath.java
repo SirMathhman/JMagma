@@ -19,11 +19,11 @@ public class TreeScriptPath implements ScriptPath {
         this.root = new Package("", elements);
     }
 
-    static Element Script(String name, String value) {
+    public static Element Script(String name, String value) {
         return new Script(name, value);
     }
 
-    static Element Package(String name, Element... elements) {
+    public static Element Package(String name, Element... elements) {
         return new Package(name, List.of(elements));
     }
 
@@ -49,7 +49,7 @@ public class TreeScriptPath implements ScriptPath {
         return new IllegalArgumentException(message);
     }
 
-    static abstract class Element {
+    public static abstract class Element {
         private final String name;
 
         protected Element(String name) {
@@ -63,7 +63,7 @@ public class TreeScriptPath implements ScriptPath {
         abstract Optional<String> read(List<String> package_, String name);
     }
 
-    static class Package extends Element {
+    public static class Package extends Element {
         private final List<Element> children;
 
         public Package(String name, List<Element> children) {
@@ -89,7 +89,7 @@ public class TreeScriptPath implements ScriptPath {
         }
     }
 
-    static class Script extends Element {
+    public static class Script extends Element {
         private final String value;
 
         public Script(String name, String value) {
