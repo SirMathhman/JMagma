@@ -3,10 +3,10 @@ package com.meti.compile.primitive.chars;
 import com.meti.compile.Node;
 
 class Char implements Node {
-    public static final String Format = "'%s'";
+    private static final String Format = "'%s'";
     private final char value;
 
-    public Char(char value) {
+    Char(char value) {
         this.value = value;
     }
 
@@ -17,6 +17,6 @@ class Char implements Node {
 
     @Override
     public boolean is(Group group) {
-        throw new UnsupportedOperationException();
+       return group == Group.Char;
     }
 }
