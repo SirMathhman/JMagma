@@ -7,6 +7,15 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class NodeTokenizerTest {
+    @Test
+    void returnFirst() {
+        assertTrue(new NodeTokenizer("""
+                return perform();
+                """.trim(), EmptyScriptPath.EmptyPath)
+                .tokenize()
+                .orElseThrow()
+                .is(Node.Group.Return));
+    }
 
     @Test
     void blockFirst() {
