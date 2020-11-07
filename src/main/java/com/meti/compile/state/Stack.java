@@ -3,6 +3,7 @@ package com.meti.compile.state;
 import com.meti.compile.scope.field.Field;
 
 import java.util.*;
+import java.util.function.Supplier;
 
 public class Stack {
     private final Deque<Frame> frames;
@@ -46,6 +47,20 @@ public class Stack {
         return frames.stream().anyMatch(frame -> frame.isDefined(field));
     }
 
+    public Field resolve(String name) {
+        return frames.stream()
+                .filter(frame -> frame.isDefined(name))
+                .map(frame -> frame.resolve(name))
+                .flatMap(Optional::stream)
+                .findFirst()
+                .orElseThrow(new Supplier<IllegalArgumentException>() {
+                    @Override
+                    public IllegalArgumentException get() {
+                        return new IllegalArgumentException(name + " is not defined in " + this);
+                    }
+                });
+    }
+
     static class Frame {
         private final Set<Field> entries;
 
@@ -66,6 +81,12 @@ public class Stack {
 
         public boolean isDefined(Field field) {
             return entries.contains(field);
+        }
+
+        public Optional<Field> resolve(String name) {
+            return entries.stream()
+                    .filter(entry -> entry.isNamed(name))
+                    .findFirst();
         }
     }
 }
