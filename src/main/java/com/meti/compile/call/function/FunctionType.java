@@ -19,7 +19,7 @@ public class FunctionType implements Type {
         this.parameters = parameters;
     }
 
-    static None FunctionType() {
+    public static None FunctionType() {
         return new None(Collections.emptyList());
     }
 
@@ -70,7 +70,7 @@ public class FunctionType implements Type {
         return Objects.hash(returnType, parameters);
     }
 
-    static class WithReturn extends FunctionTypeBuilder<WithReturn> {
+    public static class WithReturn extends FunctionTypeBuilder<WithReturn> {
         private final Type returnType;
 
         WithReturn(Type returnType, List<Type> parameters) {
@@ -88,7 +88,7 @@ public class FunctionType implements Type {
         }
     }
 
-    static class None extends FunctionTypeBuilder<None> {
+    public static class None extends FunctionTypeBuilder<None> {
         public None(List<Type> parameters) {
             super(parameters);
         }
@@ -110,7 +110,7 @@ public class FunctionType implements Type {
             this.parameters = parameters;
         }
 
-        T withParameter(Type parameter) {
+        public T withParameter(Type parameter) {
             List<Type> newParameters = new ArrayList<>(parameters);
             newParameters.add(parameter);
             return complete(newParameters);

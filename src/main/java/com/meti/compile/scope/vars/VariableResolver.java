@@ -2,19 +2,21 @@ package com.meti.compile.scope.vars;
 
 import com.meti.compile.Node;
 import com.meti.compile.Type;
+import com.meti.compile.resolve.Resolver;
+import com.meti.compile.resolve.StateResolver;
 import com.meti.compile.scope.field.Field;
 import com.meti.compile.state.State;
 
 import java.util.Optional;
+import java.util.function.Function;
 
-public class VariableResolver {
-    private final State state;
-
+public class VariableResolver extends StateResolver {
     public VariableResolver(State state) {
-        this.state = state;
+        super(state);
     }
 
-    public Optional<Type> resolve(){
+    @Override
+    public Optional<Type> resolve(Function<State, Resolver<State>> parent){
         if(state.has(Node.Group.Variable)) {
             Type type = state.transformCurrent(this::resolveToField).type();
             return Optional.of(type);

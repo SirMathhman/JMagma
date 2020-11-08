@@ -56,4 +56,8 @@ public class State {
                + cache.render(Cache.Group.Function)
                + current.render();
     }
+
+    public State with(Node node) {
+        return new State(node, stack, cache);
+    }
 }

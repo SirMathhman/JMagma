@@ -1,7 +1,6 @@
 package com.meti.compile.scope.vars;
 
 import com.meti.compile.Node;
-import com.meti.compile.Type;
 import com.meti.compile.primitive.Primitive;
 import com.meti.compile.scope.field.Field;
 import com.meti.compile.state.Stack;
@@ -23,7 +22,7 @@ class VariableResolverTest {
         Stack stack = new Stack().define(identity);
         State state = new State(root, stack);
         assertEquals(Primitive.I16, new VariableResolver(state)
-                .resolve()
+                .resolve(null)
                 .orElseThrow());
     }
 }

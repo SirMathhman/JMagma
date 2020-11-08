@@ -53,6 +53,11 @@ public class Mapping implements Node {
     }
 
     @Override
+    public <T, R> R transformValue(Class<T> clazz, Function<T, R> function) {
+        return function.apply(clazz.cast(caller));
+    }
+
+    @Override
     public Node mapByChild(Function<Node, Node> mapping) {
         Node newCaller = mapping.apply(caller);
         Complete builder = Mapping().withCaller(newCaller);
