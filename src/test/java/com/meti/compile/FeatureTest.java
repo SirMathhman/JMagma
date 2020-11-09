@@ -8,6 +8,6 @@ import java.nio.file.Paths;
 public class FeatureTest {
     protected void assertCompile(String expected, String source) {
         String actual = MagmaCompiler.MagmaCompiler(new JavaScriptPath(Paths.get(".").resolve("source"))).compile(source);
-        Assertions.assertEquals(expected, actual);
+        Assertions.assertEquals(expected.replace("    ", "\t"), actual);
     }
 }

@@ -6,6 +6,6 @@ import org.junit.jupiter.api.Test;
 class ReturnFeatureTest extends FeatureTest {
     @Test
     void simple(){
-        assertCompile("return 10;", "return 10");
+        assertCompile("return 10;\n", "return 10");
     }
 }
