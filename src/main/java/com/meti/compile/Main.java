@@ -45,23 +45,32 @@ public class Main {
 
     private static void ensureBuildFile() {
         if (!Files.exists(Build)) {
-            logger.log(Level.WARNING, "Build file did not exist at '" + Build + "' and will be created.");
+            String format = "Build file did not exist at '%s' and will be created.";
+            String message = format.formatted(Build);
+            logger.log(Level.WARNING, message);
 
             try {
                 Files.createFile(Build);
             } catch (IOException e) {
-                logger.log(Level.SEVERE, "Failed to create build file at '" + Build + "'.", e);
+                String format0 = "Failed to create build file at '%s'.";
+                String message0 = format0.formatted(Build);
+                logger.log(Level.SEVERE, message0, e);
             }
         }
     }
 
     private static void ensureSourceDirectory() {
         if (!Files.exists(SourceDirectory)) {
-            logger.log(Level.WARNING, "Source directory did not exist at '" + SourceDirectory + "' and will be created.");
+            String format = "Source directory did not exist at '%s' and will be created.";
+            String message = format.formatted(SourceDirectory);
+            logger.log(Level.WARNING, message);
+
             try {
                 Files.createDirectory(SourceDirectory);
             } catch (IOException e) {
-                logger.log(Level.SEVERE, "Failed to create source directory at '" + SourceDirectory + "'.", e);
+                String format0 = "Failed to create source directory at '%s'.";
+                String message0 = format0.formatted(SourceDirectory);
+                logger.log(Level.SEVERE, message0, e);
             }
         }
     }
@@ -119,11 +128,16 @@ public class Main {
 
     private static void deletePreviousTarget() {
         if (Files.exists(Target)) {
-            logger.log(Level.WARNING, "Previous target file will be overriden at '" + Target + "'.");
+            String format = "Previous target file will be overriden at '%s'.";
+            String message = format.formatted(Target);
+            logger.log(Level.WARNING, message);
+
             try {
                 Files.delete(Target);
             } catch (IOException e) {
-                logger.log(Level.WARNING, "Failed to delete target file at '" + Target + "'.");
+                String format0 = "Failed to delete target file at '%s'.";
+                String message0 = format0.formatted(Target);
+                logger.log(Level.WARNING, message0);
             }
         }
     }
