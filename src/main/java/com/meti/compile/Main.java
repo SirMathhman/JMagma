@@ -7,13 +7,13 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Collection;
-import java.util.Collections;
+import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class Main {
+    public static final String SourceFormat = "%s.mg";
     private static final Path Root = Paths.get(".");
     private static final Path Target = Root.resolve("target.c");
     private static final Path SourceDirectory = Root.resolve("source");
@@ -27,20 +27,52 @@ public class Main {
     }
 
     private static void process() {
-        List<String> lines = readBuild();
-        if (lines.isEmpty()) {
-            logger.log(Level.SEVERE, "Failed to find entry point.");
-        } else {
-            processBuildContent(lines);
+        try {
+            processExceptionally();
+        } catch (IOException e) {
+            logger.log(Level.WARNING, "Failed to read build file.", e);
         }
     }
 
-    private static void processBuildContent(List<String> lines) {
-        List<String> stream = extractMainPackage(lines);
-        Path mainFile = resolvePackage(stream);
+    private static void processExceptionally() throws IOException {
+        String content = Files.readString(Main.Build);
+        if (content.isBlank()) logger.log(Level.SEVERE, "No entry point was found.");
+        else processBuildContent(content);
+    }
+
+    private static void processBuildContent(String content) {
+        Path mainFile = formatEntry(content);
         String output = compile(mainFile);
         deletePreviousTarget();
         writeToTarget(output);
+    }
+
+    private static Path formatEntry(String content) {
+        String trimmed = content.trim();
+        int separator = trimmed.lastIndexOf('.');
+        return separator == -1 ?
+                formatEntrySimply(trimmed) :
+                formatEntryWithPackage(trimmed, separator);
+    }
+
+    private static Path formatEntrySimply(String trimmed) {
+        String format = "%s.mg";
+        String formatted = format.formatted(trimmed);
+        return SourceDirectory.resolve(formatted);
+    }
+
+    private static Path formatEntryWithPackage(String trimmed, int separator) {
+        String packageSlice = trimmed.substring(0, separator);
+        String packageTrim = packageSlice.trim();
+
+        String nameSlice = trimmed.substring(separator + 1);
+        String name = nameSlice.trim();
+
+        String[] packageArray = packageTrim.split("\\.");
+        String formatted = SourceFormat.formatted(name);
+        return Arrays.stream(packageArray)
+                .reduce(Main.SourceDirectory, Path::resolve, (path, path2) -> path2)
+                .resolve(formatted);
     }
 
     private static void ensureBuildFile() {
@@ -73,37 +105,6 @@ public class Main {
                 logger.log(Level.SEVERE, message0, e);
             }
         }
-    }
-
-    private static List<String> readBuild() {
-        try {
-            return Files.readAllLines(Main.Build);
-        } catch (IOException e) {
-            logger.log(Level.WARNING, "Failed to read build file.", e);
-            return Collections.emptyList();
-        }
-    }
-
-    private static List<String> extractMainPackage(List<String> lines) {
-        String first = lines.get(0);
-        String trimmed = first.trim();
-        String[] args = trimmed.split("\\.");
-        return List.of(args);
-    }
-
-    private static Path resolvePackage(List<String> name) {
-        int lastIndex = name.size() - 1;
-        String format = "%s.mg";
-        String scriptName = name.get(lastIndex);
-        String formatted = format.formatted(scriptName);
-        List<String> package_ = name.subList(0, lastIndex);
-        return foldPackage(package_, formatted);
-    }
-
-    private static Path foldPackage(Collection<String> package_, String name) {
-        return package_.stream()
-                .reduce(Main.SourceDirectory, Path::resolve, (path, path2) -> path2)
-                .resolve(name);
     }
 
     private static String compile(Path mainFile) {
