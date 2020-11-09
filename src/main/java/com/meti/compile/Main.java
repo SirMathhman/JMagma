@@ -12,7 +12,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class Main {
-    public static final String SourceFormat = "%s.mg";
+    private static final String SourceFormat = "%s.mg";
     private static final Path Root = Paths.get(".");
     private static final Path Target = Root.resolve("target.c");
     private static final Path SourceDirectory = Root.resolve("source");
