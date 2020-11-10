@@ -1,47 +1,100 @@
 package com.meti.compile;
 
+import com.meti.api.io.Directory;
+import com.meti.api.io.File;
+import com.meti.api.io.Path;
 import com.meti.compile.path.JavaScriptPath;
 import com.meti.compile.path.ScriptPath;
 
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import static com.meti.compile.NIOFileSystem.FileSystem_;
+import static com.meti.compile.MagmaCompiler.MagmaCompiler;
+import static com.meti.api.io.NIOFileSystem.FileSystem_;
 
 public class Main {
     private static final String SourceFormat = "%s.mg";
     private static final Logger logger = Logger.getAnonymousLogger();
 
+    private static final Path Root = FileSystem_.Root();
+    private static final Path SourceDirectory = Root.resolve("source");
+    private static final Path Build = Root.resolve(".build");
+    private static final Path Target = Root.resolve("target.c");
+
     public static void main(String[] args) {
-        ensureBuildFile();
-        ensureSourceDirectory();
-        process();
+        int written = process();
+        String format = "Wrote %d characters to target at '%s'.";
+        String message = format.formatted(written, Target);
+        logger.log(Level.INFO, message);
     }
 
-    private static void process() {
+    private static int process() {
         try {
-            processExceptionally();
+            return processWithSourceDirectory(ensureBuild());
         } catch (IOException e) {
-            logger.log(Level.WARNING, "Failed to read build file.", e);
+            String format0 = "Failed to create build file at '%s'.";
+            String message0 = format0.formatted(Build);
+            logger.log(Level.SEVERE, message0, e);
+            return 0;
         }
     }
 
-    private static void processExceptionally() throws IOException {
-        String content = Files.readString(FileSystem_.Root().resolve(".build").getRoot());
-        if (content.isBlank()) logger.log(Level.SEVERE, "No entry point was found.");
-        else processBuildContent(content);
+    private static File ensureBuild() throws IOException {
+        if (Build.isExtinct()) {
+            String format = "Build file did not exist at '%s' and will be created.";
+            String message = format.formatted(Build);
+            logger.log(Level.WARNING, message);
+            return Build.createFile();
+        } else {
+            return Build.asFile();
+        }
     }
 
-    private static void processBuildContent(String content) {
+    private static int processWithSourceDirectory(File file) {
+        try {
+            return process(file, ensureSourceDirectory());
+        } catch (IOException e) {
+            String format0 = "Failed to create source directory at '%s'.";
+            String message0 = format0.formatted(SourceDirectory.getRoot());
+            logger.log(Level.SEVERE, message0, e);
+            return 0;
+        }
+    }
+
+    private static Directory ensureSourceDirectory() throws IOException {
+        if (SourceDirectory.isExtinct()) {
+            String format = "Source directory did not exist at '%s' and will be created.";
+            String message = format.formatted(SourceDirectory);
+            logger.log(Level.WARNING, message);
+            return SourceDirectory.createDirectory();
+        } else {
+            return SourceDirectory.asDirectory();
+        }
+    }
+
+    private static int process(File file, Directory directory) {
+        try {
+            return processExceptionally(file, directory);
+        } catch (IOException e) {
+            logger.log(Level.WARNING, "Failed to read build file.", e);
+            return 0;
+        }
+    }
+
+    private static int processExceptionally(File file, Directory directory) throws IOException {
+        String content = file.readAsString();
+        if (!content.isBlank()) return processBuildContent(content, directory);
+        logger.log(Level.SEVERE, "No entry point was found.");
+        return 0;
+    }
+
+    private static int processBuildContent(String content, Directory directory) {
         Path mainFile = formatEntry(content);
-        String output = compile(mainFile);
+        String output = compile(mainFile, directory);
         deletePreviousTarget();
-        writeToTarget(output);
+        return writeToTarget(output);
     }
 
     private static Path formatEntry(String content) {
@@ -62,102 +115,73 @@ public class Main {
         String[] packageArray = packageTrim.split("\\.");
         String formatted = SourceFormat.formatted(name);
         return Arrays.stream(packageArray)
-                .reduce(FileSystem_.Root().resolve("source").getRoot(), Path::resolve, (path, path2) -> path2)
+                .reduce(SourceDirectory, Path::resolve, (path, path2) -> path2)
                 .resolve(formatted);
     }
 
     private static Path formatEntrySimply(String trimmed) {
         String format = "%s.mg";
         String formatted = format.formatted(trimmed);
-        return new Source(Paths.get(".").resolve("source")).resolve(formatted).getRoot();
+        return SourceDirectory.resolve(formatted);
     }
 
-    private static void ensureBuildFile() {
-        if (!Files.exists(FileSystem_.Root().resolve(".build").getRoot())) {
-            String format = "Build file did not exist at '%s' and will be created.";
-            String message = format.formatted(FileSystem_.Root().resolve(".build").getRoot());
-            logger.log(Level.WARNING, message);
-
-            try {
-                Files.createFile(FileSystem_.Root().resolve(".build").getRoot());
-            } catch (IOException e) {
-                String format0 = "Failed to create build file at '%s'.";
-                String message0 = format0.formatted(FileSystem_.Root().resolve(".build").getRoot());
-                logger.log(Level.SEVERE, message0, e);
-            }
-        }
-    }
-
-    private static void ensureSourceDirectory() {
-        if (!Files.exists(FileSystem_.Root().resolve("source").getRoot())) {
-            String format = "Source directory did not exist at '%s' and will be created.";
-            String message = format.formatted(FileSystem_.Root().resolve("source").getRoot());
-            logger.log(Level.WARNING, message);
-
-            try {
-                Files.createDirectory(FileSystem_.Root().resolve("source").getRoot());
-            } catch (IOException e) {
-                String format0 = "Failed to create source directory at '%s'.";
-                String message0 = format0.formatted(FileSystem_.Root().resolve("source").getRoot());
-                logger.log(Level.SEVERE, message0, e);
-            }
-        }
-    }
-
-    private static String compile(Path mainFile) {
-        if (Files.exists(mainFile)) {
-            String value = readContent(mainFile);
-            ScriptPath scriptPath = new JavaScriptPath(FileSystem_.Root().resolve("source").getRoot());
-            return MagmaCompiler.MagmaCompiler(scriptPath).compile(value);
+    private static String compile(Path mainFile, Directory directory) {
+        if (mainFile.isExtant()) {
+            String value = readContent(mainFile.asFile());
+            ScriptPath scriptPath = new JavaScriptPath(directory.getValue().getRoot());
+            return MagmaCompiler(scriptPath).compile(value);
         } else {
-            logger.log(Level.SEVERE, "Entry point at '" + mainFile + "' did not exist.");
+            String format = "Entry point at '%s' did not exist.";
+            String message = format.formatted(mainFile);
+            logger.log(Level.SEVERE, message);
             return "";
         }
     }
 
-    private static String readContent(Path mainFile) {
+    private static String readContent(File mainFile) {
         try {
-            return Files.readString(mainFile);
+            return mainFile.readAsString();
         } catch (IOException e) {
-            logger.log(Level.SEVERE, "Failed to read main file at '" + mainFile + "'.", e);
+            String format = "Failed to read main file at '%s'.";
+            String message = format.formatted(mainFile);
+            logger.log(Level.SEVERE, message, e);
             return "";
         }
     }
 
     private static void deletePreviousTarget() {
-        if (Files.exists(FileSystem_.Root().resolve("target.c").getRoot())) {
+        if (Target.isExtant()) {
             String format = "Previous target file will be overriden at '%s'.";
-            String message = format.formatted(FileSystem_.Root().resolve("target.c").getRoot());
+            String message = format.formatted(Target.getRoot());
             logger.log(Level.WARNING, message);
 
             try {
-                Files.delete(FileSystem_.Root().resolve("target.c").getRoot());
+                Target.delete();
             } catch (IOException e) {
                 String format0 = "Failed to delete target file at '%s'.";
-                String message0 = format0.formatted(FileSystem_.Root().resolve("target.c").getRoot());
+                String message0 = format0.formatted(Target.getRoot());
                 logger.log(Level.WARNING, message0);
             }
         }
     }
 
-    private static void writeToTarget(CharSequence output) {
+    private static int writeToTarget(CharSequence output) {
         try {
-            writeToTargetExceptionally(output);
+            return writeToTargetExceptionally(output);
         } catch (IOException e) {
             logTargetWritingFailure(output.length());
+            return 0;
         }
     }
 
     private static void logTargetWritingFailure(int length) {
         String format = "Failed to write output to '%s' of size %d.";
-        String message = format.formatted(FileSystem_.Root().resolve("target.c").getRoot(), length);
+        String message = format.formatted(Target, length);
         logger.log(Level.SEVERE, message);
     }
 
-    private static void writeToTargetExceptionally(CharSequence output) throws IOException {
-        Files.writeString(FileSystem_.Root().resolve("target.c").getRoot(), output);
-        String format = "Wrote %d characters to target at '%s'.";
-        String message = format.formatted(output.length(), FileSystem_.Root().resolve("target.c").getRoot());
-        logger.log(Level.INFO, message);
+    private static int writeToTargetExceptionally(CharSequence output) throws IOException {
+        Target.write(output);
+        return output.length();
     }
 }
