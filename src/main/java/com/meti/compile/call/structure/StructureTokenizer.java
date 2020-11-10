@@ -30,12 +30,12 @@ public class StructureTokenizer extends AbstractTokenizer<Node> {
 
     private Node tokenizeBody(String bodyTrim) {
         Structure.None builder = Structure();
-        Structure.Complete withName = attachName(builder, bodyTrim);
-        Structure.Complete reduce = attachMembersFromBody(withName, bodyTrim);
+        Structure.WithName withName = attachName(builder, bodyTrim);
+        Structure.WithName reduce = attachMembersFromBody(withName, bodyTrim);
         return reduce.complete();
     }
 
-    private Structure.Complete attachMembersFromBody(Structure.Complete withName, String bodyTrim) {
+    private Structure.WithName attachMembersFromBody(Structure.WithName withName, String bodyTrim) {
         int separator = bodyTrim.indexOf('{');
         int length = bodyTrim.length();
         String membersSlice = bodyTrim.substring(separator + 1, length - 1);
@@ -43,17 +43,17 @@ public class StructureTokenizer extends AbstractTokenizer<Node> {
         return attachMembersFromSlice(withName, membersTrim);
     }
 
-    private Structure.Complete attachMembersFromSlice(Structure.Complete withName, String membersTrim) {
+    private Structure.WithName attachMembersFromSlice(Structure.WithName withName, String membersTrim) {
         return IntStream.range(0, membersTrim.length())
                 .mapToObj(membersTrim::charAt)
                 .reduce(EmptyBuffer, ParameterStrategy_::process, (buffer0, buffer1) -> buffer1)
                 .complete()
                 .trim()
                 .map(this::tokenizeField)
-                .reduce(withName, Structure.Builder::withField, (complete, complete2) -> complete2);
+                .reduce(withName, Structure.Builder::withField, (complete, withName2) -> withName2);
     }
 
-    private Structure.Complete attachName(Structure.None builder, String bodyTrim) {
+    private Structure.WithName attachName(Structure.None builder, String bodyTrim) {
         int separator = bodyTrim.indexOf('{');
         String nameSlice = bodyTrim.substring(0, separator);
         String nameTrim = nameSlice.trim();

@@ -59,7 +59,7 @@ public class Structure implements Node {
     public Node mapByMembers(Function<Field, Field> mapping) {
         return members.stream()
                 .map(mapping)
-                .reduce(Structure().withName(name), Builder::withField, (complete, complete2) -> complete2)
+                .reduce(Structure().withName(name), Builder::withField, (withName, withName2) -> withName2)
                 .complete();
 
     }
@@ -74,8 +74,8 @@ public class Structure implements Node {
             return new None(copy);
         }
 
-        public Complete withName(String name) {
-            return new Complete(members, name);
+        public WithName withName(String name) {
+            return new WithName(members, name);
         }
     }
 
@@ -95,17 +95,17 @@ public class Structure implements Node {
         }
     }
 
-    static class Complete extends Builder<Complete> {
+    static class WithName extends Builder<WithName> {
         private final String name;
 
-        public Complete(List<Field> members, String name) {
+        public WithName(List<Field> members, String name) {
             super(members);
             this.name = name;
         }
 
         @Override
-        Complete complete(List<Field> copy) {
-            return new Complete(copy, name);
+        WithName complete(List<Field> copy) {
+            return new WithName(copy, name);
         }
 
         public Node complete() {
