@@ -1,6 +1,7 @@
 package com.meti.compile.tokenize;
 
 import com.meti.compile.Type;
+import com.meti.compile.generics.GenericTokenizer;
 import com.meti.compile.primitive.PrimitiveTokenizer;
 import com.meti.compile.primitive.VoidTokenizer;
 
@@ -14,6 +15,6 @@ public class TypeTokenizer extends CompoundTokenizer<Type> {
 
     @Override
     protected Stream<Function<String, Tokenizer<Type>>> streamFactories() {
-        return Stream.of(PrimitiveTokenizer::new, VoidTokenizer::new);
+        return Stream.of(PrimitiveTokenizer::new, VoidTokenizer::new, GenericTokenizer::new);
     }
 }

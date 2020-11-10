@@ -18,7 +18,7 @@ class StructureFeatureTest extends FeatureTest {
     void genericField(){
         assertCompile("""
                 struct Wrapper{
-                    void * value;
+                    void* value;
                 }""", """
                 struct Wrapper[T] {
                     const value : T
