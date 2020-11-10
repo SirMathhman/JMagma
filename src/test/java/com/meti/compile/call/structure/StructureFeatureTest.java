@@ -8,7 +8,7 @@ class StructureFeatureTest extends FeatureTest {
     void generics(){
         assertCompile("""
                 struct Wrapper{
-                }""", """
+                };""", """
                 struct Wrapper[T] {
                 }
                 """);
@@ -19,7 +19,7 @@ class StructureFeatureTest extends FeatureTest {
         assertCompile("""
                 struct Wrapper{
                     void* value;
-                }""", """
+                };""", """
                 struct Wrapper[T] {
                     const value : T
                 }""");
