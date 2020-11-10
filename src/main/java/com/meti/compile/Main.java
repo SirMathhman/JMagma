@@ -48,19 +48,13 @@ public class Main {
 
     private static Path formatEntry(String content) {
         String trimmed = content.trim();
+        return trimmed.contains(".") ?
+                formatEntryWithPackage(trimmed) :
+                formatEntrySimply(trimmed);
+    }
+
+    private static Path formatEntryWithPackage(String trimmed) {
         int separator = trimmed.lastIndexOf('.');
-        return separator == -1 ?
-                formatEntrySimply(trimmed) :
-                formatEntryWithPackage(trimmed, separator);
-    }
-
-    private static Path formatEntrySimply(String trimmed) {
-        String format = "%s.mg";
-        String formatted = format.formatted(trimmed);
-        return SourceDirectory.resolve(formatted);
-    }
-
-    private static Path formatEntryWithPackage(String trimmed, int separator) {
         String packageSlice = trimmed.substring(0, separator);
         String packageTrim = packageSlice.trim();
 
@@ -72,6 +66,12 @@ public class Main {
         return Arrays.stream(packageArray)
                 .reduce(Main.SourceDirectory, Path::resolve, (path, path2) -> path2)
                 .resolve(formatted);
+    }
+
+    private static Path formatEntrySimply(String trimmed) {
+        String format = "%s.mg";
+        String formatted = format.formatted(trimmed);
+        return SourceDirectory.resolve(formatted);
     }
 
     private static void ensureBuildFile() {
@@ -143,11 +143,10 @@ public class Main {
     }
 
     private static void writeToTarget(CharSequence output) {
-        int length = output.length();
         try {
-            writeToTargetExceptionally(output, length);
+            writeToTargetExceptionally(output);
         } catch (IOException e) {
-            logTargetWritingFailure(length);
+            logTargetWritingFailure(output.length());
         }
     }
 
@@ -157,10 +156,10 @@ public class Main {
         logger.log(Level.SEVERE, message);
     }
 
-    private static void writeToTargetExceptionally(CharSequence output, int length) throws IOException {
+    private static void writeToTargetExceptionally(CharSequence output) throws IOException {
         Files.writeString(Main.Target, output);
         String format = "Wrote %d characters to target at '%s'.";
-        String message = format.formatted(length, Main.Target);
+        String message = format.formatted(output.length(), Main.Target);
         logger.log(Level.INFO, message);
     }
 }
