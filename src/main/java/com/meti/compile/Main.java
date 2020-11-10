@@ -1,24 +1,23 @@
 package com.meti.compile;
 
 import com.meti.api.io.*;
+import com.meti.api.log.OutStreamLogger;
 import com.meti.api.nulls.Option;
 import com.meti.compile.path.NIOScriptPath;
 import com.meti.compile.path.ScriptPath;
 
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
+import static com.meti.api.log.Logger.Level.*;
 import static com.meti.api.nulls.None.None;
 import static com.meti.api.nulls.Some.Some;
 import static com.meti.compile.MagmaCompiler.MagmaCompiler;
 import static com.meti.api.io.NIOFileSystem.FileSystem_;
 
 public class Main {
+    private static final com.meti.api.log.Logger logger = new OutStreamLogger(new JavaOutStream(System.out));
     private static final String SourceFormat = "%s.mg";
-    private static final Logger logger = Logger.getAnonymousLogger();
-
     private static final Directory Root = FileSystem_.Root().asDirectory();
     private static final Path SourceDirectory = Root.resolve("source");
     private static final Path Build = Root.resolve(".build");
@@ -28,7 +27,7 @@ public class Main {
         int written = process();
         String format = "Wrote %d characters to target at '%s'.";
         String message = format.formatted(written, Target);
-        logger.log(Level.INFO, message);
+        logger.logIgnored(Info, message);
     }
 
     private static int process() {
@@ -37,7 +36,7 @@ public class Main {
         } catch (IOException e) {
             String format0 = "Failed to create build file at '%s'.";
             String message0 = format0.formatted(Build);
-            logger.log(Level.SEVERE, message0, e);
+            logger.logExceptionallyIgnored(Severe, message0, e);
             return 0;
         }
     }
@@ -48,7 +47,7 @@ public class Main {
         } catch (IOException e) {
             String format0 = "Failed to create source directory at '%s'.";
             String message0 = format0.formatted(SourceDirectory);
-            logger.log(Level.SEVERE, message0, e);
+            logger.logExceptionallyIgnored(Severe, message0, e);
             return 0;
         }
     }
@@ -57,7 +56,7 @@ public class Main {
         try {
             return processExceptionally(extant, directory);
         } catch (IOException e) {
-            logger.log(Level.WARNING, "Failed to read build file.", e);
+            logger.logExceptionallyIgnored(Warning, "Failed to read build file.", e);
             return 0;
         }
     }
@@ -65,7 +64,7 @@ public class Main {
     private static int processExceptionally(Extant extant, Directory directory) throws IOException {
         String content = extant.readAsString();
         if (!content.isBlank()) return processBuildContent(content, directory);
-        logger.log(Level.SEVERE, "No entry point was found.");
+        logger.logIgnored(Severe, "No entry point was found.");
         return 0;
     }
 
@@ -114,7 +113,7 @@ public class Main {
     private static String logNoEntryPoint(Path mainFile) {
         String format = "Entry point at '%s' did not exist.";
         String message = format.formatted(mainFile);
-        logger.log(Level.SEVERE, message);
+        logger.logIgnored(Severe, message);
         return "";
     }
 
@@ -131,7 +130,7 @@ public class Main {
         } catch (IOException e) {
             String format = "Failed to read main file at '%s'.";
             String message = format.formatted(mainExtant);
-            logger.log(Level.SEVERE, message, e);
+            logger.logExceptionallyIgnored(Severe, message, e);
             return "";
         }
     }
@@ -146,14 +145,14 @@ public class Main {
     private static File<Extant> logExtinct() {
         String format = "No target file existed at '%s'.";
         String message = format.formatted(Target);
-        logger.log(Level.INFO, message);
+        logger.logIgnored(Info, message);
         return Target.asFile();
     }
 
     private static void logDeletion(File<Extant> file) {
         String format = "Previous target file was deleted at '%s'.";
         String message = format.formatted(file);
-        logger.log(Level.WARNING, message);
+        logger.logIgnored(Warning, message);
     }
 
     private static Option<File<Extant>> deleteTarget(Extant extant) {
@@ -162,7 +161,7 @@ public class Main {
         } catch (IOException e) {
             String format0 = "Failed to delete previous target file at '%s'.";
             String message0 = format0.formatted(Target);
-            logger.log(Level.WARNING, message0);
+            logger.logIgnored(Warning, message0);
             return None();
         }
     }
@@ -180,6 +179,6 @@ public class Main {
     private static void logTargetWritingFailure(int length) {
         String format = "Failed to write output to '%s' of size %d.";
         String message = format.formatted(Target, length);
-        logger.log(Level.SEVERE, message);
+        logger.logIgnored(Severe, message);
     }
 }
