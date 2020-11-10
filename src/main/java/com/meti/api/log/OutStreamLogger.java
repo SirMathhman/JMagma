@@ -9,8 +9,12 @@ import java.io.StringWriter;
 public class OutStreamLogger implements Logger {
     private final OutStream outStream;
 
-    public OutStreamLogger(OutStream outStream) {
+    private OutStreamLogger(OutStream outStream) {
         this.outStream = outStream;
+    }
+
+    public static OutStreamLogger Logger(OutStream outStream) {
+        return new OutStreamLogger(outStream);
     }
 
     @Override

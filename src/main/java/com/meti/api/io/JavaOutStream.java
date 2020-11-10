@@ -6,8 +6,12 @@ import java.io.OutputStream;
 public class JavaOutStream implements OutStream {
     private final OutputStream outputStream;
 
-    public JavaOutStream(OutputStream outputStream) {
+    private JavaOutStream(OutputStream outputStream) {
         this.outputStream = outputStream;
+    }
+
+    public static JavaOutStream OutStream(OutputStream outputStream) {
+        return new JavaOutStream(outputStream);
     }
 
     @Override

@@ -1,7 +1,7 @@
 package com.meti.compile;
 
 import com.meti.api.io.*;
-import com.meti.api.log.OutStreamLogger;
+import com.meti.api.log.Logger;
 import com.meti.api.nulls.Option;
 import com.meti.compile.path.NIOScriptPath;
 import com.meti.compile.path.ScriptPath;
@@ -9,14 +9,16 @@ import com.meti.compile.path.ScriptPath;
 import java.io.IOException;
 import java.util.Arrays;
 
+import static com.meti.api.io.JavaOutStream.OutStream;
 import static com.meti.api.log.Logger.Level.*;
+import static com.meti.api.log.OutStreamLogger.Logger;
 import static com.meti.api.nulls.None.None;
 import static com.meti.api.nulls.Some.Some;
 import static com.meti.compile.MagmaCompiler.MagmaCompiler;
 import static com.meti.api.io.NIOFileSystem.FileSystem_;
 
 public class Main {
-    private static final com.meti.api.log.Logger logger = new OutStreamLogger(new JavaOutStream(System.out));
+    private static final Logger logger = Logger(OutStream(System.out));
     private static final String SourceFormat = "%s.mg";
     private static final Directory Root = FileSystem_.Root().asDirectory();
     private static final Path SourceDirectory = Root.resolve("source");
