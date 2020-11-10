@@ -1,15 +1,13 @@
 package com.meti.api.io;
 
-import com.meti.api.nulls.None;
-import com.meti.api.nulls.Option;
-import com.meti.api.nulls.Some;
+import com.meti.api.core.Option;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.function.Function;
 
-import static com.meti.api.nulls.None.*;
-import static com.meti.api.nulls.Some.*;
+import static com.meti.api.core.None.*;
+import static com.meti.api.core.Some.*;
 
 public class NIOPath implements Path {
     private final java.nio.file.Path root;

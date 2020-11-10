@@ -1,0 +1,4 @@
+struct Exception {
+    const message : String = "",
+    const cause : Option[Exception] = None
+}

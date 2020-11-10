@@ -1,0 +1,23 @@
+struct Option[T] {
+    in const flatMap : [R](T => Option[R]) => Option[R],
+    in const peek : (T => Void) => Option[T],
+
+    final in const orElseSupply : (() => T) => T,
+}
+
+const Some = class[T](value : T) => {
+    const flatMap : [R](T => Option[R]) => Option[R] = _(value);
+    const peek = (consumer : T => Void) => {
+        consumer.accept(value);
+        return this;
+    }
+    final const orElseSupply = _ => value;
+    out const Option = <Option[T]>{};
+}
+
+const None = class[T]() => {
+    const flatMap : [R](T => Option[R]) => Option[R] = None();
+    const peek : (T => Void) => Option[T] = _ => this;
+    final const orElseSupply = _();
+    out const Option = <Option[T]>{};
+}

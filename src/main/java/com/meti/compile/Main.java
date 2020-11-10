@@ -5,7 +5,7 @@ import com.meti.api.io.Extant;
 import com.meti.api.io.File;
 import com.meti.api.io.Path;
 import com.meti.api.log.Logger;
-import com.meti.api.nulls.Option;
+import com.meti.api.core.Option;
 import com.meti.compile.path.NIOScriptPath;
 import com.meti.compile.path.ScriptPath;
 
@@ -15,8 +15,8 @@ import static com.meti.api.io.JavaOutStream.OutStream;
 import static com.meti.api.io.NIOFileSystem.FileSystem_;
 import static com.meti.api.log.Logger.Level.*;
 import static com.meti.api.log.OutStreamLogger.Logger;
-import static com.meti.api.nulls.None.None;
-import static com.meti.api.nulls.Some.Some;
+import static com.meti.api.core.None.None;
+import static com.meti.api.core.Some.Some;
 import static com.meti.api.stream.ArrayStream.Stream;
 import static com.meti.compile.MagmaCompiler.MagmaCompiler;
 
@@ -142,7 +142,7 @@ public class Main {
 
     private static File<Extant> deletePreviousTarget() {
         return Target.mapExistenceAsFile(Main::deleteTarget)
-                .map(extinctOption -> extinctOption)
+                .flatMap(extinctOption -> extinctOption)
                 .peek(Main::logDeletion)
                 .orElseSupply(Main::logExtinct);
     }

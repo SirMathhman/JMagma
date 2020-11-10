@@ -1,9 +1,8 @@
 package com.meti.api.io;
 
-import com.meti.api.nulls.Option;
+import com.meti.api.core.Option;
 
 import java.io.IOException;
-import java.util.function.Consumer;
 import java.util.function.Function;
 
 public interface Path {

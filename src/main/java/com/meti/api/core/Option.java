@@ -1,4 +1,4 @@
-package com.meti.api.nulls;
+package com.meti.api.core;
 
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -9,5 +9,5 @@ public interface Option<T> {
 
     T orElseSupply(Supplier<T> supplier);
 
-    <R> Option<R> map(Function<T, Option<R>> function);
+    <R> Option<R> flatMap(Function<T, Option<R>> function);
 }
