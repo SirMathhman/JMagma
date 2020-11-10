@@ -5,6 +5,16 @@ import org.junit.jupiter.api.Test;
 
 class StructureFeatureTest extends FeatureTest {
     @Test
+    void generics(){
+        assertCompile("""
+                struct Wrapper{
+                }""", """
+                struct Wrapper[T] {
+                }
+                """);
+    }
+
+    @Test
     void empty(){
         assertCompile("""
                 struct Empty{
