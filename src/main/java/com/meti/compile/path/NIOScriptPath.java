@@ -1,7 +1,7 @@
 package com.meti.compile.path;
 
 import com.meti.api.io.Directory;
-import com.meti.api.io.File;
+import com.meti.api.io.Extant;
 import com.meti.compile.ExceptionNode;
 import com.meti.compile.Node;
 import com.meti.compile.content.ContentNode;
@@ -9,8 +9,6 @@ import com.meti.compile.extern.Import.Builder;
 import com.meti.compile.tokenize.slice.BracketSplitter;
 
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.Collection;
 import java.util.List;
 
@@ -26,7 +24,7 @@ public class NIOScriptPath implements ScriptPath {
 
     @Override
     public Node read(List<String> package_, String name) {
-        File path = package_.isEmpty() ?
+        Extant path = package_.isEmpty() ?
                 formatFile(name) :
                 formatPackage(package_, name);
         try {
@@ -45,17 +43,17 @@ public class NIOScriptPath implements ScriptPath {
         return format.formatted(join, name);
     }
 
-    private File formatPackage(Collection<String> package_, String name) {
+    private Extant formatPackage(Collection<String> package_, String name) {
         return package_.stream()
                 .reduce(directory, Directory::resolveDirectory, (directory, directory2) -> directory2)
                 .resolveFile(Format.formatted(name));
     }
 
-    private File formatFile(String name) {
+    private Extant formatFile(String name) {
         return directory.resolveFile(name + ".mg");
     }
 
-    private Node complete(File path) throws IOException {
+    private Node complete(Extant path) throws IOException {
         return new BracketSplitter(path.readAsString())
                 .split()
                 .map(ContentNode::new)

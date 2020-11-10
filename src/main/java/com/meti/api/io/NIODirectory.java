@@ -10,8 +10,8 @@ public class NIODirectory implements Directory {
     }
 
     @Override
-    public File resolveFile(String name) {
-        return new NIOFile(value.resolve(name));
+    public Extant resolveFile(String name) {
+        return new NIOExtant(value.resolve(name));
     }
 
     @Override

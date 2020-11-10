@@ -1,8 +1,7 @@
 package com.meti.compile;
 
-import com.meti.api.io.Directory;
-import com.meti.api.io.File;
-import com.meti.api.io.Path;
+import com.meti.api.io.*;
+import com.meti.api.nulls.Option;
 import com.meti.compile.path.NIOScriptPath;
 import com.meti.compile.path.ScriptPath;
 
@@ -11,6 +10,8 @@ import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import static com.meti.api.nulls.None.None;
+import static com.meti.api.nulls.Some.Some;
 import static com.meti.compile.MagmaCompiler.MagmaCompiler;
 import static com.meti.api.io.NIOFileSystem.FileSystem_;
 
@@ -32,7 +33,7 @@ public class Main {
 
     private static int process() {
         try {
-            return processWithSourceDirectory(ensureBuild());
+            return Build.ensuringExistenceAsFile(Main::processWithBuild);
         } catch (IOException e) {
             String format0 = "Failed to create build file at '%s'.";
             String message0 = format0.formatted(Build);
@@ -41,20 +42,9 @@ public class Main {
         }
     }
 
-    private static File ensureBuild() throws IOException {
-        if (Build.isExtinct()) {
-            String format = "Build file did not exist at '%s' and will be created.";
-            String message = format.formatted(Build);
-            logger.log(Level.WARNING, message);
-            return Build.createFile();
-        } else {
-            return Build.asFile();
-        }
-    }
-
-    private static int processWithSourceDirectory(File file) {
+    private static int processWithBuild(Extant build) {
         try {
-            return process(file, ensureSourceDirectory());
+            return SourceDirectory.ensuringExistenceAsDirectory(directory -> process(build, directory));
         } catch (IOException e) {
             String format0 = "Failed to create source directory at '%s'.";
             String message0 = format0.formatted(SourceDirectory);
@@ -63,38 +53,28 @@ public class Main {
         }
     }
 
-    private static Directory ensureSourceDirectory() throws IOException {
-        if (SourceDirectory.isExtinct()) {
-            String format = "Source directory did not exist at '%s' and will be created.";
-            String message = format.formatted(SourceDirectory);
-            logger.log(Level.WARNING, message);
-            return SourceDirectory.createDirectory();
-        } else {
-            return SourceDirectory.asDirectory();
-        }
-    }
-
-    private static int process(File file, Directory directory) {
+    private static int process(Extant extant, Directory directory) {
         try {
-            return processExceptionally(file, directory);
+            return processExceptionally(extant, directory);
         } catch (IOException e) {
             logger.log(Level.WARNING, "Failed to read build file.", e);
             return 0;
         }
     }
 
-    private static int processExceptionally(File file, Directory directory) throws IOException {
-        String content = file.readAsString();
+    private static int processExceptionally(Extant extant, Directory directory) throws IOException {
+        String content = extant.readAsString();
         if (!content.isBlank()) return processBuildContent(content, directory);
         logger.log(Level.SEVERE, "No entry point was found.");
         return 0;
     }
 
-    private static int processBuildContent(String content, Directory directory) {
-        Path mainFile = formatEntry(content, directory);
-        String output = compile(mainFile, directory);
-        deletePreviousTarget();
-        return writeToTarget(output);
+    private static int processBuildContent(String content, Directory directory) throws IOException {
+        var mainFile = formatEntry(content, directory);
+        var output = compile(mainFile, directory);
+        var target = deletePreviousTarget();
+        var extant = target.ensure();
+        return writeToTarget(extant, output);
     }
 
     private static Path formatEntry(String content, Directory directory) {
@@ -126,48 +106,71 @@ public class Main {
     }
 
     private static String compile(Path mainFile, Directory directory) {
-        if (mainFile.isExtant()) {
-            String value = readContent(mainFile.asFile());
-            ScriptPath scriptPath = new NIOScriptPath(directory);
-            return MagmaCompiler(scriptPath).compile(value);
-        } else {
-            String format = "Entry point at '%s' did not exist.";
-            String message = format.formatted(mainFile);
-            logger.log(Level.SEVERE, message);
-            return "";
-        }
+        return mainFile
+                .mapExistenceAsFile(file -> compile(directory, file))
+                .orElseSupply(() -> logNoEntryPoint(mainFile));
     }
 
-    private static String readContent(File mainFile) {
+    private static String logNoEntryPoint(Path mainFile) {
+        String format = "Entry point at '%s' did not exist.";
+        String message = format.formatted(mainFile);
+        logger.log(Level.SEVERE, message);
+        return "";
+    }
+
+    private static String compile(Directory directory, Extant file) {
+        String value = readContent(file);
+        ScriptPath scriptPath = new NIOScriptPath(directory);
+        Compiler compiler = MagmaCompiler(scriptPath);
+        return compiler.compile(value);
+    }
+
+    private static String readContent(Extant mainExtant) {
         try {
-            return mainFile.readAsString();
+            return mainExtant.readAsString();
         } catch (IOException e) {
             String format = "Failed to read main file at '%s'.";
-            String message = format.formatted(mainFile);
+            String message = format.formatted(mainExtant);
             logger.log(Level.SEVERE, message, e);
             return "";
         }
     }
 
-    private static void deletePreviousTarget() {
-        if (Target.isExtant()) {
-            String format = "Previous target file will be overriden at '%s'.";
-            String message = format.formatted(Target);
-            logger.log(Level.WARNING, message);
+    private static File<Extant> deletePreviousTarget() {
+        return Target.mapExistenceAsFile(Main::deleteTarget)
+                .map(extinctOption -> extinctOption)
+                .peek(Main::logDeletion)
+                .orElseSupply(Main::logExtinct);
+    }
 
-            try {
-                Target.delete();
-            } catch (IOException e) {
-                String format0 = "Failed to delete target file at '%s'.";
-                String message0 = format0.formatted(Target.getRoot());
-                logger.log(Level.WARNING, message0);
-            }
+    private static File<Extant> logExtinct() {
+        String format = "No target file existed at '%s'.";
+        String message = format.formatted(Target);
+        logger.log(Level.INFO, message);
+        return Target.asFile();
+    }
+
+    private static void logDeletion(File<Extant> file) {
+        String format = "Previous target file was deleted at '%s'.";
+        String message = format.formatted(file);
+        logger.log(Level.WARNING, message);
+    }
+
+    private static Option<File<Extant>> deleteTarget(Extant extant) {
+        try {
+            return Some(extant.delete());
+        } catch (IOException e) {
+            String format0 = "Failed to delete previous target file at '%s'.";
+            String message0 = format0.formatted(Target);
+            logger.log(Level.WARNING, message0);
+            return None();
         }
     }
 
-    private static int writeToTarget(CharSequence output) {
+    private static int writeToTarget(Extant extant, CharSequence output) {
         try {
-            return writeToTargetExceptionally(output);
+            extant.write(output);
+            return output.length();
         } catch (IOException e) {
             logTargetWritingFailure(output.length());
             return 0;
@@ -178,10 +181,5 @@ public class Main {
         String format = "Failed to write output to '%s' of size %d.";
         String message = format.formatted(Target, length);
         logger.log(Level.SEVERE, message);
-    }
-
-    private static int writeToTargetExceptionally(CharSequence output) throws IOException {
-        Target.write(output);
-        return output.length();
     }
 }

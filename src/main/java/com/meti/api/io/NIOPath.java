@@ -1,7 +1,15 @@
 package com.meti.api.io;
 
+import com.meti.api.nulls.None;
+import com.meti.api.nulls.Option;
+import com.meti.api.nulls.Some;
+
 import java.io.IOException;
 import java.nio.file.Files;
+import java.util.function.Function;
+
+import static com.meti.api.nulls.None.*;
+import static com.meti.api.nulls.Some.*;
 
 public class NIOPath implements Path {
     private final java.nio.file.Path root;
@@ -11,55 +19,52 @@ public class NIOPath implements Path {
     }
 
     @Override
-    public void delete() throws IOException {
-        Files.delete(getRoot());
-    }
-
-    @Override
-    public void write(CharSequence output) throws IOException {
-        Files.writeString(getRoot(), output);
-    }
-
-    @Override
     public Directory createDirectory() throws IOException {
-        Files.createDirectory(getRoot());
-        return new NIODirectory(getRoot());
+        Files.createDirectory(root);
+        return new NIODirectory(root);
     }
 
     @Override
-    public File createFile() throws IOException {
-        Files.createFile(getRoot());
-        return new NIOFile(this.getRoot());
+    public Extant createFile() throws IOException {
+        Files.createFile(root);
+        return new NIOExtant(root);
     }
 
     @Override
     public boolean isExtinct() {
-        return !Files.exists(getRoot());
-    }
-
-    @Override
-    @Deprecated
-    public Path resolve(String name) {
-        return new NIOPath(root.resolve(name));
-    }
-
-    @Override
-    public java.nio.file.Path getRoot() {
-        return root;
+        return !Files.exists(root);
     }
 
     @Override
     public Directory asDirectory() {
-        return new NIODirectory(getRoot());
+        return new NIODirectory(root);
     }
 
     @Override
-    public File asFile() {
-        return new NIOFile(this.getRoot());
+    public File<Extant> asFile() {
+        return isExtant() ?
+                new NIOExtant(root) :
+                new NIOExtinct(root);
     }
 
     @Override
     public boolean isExtant() {
         return Files.exists(root);
+    }
+
+    @Override
+    public <T> T ensuringExistenceAsFile(Function<Extant, T> mapper) throws IOException {
+        return mapper.apply(asFile().ensure());
+    }
+
+    @Override
+    public <T> Option<T> mapExistenceAsFile(Function<Extant, T> mapper) {
+        return isExtant() ? Some(mapper.apply(new NIOExtant(root))) : None();
+    }
+
+    @Override
+    public <T> T ensuringExistenceAsDirectory(Function<Directory, T> mapper) throws IOException {
+        Directory directory = isExtant() ? asDirectory() : createDirectory();
+        return mapper.apply(directory);
     }
 }

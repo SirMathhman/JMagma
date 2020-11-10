@@ -1,26 +1,27 @@
 package com.meti.api.io;
 
+import com.meti.api.nulls.Option;
+
 import java.io.IOException;
+import java.util.function.Consumer;
+import java.util.function.Function;
 
 public interface Path {
-    void delete() throws IOException;
-
-    void write(CharSequence output) throws IOException;
-
     Directory createDirectory() throws IOException;
 
-    File createFile() throws IOException;
+    Extant createFile() throws IOException;
 
     boolean isExtinct();
 
-    @Deprecated
-    Path resolve(String name);
-
-    java.nio.file.Path getRoot();
-
     Directory asDirectory();
 
-    File asFile();
+    File<Extant> asFile();
 
     boolean isExtant();
+
+    <T> T ensuringExistenceAsFile(Function<Extant, T> mapper) throws IOException;
+
+    <T> Option<T> mapExistenceAsFile(Function<Extant, T> mapper);
+
+    <T> T ensuringExistenceAsDirectory(Function<Directory, T> mapper) throws IOException;
 }
