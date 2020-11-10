@@ -1,21 +1,24 @@
 package com.meti.compile;
 
-import com.meti.api.io.*;
+import com.meti.api.io.Directory;
+import com.meti.api.io.Extant;
+import com.meti.api.io.File;
+import com.meti.api.io.Path;
 import com.meti.api.log.Logger;
 import com.meti.api.nulls.Option;
 import com.meti.compile.path.NIOScriptPath;
 import com.meti.compile.path.ScriptPath;
 
 import java.io.IOException;
-import java.util.Arrays;
 
 import static com.meti.api.io.JavaOutStream.OutStream;
+import static com.meti.api.io.NIOFileSystem.FileSystem_;
 import static com.meti.api.log.Logger.Level.*;
 import static com.meti.api.log.OutStreamLogger.Logger;
 import static com.meti.api.nulls.None.None;
 import static com.meti.api.nulls.Some.Some;
+import static com.meti.api.stream.ArrayStream.Stream;
 import static com.meti.compile.MagmaCompiler.MagmaCompiler;
-import static com.meti.api.io.NIOFileSystem.FileSystem_;
 
 public class Main {
     private static final Logger logger = Logger(OutStream(System.out));
@@ -95,8 +98,8 @@ public class Main {
 
         String[] packageArray = packageTrim.split("\\.");
         String formatted = SourceFormat.formatted(name);
-        return Arrays.stream(packageArray)
-                .reduce(directory, Directory::resolveDirectory, (path, path2) -> path2)
+        return Stream(packageArray)
+                .foldLeft(directory, Directory::resolveDirectory)
                 .resolve(formatted);
     }
 
