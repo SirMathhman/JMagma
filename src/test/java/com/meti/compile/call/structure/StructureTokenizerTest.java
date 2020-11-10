@@ -31,7 +31,8 @@ class StructureTokenizerTest {
     private Field createGeneric() {
         return Field()
                 .withName("value")
-                .withType(new GenericType("T"))
+                .withFlag(Field.Flag.CONST)
+                .withType(new ContentType("T"))
                 .complete();
     }
 

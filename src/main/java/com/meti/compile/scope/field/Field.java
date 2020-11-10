@@ -9,6 +9,7 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public interface Field extends Renderable {
     static None Field() {
@@ -42,6 +43,22 @@ public interface Field extends Renderable {
         private final String name;
         private final Type type;
         private final Set<Flag> flags;
+
+        @Override
+        public String toString() {
+            String flags = this.flags.stream()
+                    .map(Flag::name)
+                    .map(String::toLowerCase)
+                    .map("\"%s\""::formatted)
+                    .collect(Collectors.joining(",", "[", "]"));
+            return """
+                    {
+                        "name" : "%s",
+                        "type" : %s,
+                        "flags" : %s
+                    }
+                    """.formatted(name, type, flags);
+        }
 
         public FieldImpl(Set<Flag> flags, String name, Type type) {
             this.name = name;

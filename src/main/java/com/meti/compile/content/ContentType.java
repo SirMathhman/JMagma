@@ -13,6 +13,15 @@ public class ContentType implements Type {
     }
 
     @Override
+    public String toString() {
+        return """
+                {
+                    "content" : "%s"
+                }
+                """.formatted(content);
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;

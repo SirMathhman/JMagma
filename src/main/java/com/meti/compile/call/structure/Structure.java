@@ -23,6 +23,20 @@ public class Structure implements Node {
         return new None(Collections.emptyList());
     }
 
+
+    @Override
+    public String toString() {
+        String membersString = members.stream()
+                .map(Field::toString)
+                .collect(Collectors.joining(",", "[", "]"));
+        return """
+                {
+                    "name" : "%s",
+                    "members" : %s,
+                }
+                """.formatted(name, membersString);
+    }
+
     @Override
     public boolean is(Group group) {
         return group == Group.Structure;

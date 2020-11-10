@@ -5,7 +5,10 @@ import com.meti.compile.Node;
 import com.meti.compile.scope.field.Field;
 import com.meti.compile.scope.field.FieldTokenizer;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import static com.meti.compile.tokenize.slice.ImmutableStrategyBuffer.EmptyBuffer;
@@ -54,7 +57,8 @@ public class StructureTokenizer extends AbstractTokenizer<Node> {
     }
 
     private Structure.WithName attachName(Structure.None builder, String bodyTrim) {
-        int separator = bodyTrim.indexOf('{');
+        int genEnd = bodyTrim.indexOf('[');
+        int separator = genEnd == -1 ? bodyTrim.indexOf('{') : genEnd;
         String nameSlice = bodyTrim.substring(0, separator);
         String nameTrim = nameSlice.trim();
         return builder.withName(nameTrim);
