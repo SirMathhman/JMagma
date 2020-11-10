@@ -12,6 +12,6 @@ public class GenericTokenizer extends AbstractTokenizer<Type> {
 
     @Override
     public Optional<Type> tokenize() {
-        return Optional.of(new GenericType());
+        return Optional.of(new GenericType(content));
     }
 }

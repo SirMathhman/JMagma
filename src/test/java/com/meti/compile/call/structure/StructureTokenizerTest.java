@@ -2,6 +2,7 @@ package com.meti.compile.call.structure;
 
 import com.meti.compile.Node;
 import com.meti.compile.content.ContentType;
+import com.meti.compile.generics.GenericType;
 import com.meti.compile.scope.field.Field;
 import org.junit.jupiter.api.Test;
 
@@ -10,6 +11,29 @@ import static com.meti.compile.call.structure.Structure.Structure;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class StructureTokenizerTest {
+    @Test
+    void tokenizeGeneric(){
+        Node expected = Structure()
+                .withName("Wrapper")
+                .withField(createGeneric())
+                .complete();
+        //Make sure when using text blocks to add .trim() at the end for the tokenizer to work properly.
+        Node actual = new StructureTokenizer("""
+                struct Wrapper[T] {
+                    const value : T
+                }
+                """.trim())
+                .tokenize()
+                .orElseThrow();
+        assertEquals(expected, actual);
+    }
+
+    private Field createGeneric() {
+        return Field()
+                .withName("value")
+                .withType(new GenericType("T"))
+                .complete();
+    }
 
     @Test
     void tokenize() {
