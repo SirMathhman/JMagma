@@ -5,7 +5,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 
 public class NIOFile implements File {
-    private final java.nio.file.Path path;
+    private final Path path;
 
     public NIOFile(Path path) {
         this.path = path;

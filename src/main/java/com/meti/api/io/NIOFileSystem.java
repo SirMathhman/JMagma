@@ -11,6 +11,6 @@ public class NIOFileSystem implements FileSystem {
 
     @Override
     public Path Root() {
-        return new Path(Root);
+        return new NIOPath(Root);
     }
 }

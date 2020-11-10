@@ -3,7 +3,7 @@ package com.meti.compile;
 import com.meti.api.io.Directory;
 import com.meti.api.io.File;
 import com.meti.api.io.Path;
-import com.meti.compile.path.JavaScriptPath;
+import com.meti.compile.path.NIOScriptPath;
 import com.meti.compile.path.ScriptPath;
 
 import java.io.IOException;
@@ -18,7 +18,7 @@ public class Main {
     private static final String SourceFormat = "%s.mg";
     private static final Logger logger = Logger.getAnonymousLogger();
 
-    private static final Path Root = FileSystem_.Root();
+    private static final Directory Root = FileSystem_.Root().asDirectory();
     private static final Path SourceDirectory = Root.resolve("source");
     private static final Path Build = Root.resolve(".build");
     private static final Path Target = Root.resolve("target.c");
@@ -57,7 +57,7 @@ public class Main {
             return process(file, ensureSourceDirectory());
         } catch (IOException e) {
             String format0 = "Failed to create source directory at '%s'.";
-            String message0 = format0.formatted(SourceDirectory.getRoot());
+            String message0 = format0.formatted(SourceDirectory);
             logger.log(Level.SEVERE, message0, e);
             return 0;
         }
@@ -91,20 +91,20 @@ public class Main {
     }
 
     private static int processBuildContent(String content, Directory directory) {
-        Path mainFile = formatEntry(content);
+        Path mainFile = formatEntry(content, directory);
         String output = compile(mainFile, directory);
         deletePreviousTarget();
         return writeToTarget(output);
     }
 
-    private static Path formatEntry(String content) {
+    private static Path formatEntry(String content, Directory directory) {
         String trimmed = content.trim();
         return trimmed.contains(".") ?
-                formatEntryWithPackage(trimmed) :
-                formatEntrySimply(trimmed);
+                formatEntryWithPackage(trimmed, directory) :
+                formatEntrySimply(trimmed, directory);
     }
 
-    private static Path formatEntryWithPackage(String trimmed) {
+    private static Path formatEntryWithPackage(String trimmed, Directory directory) {
         int separator = trimmed.lastIndexOf('.');
         String packageSlice = trimmed.substring(0, separator);
         String packageTrim = packageSlice.trim();
@@ -115,20 +115,20 @@ public class Main {
         String[] packageArray = packageTrim.split("\\.");
         String formatted = SourceFormat.formatted(name);
         return Arrays.stream(packageArray)
-                .reduce(SourceDirectory, Path::resolve, (path, path2) -> path2)
+                .reduce(directory, Directory::resolveDirectory, (path, path2) -> path2)
                 .resolve(formatted);
     }
 
-    private static Path formatEntrySimply(String trimmed) {
+    private static Path formatEntrySimply(String trimmed, Directory directory) {
         String format = "%s.mg";
         String formatted = format.formatted(trimmed);
-        return SourceDirectory.resolve(formatted);
+        return directory.resolve(formatted);
     }
 
     private static String compile(Path mainFile, Directory directory) {
         if (mainFile.isExtant()) {
             String value = readContent(mainFile.asFile());
-            ScriptPath scriptPath = new JavaScriptPath(directory.getValue().getRoot());
+            ScriptPath scriptPath = new NIOScriptPath(directory);
             return MagmaCompiler(scriptPath).compile(value);
         } else {
             String format = "Entry point at '%s' did not exist.";
@@ -152,7 +152,7 @@ public class Main {
     private static void deletePreviousTarget() {
         if (Target.isExtant()) {
             String format = "Previous target file will be overriden at '%s'.";
-            String message = format.formatted(Target.getRoot());
+            String message = format.formatted(Target);
             logger.log(Level.WARNING, message);
 
             try {

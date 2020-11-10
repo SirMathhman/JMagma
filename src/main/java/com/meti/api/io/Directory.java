@@ -1,13 +1,9 @@
 package com.meti.api.io;
 
-public class Directory {
-    private final Path value;
+public interface Directory {
+    File resolveFile(String name);
 
-    public Directory(Path value) {
-        this.value = value;
-    }
+    Directory resolveDirectory(String name);
 
-    public Path getValue() {
-        return value;
-    }
+    Path resolve(String name);
 }
