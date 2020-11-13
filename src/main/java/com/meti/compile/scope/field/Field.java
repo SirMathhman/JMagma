@@ -55,8 +55,8 @@ public interface Field extends Renderable {
             return """
                     {
                         "name" : "%s",
-                        "type" : %s,
-                        "flags" : %s
+                        "flags" : %s,
+                        "type" : %s
                     }
                     """.formatted(name, type, flags);
         }

@@ -32,6 +32,17 @@ public class Initialization implements Node {
     }
 
     @Override
+    public String toString(){
+        return """
+                {
+                    "group" : "Initialization",
+                    "identity" : %s,
+                    "value" : %s
+                }
+                """.formatted(identity, value);
+    }
+
+    @Override
     public Node mapByIdentity(Function<Field, Field> mapping) {
         return new Initialization(mapping.apply(identity), value);
     }
@@ -43,7 +54,7 @@ public class Initialization implements Node {
 
     @Override
     public boolean is(Group group) {
-        return group == Group.Declaration;
+        return group == Group.Initialization;
     }
 
     @Override

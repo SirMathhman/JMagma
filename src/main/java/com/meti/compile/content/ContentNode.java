@@ -31,6 +31,16 @@ public class ContentNode implements Node {
     }
 
     @Override
+    public String toString() {
+        return """
+                {
+                    "group" : "Content",
+                    "value" : "%s"
+                }
+                """.formatted(value);
+    }
+
+    @Override
     public int hashCode() {
         return Objects.hash(value);
     }

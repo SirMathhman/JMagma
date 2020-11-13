@@ -16,6 +16,7 @@ public class ContentType implements Type {
     public String toString() {
         return """
                 {
+                    "group" : "Content",
                     "content" : "%s"
                 }
                 """.formatted(content);
