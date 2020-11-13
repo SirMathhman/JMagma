@@ -31,6 +31,7 @@ public interface Field extends Renderable {
     Node createDefault();
 
     enum Flag {
+        CLASS,
         NATIVE,
         DEF,
         IN,
