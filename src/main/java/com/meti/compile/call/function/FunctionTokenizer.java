@@ -65,7 +65,7 @@ public class FunctionTokenizer extends AbstractTokenizer<Node> {
             WithName withName = extractName(Field(), headerTrim);
             return extractFlags(withName, headerTrim);
         } catch (IllegalArgumentException e) {
-            throw new IllegalStateException("Bad header: '%s'".formatted(headerTrim));
+            throw new IllegalStateException("Bad header: '%s'".formatted(headerTrim), e);
         }
     }
 
