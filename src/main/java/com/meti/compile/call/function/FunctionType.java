@@ -26,7 +26,7 @@ public class FunctionType implements Type {
     @Override
     public Type mapByChild(Function<Type, Type> mapping) {
         Type newReturnType = mapping.apply(returnType);
-        WithReturn identity = FunctionType().withReturnType(newReturnType);
+        WithReturn identity = FunctionType().withReturn(newReturnType);
         return parameters.stream()
                 .map(mapping)
                 .reduce(identity, FunctionTypeBuilder::withParameter, (withReturn, withReturn2) -> withReturn2)
@@ -98,7 +98,7 @@ public class FunctionType implements Type {
             return new None(newParameters);
         }
 
-        public WithReturn withReturnType(Type returnType) {
+        public WithReturn withReturn(Type returnType) {
             return new WithReturn(returnType, parameters);
         }
     }

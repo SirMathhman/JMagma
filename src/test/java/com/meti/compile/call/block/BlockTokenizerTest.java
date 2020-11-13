@@ -11,8 +11,8 @@ class BlockTokenizerTest {
     @Test
     void tokenize() {
         Node expected = Block.Block()
-                .append(new ContentNode("test0"))
-                .append(new ContentNode("test1"))
+                .with(new ContentNode("test0"))
+                .with(new ContentNode("test1"))
                 .complete();
         Node actual = new BlockTokenizer("{test0;test1}")
                 .tokenize()

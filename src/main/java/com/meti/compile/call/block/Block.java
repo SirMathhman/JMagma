@@ -25,7 +25,7 @@ public class Block implements Node {
     public Node mapByChild(Function<Node, Node> mapping) {
         return children.stream()
                 .map(mapping)
-                .reduce(Block(), Builder::append, (builder, builder2) -> builder2)
+                .reduce(Block(), Builder::with, (builder, builder2) -> builder2)
                 .complete();
     }
 
@@ -65,7 +65,7 @@ public class Block implements Node {
             this.cache = cache;
         }
 
-        public Builder append(Node child) {
+        public Builder with(Node child) {
             List<Node> newCache = new ArrayList<>(cache);
             newCache.add(child);
             return new Builder(newCache);

@@ -16,16 +16,16 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 class BlockTest {
     @Test
     void testEquals() {
-        Node expected = Block().append(new Variable("test")).complete();
-        Node actual = Block().append(new Variable("test")).complete();
+        Node expected = Block().with(new Variable("test")).complete();
+        Node actual = Block().with(new Variable("test")).complete();
         assertEquals(expected, actual);
     }
 
     @Test
     void block() {
         assertEquals("{firstsecond}", Block()
-                .append(new Variable("first"))
-                .append(new Variable("second"))
+                .with(new Variable("first"))
+                .with(new Variable("second"))
                 .complete()
                 .render());
     }

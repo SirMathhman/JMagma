@@ -56,13 +56,13 @@ class ImplementationT6est {
 
     private Type createIdentityType() {
         return FunctionType()
-                .withReturnType(I16)
+                .withReturn(I16)
                 .complete();
     }
 
     private Node createValue() {
         return Block()
-                .append(new Return(new Int(BigInteger.ZERO)))
+                .with(new Return(new Int(BigInteger.ZERO)))
                 .complete();
     }
 

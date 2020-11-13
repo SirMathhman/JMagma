@@ -3,15 +3,9 @@ package com.meti.compile.call.function;
 import com.meti.compile.Node;
 import com.meti.compile.Renderable;
 import com.meti.compile.Type;
-import com.meti.compile.call.returns.Return;
-import com.meti.compile.primitive.ints.Int;
 import com.meti.compile.scope.field.Field;
 import org.junit.jupiter.api.Test;
 
-import java.math.BigInteger;
-import java.util.Collections;
-
-import static com.meti.compile.call.block.Block.Block;
 import static com.meti.compile.call.function.Abstraction.Abstraction;
 import static com.meti.compile.call.function.FunctionType.FunctionType;
 import static com.meti.compile.primitive.Primitive.I16;
@@ -55,7 +49,7 @@ class AbstractionTest {
 
     private Type createIdentityType() {
         return FunctionType()
-                .withReturnType(I16)
+                .withReturn(I16)
                 .complete();
     }
 

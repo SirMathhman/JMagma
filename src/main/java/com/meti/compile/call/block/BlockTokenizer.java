@@ -29,7 +29,7 @@ public class BlockTokenizer extends AbstractTokenizer<Node> {
         return new BracketSplitter(childrenTrim)
                 .split()
                 .map(ContentNode::new)
-                .reduce(Block(), Block.Builder::append, (builder, builder2) -> builder2)
+                .reduce(Block(), Block.Builder::with, (builder, builder2) -> builder2)
                 .complete();
     }
 }

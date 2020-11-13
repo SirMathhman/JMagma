@@ -2,7 +2,6 @@ package com.meti.compile.call.invoke;
 
 import com.meti.compile.Node;
 import com.meti.compile.Type;
-import com.meti.compile.call.function.FunctionType;
 import com.meti.compile.primitive.Primitive;
 import com.meti.compile.scope.field.Field;
 import com.meti.compile.scope.vars.Variable;
@@ -42,6 +41,6 @@ class InvocationResolverTest {
     }
 
     private Type createFunctionType() {
-        return FunctionType().withReturnType(Primitive.I16).complete();
+        return FunctionType().withReturn(Primitive.I16).complete();
     }
 }

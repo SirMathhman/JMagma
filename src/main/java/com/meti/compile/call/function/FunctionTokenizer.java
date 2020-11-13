@@ -90,7 +90,7 @@ public class FunctionTokenizer extends AbstractTokenizer<Node> {
 
     private Type extractFunctionType(Collection<Field> parameters) {
         Type returnType = extractReturnType();
-        return reduceParameters(FunctionType().withReturnType(returnType), parameters);
+        return reduceParameters(FunctionType().withReturn(returnType), parameters);
     }
 
     private Type extractReturnType() {

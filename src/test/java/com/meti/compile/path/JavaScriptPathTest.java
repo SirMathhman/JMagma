@@ -20,7 +20,7 @@ class JavaScriptPathTest {
     private static final Path SOURCES = Paths.get(".", "sources");
     private static final Path PACKAGE_0 = SOURCES.resolve("com");
     private static final Path PACKAGE_1 = PACKAGE_0.resolve("meti");
-    private static final Path SOURCE = PACKAGE_1.resolve("Main.mg");
+    private static final Path SOURCE = PACKAGE_1.resolve("Main.mgs");
 
     @BeforeEach
     void setUp() throws IOException {

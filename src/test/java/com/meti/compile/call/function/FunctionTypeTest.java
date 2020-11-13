@@ -1,7 +1,6 @@
 package com.meti.compile.call.function;
 
 import com.meti.compile.Type;
-import com.meti.compile.primitive.Void;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -23,7 +22,7 @@ class FunctionTypeTest {
 
     private Type createType() {
         return FunctionType()
-                .withReturnType(Void_)
+                .withReturn(Void_)
                 .withParameter(U8)
                 .withParameter(I64)
                 .complete();

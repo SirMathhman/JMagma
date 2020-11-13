@@ -42,6 +42,6 @@ public interface Type extends Renderable {
 
     enum Group {
         Content,
-        Function, Void, Generic, Primitive
+        Function, Void, Generic, Implicit, Primitive
     }
 }
