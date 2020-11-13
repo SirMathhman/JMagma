@@ -5,7 +5,7 @@ struct Option[T] {
     in const orElseSupply : (() => T) => T,
 }
 
-const Some = class[T](value : T) => {
+class def Some[T](value : T) => {
     const flatMap : [R](T => Option[R]) => Option[R] = _(value);
     const peek = (consumer : T => Void) => {
         consumer.accept(value);
@@ -15,7 +15,7 @@ const Some = class[T](value : T) => {
     out const Option = <Option[T]>{};
 }
 
-const None = class[T]() => {
+class def None[T]() => {
     const flatMap : [R](T => Option[R]) => Option[R] = None();
     const peek : (T => Void) => Option[T] = _ => this;
     const orElseSupply = _();
