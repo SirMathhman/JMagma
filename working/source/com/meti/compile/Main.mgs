@@ -1,0 +1,61 @@
+const LOGGER = Logger(OutStream(Internal.outStream));
+const Root = FileSystem.Root.asDirectory();
+const SourceDirectory = Root.resolve("source");
+const Build = Root.resolve(".build");
+const Target = Root.resolve(".target");
+
+def processWithBuild(build : Extant) => {
+	def processBoth(directory : Directory) => {
+		def formatEntry(content : String) => {
+			const trimmed = content.trim();
+			return trimmed.contains(".") ?
+					formatEntryWithPackage(trimmed) :
+					formatEntrySimply(trimmed);
+		}
+
+		def processBuildContent() => {
+			const mainFile = formatEntry(content);
+			const output = compile(mainFile);
+			const target = deletePreviousTarget();
+			const extant = target.ensure();
+			return writeToTarget(extant, output);
+		}
+
+		def processExceptionally() => {
+			const content = build.readAsString();
+			if (!content.isBlank()) return processBuildContent();
+			LOGGER.logIgnored(Severe, "No entry point was found.");
+			return 0;
+		}
+	
+		try {
+			return processExceptionally(build, directory);
+		} catch (const e : Ref[IOException]) {
+			LOGGER.logExceptionallyIgnored(Warning, "Failed to read build file.", e);
+			return 0;
+		}
+	}
+
+	try {
+		return SourceDirectory.ensuringExistenceAsDirectory(directory -> processBoth(build, directory));
+	} catch (const e : Ref[IOException]) {
+		const format = "Failed to create source directory at '%s'.";
+		const message = format0.formatted(SourceDirectory);
+		LOGGER.logExceptionallyIgnored(Severe, message, e);
+		return 0;
+	}
+}
+
+def execute() => try {
+	return Build.ensuringExistenceAsFile(processWithBuild);
+} catch (const e : Ref[IOException]) {
+	const format = "Failed to create build file at '%s'.";
+	const message = format.formatted(Build);
+	LOGGER.logExceptionallyIgnored(Severe, message, e);
+	return 0;
+}
+
+const written = execute();
+const format = "Wrote %d characters to target at '%s'".
+const message = format.format(written, Target);
+LOGGER.logIgnored(Info, message);
