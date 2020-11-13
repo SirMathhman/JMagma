@@ -3,7 +3,12 @@ package com.meti.compile.call.invoke;
 import com.meti.compile.FeatureTest;
 import org.junit.jupiter.api.Test;
 
-public class MappingFeatureTest extends FeatureTest {
+class MappingFeatureTest extends FeatureTest {
+    @Test
+    void initialize(){
+        assertCompile("int x=test();\n", "const x : I16 = test()");
+    }
+
     @Test
     void arity0(){
         assertCompile("caller()", "caller()");
