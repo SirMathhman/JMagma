@@ -5,6 +5,15 @@ import org.junit.jupiter.api.Test;
 
 class DeclarationFeatureTest  extends FeatureTest {
     @Test
+    void test(){
+        assertCompile("""
+                
+                """, """
+                const flatMap : [R](T => Option[R]) => Option[R] = _(value);
+                """);
+    }
+
+    @Test
     void immutable(){
         assertCompile("int x;\n", "const x : I16");
     }
