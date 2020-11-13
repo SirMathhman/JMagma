@@ -51,6 +51,11 @@ class FunctionFeatureTest extends FeatureTest {
     }
 
     @Test
+    void functionType(){
+        assertCompile("int (*myFunction)()", "const myFunction : () => I16");
+    }
+
+    @Test
     void namedLambda(){
         assertCompile("""
                 int main_(){
