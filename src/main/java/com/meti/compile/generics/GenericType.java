@@ -26,7 +26,9 @@ public class GenericType implements Type {
 
     @Override
     public String render(String name) {
-        return "void* %s".formatted(name);
+        String format = "Cannot render generic types of value '%s' and name '%s'.";
+        String message = format.formatted(value, name);
+        throw new IllegalStateException(message);
     }
 
     @Override

@@ -5,6 +5,11 @@ import org.junit.jupiter.api.Test;
 
 class DeclarationFeatureTest  extends FeatureTest {
     @Test
+    void functionType(){
+        assertCompile("int (*main)()", "const main : () => I16");
+    }
+
+    @Test
     void test(){
         assertCompile("""
                 

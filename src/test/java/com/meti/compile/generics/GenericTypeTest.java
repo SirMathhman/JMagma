@@ -6,18 +6,20 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class GenericTypeTest {
-    @Test
-    void testEquals() {
-        assertEquals(new GenericType("test"), new GenericType("test"));
-    }
+	private static final GenericType Type_ = new GenericType("test");
 
-    @Test
-    void render() {
-        assertEquals("void* value", new GenericType("T").render("value"));
-    }
+	@Test
+	void testEquals() {
+		assertEquals(Type_, Type_);
+	}
 
-    @Test
-    void is() {
-        assertTrue(new GenericType("T").is(Type.Group.Generic));
-    }
+	@Test
+	void render() {
+		assertThrows(IllegalStateException.class, Type_::render);
+	}
+
+	@Test
+	void is() {
+		assertTrue(Type_.is(Type.Group.Generic));
+	}
 }
