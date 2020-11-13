@@ -17,6 +17,6 @@ class ImplicitImplementationParserTest extends ParserTest {
 
     @Override
     protected Parser createParser(Node node) {
-        return new ImplicitImplementationParser(new State(node), resolver);
+        return new ImplicitImplementationParser(new State(node), null);
     }
 }

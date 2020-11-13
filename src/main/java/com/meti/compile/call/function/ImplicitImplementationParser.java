@@ -22,7 +22,7 @@ public class ImplicitImplementationParser extends AbstractParser {
             previous.mapByCurrent(new Function<Node, Node>() {
                 @Override
                 public Node apply(Node node) {
-                    node.transformValue(Class.class, )
+                    return node;
                 }
             });
         }

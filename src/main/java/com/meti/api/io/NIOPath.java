@@ -17,6 +17,11 @@ public class NIOPath implements Path {
     }
 
     @Override
+    public String toString() {
+        return root.toAbsolutePath().toString();
+    }
+
+    @Override
     public Directory createDirectory() throws IOException {
         Files.createDirectory(root);
         return new NIODirectory(root);
