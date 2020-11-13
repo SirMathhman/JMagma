@@ -10,13 +10,14 @@ import java.util.List;
 import static com.meti.compile.call.function.FunctionType.FunctionType;
 import static com.meti.compile.primitive.Primitive.*;
 import static com.meti.compile.primitive.Void.Void_;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class FunctionTypeTest {
     @Test
     void builder() {
-        Assertions.assertEquals("void (*myFunction)(unsigned char ,long long )", createType()
+        assertEquals("void (*myFunction)(unsigned char ,long long )", createType()
                 .render("myFunction"));
     }
 
