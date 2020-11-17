@@ -14,12 +14,10 @@ public class ContentType implements Type {
 
     @Override
     public String toString() {
-        return """
-                {
-                    "group" : "Content",
-                    "content" : "%s"
-                }
-                """.formatted(content);
+        return ("{\n" +
+                "    \"group\" : \"Content\",\n" +
+                "    \"content\" : \"%s\"\n" +
+                "}\n").formatted(content);
     }
 
     @Override

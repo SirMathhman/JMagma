@@ -52,13 +52,11 @@ public interface Field extends Renderable {
                     .map(String::toLowerCase)
                     .map("\"%s\""::formatted)
                     .collect(Collectors.joining(",", "[", "]"));
-            return """
-                    {
-                        "name" : "%s",
-                        "flags" : %s,
-                        "type" : %s
-                    }
-                    """.formatted(name, type, flags);
+            return ("{\n" +
+                    "    \"name\" : \"%s\",\n" +
+                    "    \"flags\" : %s,\n" +
+                    "    \"type\" : %s\n" +
+                    "}\n").formatted(name, type, flags);
         }
 
         public FieldImpl(Set<Flag> flags, String name, Type type) {

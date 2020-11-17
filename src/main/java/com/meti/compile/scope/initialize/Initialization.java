@@ -33,13 +33,11 @@ public class Initialization implements Node {
 
     @Override
     public String toString(){
-        return """
-                {
-                    "group" : "Initialization",
-                    "identity" : %s,
-                    "value" : %s
-                }
-                """.formatted(identity, value);
+        return ("{\n" +
+                "    \"group\" : \"Initialization\",\n" +
+                "    \"identity\" : %s,\n" +
+                "    \"value\" : %s\n" +
+                "}\n").formatted(identity, value);
     }
 
     @Override

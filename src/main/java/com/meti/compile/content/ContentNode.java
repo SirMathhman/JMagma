@@ -32,12 +32,10 @@ public class ContentNode implements Node {
 
     @Override
     public String toString() {
-        return """
-                {
-                    "group" : "Content",
-                    "value" : "%s"
-                }
-                """.formatted(value);
+        return ("{\n" +
+                "    \"group\" : \"Content\",\n" +
+                "    \"value\" : \"%s\"\n" +
+                "}\n").formatted(value);
     }
 
     @Override

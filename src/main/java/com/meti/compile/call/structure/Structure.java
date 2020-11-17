@@ -29,12 +29,10 @@ public class Structure implements Node {
         String membersString = members.stream()
                 .map(Field::toString)
                 .collect(Collectors.joining(",", "[", "]"));
-        return """
-                {
-                    "name" : "%s",
-                    "members" : %s,
-                }
-                """.formatted(name, membersString);
+        return ("{\n" +
+                "    \"name\" : \"%s\",\n" +
+                "    \"members\" : %s,\n" +
+                "}\n").formatted(name, membersString);
     }
 
     @Override
