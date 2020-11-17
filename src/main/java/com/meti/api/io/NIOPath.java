@@ -33,12 +33,7 @@ public class NIOPath implements Path {
         return new NIOExtant(root);
     }
 
-    @Override
-    public boolean isExtinct() {
-        return !Files.exists(root);
-    }
-
-    @Override
+	@Override
     public Directory asDirectory() {
         return new NIODirectory(root);
     }

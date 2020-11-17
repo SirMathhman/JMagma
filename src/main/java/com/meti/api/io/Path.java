@@ -10,8 +10,6 @@ public interface Path {
 
     Extant createFile() throws IOException;
 
-    boolean isExtinct();
-
     Directory asDirectory();
 
     File<Extant> asFile();
