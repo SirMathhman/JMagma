@@ -1,5 +1,6 @@
 package com.meti.api.core;
 
+import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -17,6 +18,19 @@ public class Some<T> implements Option<T> {
 
 	public static <T> Option<T> Some(T value) {
 		return new Some<>(value);
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		Some<?> some = (Some<?>) o;
+		return Objects.equals(value, some.value);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(value);
 	}
 
 	@Override
@@ -49,5 +63,10 @@ public class Some<T> implements Option<T> {
 	@Override
 	public <R> Option<R> map(Function<T, R> mapper) {
 		return Some(mapper.apply(value));
+	}
+
+	@Override
+	public T orElse(T other) {
+		return value;
 	}
 }

@@ -47,7 +47,7 @@ public class ContentNode implements Node {
 
     @Override
     public String render() {
-        String format = "Cannot render instances of '%s' with value '%s'.";
+        String format = "Cannot render instances of '%s' add value '%s'.";
         String message = format.formatted(getClass(), value);
         throw new IllegalStateException(message);
     }

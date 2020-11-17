@@ -13,5 +13,12 @@ public interface Tokenizer<T> {
 				.orElse(None.None());
 	}
 
-	Optional<T> tokenize();
+	default Optional<T> tokenizeExceptionally() throws TokenizeException {
+		return tokenize();
+	}
+
+	@Deprecated
+	default Optional<T> tokenize() {
+		return Optional.empty();
+	}
 }

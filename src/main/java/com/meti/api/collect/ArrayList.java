@@ -27,10 +27,6 @@ public class ArrayList<T> implements List<T> {
 		return new ArrayList<>(array, array.length, allocator);
 	}
 
-	public static <R> ArrayList<R> ArrayList() {
-		return ArrayList(DefaultAllocator_);
-	}
-
 	public static <R> ArrayList<R> ArrayList(Allocator allocator) {
 		Object[] array = allocator.allocate(DEFAULT_SIZE);
 		return new ArrayList<>(array, 0, allocator);
@@ -46,7 +42,7 @@ public class ArrayList<T> implements List<T> {
 	private Object[] resize(Object[] oldList, int index) {
 		int oldLength = oldList.length;
 		int newLength = oldLength == 0 ? 1 : oldLength;
-		while(newLength <= index) {
+		while (newLength <= index) {
 			newLength = round(newLength * GROWTH_FACTOR);
 		}
 		Object[] newArray = allocator.allocate(newLength);

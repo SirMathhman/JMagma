@@ -9,6 +9,6 @@ public class EmptyScriptPath implements ScriptPath {
 
     @Override
     public Node read(List<String> package_, String name) {
-        throw new IllegalStateException("Script path is empty.");
+        throw new IllegalStateException("Script path is asEmpty.");
     }
 }

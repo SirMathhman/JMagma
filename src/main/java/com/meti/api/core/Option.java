@@ -1,5 +1,7 @@
 package com.meti.api.core;
 
+import com.meti.api.collect.ArrayList;
+
 import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -18,4 +20,6 @@ public interface Option<T> {
 	<R> Option<R> flatMap(Function<T, Option<R>> function);
 
 	<R> Option<R> map(Function<T, R> mapper);
+
+	T orElse(T other);
 }

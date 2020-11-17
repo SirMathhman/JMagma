@@ -31,7 +31,7 @@ public interface Type extends Renderable {
 
     default String render(String name) {
         Class<? extends Type> clazz = getClass();
-        String format = "Cannot render instances of '%s' with name '%s'.";
+        String format = "Cannot render instances of '%s' add name '%s'.";
         String message = format.formatted(clazz, name);
         throw new IllegalStateException(message);
     }

@@ -19,7 +19,7 @@ import java.util.stream.Stream;
 import static com.meti.compile.scope.field.Field.Field;
 import static com.meti.compile.scope.field.Field.*;
 import static com.meti.compile.call.function.FunctionType.FunctionType;
-import static com.meti.compile.call.function.FunctionType.WithReturn;
+import static com.meti.compile.call.function.FunctionType.Prototype;
 import static com.meti.compile.tokenize.slice.ImmutableStrategyBuffer.EmptyBuffer;
 import static com.meti.compile.call.function.Implementation.Both;
 import static com.meti.compile.call.function.Implementation.Implementation;
@@ -131,7 +131,7 @@ public class FunctionTokenizer extends AbstractTokenizer<Node> {
                 .complete();
     }
 
-    private Type reduceParameters(WithReturn builder, Collection<Field> parameters) {
+    private Type reduceParameters(Prototype builder, Collection<Field> parameters) {
         return parameters.stream()
                 .map(Field::type)
                 .reduce(builder, FunctionTypeBuilder::withParameter, (complete, complete2) -> complete2)

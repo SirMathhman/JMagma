@@ -26,10 +26,10 @@ public class FunctionType implements Type {
     @Override
     public Type mapByChild(Function<Type, Type> mapping) {
         Type newReturnType = mapping.apply(returnType);
-        WithReturn identity = FunctionType().withReturn(newReturnType);
+        Prototype identity = FunctionType().withReturn(newReturnType);
         return parameters.stream()
                 .map(mapping)
-                .reduce(identity, FunctionTypeBuilder::withParameter, (withReturn, withReturn2) -> withReturn2)
+                .reduce(identity, FunctionTypeBuilder::withParameter, (prototype, prototype2) -> prototype2)
                 .complete();
     }
 
@@ -70,17 +70,17 @@ public class FunctionType implements Type {
         return Objects.hash(returnType, parameters);
     }
 
-    public static class WithReturn extends FunctionTypeBuilder<WithReturn> {
+    public static class Prototype extends FunctionTypeBuilder<Prototype> {
         private final Type returnType;
 
-        WithReturn(Type returnType, List<Type> parameters) {
+        Prototype(Type returnType, List<Type> parameters) {
             super(parameters);
             this.returnType = returnType;
         }
 
         @Override
-        protected WithReturn complete(List<Type> newParameters) {
-            return new WithReturn(returnType, newParameters);
+        protected Prototype complete(List<Type> newParameters) {
+            return new Prototype(returnType, newParameters);
         }
 
         public Type complete() {
@@ -98,8 +98,8 @@ public class FunctionType implements Type {
             return new None(newParameters);
         }
 
-        public WithReturn withReturn(Type returnType) {
-            return new WithReturn(returnType, parameters);
+        public Prototype withReturn(Type returnType) {
+            return new Prototype(returnType, parameters);
         }
     }
 
