@@ -6,19 +6,23 @@ import java.io.IOException;
 import java.util.function.Function;
 
 public interface Path {
-    Directory createDirectory() throws IOException;
+	Directory ensuringAsDirectory() throws IOException;
 
-    Extant createFile() throws IOException;
+	Directory createDirectory() throws IOException;
 
-    Directory asDirectory();
+	Extant createFile() throws IOException;
 
-    File<Extant> asFile();
+	Directory asDirectory();
 
-    boolean isExtant();
+	File<Extant> asFile();
 
-    <T> T ensuringExistenceAsFile(Function<Extant, T> mapper) throws IOException;
+	boolean isExtant();
 
-    <T> Option<T> mapExistenceAsFile(Function<Extant, T> mapper);
+	<T> T ensuringExistenceAsFile(Function<Extant, T> mapper) throws IOException;
 
-    <T> T ensuringExistenceAsDirectory(Function<Directory, T> mapper) throws IOException;
+	<T> Option<T> mapExistenceAsFile(Function<Extant, T> mapper);
+
+	<T> T ensuringExistenceAsDirectory(Function<Directory, T> mapper) throws IOException;
+
+	Extant ensuringAsFile() throws IOException;
 }

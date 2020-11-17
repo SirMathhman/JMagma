@@ -48,7 +48,7 @@ class MagmaCompilerTest {
 
     @Test
     void testMain() {
-        Directory directory = FileSystem_.Root().asDirectory().resolveDirectory("source");
+        Directory directory = FileSystem_.RootPath().asDirectory().resolveDirectory("source");
         ScriptPath scriptPath = new NIOScriptPath(directory);
         String result = MagmaCompiler(scriptPath).compile("def main() : I16 => {return 0;}");
         assertEquals("""

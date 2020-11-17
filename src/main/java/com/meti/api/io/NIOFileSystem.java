@@ -1,5 +1,6 @@
 package com.meti.api.io;
 
+import java.io.IOException;
 import java.nio.file.Paths;
 
 public class NIOFileSystem implements FileSystem {
@@ -10,7 +11,12 @@ public class NIOFileSystem implements FileSystem {
     }
 
     @Override
-    public Path Root() {
+    public Path RootPath() {
         return new NIOPath(Root);
+    }
+
+    @Override
+    public Directory Root() throws IOException {
+        return new NIOPath(Root).ensuringAsDirectory();
     }
 }

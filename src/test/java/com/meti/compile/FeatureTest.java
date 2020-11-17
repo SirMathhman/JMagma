@@ -10,7 +10,7 @@ import static com.meti.compile.MagmaCompiler.MagmaCompiler;
 
 public class FeatureTest {
 	protected void assertCompile(String expected, String source) {
-		Directory directory = FileSystem_.Root().asDirectory().resolveDirectory("source");
+		Directory directory = FileSystem_.RootPath().asDirectory().resolveDirectory("source");
 		ScriptPath scriptPath = new NIOScriptPath(directory);
 		String actual = MagmaCompiler(scriptPath).compile(source);
 		Assertions.assertEquals(expected.replace("    ", "\t"), actual);
