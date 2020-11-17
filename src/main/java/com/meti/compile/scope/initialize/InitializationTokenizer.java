@@ -3,10 +3,10 @@ package com.meti.compile.scope.initialize;
 import com.meti.api.core.Option;
 import com.meti.api.core.Some;
 import com.meti.compile.Node;
-import com.meti.compile.tokenize.AbstractTokenizer;
 import com.meti.compile.content.ContentNode;
 import com.meti.compile.scope.field.Field;
 import com.meti.compile.scope.field.FieldTokenizer;
+import com.meti.compile.tokenize.AbstractTokenizer;
 import com.meti.compile.tokenize.Tokenizer;
 
 import java.util.Optional;
