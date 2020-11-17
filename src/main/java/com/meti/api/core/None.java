@@ -1,7 +1,6 @@
 package com.meti.api.core;
 
 import java.util.Optional;
-import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
@@ -21,11 +20,6 @@ public class None<T> implements Option<T> {
 
 	@Override
 	public Option<T> filter(Predicate<T> predicate) {
-		return None();
-	}
-
-	@Override
-	public Option<T> peek(Consumer<T> consumer) {
 		return None();
 	}
 

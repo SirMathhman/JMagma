@@ -2,7 +2,6 @@ package com.meti.api.core;
 
 import java.util.Objects;
 import java.util.Optional;
-import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
@@ -42,12 +41,6 @@ public class Some<T> implements Option<T> {
 	public Option<T> filter(Predicate<T> predicate) {
 		if (predicate.test(value)) return this;
 		else return None();
-	}
-
-	@Override
-	public Option<T> peek(Consumer<T> consumer) {
-		consumer.accept(value);
-		return this;
 	}
 
 	@Override
