@@ -1,13 +1,18 @@
 package com.meti.compile;
 
-import com.meti.compile.path.JavaScriptPath;
+import com.meti.api.io.Directory;
+import com.meti.compile.path.NIOScriptPath;
+import com.meti.compile.path.ScriptPath;
 import org.junit.jupiter.api.Assertions;
 
-import java.nio.file.Paths;
+import static com.meti.api.io.NIOFileSystem.FileSystem_;
+import static com.meti.compile.MagmaCompiler.MagmaCompiler;
 
 public class FeatureTest {
-    protected void assertCompile(String expected, String source) {
-        String actual = MagmaCompiler.MagmaCompiler(new JavaScriptPath(Paths.get(".").resolve("source"))).compile(source);
-        Assertions.assertEquals(expected.replace("    ", "\t"), actual);
-    }
+	protected void assertCompile(String expected, String source) {
+		Directory directory = FileSystem_.Root().asDirectory().resolveDirectory("source");
+		ScriptPath scriptPath = new NIOScriptPath(directory);
+		String actual = MagmaCompiler(scriptPath).compile(source);
+		Assertions.assertEquals(expected.replace("    ", "\t"), actual);
+	}
 }

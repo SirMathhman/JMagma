@@ -1,14 +1,16 @@
 package com.meti.compile;
 
-import com.meti.compile.path.JavaScriptPath;
+import com.meti.api.io.Directory;
+import com.meti.compile.path.NIOScriptPath;
+import com.meti.compile.path.ScriptPath;
 import com.meti.compile.tokenize.slice.BracketSplitter;
 import org.junit.jupiter.api.Test;
 
-import java.nio.file.Paths;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import static com.meti.api.io.NIOFileSystem.FileSystem_;
 import static com.meti.compile.MagmaCompiler.MagmaCompiler;
 import static com.meti.compile.MagmaCompiler.format;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -46,7 +48,9 @@ class MagmaCompilerTest {
 
     @Test
     void testMain() {
-        String result = MagmaCompiler(new JavaScriptPath(Paths.get(".").resolve("source"))).compile("def main() : I16 => {return 0;}");
+        Directory directory = FileSystem_.Root().asDirectory().resolveDirectory("source");
+        ScriptPath scriptPath = new NIOScriptPath(directory);
+        String result = MagmaCompiler(scriptPath).compile("def main() : I16 => {return 0;}");
         assertEquals("""
                 int main(){
                     return 0;

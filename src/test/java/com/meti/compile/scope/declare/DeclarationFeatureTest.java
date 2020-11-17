@@ -4,19 +4,7 @@ import com.meti.compile.FeatureTest;
 import org.junit.jupiter.api.Test;
 
 class DeclarationFeatureTest  extends FeatureTest {
-    @Test
-    void functionType(){
-        assertCompile("int (*main)()", "const main : () => I16");
-    }
 
-    @Test
-    void test(){
-        assertCompile("""
-                
-                """, """
-                const flatMap : [R](T => Option[R]) => Option[R] = _(value);
-                """);
-    }
 
     @Test
     void immutable(){
