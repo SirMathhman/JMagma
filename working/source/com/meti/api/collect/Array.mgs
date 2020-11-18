@@ -1,0 +1,29 @@
+const IndexException = Exception >> {
+	out const Exception = Exception(message, cause);
+}
+
+const Array = class [T]{
+	const ref : Ref[T],
+	const length
+} => {
+	/*
+	Should the paramteter here be changed depending on
+	the bits of the operating system?
+
+	Pointers on 32-bit systems aren't the same as system
+	with 64-bits. As a result, does it make sense to add
+	signed integers, even though this the most common
+	usage?
+	*/
+	out const apply = (index : I16) => {
+		if(index < 0) throw IndexException("Index cannot be negative.");
+		if(index >= length) throw IndexException("Index cannot be greater than or equal to length.");
+		return *(ref + index);
+	}
+
+	out const apply = (index : I16, value : T) => {
+		const previous = this(index);
+		*(ref + index) = value;
+		return previous;
+	}
+}
