@@ -1,0 +1,3 @@
+struct Allocator {
+	const allocate : [T](AnySize[T]) => Ref[T];
+}
