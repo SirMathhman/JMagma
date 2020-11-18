@@ -1,6 +1,6 @@
 import com.meti.api.core.Option;
 
-struct Exception {
-    const message : String = "",
-    const cause : Option[Exception] = None
+const Exeception = class {
+	const message : String = "",
+	const cause : Option[Exception] = None
 }

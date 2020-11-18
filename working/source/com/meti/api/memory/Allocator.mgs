@@ -1,3 +1,34 @@
+import com.meti.api.core {Exception, Array, NativeOps}
+import _.Memory;
+
 struct Allocator {
-	const allocate : [T](AnySize[T]) => Ref[T];
+	in const allocateRef : [T, R, E ? Exception](AnySize[T], Ref[T] => R ? E) ? E;
+	in const allocateArray : [T, R, E ? Exception](AnySize[T], U16, Array[T] => R ? E) ? E;
+	in const allocatePool : [T]() => MemoryPool[T];
+}
+
+single DefaultAllocator {
+	const allocateRef = [T, R, E ? Exception]{
+		const size : AnySize[T],
+		const function : Ref[T] => R ? E
+	} ? E => {
+		const buffer = malloc(size);
+		const result = function(buffer);
+		free(buffer);
+		return result;
+	}
+
+	const allocatedArray = [T, R, E ? Exception]{
+		const size : AnySize[T],
+		const length : U16,
+		const function : Array[T] => R ? E
+	} ? E => {
+		const buffer = malloc(size * length);
+		const array = Array(buffer, length);
+		const result = function(buffer);
+		free(buffer);
+		return result;
+	}
+	const allocatePool = LinkedMemoryPool;
+	out const Allocator = Allocator();
 }

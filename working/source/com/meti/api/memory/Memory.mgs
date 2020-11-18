@@ -1,0 +1,72 @@
+import native stdlib;
+import com.meti.api.core {Array, Option, NativeOps};
+
+native def malloc[T](count : AnySize[T]) => Ref[T];
+native def free(ref : Ref[_]) => Void;
+
+struct MemoryPool[T] {
+	const allocateRef : (AnySize[T]) => Ref[T];
+	const allocateArray : (U16, AnySize[T]) => Array[T];
+	const delete :=> MemoryPool[T];
+}
+
+/*
+TODO: redesign so is immutable
+*/
+const LinkedMemoryPool = class[T]{
+	const allocator : [T](count : AnySize[T]) => Ref[T] = malloc,
+	const deleter : (ref : Ref[_]) => Void = free
+} => {
+	const Node = class[R] {
+		const value : Ref[R];
+
+		let parent : Ref[Node] = null;
+		let child : Ref[Node] = null;
+	}
+
+	let head : Ref[Node[T]];
+
+	const findTail() = () => {
+		const withHead = () => {
+			let parent = head.child;
+            let child = parent.child;
+        	while(child){
+        		parent = child;
+        		child = parent.child;
+        	}
+        	return parent;
+		}
+		return if(head) Some(withHead()) else None();
+	}
+
+	const allocateRef = (refSize : AnySize[T]) => {
+		const new = allocator(Node.size);
+		const ref = allocator(refSize);
+		head.value = ref;
+		head = new;
+
+		findTail().ifPresentOrElse(tail => {
+			tail.child = new;
+        	new.parent = tail;
+		}, () => {
+			head = new;
+		});
+
+		return ref;
+	}
+
+	const allocateArray : (length : U16, refSize : AnySize[T]) => {
+		const buffer = allocateRef(refSize * count);
+		return Array(buffer, length);
+	}
+
+	final chained const delete ==> findTail().ifPresent(tail => {
+		let current = tail;
+		while(current){
+			const parent = current.parent;
+			deleter(current.value);
+			deleter(current);
+			current = parent;
+		}
+	});
+}

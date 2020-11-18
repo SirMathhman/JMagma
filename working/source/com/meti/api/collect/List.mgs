@@ -1,0 +1,11 @@
+struct List[T] {
+	in const toArray : () => Array[T];
+
+	called in const get : (I16) => T ? IndexException;
+	called in const set : (I16, T) => List[T] ? IndexException;
+
+	in const +: (T) => List[T];
+	in const asEmpty : () => List[T];
+
+	in const count : () => I16;
+}

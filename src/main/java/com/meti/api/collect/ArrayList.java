@@ -9,12 +9,12 @@ public class ArrayList<T> implements List<T> {
 	private static final int DEFAULT_SIZE = 10;
 	private static final float GROWTH_FACTOR = 1.5f;
 	private final Object[] elements;
-	private final int size;
+	private final int elementsSize;
 	private final Allocator allocator;
 
-	public ArrayList(Object[] elements, int size, Allocator allocator) {
+	public ArrayList(Object[] elements, int elementsSize, Allocator allocator) {
 		this.elements = elements;
-		this.size = size;
+		this.elementsSize = elementsSize;
 		this.allocator = allocator;
 	}
 
@@ -34,8 +34,8 @@ public class ArrayList<T> implements List<T> {
 
 	@Override
 	public Object[] toArray() {
-		Object[] copy = allocator.allocate(size);
-		if (size >= 0) System.arraycopy(elements, 0, copy, 0, size);
+		Object[] copy = allocator.allocate(elementsSize);
+		if (elementsSize >= 0) System.arraycopy(elements, 0, copy, 0, elementsSize);
 		return copy;
 	}
 
@@ -60,14 +60,14 @@ public class ArrayList<T> implements List<T> {
 
 		Object[] list = resize(elements, index);
 		list[index] = value;
-		int elementCount = Math.max(index + 1, size);
+		int elementCount = Math.max(index + 1, elementsSize);
 		return new ArrayList<>(list, elementCount, allocator);
 	}
 
 	@Override
 	public List<T> add(Object value) {
 		try {
-			return set(size, value);
+			return set(elementsSize, value);
 		} catch (IndexException e) {
 			return this;
 		}
@@ -80,14 +80,14 @@ public class ArrayList<T> implements List<T> {
 
 	@Override
 	public int size() {
-		return size;
+		return elementsSize;
 	}
 
 	@Override
 	public T get(int index) throws IndexException {
 		if (index < 0) throw new IndexException("Index '%d' is negative.".formatted(index));
-		if (index >= size)
-			throw new IndexException("Index '%d' exceeds size of '%d'.".formatted(index, size));
+		if (index >= elementsSize)
+			throw new IndexException("Index '%d' exceeds elementsSize of '%d'.".formatted(index, elementsSize));
 		return (T) elements[index];
 	}
 }

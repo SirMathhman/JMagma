@@ -1,0 +1,56 @@
+const DefaultSize = 10;
+const GrowthFactor = 1.5f;
+
+const ArrayList = class[T] {
+	const pool : MemoryPool[T] = LinkedMemoryPool();
+	const elementsSize : U16 = 0;
+	const elements : Array[T] = pool.allocateArray(DefaultSize);
+} => {
+	const toArray = () => {
+		const copy = pool.allocateArray(elementsSize, T.size);
+		for(let i = 0; i < elementsSize; i++) copy[i] = elements[i];
+		return copy;
+	}
+
+	const resize : (oldList : Array[T], index : I16) => {
+		const oldLength = oldList.length;
+		let newLength = oldLength == 0 ? 1 : oldLength;
+		while(newLength <= index){
+			newLength = round(newLength * GrowthFactor);
+		}
+		const newArray = pool.allocateArray(newLength, T.size);
+		for(let i = 0; i < oldLength; i++) newArray[i] = oldList[i];
+		return newArray;
+	}
+
+	called const get = (index : I16) ? IndexException => {
+		if(index < 0) throw IndexException("Index '%d' is negative.".format(index));
+		if(index >= indexSize) throw new IndexException("Index '%d' exceeds size of '%d'.".format(index, elementSize));
+		return elements[index];
+	}
+
+	called const set = (index : I16, value : T) ? IndexException => {
+		if(index < 0){
+			const format = "Index '%d' cannot be negative."
+			const message = format.format(index);
+			throw IndexException(message);
+		}
+
+		const list = resize(elements, index);
+		list(index, value);
+
+		const elementCount = Math.max.u16(index + 1, elementSize);
+		return ArrayList(pool, elementCount, list);
+	}
+
+	const += (value : T) => return
+		try set(elementsSize, value)
+		catch case IndexExcpetion => this;
+
+	const asEmpty ==> ArrayList(pool);
+	const count = elementsSize;
+}
+
+single ArrayLists {
+	called const of = [T](array : T...) => ArrayList(array.length, array);
+}

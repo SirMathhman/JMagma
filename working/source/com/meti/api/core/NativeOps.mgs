@@ -1,0 +1,1 @@
+native def *[T](size : AnySize[T], scalar : U16) => AnySize[T];
