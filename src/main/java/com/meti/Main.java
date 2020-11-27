@@ -1,13 +1,12 @@
 package com.meti;
 
+import com.meti.CCache.Group;
+
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static com.meti.Main.Level.Info;
@@ -72,61 +71,9 @@ public class Main {
 								.collect(Collectors.joining());
 						logFormatted(Info, "%d files were loaded in:%s", scriptPath.size(), statement);
 					} else if (line.startsWith("compile ")) {
-						String slice = line.substring(8);
-						String trim = slice.trim();
-
-						String[] package_ = trim.split("\\.");
-						Path mainPath = Arrays.stream(package_)
-								.limit(package_.length - 1)
-								.reduce(ROOT, Path::resolve, (value0, value1) -> value1)
-								.resolve("%s.mgs".formatted(package_[package_.length - 1]));
-						if (scriptPath.contains(mainPath.toAbsolutePath())) {
-							try {
-								String pathString = mainPath.getName(mainPath.getNameCount() - 1).toString();
-								String name = pathString.split("\\.")[0];
-								String content = Files.readString(mainPath);
-								if (content.equals("def main() : I16 => {return 0;}")) {
-									Path cSource = mainPath.resolveSibling(name + ".c");
-									Path header = mainPath.resolveSibling(name + ".h");
-									String formattedHeader = name + ".h";
-									Files.writeString(cSource, formatC("#include \"%s\"\nint main(){return 0;}".formatted(formattedHeader)));
-									Files.writeString(header, formatC("#ifndef Main\n#define Main\nint main();#endif"));
-									Files.writeString(mainPath.resolveSibling(name + ".mgh"), "def main() : I16;");
-
-									ProcessBuilder builder = new ProcessBuilder("gcc", cSource.toString());
-									try {
-										Process process = builder.start();
-										ByteArrayOutputStream errorStream = new ByteArrayOutputStream();
-										process.getErrorStream().transferTo(errorStream);
-										String errorString = errorStream.toString();
-										if (!errorString.isBlank()) {
-											logFormatted(Warning, "Failed to compile native source with command '%s':\n%s", String.join(" ", builder.command()), errorString);
-										}
-									} catch (IOException e) {
-										e.printStackTrace();
-									}
-								} else {
-									logFormatted(Warning, "Unable to compile content of '%s'.", content);
-								}
-							} catch (IOException e) {
-								logExceptionally(Level.Error, "Failed to read main content.", e);
-							}
-						} else {
-							logFormatted(Warning, "Main script of package '%s' at '%s' wasn't loaded in yet.", trim, mainPath.toString());
-						}
+						compile(scriptPath, line);
 					} else if (line.startsWith("run ")) {
-						String slice = line.substring(4);
-						String trim = slice.trim();
-
-						Process process = new ProcessBuilder(trim).start();
-						ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-						process.getInputStream().transferTo(outputStream);
-						ByteArrayOutputStream errorStream = new ByteArrayOutputStream();
-						process.getErrorStream().transferTo(errorStream);
-						System.out.println("START PROCESS");
-						System.out.println(outputStream.toString());
-						System.err.println(errorStream.toString());
-						System.out.println("END PROCESS");
+						run(line);
 					}
 				} else {
 					buffer.append((char) c);
@@ -135,6 +82,104 @@ public class Main {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+
+	private static void compile(Collection<Path> scriptPath, String line) {
+		String slice = line.substring(8);
+		String trim = slice.trim();
+
+		String[] package_ = trim.split("\\.");
+		Path mainPath = getResolve(package_);
+		if (scriptPath.contains(mainPath.toAbsolutePath())) {
+			try {
+				String pathString = mainPath.getName(mainPath.getNameCount() - 1).toString();
+				String name = pathString.split("\\.")[0];
+				String content = Files.readString(mainPath);
+				if (content.equals("def main() : I16 => {return 0;}")) {
+					Cache<Group> cache = compile(name);
+					Map<Group, Path> map = cache.write(mainPath, name);
+					if (map.containsKey(Group.NativeSource)) {
+						compileSource(map.get(Group.NativeSource));
+					}
+				} else {
+					logFormatted(Warning, "Unable to compile content of '%s'.", content);
+				}
+			} catch (IOException e) {
+				logExceptionally(Level.Error, "Failed to read main content.", e);
+			}
+		} else {
+			logFormatted(Warning, "Main script of package '%s' at '%s' wasn't loaded in yet.", trim, mainPath.toString());
+		}
+	}
+
+	private static Cache<Group> compile(String name) {
+		String sourceString = formatC("#include \"%s\"\nint main(){return 0;}".formatted(name + ".h"));
+		String headerString = formatC("#ifndef Main\n#define Main\nint main();#endif");
+		String reflectionString = "def main() : I16;";
+		return new InlineCache(sourceString, headerString, reflectionString);
+	}
+
+	private static void compileSource(Path source) {
+		try {
+			compileSourceExceptionally(source);
+		} catch (IOException e) {
+			logExceptionally(Warning, "Failed to compile source.", e);
+		}
+	}
+
+	private static void compileSourceExceptionally(Path source) throws IOException {
+		ProcessBuilder builder = new ProcessBuilder("gcc", source.toString());
+		Process process = builder.start();
+		ByteArrayOutputStream errorStream = new ByteArrayOutputStream();
+		process.getErrorStream().transferTo(errorStream);
+		String errorString = errorStream.toString();
+		if (!errorString.isBlank()) {
+			logFormatted(Warning, "Failed to compile native source with command '%s':\n%s", String.join(" ", builder.command()), errorString);
+		}
+	}
+
+	private static Path getResolve(String[] package_) {
+		return Arrays.stream(package_)
+				.limit(package_.length - 1)
+				.reduce(ROOT, Path::resolve, (value0, value1) -> value1)
+				.resolve("%s.mgs".formatted(package_[package_.length - 1]));
+	}
+
+	private static void run(String line) {
+		String slice = line.substring(4);
+		String trim = slice.trim();
+		runCommand(trim);
+	}
+
+	private static void runCommand(String trim) {
+		try {
+			runExceptionally(trim);
+		} catch (IOException e) {
+			logRunFailure(trim, e);
+		}
+	}
+
+	private static void runExceptionally(String command) throws IOException {
+		ProcessBuilder builder = new ProcessBuilder(command);
+		Process process = builder.start();
+		System.out.println("START PROCESS");
+		process.getInputStream().transferTo(System.out);
+		process.getErrorStream().transferTo(System.out);
+		System.out.println("END PROCESS");
+	}
+
+	private static void logRunFailure(String command, IOException e) {
+		String format = "Failed to run process: %s";
+		String message = format.formatted(command);
+		logExceptionally(Warning, message, e);
+	}
+
+	private static void runExceptionally(ProcessBuilder builder) throws IOException {
+		Process process = builder.start();
+		System.out.println("START PROCESS");
+		process.getInputStream().transferTo(System.out);
+		process.getErrorStream().transferTo(System.out);
+		System.out.println("END PROCESS");
 	}
 
 	private static String formatC(String message) {
