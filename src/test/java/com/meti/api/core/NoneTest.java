@@ -1,8 +1,9 @@
-package com.meti;
+package com.meti.api.core;
 
+import com.meti.IndexException;
 import org.junit.jupiter.api.Test;
 
-import static com.meti.None.None;
+import static com.meti.api.core.None.None;
 import static org.junit.jupiter.api.Assertions.*;
 
 class NoneTest {

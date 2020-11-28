@@ -1,6 +1,8 @@
 package com.meti;
 
-import static com.meti.None.None;
+import com.meti.api.extern.*;
+
+import static com.meti.api.core.None.None;
 import static com.meti.Some.Some;
 
 public class ListStream<T> {

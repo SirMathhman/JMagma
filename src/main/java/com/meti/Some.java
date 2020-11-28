@@ -1,5 +1,9 @@
 package com.meti;
 
+import com.meti.api.extern.ExceptionalFunction1;
+import com.meti.api.extern.Function0;
+import com.meti.api.extern.Function1;
+
 public class Some<T> implements Option<T> {
 	private final T value;
 

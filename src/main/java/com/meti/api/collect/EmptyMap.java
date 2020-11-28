@@ -5,7 +5,7 @@ import com.meti.Map;
 import com.meti.Option;
 
 import static com.meti.api.collect.EmptyList.EmptyList;
-import static com.meti.None.None;
+import static com.meti.api.core.None.None;
 
 public class EmptyMap<K, V> implements Map<K, V> {
 	private EmptyMap() {

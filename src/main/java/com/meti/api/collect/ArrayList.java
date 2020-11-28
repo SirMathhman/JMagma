@@ -1,6 +1,7 @@
 package com.meti.api.collect;
 
 import com.meti.*;
+import com.meti.api.extern.Function1;
 
 public class ArrayList<T> implements MutableList<T> {
 	private static final int GrowthFactor = 2;

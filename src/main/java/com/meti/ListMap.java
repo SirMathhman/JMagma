@@ -1,9 +1,11 @@
 package com.meti;
 
 import com.meti.api.collect.ArrayList;
+import com.meti.api.extern.ExceptionalFunction1;
+import com.meti.api.extern.Function0;
 
 import static com.meti.api.collect.ArrayList.ArrayList;
-import static com.meti.None.None;
+import static com.meti.api.core.None.None;
 
 public class ListMap<K, V> implements ModifiableMap<K, V> {
 	private final MutableList<Binding<K, V>> bindings;
