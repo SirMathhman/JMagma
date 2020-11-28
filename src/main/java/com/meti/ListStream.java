@@ -32,7 +32,7 @@ public class ListStream<T> {
 	}
 
 	public ListStream<T> filter(Function1<T, Boolean> predicate) {
-		List<T> copy = list.asEmpty();
+		List<T> copy = list.empty();
 		int size = list.size();
 		for (int i = 0; i < size; i++) {
 			copy = get(i).filter(predicate).mapExceptionally(copy::add).orElse(copy);
@@ -42,7 +42,7 @@ public class ListStream<T> {
 
 	public <R> ListStream<R> map(ExceptionalFunction1<T, R, ?> mapper) throws StreamException {
 		return supplyExceptionally(() -> {
-			List<R> copy = list.asEmpty();
+			List<R> copy = list.empty();
 			int size = list.size();
 			for (int i = 0; i < size; i++) {
 				copy = get(i).mapExceptionally(mapper).mapExceptionally(copy::add).orElse(copy);

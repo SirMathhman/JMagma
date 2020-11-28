@@ -1,7 +1,7 @@
 package com.meti;
 
 public interface Sequence<T, C> {
-	<R> List<R> asEmpty();
+	<R> List<R> empty();
 
 	int size();
 

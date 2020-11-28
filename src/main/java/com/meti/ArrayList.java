@@ -18,11 +18,15 @@ public class ArrayList<T> implements List<T> {
 	}
 
 	public static <T> ArrayList<T> ArrayList(int capacity) {
-		return new ArrayList<>(new Object[capacity], capacity, 0);
+		return ArrayList(new Object[capacity], capacity, 0);
+	}
+
+	static <T> ArrayList<T> ArrayList(Object[] internalArray, int capacity, int size) {
+		return new ArrayList<>(internalArray, capacity, size);
 	}
 
 	@Override
-	public <R> List<R> asEmpty() {
+	public <R> List<R> empty() {
 		return ArrayList();
 	}
 
@@ -60,14 +64,17 @@ public class ArrayList<T> implements List<T> {
 		}
 	}
 
+	@Override
 	public List<T> set(int index, T value) throws IndexException {
-		return bounded(index, (Function1<Integer, List<T>>) integer -> {
-			Object[] copy = resizeTo(integer);
-			Object previous = copy[index];
-			copy[index] = value;
-			int newSize = previous == null ? size + 1 : size;
-			return new ArrayList<>(copy, copy.length, newSize);
-		});
+		if(index < 0) {
+			String format = "Index %d can't be negative.";
+			String message = format.formatted(index);
+			throw new IndexException(message);
+		}
+		Object[] copy = resizeTo(index + 1);
+		copy[index] = value;
+		int newSize = Math.max(index + 1, size);
+		return ArrayList(copy, copy.length, newSize);
 	}
 
 	@Override

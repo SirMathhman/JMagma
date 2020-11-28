@@ -8,7 +8,7 @@ public class SingletonSequence<T> implements Sequence<T, List<T>> {
 	}
 
 	@Override
-	public <R> List<R> asEmpty() {
+	public <R> List<R> empty() {
 		return null;
 	}
 
