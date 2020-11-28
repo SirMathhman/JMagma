@@ -1,7 +1,10 @@
 package com.meti;
 
-public interface List<T> extends Sequence<T, List<T>> {
-	List<T> set(int index, T value) throws IndexException;
+public interface List<T> {
+	int size();
 
-	List<T> add(T t);
+	T get(int index) throws IndexException;
+
+	boolean isEmpty();
 }
+

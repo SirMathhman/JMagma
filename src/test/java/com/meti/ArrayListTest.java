@@ -32,7 +32,7 @@ class ArrayListTest {
 		assertThrows(IndexException.class, () -> createList().get(1));
 	}
 
-	private List<Object> createList() {
+	private MutableList<Object> createList() {
 		var array = new Object[]{"test0"};
 		var capacity = 1;
 		var size = 1;

@@ -1,6 +1,6 @@
 package com.meti;
 
-public class ArrayList<T> implements List<T> {
+public class ArrayList<T> implements MutableList<T> {
 	private static final int GrowthFactor = 2;
 	private static final int DEFAULT_CAPACITY = 10;
 	private final Object[] internalArray;
@@ -23,11 +23,6 @@ public class ArrayList<T> implements List<T> {
 
 	static <T> ArrayList<T> ArrayList(Object[] internalArray, int capacity, int size) {
 		return new ArrayList<>(internalArray, capacity, size);
-	}
-
-	@Override
-	public <R> List<R> empty() {
-		return ArrayList();
 	}
 
 	@Override
@@ -65,8 +60,8 @@ public class ArrayList<T> implements List<T> {
 	}
 
 	@Override
-	public List<T> set(int index, T value) throws IndexException {
-		if(index < 0) {
+	public MutableList<T> set(int index, T value) throws IndexException {
+		if (index < 0) {
 			String format = "Index %d can't be negative.";
 			String message = format.formatted(index);
 			throw new IndexException(message);
@@ -78,12 +73,22 @@ public class ArrayList<T> implements List<T> {
 	}
 
 	@Override
-	public List<T> add(T t) {
+	public MutableList<T> add(T t) {
 		try {
 			return set(size, t);
 		} catch (IndexException e) {
 			return this;
 		}
+	}
+
+	@Override
+	public MutableList<T> addAll(List<T> others) {
+		return null;
+	}
+
+	@Override
+	public <R> MutableList<R> empty() {
+		return ArrayList();
 	}
 
 	@Override

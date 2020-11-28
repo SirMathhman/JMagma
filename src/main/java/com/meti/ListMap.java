@@ -4,13 +4,13 @@ import static com.meti.ArrayList.ArrayList;
 import static com.meti.None.None;
 
 public class ListMap<K, V> implements ModifiableMap<K, V> {
-	private final List<Binding<K, V>> bindings;
+	private final MutableList<Binding<K, V>> bindings;
 
 	public ListMap() {
 		this(ArrayList());
 	}
 
-	public ListMap(List<Binding<K, V>> bindings) {
+	public ListMap(MutableList<Binding<K, V>> bindings) {
 		this.bindings = bindings;
 	}
 
@@ -54,7 +54,8 @@ public class ListMap<K, V> implements ModifiableMap<K, V> {
 			return others.get(key).orElseThrow(supplier);
 		};
 		try {
-			return new ListStream<>(keys).fold(this, (current, k) -> current.ensure(k, otherSupplier));
+			return new ListStream<>(ArrayList.<K>ArrayList().addAll(keys))
+					.fold(this, (current, k) -> current.ensure(k, otherSupplier));
 		} catch (StreamException e) {
 			return this;
 		}

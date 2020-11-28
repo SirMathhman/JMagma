@@ -1,18 +1,20 @@
 package com.meti;
 
+import scala.Mutable;
+
 import static com.meti.None.None;
 import static com.meti.Some.Some;
 
 public class ListStream<T> {
-	private final List<T> list;
+	private final MutableList<T> mutableList;
 
-	public ListStream(List<T> list) {
-		this.list = list;
+	public ListStream(MutableList<T> mutableList) {
+		this.mutableList = mutableList;
 	}
 
 
 	public boolean anyMatch(Function1<T, Boolean> predicate) {
-		int size = list.size();
+		int size = mutableList.size();
 		for (int i = 0; i < size; i++) {
 			if (get(size)
 					.filter(predicate)
@@ -25,15 +27,15 @@ public class ListStream<T> {
 
 	private Option<T> get(int index) {
 		try {
-			return Some(list.get(index));
+			return Some(mutableList.get(index));
 		} catch (IndexException e) {
 			return None();
 		}
 	}
 
 	public ListStream<T> filter(Function1<T, Boolean> predicate) {
-		List<T> copy = list.empty();
-		int size = list.size();
+		MutableList<T> copy = mutableList.empty();
+		int size = mutableList.size();
 		for (int i = 0; i < size; i++) {
 			copy = get(i).filter(predicate).mapExceptionally(copy::add).orElse(copy);
 		}
@@ -42,8 +44,8 @@ public class ListStream<T> {
 
 	public <R> ListStream<R> map(ExceptionalFunction1<T, R, ?> mapper) throws StreamException {
 		return supplyExceptionally(() -> {
-			List<R> copy = list.empty();
-			int size = list.size();
+			MutableList<R> copy = mutableList.empty();
+			int size = mutableList.size();
 			for (int i = 0; i < size; i++) {
 				copy = get(i).mapExceptionally(mapper).mapExceptionally(copy::add).orElse(copy);
 			}
@@ -54,7 +56,7 @@ public class ListStream<T> {
 	public <R, E extends Exception> R fold(R identity, ExceptionalFunction2<R, T, R, E> mapper) throws StreamException {
 		return supplyExceptionally(() -> {
 			R current = identity;
-			int size = list.size();
+			int size = mutableList.size();
 			for (int i = 0; i < size; i++) {
 				R finalCurrent = current;
 				current = get(i).mapExceptionally(t -> mapper.apply(finalCurrent, t))
@@ -73,6 +75,6 @@ public class ListStream<T> {
 	}
 
 	public Option<T> head() {
-		return list.isEmpty() ? None() : get(0);
+		return mutableList.isEmpty() ? None() : get(0);
 	}
 }
