@@ -1,8 +1,9 @@
-package com.meti;
+package com.meti.api.collect;
 
+import com.meti.IndexException;
 import org.junit.jupiter.api.Test;
 
-import static com.meti.EmptyList.EmptyList;
+import static com.meti.api.collect.EmptyList.EmptyList;
 import static org.junit.jupiter.api.Assertions.*;
 
 class EmptyListTest {
