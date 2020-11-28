@@ -1,6 +1,5 @@
 package com.meti.api.collect;
 
-import com.meti.IndexException;
 import org.junit.jupiter.api.Test;
 
 import static com.meti.api.collect.EmptyList.EmptyList;

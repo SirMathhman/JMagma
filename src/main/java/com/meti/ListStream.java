@@ -1,5 +1,6 @@
 package com.meti;
 
+import com.meti.api.collect.IndexException;
 import com.meti.api.extern.*;
 
 import static com.meti.api.core.None.None;

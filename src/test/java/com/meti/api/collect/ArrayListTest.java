@@ -1,8 +1,6 @@
 package com.meti.api.collect;
 
-import com.meti.IndexException;
 import com.meti.MutableList;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import static com.meti.api.collect.ArrayList.ArrayList;

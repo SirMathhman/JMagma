@@ -1,8 +1,5 @@
 package com.meti.api.collect;
 
-import com.meti.IndexException;
-import com.meti.List;
-
 public class EmptyList<T> implements List<T> {
 	private EmptyList() {
 	}

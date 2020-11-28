@@ -1,6 +1,5 @@
 package com.meti.api.collect;
 
-import com.meti.List;
 import com.meti.Map;
 import com.meti.Option;
 

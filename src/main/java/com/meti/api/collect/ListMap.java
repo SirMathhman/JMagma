@@ -1,6 +1,6 @@
-package com.meti;
+package com.meti.api.collect;
 
-import com.meti.api.collect.ArrayList;
+import com.meti.*;
 import com.meti.api.extern.ExceptionalFunction1;
 import com.meti.api.extern.Function0;
 

@@ -1,5 +1,7 @@
 package com.meti;
 
+import com.meti.api.collect.List;
+
 public class SingletonMap<K, V> implements Map<K, V> {
 	private final K key;
 	private final V value;

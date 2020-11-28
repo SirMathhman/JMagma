@@ -1,6 +1,6 @@
 package com.meti.api.core;
 
-import com.meti.IndexException;
+import com.meti.api.collect.IndexException;
 import org.junit.jupiter.api.Test;
 
 import static com.meti.api.core.None.None;
