@@ -8,7 +8,7 @@ public class SingletonList<T> implements List<T> {
 	}
 
 	public static <T> SingletonList<T> SingletonList(T value) {
-		return new SingletonList<T>(value);
+		return new SingletonList<>(value);
 	}
 
 	@Override
