@@ -1,4 +1,6 @@
-package com.meti;
+package com.meti.api.collect;
+
+import com.meti.*;
 
 public class ArrayList<T> implements MutableList<T> {
 	private static final int GrowthFactor = 2;
@@ -21,7 +23,7 @@ public class ArrayList<T> implements MutableList<T> {
 		return ArrayList(new Object[capacity], capacity, 0);
 	}
 
-	static <T> ArrayList<T> ArrayList(Object[] internalArray, int capacity, int size) {
+	public static <T> ArrayList<T> ArrayList(Object[] internalArray, int capacity, int size) {
 		return new ArrayList<>(internalArray, capacity, size);
 	}
 
@@ -83,7 +85,15 @@ public class ArrayList<T> implements MutableList<T> {
 
 	@Override
 	public MutableList<T> addAll(List<T> others) {
-		return null;
+		int size = others.size();
+		MutableList<T> current = this;
+		for (int i = 0; i < size; i++) {
+			try {
+				current = current.add(others.get(i));
+			} catch (IndexException ignored) {
+			}
+		}
+		return current;
 	}
 
 	@Override

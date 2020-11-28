@@ -1,6 +1,8 @@
 package com.meti;
 
-import static com.meti.ArrayList.ArrayList;
+import com.meti.api.collect.ArrayList;
+
+import static com.meti.api.collect.ArrayList.ArrayList;
 import static com.meti.None.None;
 
 public class ListMap<K, V> implements ModifiableMap<K, V> {
@@ -55,7 +57,7 @@ public class ListMap<K, V> implements ModifiableMap<K, V> {
 		};
 		try {
 			return new ListStream<>(ArrayList.<K>ArrayList().addAll(keys))
-					.fold(this, (current, k) -> current.ensure(k, otherSupplier));
+					.foldExceptionally(this, (current, k) -> current.ensure(k, otherSupplier));
 		} catch (StreamException e) {
 			return this;
 		}

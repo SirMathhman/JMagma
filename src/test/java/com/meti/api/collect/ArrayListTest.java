@@ -1,11 +1,28 @@
-package com.meti;
+package com.meti.api.collect;
 
+import com.meti.IndexException;
+import com.meti.MutableList;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import static com.meti.ArrayList.ArrayList;
+import static com.meti.api.collect.ArrayList.ArrayList;
 import static org.junit.jupiter.api.Assertions.*;
 
 class ArrayListTest {
+	@Test
+	void addAllSize(){
+		assertEquals(2, createList().addAll(createList()).size());
+	}
+
+	@Test
+	void addAllOld() throws IndexException {
+		assertEquals("test0", createList().addAll(createList()).get(0));
+	}
+
+	@Test
+	void addAllNew() throws IndexException {
+		assertEquals("test0", createList().addAll(createList()).get(0));
+	}
 
 	@Test
 	void empty() {

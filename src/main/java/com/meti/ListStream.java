@@ -1,7 +1,5 @@
 package com.meti;
 
-import scala.Mutable;
-
 import static com.meti.None.None;
 import static com.meti.Some.Some;
 
@@ -11,7 +9,6 @@ public class ListStream<T> {
 	public ListStream(MutableList<T> mutableList) {
 		this.mutableList = mutableList;
 	}
-
 
 	public boolean anyMatch(Function1<T, Boolean> predicate) {
 		int size = mutableList.size();
@@ -53,7 +50,7 @@ public class ListStream<T> {
 		});
 	}
 
-	public <R, E extends Exception> R fold(R identity, ExceptionalFunction2<R, T, R, E> mapper) throws StreamException {
+	public <R, E extends Exception> R foldExceptionally(R identity, ExceptionalFunction2<R, T, R, E> mapper) throws StreamException {
 		return supplyExceptionally(() -> {
 			R current = identity;
 			int size = mutableList.size();
@@ -64,6 +61,18 @@ public class ListStream<T> {
 			}
 			return current;
 		});
+	}
+
+	public <R> R fold(R identity, Function2<R, T, R> mapper) {
+		R current = identity;
+		int size = mutableList.size();
+		for (int i = 0; i < size; i++) {
+			R finalCurrent = current;
+			current = get(i)
+					.map(t -> mapper.apply(finalCurrent, t))
+					.orElse(current);
+		}
+		return current;
 	}
 
 	private <R> R supplyExceptionally(ExceptionalFunction0<R, Exception> supplier) throws StreamException {
