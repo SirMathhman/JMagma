@@ -1,12 +1,15 @@
 package com.meti.api.collect;
 
-import com.meti.*;
+import com.meti.api.StateException;
+import com.meti.api.core.Option;
 import com.meti.api.extern.ExceptionalFunction1;
 import com.meti.api.extern.Function0;
 
-import static com.meti.ListStream.ListStream;
+import java.util.Objects;
+
 import static com.meti.api.collect.ArrayList.ArrayList;
 import static com.meti.api.collect.EmptyList.EmptyList;
+import static com.meti.api.collect.ListStream.ListStream;
 import static com.meti.api.core.None.None;
 
 public class ListMap<K, V> implements MutableMap<K, V> {
@@ -26,6 +29,19 @@ public class ListMap<K, V> implements MutableMap<K, V> {
 
 	static <K, V> Binding<K, V> Binding(K key, V value) {
 		return new Binding<>(key, value);
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		ListMap<?, ?> listMap = (ListMap<?, ?>) o;
+		return Objects.equals(bindings, listMap.bindings);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(bindings);
 	}
 
 	@Override
@@ -103,6 +119,20 @@ public class ListMap<K, V> implements MutableMap<K, V> {
 		private Binding(K key, V value) {
 			this.key = key;
 			this.value = value;
+		}
+
+		@Override
+		public boolean equals(Object o) {
+			if (this == o) return true;
+			if (o == null || getClass() != o.getClass()) return false;
+			Binding<?, ?> binding = (Binding<?, ?>) o;
+			return Objects.equals(key, binding.key) &&
+			       Objects.equals(value, binding.value);
+		}
+
+		@Override
+		public int hashCode() {
+			return Objects.hash(key, value);
 		}
 
 		boolean hasKey(K otherKey) {

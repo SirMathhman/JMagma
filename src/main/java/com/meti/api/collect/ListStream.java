@@ -1,6 +1,6 @@
-package com.meti;
+package com.meti.api.collect;
 
-import com.meti.api.collect.IndexException;
+import com.meti.api.core.Option;
 import com.meti.api.extern.*;
 
 import static com.meti.api.collect.ArrayList.ArrayList;

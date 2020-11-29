@@ -1,5 +1,6 @@
-package com.meti;
+package com.meti.api.collect;
 
+import com.meti.api.core.Option;
 import com.meti.api.extern.*;
 
 public interface Stream<T> {

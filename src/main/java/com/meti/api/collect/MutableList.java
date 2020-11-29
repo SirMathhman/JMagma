@@ -1,7 +1,4 @@
-package com.meti;
-
-import com.meti.api.collect.IndexException;
-import com.meti.api.collect.List;
+package com.meti.api.collect;
 
 public interface MutableList<T> extends List<T> {
 	MutableList<T> set(int index, T value) throws IndexException;

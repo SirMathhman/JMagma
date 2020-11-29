@@ -1,10 +1,10 @@
 package com.meti.api.collect;
 
-import com.meti.MutableMap;
 import org.junit.jupiter.api.Test;
 
 import static com.meti.api.collect.ArrayList.ArrayList;
 import static com.meti.api.collect.ListMap.Binding;
+import static com.meti.api.collect.ListMap.ListMap;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -12,37 +12,63 @@ class ListMapTest {
 
 	@Test
 	void containsKey() {
-		assertTrue(createMap().containsKey("key"));
+		assertTrue(createMap().containsKey("test0"));
 	}
 
-	private MutableMap<String, String> createMap() {
-		var list = ArrayList(Binding("key", "value"));
-		return new ListMap<>(list);
+	private ListMap<String, String> createMap() {
+		return new ListMap<>(ArrayList(Binding("test0", "test1")));
 	}
 
 	@Test
 	void get() {
-		assertEquals("value", createMap().get("key").orElse("other"));
+		assertEquals("test1", createMap().get("test0").orElse("other"));
 	}
 
 	@Test
 	void put() {
-		assertEquals("value2", createMap().put("key2", "value2").get("key2").orElse("other"));
+		assertEquals("test3", createMap()
+				.put("test2", "test3")
+				.get("test2")
+				.orElse("other"));
 	}
 
 	@Test
-	void ensure() {
+	void ensureExtant() {
+		assertEquals("test1", createMap()
+				.ensure("test0", "test2")
+				.get("test0")
+				.orElse("other"));
 	}
 
 	@Test
-	void testEnsure() {
+	void ensureExtinct() {
+		assertEquals("test2", ListMap()
+				.ensure("test0", "test2")
+				.get("test0")
+				.orElse("other"));
 	}
 
 	@Test
 	void putAll() {
+		var first = ListMap().put("test0", "test1");
+		var second = ListMap().put("test2", "test3");
+		var actual = first.putAll(second);
+		var expected = ListMap()
+				.put("test0", "test1")
+				.put("test2", "test3");
+		assertEquals(actual, expected);
+	}
+
+	@Test
+	void testEquals() {
+		assertEquals(createMap(), createMap());
 	}
 
 	@Test
 	void orderedKeys() {
+		var map = ListMap()
+				.put("test0", "test1")
+				.put("test2", "test3");
+		assertEquals(ArrayList("test0", "test2"), map.orderedKeys());
 	}
 }

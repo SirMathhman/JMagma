@@ -18,7 +18,7 @@ class SingletonMapTest {
 	}
 
 	private SingletonMap<String, String> createMap() {
-		return new SingletonMap<>("key", "value");
+		return SingletonMap.SingletonMap("key", "value");
 	}
 
 	@Test

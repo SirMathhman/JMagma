@@ -3,7 +3,6 @@ package com.meti.api.core;
 import com.meti.api.extern.ExceptionalFunction1;
 import com.meti.api.extern.Function0;
 import com.meti.api.extern.Function1;
-import com.meti.Option;
 
 public class None<T> implements Option<T> {
 	private None() {

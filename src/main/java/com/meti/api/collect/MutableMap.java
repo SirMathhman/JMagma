@@ -1,7 +1,4 @@
-package com.meti;
-
-import com.meti.api.collect.ListMap;
-import com.meti.api.extern.ExceptionalFunction1;
+package com.meti.api.collect;
 
 public interface MutableMap<K, V> extends Map<K, V> {
 	ListMap<K, V> put(K key, V value);

@@ -1,4 +1,4 @@
-package com.meti;
+package com.meti.api.core;
 
 import com.meti.api.extern.ExceptionalFunction1;
 import com.meti.api.extern.Function0;

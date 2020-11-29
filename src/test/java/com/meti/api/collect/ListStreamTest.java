@@ -1,8 +1,8 @@
-package com.meti;
+package com.meti.api.collect;
 
 import org.junit.jupiter.api.Test;
 
-import static com.meti.ListStream.ListStream;
+import static com.meti.api.collect.ListStream.ListStream;
 import static com.meti.api.collect.ArrayList.ArrayList;
 import static org.junit.jupiter.api.Assertions.*;
 

@@ -1,4 +1,4 @@
-package com.meti;
+package com.meti.api;
 
 public class StateException extends Exception {
 	public StateException(String message) {

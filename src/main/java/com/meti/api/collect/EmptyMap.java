@@ -1,7 +1,6 @@
 package com.meti.api.collect;
 
-import com.meti.Map;
-import com.meti.Option;
+import com.meti.api.core.Option;
 
 import static com.meti.api.collect.EmptyList.EmptyList;
 import static com.meti.api.core.None.None;

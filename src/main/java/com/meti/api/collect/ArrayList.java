@@ -1,6 +1,5 @@
 package com.meti.api.collect;
 
-import com.meti.MutableList;
 import com.meti.api.extern.Function1;
 
 import java.util.Objects;

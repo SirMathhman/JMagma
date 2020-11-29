@@ -1,6 +1,7 @@
 package com.meti;
 
 import com.meti.api.collect.ListMap;
+import com.meti.api.core.Option;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -9,6 +10,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static com.meti.CCache.Group.*;
+import static com.meti.api.collect.SingletonMap.SingletonMap;
 import static com.meti.api.core.Some.Some;
 
 public class InlineCache implements CCache {
@@ -38,11 +40,11 @@ public class InlineCache implements CCache {
 		return Map.of(group, sibling);
 	}
 
-	private com.meti.Map<Group, Path> writeGroup2(Path sourcePath, Group group, String name) throws IOException {
+	private com.meti.api.collect.Map<Group, Path> writeGroup2(Path sourcePath, Group group, String name) throws IOException {
 		Path sibling = sourcePath.resolveSibling(name);
 		String output = retrieve(group).orElse("");
 		Files.writeString(sibling, output);
-		return SingletonMap.SingletonMap(group, sibling);
+		return SingletonMap(group, sibling);
 	}
 
 	@Override
@@ -55,7 +57,7 @@ public class InlineCache implements CCache {
 	}
 
 	@Override
-	public com.meti.Map<Group, Path> write2(Path parent, String name) throws IOException {
+	public com.meti.api.collect.Map<Group, Path> write2(Path parent, String name) throws IOException {
 		return ListMap.<Group, Path>ListMap()
 				.putAll(writeGroup2(parent, NativeSource, "%s.c".formatted(name)))
 				.putAll(writeGroup2(parent, NativeHeader, "%s.h".formatted(name)))

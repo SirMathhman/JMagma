@@ -1,7 +1,6 @@
 package com.meti.api.collect;
 
-import com.meti.Map;
-import com.meti.Option;
+import com.meti.api.core.Option;
 
 import static com.meti.api.core.Some.Some;
 import static com.meti.api.collect.SingletonList.SingletonList;
@@ -11,9 +10,13 @@ public class SingletonMap<K, V> implements Map<K, V> {
 	private final K key;
 	private final V value;
 
-	public SingletonMap(K key, V value) {
+	private SingletonMap(K key, V value) {
 		this.key = key;
 		this.value = value;
+	}
+
+	public static <K, V> SingletonMap<K, V> SingletonMap(K key, V value) {
+		return new SingletonMap<>(key, value);
 	}
 
 	@Override
