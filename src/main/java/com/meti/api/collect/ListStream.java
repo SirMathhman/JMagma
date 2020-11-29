@@ -14,13 +14,15 @@ public class ListStream<T> implements Stream<T> {
 		this.mutableList = mutableList;
 	}
 
-	@SafeVarargs
-	public static <T> ListStream<T> ListStream(T... values) {
-		return ListStream(ArrayList(values));
-	}
+	public static class ListStreams {
+		@SafeVarargs
+		public static <T> ListStream<T> of(T... values) {
+			return ofList(ArrayList(values));
+		}
 
-	public static <T> ListStream<T> ListStream(MutableList<T> mutableList) {
-		return new ListStream<>(mutableList);
+		public static <T> ListStream<T> ofList(MutableList<T> mutableList) {
+			return new ListStream<>(mutableList);
+		}
 	}
 
 	@Override
@@ -43,7 +45,7 @@ public class ListStream<T> implements Stream<T> {
 		for (int i = 0; i < size; i++) {
 			copy = get(i).filter(predicate).mapExceptionally(copy::add).orElse(copy);
 		}
-		return ListStream(copy);
+		return ListStreams.ofList(copy);
 	}
 
 	@Override
@@ -54,7 +56,7 @@ public class ListStream<T> implements Stream<T> {
 			for (int i = 0; i < size; i++) {
 				copy = get(i).map(mapper).map(copy::add).orElse(copy);
 			}
-			return ListStream(copy);
+			return ListStreams.ofList(copy);
 		});
 	}
 
@@ -66,7 +68,7 @@ public class ListStream<T> implements Stream<T> {
 			for (int i = 0; i < size; i++) {
 				copy = get(i).mapExceptionally(mapper).map(copy::add).orElse(copy);
 			}
-			return ListStream(copy);
+			return ListStreams.ofList(copy);
 		});
 	}
 

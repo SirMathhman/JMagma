@@ -1,88 +1,149 @@
 package com.meti;
 
 import com.meti.CCache.Group;
+import com.meti.api.collect.StreamException;
+import com.meti.api.extern.Internal;
 
-import java.io.*;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
-import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 import static com.meti.Main.Level.Info;
 import static com.meti.Main.Level.Warning;
+import static com.meti.api.io.DelegateInStream.DelegateInStream;
 
 public class Main {
-
-	public static final Path ROOT = Paths.get(".");
+	private static final Path ROOT = Paths.get(".");
 
 	public static void main(String[] args) {
-		InputStream stream = System.in;
-		try {
-			StringBuilder buffer = new StringBuilder();
-			int c;
-			boolean exiting = false;
-			Collection<Path> scriptPath = new HashSet<>();
-			do {
-				c = stream.read();
-				if (c == '\n') {
-					String line = buffer.toString();
-					buffer = new StringBuilder();
-					if (line.equals("exit")) {
-						exiting = true;
-					} else if (line.startsWith("add ")) {
-						String slice = line.substring(4);
-						String trim = slice.trim();
-						Path path = ROOT.resolve(trim);
+		execute(new CollectiveScriptPath<>(new HashSet<>()));
+	}
 
-						Path absolute = path.toAbsolutePath();
-						if (Files.exists(path)) {
-							if (Files.isRegularFile(path)) {
-								boolean b = isMagmaFile(path);
-								if (b) {
-									scriptPath.add(path.toAbsolutePath());
-									logFormatted(Info, "'%s' has been loaded in.", absolute);
-								} else {
-									logFormatted(Warning, "'%s' isn't a Magma file.", absolute);
-								}
-							} else if (Files.isDirectory(path)) {
-								List<Path> files = Files.walk(path)
-										.filter(Main::isMagmaFile)
-										.map(Path::toAbsolutePath)
-										.collect(Collectors.toList());
-								scriptPath.addAll(files);
-								String statement = files.stream()
-										.map(Path::toString)
-										.map("\n\t%s"::formatted)
-										.collect(Collectors.joining());
-								logFormatted(Info, "Loaded in %d Magma files from '%s':%s", files.size(), absolute, statement);
-							} else {
-								logFormatted(Warning, "Cannot read '%s', invalid file format.", absolute);
-							}
-						} else {
-							String format = "'%s' doesn't exist.";
-							String message = format.formatted(absolute);
-							log(Level.Warning, message);
-						}
-					} else if (line.equals("list")) {
-						String statement = scriptPath.stream()
-								.map(Path::toString)
-								.map("\n\t%s"::formatted)
-								.collect(Collectors.joining());
-						logFormatted(Info, "%d files were loaded in:%s", scriptPath.size(), statement);
-					} else if (line.startsWith("compile ")) {
-						compile(scriptPath, line);
-					} else if (line.startsWith("run ")) {
-						run(line);
-					}
-				} else {
-					buffer.append((char) c);
-				}
-			} while (c != -1 && !exiting);
+	private static void execute(ScriptPath<Path> scriptPath) {
+		try {
+			executeExceptionally(scriptPath);
 		} catch (IOException e) {
-			e.printStackTrace();
+			logExceptionally(Level.Error, "Failed to execute.", e);
+		}
+	}
+
+	private static void executeExceptionally(ScriptPath<Path> scriptPath) throws IOException {
+		var inStream = DelegateInStream(Internal.In);
+		var lineOptional = inStream.readLine();
+		var shouldContinue = true;
+		while (shouldContinue) {
+			shouldContinue = lineOptional
+					.map(line -> process(scriptPath, line))
+					.orElse(true);
+			lineOptional = inStream.readLine();
+		}
+	}
+
+	private static boolean process(ScriptPath<Path> scriptPath, String line) {
+		if (line.equals("exit")) {
+			return true;
+		} else {
+			processImpl(scriptPath, line);
+			return false;
+		}
+	}
+
+	private static void processImpl(ScriptPath<Path> scriptPath, String command) {
+		try {
+			processCommand(scriptPath, command);
+		} catch (IOException e) {
+			var format = "Failed to process command '%s'.";
+			var message = format.formatted(command);
+			logExceptionally(Warning, message, e);
+		}
+	}
+
+	private static void processCommand(ScriptPath<Path> scriptPath, String command) throws IOException {
+		if (command.startsWith("add ")) {
+			add(scriptPath, command);
+		} else if (command.equals("list")) {
+			list(scriptPath);
+		} else if (command.startsWith("compile ")) {
+			compile(scriptPath.asCollection(), command);
+		} else if (command.startsWith("run ")) {
+			run(command);
+		}
+	}
+
+	private static void list(ScriptPath<Path> scriptPath) {
+		var count = scriptPath.count();
+		var collect = render(scriptPath);
+		logFormatted(Info, "%d files were loaded in:%s", count, collect);
+	}
+
+	private static void add(ScriptPath<Path> scriptPath1, String line) throws IOException {
+		String slice = line.substring(4);
+		String trim = slice.trim();
+		Path path = ROOT.resolve(trim);
+		Path absolute = path.toAbsolutePath();
+		if (Files.exists(path)) {
+			loadExtant(scriptPath1, path, absolute);
+		} else {
+			String format = "'%s' doesn't exist.";
+			String message = format.formatted(absolute);
+			log(Warning, message);
+		}
+	}
+
+	private static void loadExtant(ScriptPath<Path> scriptPath1, Path path, Path absolute) throws IOException {
+		if (Files.isRegularFile(path)) {
+			loadPath(scriptPath1, absolute);
+		} else if (Files.isDirectory(path)) {
+			loadDirectory(scriptPath1, absolute);
+		} else {
+			logFormatted(Warning, "Cannot read '%s', invalid file format.", absolute);
+		}
+	}
+
+	private static void loadDirectory(ScriptPath<Path> scriptPath1, Path absolute) throws IOException {
+		List<Path> files = walkPath(absolute);
+		scriptPath1.asCollection().addAll(files);
+		String statement = formatPaths(files);
+		logFormatted(Info, "Loaded in %d Magma files from '%s':%s", files.size(), absolute, statement);
+	}
+
+	private static String formatPaths(Collection<Path> files) {
+		return files.stream()
+				.map(Path::toString)
+				.map("\n\t%s"::formatted)
+				.collect(Collectors.joining());
+	}
+
+	private static List<Path> walkPath(Path path) throws IOException {
+		return Files.walk(path)
+				.filter(Main::isMagmaFile)
+				.map(Path::toAbsolutePath)
+				.collect(Collectors.toList());
+	}
+
+	private static String render(ScriptPath<Path> scriptPath) {
+		try {
+			return scriptPath.stream()
+					.map(Object::toString)
+					.map(args -> "\n\t" + args)
+					.fold("", (value0, value1) -> value0 + value1);
+		} catch (StreamException e) {
+			return "";
+		}
+	}
+
+	private static void loadPath(ScriptPath<Path> scriptPath1, Path path) {
+		if (isMagmaFile(path)) {
+			scriptPath1.load(path);
+			logFormatted(Info, "'%s' has been loaded in.", path);
+		} else {
+			logFormatted(Warning, "'%s' isn't a Magma file.", path);
 		}
 	}
 
@@ -189,10 +250,10 @@ public class Main {
 	}
 
 	private static boolean isMagmaFile(Path path) {
-		Path lastName = path.getName(path.getNameCount() - 1);
-		String lastNameString = lastName.toString();
-		boolean b = lastNameString.endsWith(".mgs");
-		return b;
+		var count = path.getNameCount();
+		var namePath = path.getName(count - 1);
+		var nameString = namePath.toString();
+		return nameString.endsWith(".mgs");
 	}
 
 	private static void logFormatted(Level level, String format, Object... args) {

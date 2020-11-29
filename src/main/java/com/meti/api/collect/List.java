@@ -1,12 +1,6 @@
 package com.meti.api.collect;
 
-import com.meti.api.collect.IndexException;
-
-public interface List<T> {
-	int size();
-
+public interface List<T> extends Collection {
 	T get(int index) throws IndexException;
-
-	boolean isEmpty();
 }
 

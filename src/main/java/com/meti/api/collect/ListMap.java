@@ -9,7 +9,7 @@ import java.util.Objects;
 
 import static com.meti.api.collect.ArrayList.ArrayList;
 import static com.meti.api.collect.EmptyList.EmptyList;
-import static com.meti.api.collect.ListStream.ListStream;
+import static com.meti.api.collect.ListStream.ListStreams.ofList;
 import static com.meti.api.core.None.None;
 
 public class ListMap<K, V> implements MutableMap<K, V> {
@@ -46,13 +46,13 @@ public class ListMap<K, V> implements MutableMap<K, V> {
 
 	@Override
 	public boolean containsKey(K key) {
-		return ListStream(bindings).anyMatch(binding -> binding.hasKey(key));
+		return ofList(bindings).anyMatch(binding -> binding.hasKey(key));
 	}
 
 	@Override
 	public Option<V> get(K key) {
 		try {
-			return ListStream(bindings)
+			return ofList(bindings)
 					.filter(binding -> binding.hasKey(key))
 					.mapExceptionally(Binding::toValue)
 					.head();
@@ -83,7 +83,7 @@ public class ListMap<K, V> implements MutableMap<K, V> {
 			return others.get(key).orElseThrow(supplier);
 		};
 		try {
-			return ListStream(ArrayList.<K>ArrayList().addAll(keys))
+			return ofList(ArrayList.<K>ArrayList().addAll(keys))
 					.foldExceptionally(this, (current, k) -> current.ensure(k, otherSupplier.apply(k)));
 		} catch (StreamException e) {
 			return this;
@@ -96,7 +96,7 @@ public class ListMap<K, V> implements MutableMap<K, V> {
 			const message = format.formatted(key);
 			return new StateException(message);
 		});
-		return try ListStream<>(keys).foldExceptionally(this, _.ensure(_, otherSupplier));
+		return try of<>(keys).foldExceptionally(this, _.ensure(_, otherSupplier));
 			   catch case (e : Exception) => this;
 		*/
 	}
@@ -104,7 +104,7 @@ public class ListMap<K, V> implements MutableMap<K, V> {
 	@Override
 	public List<K> orderedKeys() {
 		try {
-			return ListStream(bindings)
+			return ofList(bindings)
 					.map(Binding::toKey)
 					.fold(ArrayList(), MutableList::add);
 		} catch (StreamException e) {
