@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static com.meti.CCache.Group.*;
-import static com.meti.Some.Some;
+import static com.meti.api.core.Some.Some;
 
 public class InlineCache implements CCache {
 	private final String sourceString;
@@ -56,7 +56,7 @@ public class InlineCache implements CCache {
 
 	@Override
 	public com.meti.Map<Group, Path> write2(Path parent, String name) throws IOException {
-		return new ListMap<Group, Path>()
+		return ListMap.<Group, Path>ListMap()
 				.putAll(writeGroup2(parent, NativeSource, "%s.c".formatted(name)))
 				.putAll(writeGroup2(parent, NativeHeader, "%s.h".formatted(name)))
 				.putAll(writeGroup2(parent, SourceHeader, "%s.mgh".formatted(name)));

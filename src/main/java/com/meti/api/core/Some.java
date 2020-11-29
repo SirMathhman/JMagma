@@ -1,8 +1,11 @@
-package com.meti;
+package com.meti.api.core;
 
+import com.meti.Option;
 import com.meti.api.extern.ExceptionalFunction1;
 import com.meti.api.extern.Function0;
 import com.meti.api.extern.Function1;
+
+import static com.meti.api.core.None.None;
 
 public class Some<T> implements Option<T> {
 	private final T value;
@@ -17,12 +20,12 @@ public class Some<T> implements Option<T> {
 
 	@Override
 	public <R> Option<R> map(Function1<T, R> mapper) {
-		return null;
+		return new Some<>(mapper.apply(value));
 	}
 
 	@Override
 	public <R, E extends Exception> Option<R> mapExceptionally(ExceptionalFunction1<T, R, E> mapper) throws E {
-		return null;
+		return new Some<>(mapper.apply(value));
 	}
 
 	@Override
@@ -32,17 +35,17 @@ public class Some<T> implements Option<T> {
 
 	@Override
 	public Option<T> filter(Function1<T, Boolean> predicate) {
-		return null;
+		return predicate.apply(value) ? this : None();
 	}
 
 	@Override
 	public boolean isPresent() {
-		return false;
+		return true;
 	}
 
 	@Override
 	public <E extends Exception> T orElseThrow(Function0<E> supplier) throws E {
-		return null;
+		return value;
 	}
 
 	@Override

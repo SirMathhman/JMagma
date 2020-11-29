@@ -23,4 +23,9 @@ public class EmptyMap<K, V> implements Map<K, V> {
 	public List<K> orderedKeys() {
 		return EmptyList();
 	}
+
+	@Override
+	public boolean containsKey(K key) {
+		return false;
+	}
 }

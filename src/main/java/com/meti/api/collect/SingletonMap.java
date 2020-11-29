@@ -3,7 +3,7 @@ package com.meti.api.collect;
 import com.meti.Map;
 import com.meti.Option;
 
-import static com.meti.Some.Some;
+import static com.meti.api.core.Some.Some;
 import static com.meti.api.collect.SingletonList.SingletonList;
 import static com.meti.api.core.None.None;
 
@@ -24,5 +24,10 @@ public class SingletonMap<K, V> implements Map<K, V> {
 	@Override
 	public List<K> orderedKeys() {
 		return SingletonList(key);
+	}
+
+	@Override
+	public boolean containsKey(K key) {
+		return this.key.equals(key);
 	}
 }

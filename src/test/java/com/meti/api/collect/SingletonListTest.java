@@ -30,4 +30,9 @@ class SingletonListTest {
 	private List<String> createList() {
 		return SingletonList("test");
 	}
+
+	@Test
+	void testEquals() {
+		assertEquals(createList(), createList());
+	}
 }

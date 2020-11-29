@@ -4,13 +4,15 @@ import com.meti.*;
 import com.meti.api.extern.ExceptionalFunction1;
 import com.meti.api.extern.Function0;
 
+import static com.meti.ListStream.ListStream;
 import static com.meti.api.collect.ArrayList.ArrayList;
+import static com.meti.api.collect.EmptyList.EmptyList;
 import static com.meti.api.core.None.None;
 
-public class ListMap<K, V> implements ModifiableMap<K, V> {
+public class ListMap<K, V> implements MutableMap<K, V> {
 	private final MutableList<Binding<K, V>> bindings;
 
-	public ListMap() {
+	private ListMap() {
 		this(ArrayList());
 	}
 
@@ -18,63 +20,87 @@ public class ListMap<K, V> implements ModifiableMap<K, V> {
 		this.bindings = bindings;
 	}
 
+	public static <K, V> MutableMap<K, V> ListMap() {
+		return new ListMap<>();
+	}
+
+	static <K, V> Binding<K, V> Binding(K key, V value) {
+		return new Binding<>(key, value);
+	}
+
+	@Override
 	public boolean containsKey(K key) {
-		return new ListStream<>(bindings).anyMatch(binding -> binding.hasKey(key));
+		return ListStream(bindings).anyMatch(binding -> binding.hasKey(key));
 	}
 
 	@Override
 	public Option<V> get(K key) {
 		try {
-			return new ListStream<>(bindings)
+			return ListStream(bindings)
 					.filter(binding -> binding.hasKey(key))
-					.map(Binding::toValue)
+					.mapExceptionally(Binding::toValue)
 					.head();
 		} catch (StreamException e) {
 			return None();
 		}
 	}
 
+	@Override
 	public ListMap<K, V> put(K key, V value) {
-		return new ListMap<>(bindings.add(new Binding<>(key, value)));
+		return new ListMap<>(bindings.add(Binding(key, value)));
 	}
 
+	@Override
 	public ListMap<K, V> ensure(K key, V value) {
 		return containsKey(key) ? this : put(key, value);
 	}
 
-	public <E extends Exception> ListMap<K, V> ensure(K key, ExceptionalFunction1<K, V, E> mapper) throws E {
-		return ensure(key, mapper.apply(key));
-	}
-
 	@Override
-	public ModifiableMap<K, V> putAll(Map<K, V> others) {
+	public MutableMap<K, V> putAll(Map<K, V> others) {
 		List<K> keys = others.orderedKeys();
 		ExceptionalFunction1<K, V, Exception> otherSupplier = key -> {
 			Function0<StateException> supplier = () -> {
-				String format = "Neither this mapExceptionally or the supplied mapExceptionally had '%s' as a key.";
+				String format = "Neither this map or the supplied map had '%s' as a key.";
 				String message = format.formatted(key);
 				return new StateException(message);
 			};
 			return others.get(key).orElseThrow(supplier);
 		};
 		try {
-			return new ListStream<>(ArrayList.<K>ArrayList().addAll(keys))
-					.foldExceptionally(this, (current, k) -> current.ensure(k, otherSupplier));
+			return ListStream(ArrayList.<K>ArrayList().addAll(keys))
+					.foldExceptionally(this, (current, k) -> current.ensure(k, otherSupplier.apply(k)));
 		} catch (StreamException e) {
 			return this;
 		}
+
+		/*
+		const keys = others.orderedKeys();
+		const otherSupplier = key -> others(key).orElseThrow(() -> {
+			const format = "Neither this mapExceptionally or the supplied mapExceptionally had '%s' as a key.";
+			const message = format.formatted(key);
+			return new StateException(message);
+		});
+		return try ListStream<>(keys).foldExceptionally(this, _.ensure(_, otherSupplier));
+			   catch case (e : Exception) => this;
+		*/
 	}
 
 	@Override
 	public List<K> orderedKeys() {
-		return null;
+		try {
+			return ListStream(bindings)
+					.map(Binding::toKey)
+					.fold(ArrayList(), MutableList::add);
+		} catch (StreamException e) {
+			return EmptyList();
+		}
 	}
 
 	static class Binding<K, V> {
 		private final K key;
 		private final V value;
 
-		Binding(K key, V value) {
+		private Binding(K key, V value) {
 			this.key = key;
 			this.value = value;
 		}
@@ -85,6 +111,10 @@ public class ListMap<K, V> implements ModifiableMap<K, V> {
 
 		public V toValue() {
 			return value;
+		}
+
+		public K toKey() {
+			return key;
 		}
 	}
 }

@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class ArrayListTest {
 	@Test
-	void addAllSize(){
+	void addAllSize() {
 		assertEquals(2, createList().addAll(createList()).size());
 	}
 
@@ -82,5 +82,15 @@ class ArrayListTest {
 	@Test
 	void isEmpty() {
 		assertFalse(createList().isEmpty());
+	}
+
+	@Test
+	void testEquals() {
+		assertEquals(ArrayList("test0", "test1"), ArrayList("test0", "test1"));
+	}
+
+	@Test
+	void equalsOrder(){
+		assertNotEquals(ArrayList("test1", "test0"), ArrayList("test0", "test1"));
 	}
 }

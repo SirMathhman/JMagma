@@ -1,7 +1,9 @@
 package com.meti.api.collect;
 
-import com.meti.*;
+import com.meti.MutableList;
 import com.meti.api.extern.Function1;
+
+import java.util.Objects;
 
 public class ArrayList<T> implements MutableList<T> {
 	private static final int GrowthFactor = 2;
@@ -16,16 +18,42 @@ public class ArrayList<T> implements MutableList<T> {
 		this.size = size;
 	}
 
-	public static <T> ArrayList<T> ArrayList() {
+	public static <T> MutableList<T> ArrayList() {
 		return ArrayList(DEFAULT_CAPACITY);
 	}
 
-	public static <T> ArrayList<T> ArrayList(int capacity) {
+	public static <T> MutableList<T> ArrayList(int capacity) {
 		return ArrayList(new Object[capacity], capacity, 0);
 	}
 
-	public static <T> ArrayList<T> ArrayList(Object[] internalArray, int capacity, int size) {
+	@SafeVarargs
+	public static <T> MutableList<T> ArrayList(T... array) {
+		return new ArrayList<>(array, array.length, array.length);
+	}
+
+	public static <T> MutableList<T> ArrayList(Object[] internalArray, int capacity, int size) {
 		return new ArrayList<>(internalArray, capacity, size);
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		ArrayList<?> arrayList = (ArrayList<?>) o;
+		if (size == arrayList.size) {
+			for (int i = 0; i < size; i++) {
+				if (!internalArray[i].equals(arrayList.internalArray[i])) {
+					return false;
+				}
+			}
+			return true;
+		}
+		return false;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(size);
 	}
 
 	@Override
