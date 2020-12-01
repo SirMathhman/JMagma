@@ -1,4 +1,4 @@
-package com.meti.api.collect;
+package com.meti.api.collect.map;
 
 public interface MutableMap<K, V> extends Map<K, V> {
 	ListMap<K, V> put(K key, V value);

@@ -1,8 +1,11 @@
-package com.meti.api.collect;
+package com.meti.api.collect.stream;
 
+import com.meti.api.collect.list.MutableList;
+import com.meti.api.collect.stream.ListStream;
+import com.meti.api.collect.stream.StreamException;
 import org.junit.jupiter.api.Test;
 
-import static com.meti.api.collect.ArrayList.ArrayList;
+import static com.meti.api.collect.list.ArrayList.ArrayList;
 import static org.junit.jupiter.api.Assertions.*;
 
 class ListStreamTest {

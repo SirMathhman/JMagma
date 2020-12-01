@@ -1,7 +1,7 @@
 package com.meti;
 
-import com.meti.api.collect.ListStream;
-import com.meti.api.collect.MutableList;
+import com.meti.api.collect.stream.ListStream;
+import com.meti.api.collect.list.MutableList;
 
 import java.util.Collection;
 

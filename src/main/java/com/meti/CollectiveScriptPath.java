@@ -1,12 +1,12 @@
 package com.meti;
 
-import com.meti.api.collect.ArrayList;
-import com.meti.api.collect.ListStream;
-import com.meti.api.collect.MutableList;
+import com.meti.api.collect.list.ArrayList;
+import com.meti.api.collect.stream.ListStream;
+import com.meti.api.collect.list.MutableList;
 
 import java.util.Collection;
 
-import static com.meti.api.collect.ListStream.ListStreams.ofList;
+import static com.meti.api.collect.stream.ListStream.ListStreams.ofList;
 
 public class CollectiveScriptPath<T> implements ScriptPath<T> {
 	private final Collection<T> scriptPath;

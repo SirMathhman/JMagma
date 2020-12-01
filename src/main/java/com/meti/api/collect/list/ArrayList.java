@@ -1,5 +1,6 @@
-package com.meti.api.collect;
+package com.meti.api.collect.list;
 
+import com.meti.api.collect.IndexException;
 import com.meti.api.extern.Function1;
 
 import java.util.Objects;

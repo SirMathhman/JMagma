@@ -1,8 +1,9 @@
-package com.meti.api.collect;
+package com.meti.api.collect.map;
 
+import com.meti.api.collect.list.List;
 import com.meti.api.core.Option;
 
-import static com.meti.api.collect.EmptyList.EmptyList;
+import static com.meti.api.collect.list.EmptyList.EmptyList;
 import static com.meti.api.core.None.None;
 
 public class EmptyMap<K, V> implements Map<K, V> {

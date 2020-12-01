@@ -1,4 +1,4 @@
-package com.meti.api.collect;
+package com.meti.api.collect.stream;
 
 public class StreamException extends Exception {
 	public StreamException(String message, Throwable cause) {

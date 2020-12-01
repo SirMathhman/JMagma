@@ -1,10 +1,11 @@
-package com.meti.api.collect;
+package com.meti.api.collect.map;
 
+import com.meti.api.collect.map.ListMap;
 import org.junit.jupiter.api.Test;
 
-import static com.meti.api.collect.ArrayList.ArrayList;
-import static com.meti.api.collect.ListMap.Binding;
-import static com.meti.api.collect.ListMap.ListMap;
+import static com.meti.api.collect.list.ArrayList.ArrayList;
+import static com.meti.api.collect.map.ListMap.Binding;
+import static com.meti.api.collect.map.ListMap.ListMap;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 

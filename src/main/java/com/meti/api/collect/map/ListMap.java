@@ -1,15 +1,19 @@
-package com.meti.api.collect;
+package com.meti.api.collect.map;
 
 import com.meti.api.StateException;
+import com.meti.api.collect.stream.StreamException;
+import com.meti.api.collect.list.ArrayList;
+import com.meti.api.collect.list.List;
+import com.meti.api.collect.list.MutableList;
 import com.meti.api.core.Option;
 import com.meti.api.extern.ExceptionalFunction1;
 import com.meti.api.extern.Function0;
 
 import java.util.Objects;
 
-import static com.meti.api.collect.ArrayList.ArrayList;
-import static com.meti.api.collect.EmptyList.EmptyList;
-import static com.meti.api.collect.ListStream.ListStreams.ofList;
+import static com.meti.api.collect.list.ArrayList.ArrayList;
+import static com.meti.api.collect.list.EmptyList.EmptyList;
+import static com.meti.api.collect.stream.ListStream.ListStreams.ofList;
 import static com.meti.api.core.None.None;
 
 public class ListMap<K, V> implements MutableMap<K, V> {

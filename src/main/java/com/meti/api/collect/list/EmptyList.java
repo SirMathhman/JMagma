@@ -1,4 +1,6 @@
-package com.meti.api.collect;
+package com.meti.api.collect.list;
+
+import com.meti.api.collect.IndexException;
 
 public class EmptyList<T> implements List<T> {
 	private EmptyList() {

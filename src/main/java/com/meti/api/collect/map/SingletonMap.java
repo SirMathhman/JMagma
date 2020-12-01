@@ -1,9 +1,10 @@
-package com.meti.api.collect;
+package com.meti.api.collect.map;
 
+import com.meti.api.collect.list.List;
 import com.meti.api.core.Option;
 
 import static com.meti.api.core.Some.Some;
-import static com.meti.api.collect.SingletonList.SingletonList;
+import static com.meti.api.collect.list.SingletonList.SingletonList;
 import static com.meti.api.core.None.None;
 
 public class SingletonMap<K, V> implements Map<K, V> {

@@ -1,7 +1,7 @@
 package com.meti;
 
 import com.meti.CCache.Group;
-import com.meti.api.collect.StreamException;
+import com.meti.api.collect.stream.StreamException;
 import com.meti.api.extern.Internal;
 
 import java.io.ByteArrayOutputStream;

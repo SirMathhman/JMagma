@@ -1,8 +1,8 @@
-package com.meti.api.collect;
+package com.meti.api.collect.map;
 
 import org.junit.jupiter.api.Test;
 
-import static com.meti.api.collect.EmptyMap.EmptyMap;
+import static com.meti.api.collect.map.EmptyMap.EmptyMap;
 import static org.junit.jupiter.api.Assertions.*;
 
 class EmptyMapTest {

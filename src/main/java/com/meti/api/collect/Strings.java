@@ -1,10 +1,11 @@
 package com.meti.api.collect;
 
+import com.meti.api.collect.stream.StreamException;
 import com.meti.api.math.StandardMath;
 
-import static com.meti.api.collect.ArrayList.Range;
+import static com.meti.api.collect.list.ArrayList.Range;
 import static com.meti.api.collect.IndexException.IndexException;
-import static com.meti.api.collect.ListStream.ListStreams;
+import static com.meti.api.collect.stream.ListStream.ListStreams;
 
 public class Strings {
 	public static final Strings Strings = new Strings();

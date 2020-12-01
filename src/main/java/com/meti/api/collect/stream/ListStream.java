@@ -1,9 +1,11 @@
-package com.meti.api.collect;
+package com.meti.api.collect.stream;
 
+import com.meti.api.collect.IndexException;
+import com.meti.api.collect.list.MutableList;
 import com.meti.api.core.Option;
 import com.meti.api.extern.*;
 
-import static com.meti.api.collect.ArrayList.ArrayList;
+import static com.meti.api.collect.list.ArrayList.ArrayList;
 import static com.meti.api.core.None.None;
 import static com.meti.api.core.Some.Some;
 
