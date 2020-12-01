@@ -28,6 +28,11 @@ public class Some<T> implements Option<T> {
 	}
 
 	@Override
+	public T get() {
+		return value;
+	}
+
+	@Override
 	public T orElse(T other) {
 		return value;
 	}

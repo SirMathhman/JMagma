@@ -21,7 +21,7 @@ class ListStreamTest {
 	}
 
 	@Test
-	void filter() {
+	void filter() throws StreamException {
 		var list = ListStream.ListStreams.of(0, 1, 2)
 				.filter(value -> value % 2 == 0)
 				.fold(ArrayList(), MutableList::add);

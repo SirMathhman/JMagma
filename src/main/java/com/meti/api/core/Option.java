@@ -9,6 +9,8 @@ public interface Option<T> {
 
 	<R, E extends Exception> Option<R> mapExceptionally(ExceptionalFunction1<T, R, E> mapper) throws E;
 
+	T get();
+
 	T orElse(T other);
 
 	Option<T> filter(Function1<T, Boolean> predicate);

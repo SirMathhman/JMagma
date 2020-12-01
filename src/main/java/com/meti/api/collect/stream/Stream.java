@@ -4,7 +4,7 @@ import com.meti.api.core.Option;
 import com.meti.api.extern.*;
 
 public interface Stream<T> {
-	boolean anyMatch(Function1<T, Boolean> predicate);
+	boolean anyMatch(Function1<T, Boolean> predicate) throws StreamException;
 
 	Stream<T> filter(Function1<T, Boolean> predicate);
 
@@ -12,9 +12,9 @@ public interface Stream<T> {
 
 	<R> Stream<R> mapExceptionally(ExceptionalFunction1<T, R, ?> mapper) throws StreamException;
 
-	<R, E extends Exception> R foldExceptionally(R identity, ExceptionalFunction2<R, T, R, E> mapper) throws StreamException;
+	<R, E extends Exception> R foldExceptionally(R identity, ExceptionalFunction2<R, T, R, E> mapper) throws StreamException, Exception;
 
-	<R> R fold(R identity, Function2<R, T, R> mapper);
+	<R> R fold(R identity, Function2<R, T, R> mapper) throws StreamException;
 
-	Option<T> head();
+	Option<T> head() throws StreamException;
 }
