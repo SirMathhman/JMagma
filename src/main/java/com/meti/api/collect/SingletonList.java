@@ -34,7 +34,7 @@ public class SingletonList<T> implements List<T> {
 	@Override
 	public T get(int index) throws IndexException {
 		if(index == 0) return value;
-		else throw new IndexException("Index is not zero.");
+		else throw IndexException.IndexException("Index is not zero.");
 	}
 
 	@Override

@@ -6,19 +6,18 @@ import com.meti.api.extern.Internal;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.io.StringWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static com.meti.Main.Level.Info;
-import static com.meti.Main.Level.Warning;
+import static com.meti.Logger.Level.Info;
+import static com.meti.Logger.Level.Warning;
 import static com.meti.api.io.DelegateInStream.DelegateInStream;
 
 public class Main {
+	public static final Logger LOGGER = new Logger();
 	private static final Path ROOT = Paths.get(".");
 
 	public static void main(String[] args) {
@@ -29,7 +28,7 @@ public class Main {
 		try {
 			executeExceptionally(scriptPath);
 		} catch (IOException e) {
-			logExceptionally(Level.Error, "Failed to execute.", e);
+			LOGGER.logExceptionally(Logger.Level.Error, "Failed to execute.", e);
 		}
 	}
 
@@ -60,7 +59,7 @@ public class Main {
 		} catch (IOException e) {
 			var format = "Failed to process command '%s'.";
 			var message = format.formatted(command);
-			logExceptionally(Warning, message, e);
+			LOGGER.logExceptionally(Warning, message, e);
 		}
 	}
 
@@ -79,7 +78,7 @@ public class Main {
 	private static void list(ScriptPath<Path> scriptPath) {
 		var count = scriptPath.count();
 		var collect = render(scriptPath);
-		logFormatted(Info, "%d files were loaded in:%s", count, collect);
+		LOGGER.logFormatted(Info, "%d files were loaded in:%s", count, collect);
 	}
 
 	private static void add(ScriptPath<Path> scriptPath1, String line) throws IOException {
@@ -92,7 +91,7 @@ public class Main {
 		} else {
 			String format = "'%s' doesn't exist.";
 			String message = format.formatted(absolute);
-			log(Warning, message);
+			LOGGER.log(Warning, message);
 		}
 	}
 
@@ -102,7 +101,7 @@ public class Main {
 		} else if (Files.isDirectory(path)) {
 			loadDirectory(scriptPath1, absolute);
 		} else {
-			logFormatted(Warning, "Cannot read '%s', invalid file format.", absolute);
+			LOGGER.logFormatted(Warning, "Cannot read '%s', invalid file format.", absolute);
 		}
 	}
 
@@ -110,7 +109,7 @@ public class Main {
 		List<Path> files = walkPath(absolute);
 		scriptPath1.asCollection().addAll(files);
 		String statement = formatPaths(files);
-		logFormatted(Info, "Loaded in %d Magma files from '%s':%s", files.size(), absolute, statement);
+		LOGGER.logFormatted(Info, "Loaded in %d Magma files from '%s':%s", files.size(), absolute, statement);
 	}
 
 	private static String formatPaths(Collection<Path> files) {
@@ -141,9 +140,9 @@ public class Main {
 	private static void loadPath(ScriptPath<Path> scriptPath1, Path path) {
 		if (isMagmaFile(path)) {
 			scriptPath1.load(path);
-			logFormatted(Info, "'%s' has been loaded in.", path);
+			LOGGER.logFormatted(Info, "'%s' indexOf been loaded in.", path);
 		} else {
-			logFormatted(Warning, "'%s' isn't a Magma file.", path);
+			LOGGER.logFormatted(Warning, "'%s' isn't a Magma file.", path);
 		}
 	}
 
@@ -154,24 +153,36 @@ public class Main {
 		String[] package_ = trim.split("\\.");
 		Path mainPath = getResolve(package_);
 		if (scriptPath.contains(mainPath.toAbsolutePath())) {
-			try {
-				String pathString = mainPath.getName(mainPath.getNameCount() - 1).toString();
-				String name = pathString.split("\\.")[0];
-				String content = Files.readString(mainPath);
-				if (content.equals("def main() : I16 => {return 0;}")) {
-					Cache<Group> cache = compile(name);
-					Map<Group, Path> map = cache.write(mainPath, name);
-					if (map.containsKey(Group.NativeSource)) {
-						compileSource(map.get(Group.NativeSource));
-					}
-				} else {
-					logFormatted(Warning, "Unable to compile content of '%s'.", content);
-				}
-			} catch (IOException e) {
-				logExceptionally(Level.Error, "Failed to read main content.", e);
-			}
+			sovhrt(mainPath);
 		} else {
-			logFormatted(Warning, "Main script of package '%s' at '%s' wasn't loaded in yet.", trim, mainPath.toString());
+			LOGGER.logFormatted(Warning, "Main script of package '%s' at '%s' wasn't loaded in yet.", trim, mainPath.toString());
+		}
+	}
+
+	private static void sovhrt(Path mainPath) {
+		try {
+			String pathString = mainPath.getName(mainPath.getNameCount() - 1).toString();
+			String name = pathString.split("\\.")[0];
+			sdiughsieu(mainPath, name);
+		} catch (IOException e) {
+			LOGGER.logExceptionally(Logger.Level.Error, "Failed to read main content.", e);
+		}
+	}
+
+	private static void sdiughsieu(Path mainPath, String name) throws IOException {
+		String content = Files.readString(mainPath);
+		if (content.equals("def main() : I16 => {return 0;}")) {
+			adasd(mainPath, name);
+		} else {
+			LOGGER.logFormatted(Warning, "Unable to compile content of '%s'.", content);
+		}
+	}
+
+	private static void adasd(Path mainPath, String name) throws IOException {
+		Cache<Group> cache = compile(name);
+		Map<Group, Path> map = cache.write(mainPath, name);
+		if (map.containsKey(Group.NativeSource)) {
+			compileSource(map.get(Group.NativeSource));
 		}
 	}
 
@@ -186,7 +197,7 @@ public class Main {
 		try {
 			compileSourceExceptionally(source);
 		} catch (IOException e) {
-			logExceptionally(Warning, "Failed to compile source.", e);
+			LOGGER.logExceptionally(Warning, "Failed to compile source.", e);
 		}
 	}
 
@@ -197,7 +208,7 @@ public class Main {
 		process.getErrorStream().transferTo(errorStream);
 		String errorString = errorStream.toString();
 		if (!errorString.isBlank()) {
-			logFormatted(Warning, "Failed to compile native source with command '%s':\n%s", String.join(" ", builder.command()), errorString);
+			LOGGER.logFormatted(Warning, "Failed to compile native source with command '%s':\n%s", String.join(" ", builder.command()), errorString);
 		}
 	}
 
@@ -234,15 +245,7 @@ public class Main {
 	private static void logRunFailure(String command, IOException e) {
 		String format = "Failed to run process: %s";
 		String message = format.formatted(command);
-		logExceptionally(Warning, message, e);
-	}
-
-	private static void runExceptionally(ProcessBuilder builder) throws IOException {
-		Process process = builder.start();
-		System.out.println("START PROCESS");
-		process.getInputStream().transferTo(System.out);
-		process.getErrorStream().transferTo(System.out);
-		System.out.println("END PROCESS");
+		LOGGER.logExceptionally(Warning, message, e);
 	}
 
 	private static String formatC(String message) {
@@ -254,25 +257,5 @@ public class Main {
 		var namePath = path.getName(count - 1);
 		var nameString = namePath.toString();
 		return nameString.endsWith(".mgs");
-	}
-
-	private static void logFormatted(Level level, String format, Object... args) {
-		log(level, format.formatted(args));
-	}
-
-	private static void logExceptionally(Level level, String message, Exception e) {
-		StringWriter writer = new StringWriter();
-		e.printStackTrace(new PrintWriter(writer));
-		logFormatted(level, "%s\n%s", message, writer);
-	}
-
-	private static void log(Level level, String message) {
-		System.out.printf("%s: %s%n", level.name(), message);
-	}
-
-	enum Level {
-		Info,
-		Warning,
-		Error
 	}
 }

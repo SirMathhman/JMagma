@@ -1,8 +1,8 @@
 package com.meti;
 
-import com.meti.api.collect.EmptyList;
-import com.meti.api.collect.List;
+import com.meti.api.collect.ArrayList;
 import com.meti.api.collect.ListStream;
+import com.meti.api.collect.MutableList;
 
 import java.util.Collection;
 
@@ -26,8 +26,8 @@ public class CollectiveScriptPath<T> implements ScriptPath<T> {
 	}
 
 	@Override
-	public List<T> asCollection2(){
-		return EmptyList.EmptyList();
+	public MutableList<T> asCollection2() {
+		return ArrayList.ArrayList();
 	}
 
 	@Override

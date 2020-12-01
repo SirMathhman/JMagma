@@ -17,6 +17,18 @@ public class ArrayList<T> implements MutableList<T> {
 		this.size = size;
 	}
 
+	public static MutableList<Integer> Range(int from, int to) {
+		return ArrayList(from, i -> i < to, i -> i + 1);
+	}
+
+	public static <T> MutableList<T> ArrayList(T identity, Function1<T, Boolean> condition, Function1<T, T> incrementor) {
+		var list = ArrayList.<T>ArrayList();
+		for (T i = identity; condition.apply(i); i = incrementor.apply(i)) {
+			list.add(i);
+		}
+		return list;
+	}
+
 	public static <T> MutableList<T> ArrayList() {
 		return ArrayList(DEFAULT_CAPACITY);
 	}
@@ -66,11 +78,11 @@ public class ArrayList<T> implements MutableList<T> {
 	}
 
 	private <R> R bounded(int index, Function1<Integer, R> applicator) throws IndexException {
-		if (index < 0) throw new IndexException("Index %d cannot be negative.".formatted(index));
+		if (index < 0) throw IndexException.IndexException("Index %d cannot be negative.".formatted(index));
 		if (index >= size) {
 			String format = "Index %d cannot be greater or equal to the number of elements available.";
 			String message = format.formatted(index);
-			throw new IndexException(message);
+			throw IndexException.IndexException(message);
 		}
 		return applicator.apply(index);
 	}
@@ -94,7 +106,7 @@ public class ArrayList<T> implements MutableList<T> {
 		if (index < 0) {
 			String format = "Index %d can't be negative.";
 			String message = format.formatted(index);
-			throw new IndexException(message);
+			throw IndexException.IndexException(message);
 		}
 		Object[] copy = resizeTo(index + 1);
 		copy[index] = value;

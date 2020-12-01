@@ -15,7 +15,7 @@ public class EmptyList<T> implements List<T> {
 
 	@Override
 	public T get(int index) throws IndexException {
-		throw new IndexException("List is empty.");
+		throw IndexException.IndexException("List is empty.");
 	}
 
 	@Override
