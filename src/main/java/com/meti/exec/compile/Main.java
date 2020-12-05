@@ -1,16 +1,15 @@
 package com.meti.exec.compile;
 
+import com.meti.api.extern.Action0;
 import com.meti.api.io.InStream;
-import com.meti.api.io.file.nio.NIOExtant;
-import com.meti.api.io.file.nio.Extant;
+import com.meti.api.io.file.Extant;
 import com.meti.api.log.Logger;
 import com.meti.api.log.OutputStreamLogger;
 
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.HashMap;
 
+import static com.meti.api.io.file.nio.NIOFileSystem.NIO_FILE_SYSTEM__;
 import static com.meti.api.log.Logger.Level.Error;
 import static com.meti.exec.compile.EmptyMapResult.EmptyMapResult_;
 
@@ -18,23 +17,37 @@ public class Main {
 	private static final Logger LOGGER = new OutputStreamLogger(System.err);
 
 	public static void main(String[] args) {
-		var path = Paths.get("Main.mgs");
-		if (Files.exists(path)) {
-			var extant = new NIOExtant(path);
-			var content = readContent(extant);
-			var compile = compile(content);
-			var target = Paths.get("main.c");
-			try (var outputStream = Files.newOutputStream(target)) {
-				var s = compile.apply(Result.Group.Target);
-				for (int i = 0; i < s.length(); i++) {
-					outputStream.write(s.charAt(i));
-				}
-				outputStream.flush();
-			} catch (IOException e) {
-				LOGGER.logExceptionally(Error, "Failed to write content.", e);
+		try {
+			Action0 action0 = () -> LOGGER.logSimple(Error, "Main file doesn't exist.");
+			NIO_FILE_SYSTEM__.findWorking()
+					.resolve("Main.mgs")
+					.existingAsFile()
+					.ifPresentOrElse(Main::compileMain, action0);
+		} catch (IOException e) {
+			LOGGER.logExceptionally(Error, "Failed to create path for main file.", e);
+		}
+	}
+
+	private static void compileMain(Extant nioExtant) {
+		var content = readInput(nioExtant);
+		var compile = compile(content);
+		writeOutput(compile);
+	}
+
+	private static void writeOutput(Result compile) {
+		try {
+			var outStream = NIO_FILE_SYSTEM__.findWorking()
+					.resolve("main.c")
+					.ensuringAsFile()
+					.write();
+			var output = compile.apply(Result.Group.Target);
+			for (int i = 0; i < output.length(); i++) {
+				outStream.write(output.charAt(i));
 			}
-		} else {
-			LOGGER.logSimple(Error, "Main file doesn't exist.");
+			outStream.flush();
+			outStream.close();
+		} catch (IOException e) {
+			LOGGER.logExceptionally(Error, "Failed to write content to target.", e);
 		}
 	}
 
@@ -62,7 +75,7 @@ public class Main {
 		}
 	}
 
-	private static String readContent(Extant file) {
+	private static String readInput(Extant file) {
 		var buffer = new StringBuilder();
 		try {
 			InStream inStream = file.read();
