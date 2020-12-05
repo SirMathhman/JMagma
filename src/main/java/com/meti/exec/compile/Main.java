@@ -1,5 +1,8 @@
 package com.meti.exec.compile;
 
+import com.meti.api.io.InStream;
+import com.meti.api.io.file.nio.NIOExtant;
+import com.meti.api.io.file.nio.Extant;
 import com.meti.api.log.Logger;
 import com.meti.api.log.OutputStreamLogger;
 
@@ -16,10 +19,9 @@ public class Main {
 
 	public static void main(String[] args) {
 		var path = Paths.get("Main.mgs");
-		if (!Files.exists(path)) {
-			LOGGER.logSimple(Error, "Main file doesn't exist.");
-		} else {
-			var content = readContent(path);
+		if (Files.exists(path)) {
+			var extant = new NIOExtant(path);
+			var content = readContent(extant);
 			var compile = compile(content);
 			var target = Paths.get("main.c");
 			try (var outputStream = Files.newOutputStream(target)) {
@@ -31,6 +33,8 @@ public class Main {
 			} catch (IOException e) {
 				LOGGER.logExceptionally(Error, "Failed to write content.", e);
 			}
+		} else {
+			LOGGER.logSimple(Error, "Main file doesn't exist.");
 		}
 	}
 
@@ -58,18 +62,19 @@ public class Main {
 		}
 	}
 
-	private static String readContent(java.nio.file.Path path) {
+	private static String readContent(Extant file) {
 		var buffer = new StringBuilder();
-		try (var inputStream = Files.newInputStream(path)) {
-			var next = inputStream.read();
+		try {
+			InStream inStream = file.read();
+			var next = inStream.read();
 			while (next != -1) {
 				buffer.append((char) next);
-				next = inputStream.read();
+				next = inStream.read();
 			}
+			inStream.close();
 		} catch (IOException e) {
 			LOGGER.logExceptionally(Error, "Failed to read main file.", e);
 		}
 		return buffer.toString();
 	}
-
 }
