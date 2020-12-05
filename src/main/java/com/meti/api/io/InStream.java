@@ -1,6 +1,6 @@
 package com.meti.api.io;
 
-import com.meti.api.collect.Stream;
+import com.meti.api.collect.stream.Stream;
 
 import java.io.IOException;
 

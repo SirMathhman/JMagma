@@ -1,14 +1,14 @@
 package com.meti.api.io;
 
-import com.meti.api.collect.DelegatedStream;
-import com.meti.api.collect.EndOfStreamException;
-import com.meti.api.collect.Stream;
-import com.meti.api.collect.StreamException;
+import com.meti.api.collect.stream.DelegatedStream;
+import com.meti.api.collect.stream.EndOfStreamException;
+import com.meti.api.collect.stream.Stream;
+import com.meti.api.collect.stream.StreamException;
 import com.meti.api.extern.ExceptionFunction1;
 
 import java.io.IOException;
 
-import static com.meti.api.collect.StreamException.StreamException;
+import static com.meti.api.collect.stream.StreamException.StreamException;
 
 public abstract class AbstractInStream implements InStream {
 	@Override

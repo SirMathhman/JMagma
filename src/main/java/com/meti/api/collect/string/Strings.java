@@ -1,4 +1,9 @@
-package com.meti.api.collect;
+package com.meti.api.collect.string;
+
+import com.meti.api.collect.stream.EndOfStreamException;
+import com.meti.api.collect.stream.Stream;
+import com.meti.api.collect.stream.StreamException;
+import com.meti.api.collect.stream.SuppliedStream;
 
 public class Strings {
 	public Strings() {

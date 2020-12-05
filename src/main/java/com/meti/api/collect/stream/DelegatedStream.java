@@ -1,4 +1,4 @@
-package com.meti.api.collect;
+package com.meti.api.collect.stream;
 
 import com.meti.api.extern.ExceptionFunction0;
 

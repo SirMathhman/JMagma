@@ -1,4 +1,4 @@
-package com.meti.api.collect;
+package com.meti.api.collect.string;
 
 public class SimpleStringBuffer implements StringBuffer {
 	private final String internalValue;

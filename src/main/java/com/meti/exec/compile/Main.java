@@ -1,8 +1,8 @@
 package com.meti.exec.compile;
 
-import com.meti.api.collect.StreamException;
-import com.meti.api.collect.StringBuffer;
-import com.meti.api.collect.Strings;
+import com.meti.api.collect.stream.StreamException;
+import com.meti.api.collect.string.StringBuffer;
+import com.meti.api.collect.string.Strings;
 import com.meti.api.extern.Action0;
 import com.meti.api.extern.ExceptionFunction1;
 import com.meti.api.io.InStream;
@@ -13,7 +13,7 @@ import com.meti.api.log.OutputStreamLogger;
 
 import java.io.IOException;
 
-import static com.meti.api.collect.SimpleStringBuffer.StringBuffer;
+import static com.meti.api.collect.string.SimpleStringBuffer.StringBuffer;
 import static com.meti.api.io.file.nio.NIOFileSystem.NIO_FILE_SYSTEM__;
 import static com.meti.api.log.Logger.Level.Error;
 import static com.meti.exec.compile.EmptyMapResult.EmptyMapResult_;
