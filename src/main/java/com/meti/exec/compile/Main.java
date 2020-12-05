@@ -1,6 +1,7 @@
 package com.meti.exec.compile;
 
 import com.meti.api.extern.Action0;
+import com.meti.api.extern.ExceptionFunction1;
 import com.meti.api.io.InStream;
 import com.meti.api.io.file.Extant;
 import com.meti.api.log.Logger;
@@ -76,18 +77,20 @@ public class Main {
 	}
 
 	private static String readInput(Extant file) {
-		var buffer = new StringBuilder();
 		try {
-			InStream inStream = file.read();
-			var next = inStream.read();
-			while (next != -1) {
-				buffer.append((char) next);
-				next = inStream.read();
-			}
-			inStream.close();
+			ExceptionFunction1<InStream, String, IOException> mapper = inStream -> {
+				var buffer = new StringBuilder();
+				var next = inStream.read();
+				while (next != InStream.EndOfFile) {
+					buffer.append((char) next);
+					next = inStream.read();
+				}
+				return buffer.toString();
+			};
+			return file.read().enclosing(mapper);
 		} catch (IOException e) {
 			LOGGER.logExceptionally(Error, "Failed to read main file.", e);
+			return "";
 		}
-		return buffer.toString();
 	}
 }

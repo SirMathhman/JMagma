@@ -3,7 +3,7 @@ package com.meti.api.io;
 import java.io.IOException;
 import java.io.OutputStream;
 
-public class JavaOutStream implements OutStream {
+public class JavaOutStream extends AbstractOutStream {
 	private final OutputStream outputStream;
 
 	public JavaOutStream(OutputStream outputStream) {

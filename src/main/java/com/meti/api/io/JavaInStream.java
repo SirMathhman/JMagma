@@ -1,9 +1,11 @@
 package com.meti.api.io;
 
+import com.meti.api.extern.ExceptionFunction1;
+
 import java.io.IOException;
 import java.io.InputStream;
 
-public class JavaInStream implements InStream {
+public class JavaInStream extends AbstractInStream {
 	private final InputStream inputStream;
 
 	public JavaInStream(InputStream inputStream) {
