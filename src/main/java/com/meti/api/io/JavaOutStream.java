@@ -11,13 +11,15 @@ public class JavaOutStream extends AbstractOutStream {
 	}
 
 	@Override
-	public void write(int value) throws IOException {
+	public OutStream write(int value) throws IOException {
 		outputStream.write(value);
+		return this;
 	}
 
 	@Override
-	public void flush() throws IOException {
+	public OutStream flush() throws IOException {
 		outputStream.flush();
+		return this;
 	}
 
 	@Override

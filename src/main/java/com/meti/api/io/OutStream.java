@@ -3,7 +3,7 @@ package com.meti.api.io;
 import java.io.IOException;
 
 public interface OutStream extends Closeable<OutStream> {
-	void write(int value) throws IOException;
+	OutStream write(int value) throws IOException;
 
-	void flush() throws IOException;
+	OutStream flush() throws IOException;
 }

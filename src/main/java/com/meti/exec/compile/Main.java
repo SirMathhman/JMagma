@@ -1,8 +1,12 @@
 package com.meti.exec.compile;
 
+import com.meti.api.collect.StreamException;
+import com.meti.api.collect.StringBuffer;
+import com.meti.api.collect.Strings;
 import com.meti.api.extern.Action0;
 import com.meti.api.extern.ExceptionFunction1;
 import com.meti.api.io.InStream;
+import com.meti.api.io.OutStream;
 import com.meti.api.io.file.Extant;
 import com.meti.api.log.Logger;
 import com.meti.api.log.OutputStreamLogger;
@@ -38,17 +42,15 @@ public class Main {
 
 	private static void writeOutput(Result compile) {
 		try {
-			var outStream = NIO_FILE_SYSTEM__.findWorking()
+			ExceptionFunction1<OutStream, OutStream, StreamException> mapper = stream -> Strings
+					.stream(compile.apply(Result.Group.Target))
+					.foldLeft(stream, OutStream::write);
+			NIO_FILE_SYSTEM__.findWorking()
 					.resolve("main.c")
 					.ensuringAsFile()
-					.write();
-			var output = compile.apply(Result.Group.Target);
-			for (int i = 0; i < output.length(); i++) {
-				outStream.write(output.charAt(i));
-			}
-			outStream.flush();
-			outStream.close();
-		} catch (IOException e) {
+					.write()
+					.enclosing(mapper);
+		} catch (StreamException | IOException e) {
 			LOGGER.logExceptionally(Error, "Failed to write content to target.", e);
 		}
 	}
@@ -79,20 +81,12 @@ public class Main {
 
 	private static String readInput(Extant file) {
 		try {
-			ExceptionFunction1<InStream, String, IOException> mapper = inStream -> {
-				var buffer = StringBuffer();
-				while (true) {
-					var next = inStream.read();
-					if (next == InStream.EndOfFile) {
-						break;
-					} else {
-						buffer = buffer.append((char) next);
-					}
-				}
-				return buffer.toString();
-			};
+			ExceptionFunction1<InStream, String, StreamException> mapper = inStream -> inStream.stream()
+					.map(integer -> (char) (int) integer)
+					.foldLeft(StringBuffer(), StringBuffer::append)
+					.toString();
 			return file.read().enclosing(mapper);
-		} catch (IOException e) {
+		} catch (IOException | StreamException e) {
 			LOGGER.logExceptionally(Error, "Failed to read main file.", e);
 			return "";
 		}
