@@ -10,6 +10,7 @@ import com.meti.api.log.OutputStreamLogger;
 import java.io.IOException;
 import java.util.HashMap;
 
+import static com.meti.api.collect.SimpleStringBuffer.StringBuffer;
 import static com.meti.api.io.file.nio.NIOFileSystem.NIO_FILE_SYSTEM__;
 import static com.meti.api.log.Logger.Level.Error;
 import static com.meti.exec.compile.EmptyMapResult.EmptyMapResult_;
@@ -79,11 +80,14 @@ public class Main {
 	private static String readInput(Extant file) {
 		try {
 			ExceptionFunction1<InStream, String, IOException> mapper = inStream -> {
-				var buffer = new StringBuilder();
-				var next = inStream.read();
-				while (next != InStream.EndOfFile) {
-					buffer.append((char) next);
-					next = inStream.read();
+				var buffer = StringBuffer();
+				while (true) {
+					var next = inStream.read();
+					if (next == InStream.EndOfFile) {
+						break;
+					} else {
+						buffer = buffer.append((char) next);
+					}
 				}
 				return buffer.toString();
 			};
