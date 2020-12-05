@@ -1,0 +1,3 @@
+import native stdio;
+native def printf(format : String, args : Any...) : Void;
+printf("Hello World!");
