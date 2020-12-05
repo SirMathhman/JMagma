@@ -1,17 +1,23 @@
 package com.meti;
 
+import com.meti.api.log.Logger;
+import com.meti.api.log.OutputStreamLogger;
+
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.io.StringWriter;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.HashMap;
 
+import static com.meti.api.log.Logger.Level.Error;
+import static com.meti.api.log.Logger.Level.Warning;
+
 public class Main {
+	private static final Logger LOGGER = new OutputStreamLogger(System.err);
+
 	public static void main(String[] args) {
 		var path = Paths.get("Main.mgs");
 		if (!Files.exists(path)) {
-			logSimple(Level.Error, "Main file doesn't exist.");
+			LOGGER.logSimple(Error, "Main file doesn't exist.");
 		} else {
 			try {
 				var inputStream = Files.newInputStream(path);
@@ -39,33 +45,15 @@ public class Main {
 				} else {
 					var format = "Unable to compile content:\n%s";
 					var message = format.formatted(content);
-					logSimple(Level.Warning, message);
+					LOGGER.logSimple(Warning, message);
 				}
 			} catch (IOException e) {
-				logExceptionally(Level.Error, "Cannot open main file.", e);
+				LOGGER.logExceptionally(Error, "Cannot open main file.", e);
 			}
 		}
 	}
 
-	private static void logSimple(Level level, final String message) {
-		System.out.printf("[%s] %s%n", level, message);
-	}
-
-	private static void logExceptionally(Level level, String message, Exception e) {
-		var parent = new StringWriter();
-		var child = new PrintWriter(parent);
-		e.printStackTrace(child);
-		var parentString = parent.toString();
-		var formatted = "%s: %s".formatted(message, parentString);
-		logSimple(level, formatted);
-	}
-
 	enum Group {
 		Target
-	}
-
-	enum Level {
-		Warning,
-		Error
 	}
 }
