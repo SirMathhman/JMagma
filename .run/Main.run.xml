@@ -1,6 +1,6 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="Main" type="Application" factoryName="Application" nameIsGenerated="true">
-    <option name="MAIN_CLASS_NAME" value="com.meti.Main" />
+    <option name="MAIN_CLASS_NAME" value="com.meti.exec.compile.Main" />
     <module name="JMagma" />
     <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/working" />
     <extension name="coverage">
