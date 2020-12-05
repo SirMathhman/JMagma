@@ -1,6 +1,6 @@
 package com.meti.api.io;
 
-import com.meti.api.collect.stream.DelegatedStream;
+import com.meti.api.collect.stream.SuppliedStream;
 import com.meti.api.collect.stream.EndOfStreamException;
 import com.meti.api.collect.stream.Stream;
 import com.meti.api.collect.stream.StreamException;
@@ -20,7 +20,7 @@ public abstract class AbstractInStream implements InStream {
 
 	@Override
 	public Stream<Integer> stream() {
-		return new DelegatedStream<>(this::supply);
+		return new SuppliedStream<>(this::supply);
 	}
 
 	private int supply() throws StreamException {

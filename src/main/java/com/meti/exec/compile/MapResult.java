@@ -1,27 +1,26 @@
 package com.meti.exec.compile;
 
-import java.util.HashMap;
+import com.meti.api.collect.map.ListMap;
+import com.meti.api.collect.map.Map;
 
-@Deprecated
 public class MapResult implements Result<Result.Group> {
-	private final HashMap<Group, String> value;
+	private final Map<Group, String> value;
 
 	public MapResult() {
-		this(new HashMap<>());
+		this(new ListMap<>());
 	}
 
-	public MapResult(HashMap<Group, String> value) {
+	public MapResult(Map<Group, String> value) {
 		this.value = value;
 	}
 
 	@Override
 	public Result<Group> with(Group group, String result) {
-		value.put(group, result);
-		return this;
+		return new MapResult(value.put(group, result));
 	}
 
 	@Override
 	public String apply(Group group) {
-		return value.get(group);
+		return value.get(group).orElse("");
 	}
 }

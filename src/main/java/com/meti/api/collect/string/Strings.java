@@ -3,7 +3,7 @@ package com.meti.api.collect.string;
 import com.meti.api.collect.stream.EndOfStreamException;
 import com.meti.api.collect.stream.Stream;
 import com.meti.api.collect.stream.StreamException;
-import com.meti.api.collect.stream.SuppliedStream;
+import com.meti.api.collect.stream.DelegatedStream;
 
 public class Strings {
 	public Strings() {
@@ -13,7 +13,7 @@ public class Strings {
 		return new StringStream(value);
 	}
 
-	private static class StringStream extends SuppliedStream<Character> {
+	private static class StringStream extends DelegatedStream<Character> {
 		private final int length;
 		private final String value;
 		private int counter;

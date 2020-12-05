@@ -15,26 +15,31 @@ public class Some<T> implements Option<T> {
 	}
 
 	public static <T> Some<T> Some(T value) {
-		return new Some<T>(value);
+		return new Some<>(value);
 	}
 
 	@Override
 	public void ifPresentOrElse(Action1<T> action, Action0 otherwise) {
-		otherwise.run();
+		action.accept(value);
 	}
 
 	@Override
 	public <R> Option<R> map(Function1<T, R> mapper) {
-		return None();
+		return Some(mapper.apply(value));
 	}
 
 	@Override
 	public Option<T> filter(Function1<T, Boolean> predicate) {
-		return None.None();
+		return predicate.apply(value) ? this : None();
 	}
 
 	@Override
-	public <E extends Exception> T orElseThrow(Function0<E> supplier) throws E{
-		throw supplier.get();
+	public <E extends Exception> T orElseThrow(Function0<E> supplier) throws E {
+		return value;
+	}
+
+	@Override
+	public T orElse(T other) {
+		return value;
 	}
 }

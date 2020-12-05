@@ -10,7 +10,7 @@ public class None<T> implements Option<T> {
 	}
 
 	public static <T> None<T> None() {
-		return new None<T>();
+		return new None<>();
 	}
 
 	@Override
@@ -25,11 +25,16 @@ public class None<T> implements Option<T> {
 
 	@Override
 	public Option<T> filter(Function1<T, Boolean> predicate) {
-		return None.None();
+		return None();
 	}
 
 	@Override
-	public <E extends Exception> T orElseThrow(Function0<E> supplier) throws E{
+	public <E extends Exception> T orElseThrow(Function0<E> supplier) throws E {
 		throw supplier.get();
+	}
+
+	@Override
+	public T orElse(T other) {
+		return other;
 	}
 }

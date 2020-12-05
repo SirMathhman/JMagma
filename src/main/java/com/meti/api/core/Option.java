@@ -13,4 +13,6 @@ public interface Option<T> {
 	Option<T> filter(Function1<T, Boolean> predicate);
 
 	<E extends Exception> T orElseThrow(Function0<E> supplier) throws E;
+
+	T orElse(T other);
 }
