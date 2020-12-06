@@ -1,11 +1,11 @@
 package com.meti.api.collect.map;
 
-import com.meti.api.collect.list.ArrayList;
 import com.meti.api.collect.list.List;
 import com.meti.api.collect.stream.StreamException;
 import com.meti.api.core.Comparable;
 import com.meti.api.core.Option;
 
+import static com.meti.api.collect.list.ArrayList.ArrayList;
 import static com.meti.api.collect.stream.SequenceStream.SequenceStream;
 import static com.meti.api.core.None.None;
 
@@ -13,7 +13,7 @@ public class ListMap<K extends Comparable<K>, V> implements Map<K, V> {
 	private final List<Binding<K, V>> bindings;
 
 	public ListMap() {
-		this(ArrayList.ArrayList());
+		this(ArrayList());
 	}
 
 	private ListMap(List<Binding<K, V>> bindings) {

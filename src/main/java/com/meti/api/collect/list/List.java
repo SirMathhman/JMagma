@@ -15,5 +15,7 @@ public interface List<T> extends Sequence<T> {
 
 	List<T> remove(T t);
 
+	Object[] asArray();
+
 	List<T> add(T t);
 }

@@ -1,12 +1,22 @@
 package com.meti.api.collect.string;
 
+import com.meti.api.collect.stream.DelegatedStream;
 import com.meti.api.collect.stream.EndOfStreamException;
 import com.meti.api.collect.stream.Stream;
 import com.meti.api.collect.stream.StreamException;
-import com.meti.api.collect.stream.DelegatedStream;
 
 public class Strings {
 	public Strings() {
+	}
+
+	public static int compareTo(CharSequence this_, CharSequence other) {
+		var lengthDelta = this_.length() - other.length();
+		var charDelta = 0;
+		var minLength = Math.min(this_.length(), other.length());
+		for (int i = 0; i < minLength; i++) {
+			charDelta += this_.charAt(i) - other.charAt(i);
+		}
+		return lengthDelta + charDelta;
 	}
 
 	public static Stream<Character> stream(String value) {

@@ -2,31 +2,46 @@ package com.meti.api.collect.list;
 
 import com.meti.api.collect.IndexException;
 import com.meti.api.core.Comparable;
+import com.meti.api.extern.Function2;
 
-import static com.meti.api.collect.IndexException.IndexException;
-
-public class ArrayList<T extends Comparable<T>> implements List<T> {
-	public static final int DEFAULT_SIZE = 10;
-	private final Comparable<T>[] array;
+public class ArrayList<T> implements List<T> {
+	private static final int DefaultSize = 10;
 	private final int size;
+	private final Object[] array;
+	private final Function2<T, T, Integer> comparator;
 
-	private ArrayList(Comparable<T>[] array, int size) {
-		this.array = array;
+	private ArrayList(Object[] array, int size, Function2<T, T, Integer> comparator) {
 		this.size = size;
+		this.array = array;
+		this.comparator = comparator;
 	}
 
-	public static <T extends Comparable<T>> ArrayList<T> ArrayList() {
-		return ArrayList(new Comparable[DEFAULT_SIZE], 0);
+	@SafeVarargs
+	public static <T> List<T> ArrayList(Function2<T, T, Integer> comparator, T... elements) {
+		return elements.length != 0 ?
+				ArrayList(elements, elements.length, comparator) :
+				ArrayList(new Object[DefaultSize], 0, comparator);
 	}
 
-	public static <T extends Comparable<T>> ArrayList<T> ArrayList(Comparable<T>[] array, int size) {
-		return new ArrayList<>(array, size);
+	@SafeVarargs
+	public static <T extends Comparable<T>> List<T> ArrayList(T... elements) {
+		return elements.length != 0 ?
+				ArrayList(elements, elements.length) :
+				ArrayList(new Object[DefaultSize], 0);
+	}
+
+	private static <T extends Comparable<T>> List<T> ArrayList(Object[] array, int size) {
+		return ArrayList(array, size, Comparable::compareTo);
+	}
+
+	private static <T> List<T> ArrayList(Object[] array, int size, Function2<T, T, Integer> comparator) {
+		return new ArrayList<>(array, size, comparator);
 	}
 
 	@Override
 	public T apply(int index) throws IndexException {
-		if (index < 0) throw IndexException("Index can't be negative");
-		if (index >= array.length) throw IndexException("Index is equal to or exceeds the size of this list.");
+		if (index < 0) throw IndexException.IndexException("Index can't be negative");
+		if (index >= size) throw IndexException.IndexException("Index is equal to or exceeds the size of this list.");
 		return (T) array[index];
 	}
 
@@ -43,36 +58,30 @@ public class ArrayList<T extends Comparable<T>> implements List<T> {
 	@Override
 	public int indexOf(T t) {
 		for (int i = 0; i < size; i++) {
-			if (array[i].compareTo(t) == 0) {
+			if ((double) comparator.apply((T) array[i], t) == 0) {
 				return i;
 			}
 		}
 		return -1;
 	}
 
-	private Comparable<T>[] resizeTo(int index) {
+	private Object[] resizeTo(int index) {
 		var sizeToAllocate = array.length;
-		if (sizeToAllocate == 0) {
-			sizeToAllocate = 1;
-		} else {
-			while (sizeToAllocate < index) {
-				sizeToAllocate = sizeToAllocate * 2;
-			}
+		if (index < array.length) return array;
+		if (sizeToAllocate == 0) sizeToAllocate = 1;
+		while (sizeToAllocate < index + 1) {
+			sizeToAllocate = sizeToAllocate * 2;
 		}
-		var copy = new Comparable[sizeToAllocate];
+		var copy = new Object[sizeToAllocate];
 		if (size >= 0) System.arraycopy(array, 0, copy, 0, size);
 		return copy;
 	}
 
 	@Override
 	public List<T> set(int index, T t) {
-		if (index < size) {
-			array[index] = t;
-			return this;
-		} else {
-			var newArray = resizeTo(index);
-			return ArrayList(newArray, index);
-		}
+		var newArray = resizeTo(index);
+		newArray[index] = t;
+		return ArrayList(newArray, Math.max(index + 1, size), comparator);
 	}
 
 	@Override
@@ -87,13 +96,23 @@ public class ArrayList<T extends Comparable<T>> implements List<T> {
 			keyword is used, then we're going to use that here. But note
 			that this line won't actually exist in the Magma implementation.
 			 */
-			array[index] = null;
+			for (int i = index; i < array.length - 1; i++) {
+				array[i] = array[i + 1];
+			}
+			return ArrayList(array, size - 1, comparator);
 		}
 		return this;
 	}
 
 	@Override
+	public Object[] asArray() {
+		var copy = new Object[size];
+		if (size >= 0) System.arraycopy(array, 0, copy, 0, size);
+		return copy;
+	}
+
+	@Override
 	public List<T> add(T t) {
-		return set(size + 1, t);
+		return set(size, t);
 	}
 }
