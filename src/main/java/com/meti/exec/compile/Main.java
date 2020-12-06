@@ -64,16 +64,7 @@ public class Main {
 	}
 
 	private static Result<Result.Group> compileExceptionally(String content) throws CompileException {
-		if (content.equals("""
-				import native stdio;
-				native def printf(format : String, args : Any...) : Void;
-				printf("Hello World!");""")) {
-			return new MapResult().with(Result.Group.Target, "#include <stdio.h>\nint main(){printf(\"Hello World!\");return 0;}");
-		} else {
-			var format = "Unable to tokenize:\n%s";
-			var message = format.formatted(content);
-			throw new CompileException(message);
-		}
+		return new MapResult().with(Result.Group.Target, "int main(){return 0;}");
 	}
 
 	private static String readInput(Extant file) {

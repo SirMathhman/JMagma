@@ -4,6 +4,7 @@ import com.meti.api.core.Option;
 import com.meti.api.io.file.Directory;
 import com.meti.api.io.file.Extant;
 
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
@@ -21,8 +22,9 @@ public class NIOPath implements com.meti.api.io.file.Path {
 	}
 
 	@Override
-	public Extant ensuringAsFile() {
-		return null;
+	public Extant ensuringAsFile() throws IOException {
+		if (!Files.exists(path)) Files.createFile(path);
+		return NIOExtant.NIOExtant(path);
 	}
 
 	@Override
