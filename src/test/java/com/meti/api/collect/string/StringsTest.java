@@ -3,7 +3,8 @@ package com.meti.api.collect.string;
 import com.meti.api.collect.stream.StreamException;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class StringsTest {
 
@@ -18,12 +19,12 @@ class StringsTest {
 	}
 
 	@Test
-	void compareToLess(){
+	void compareToLess() {
 		assertEquals(-3, Strings.compareTo("a", "d"));
 	}
 
 	@Test
-	void compareToGreater(){
+	void compareToGreater() {
 		assertEquals(3, Strings.compareTo("d", "a"));
 	}
 
@@ -32,5 +33,15 @@ class StringsTest {
 		assertEquals('t', Strings.stream("test")
 				.head()
 				.orElse('\0'));
+	}
+
+	@Test
+	void length() {
+		assertEquals(4, Strings.length("test"));
+	}
+
+	@Test
+	void testEquals() {
+		assertTrue(Strings.equals("test", "test"));
 	}
 }

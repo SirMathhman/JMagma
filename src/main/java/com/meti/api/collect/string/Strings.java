@@ -9,6 +9,14 @@ public class Strings {
 	public Strings() {
 	}
 
+	public static int length(String this_) {
+		return this_.length();
+	}
+
+	public static boolean equals(String this_, String other) {
+		return compareTo(this_, other) == 0;
+	}
+
 	public static String concat(String this_, String other) {
 		return this_ + other;
 	}

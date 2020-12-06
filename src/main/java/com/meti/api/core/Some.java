@@ -21,7 +21,7 @@ public class Some<T> implements Option<T> {
 	@Override
 	public boolean ifPresentOrElse(Action1<T> action, Action0 otherwise) {
 		action.accept(value);
-		return false;
+		return true;
 	}
 
 	@Override
