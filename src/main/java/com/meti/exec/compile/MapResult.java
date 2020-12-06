@@ -7,7 +7,7 @@ public class MapResult implements Result<Result.Group> {
 	private final Map<Group, String> value;
 
 	public MapResult() {
-		this(new ListMap<>());
+		this(ListMap.ListMap(Group::compareTo));
 	}
 
 	public MapResult(Map<Group, String> value) {

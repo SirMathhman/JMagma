@@ -4,22 +4,44 @@ import com.meti.api.collect.list.List;
 import com.meti.api.collect.stream.StreamException;
 import com.meti.api.core.Comparable;
 import com.meti.api.core.Option;
+import com.meti.api.extern.Function2;
 
 import static com.meti.api.collect.list.ArrayList.ArrayList;
 import static com.meti.api.collect.stream.SequenceStream.SequenceStream;
 import static com.meti.api.core.None.None;
 
-public class ListMap<K extends Comparable<K>, V> implements Map<K, V> {
-	private final List<Binding<K, V>> bindings;
+public class ListMap<K, V> implements Map<K, V> {
+	private final List<Binding> bindings;
+	private final Function2<K, K, Integer> comparator;
 
-	public ListMap() {
-		this(ArrayList());
+	private ListMap(Function2<K, K, Integer> comparator) {
+		this(ArrayList(), comparator);
 	}
 
-	private ListMap(List<Binding<K, V>> bindings) {
+	private ListMap(List<Binding> bindings, Function2<K, K, Integer> comparator) {
 		this.bindings = bindings;
+		this.comparator = comparator;
 	}
 
+	public static <K extends Comparable<K>, V> Map<K, V> ListMap(K key, V value) {
+		return ListMap(Comparable::compareTo, key, value);
+	}
+
+	public static <K, V> Map<K, V> ListMap(Function2<K, K, Integer> comparator, K key, V value) {
+		return new ListMap<K, V>(comparator).put(key, value);
+	}
+
+
+	public static <K, V> Map<K, V> ListMap(Function2<K, K, Integer> comparator) {
+		return new ListMap<>(comparator);
+	}
+
+	@Override
+	public int size() {
+		return bindings.size();
+	}
+
+	@Override
 	public boolean containsKey(K key) {
 		try {
 			return SequenceStream(bindings).anyMatch(binding -> binding.hasKey(key));
@@ -28,13 +50,14 @@ public class ListMap<K extends Comparable<K>, V> implements Map<K, V> {
 		}
 	}
 
+	@Override
 	public Map<K, V> remove(K key) {
 		try {
-			return new ListMap<>(SequenceStream(bindings)
+			return new ListMap<K, V>(SequenceStream(bindings)
 					.filter(binding -> binding.hasKey(key))
 					.head()
 					.map(bindings::remove)
-					.orElse(bindings));
+					.orElse(bindings), comparator);
 		} catch (StreamException e) {
 			return this;
 		}
@@ -45,7 +68,7 @@ public class ListMap<K extends Comparable<K>, V> implements Map<K, V> {
 		if (containsKey(key)) {
 			return remove(key).put(key, value);
 		} else {
-			return new ListMap<>(bindings.add(new Binding<>(key, value)));
+			return new ListMap<K, V>(bindings.add(new Binding(key, value)), comparator);
 		}
 	}
 
@@ -61,7 +84,7 @@ public class ListMap<K extends Comparable<K>, V> implements Map<K, V> {
 		}
 	}
 
-	static class Binding<K extends Comparable<K>, V> implements Comparable<Binding<K, V>> {
+	private class Binding implements Comparable<Binding> {
 		private final K key;
 		private final V value;
 
@@ -71,12 +94,12 @@ public class ListMap<K extends Comparable<K>, V> implements Map<K, V> {
 		}
 
 		boolean hasKey(K key) {
-			return this.key.compareTo(key) == 0;
+			return comparator.apply(this.key, key) == 0;
 		}
 
 		@Override
-		public int compareTo(Binding<K, V> other) {
-			return this.key.compareTo(other.key);
+		public int compareTo(Binding other) {
+			return comparator.apply(this.key, key);
 		}
 	}
 }
