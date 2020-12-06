@@ -9,6 +9,10 @@ public class Strings {
 	public Strings() {
 	}
 
+	public static String concat(String this_, String other) {
+		return this_ + other;
+	}
+
 	public static int compareTo(CharSequence this_, CharSequence other) {
 		var lengthDelta = this_.length() - other.length();
 		var charDelta = 0;
