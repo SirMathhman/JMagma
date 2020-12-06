@@ -27,7 +27,7 @@ public abstract class AbstractInStream implements InStream {
 		try {
 			var value = read();
 			if (value == -1) {
-				throw new EndOfStreamException("End of in stream has been reached.");
+				throw EndOfStreamException.EndOfStreamException("End of in stream has been reached.");
 			} else {
 				return value;
 			}

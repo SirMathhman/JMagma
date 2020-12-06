@@ -39,7 +39,7 @@ public class Strings {
 			if (counter < length) {
 				return value.charAt(counter++);
 			} else {
-				throw new EndOfStreamException("No more characters exist in the string.");
+				throw EndOfStreamException.EndOfStreamException("No more characters exist in the string.");
 			}
 		}
 	}

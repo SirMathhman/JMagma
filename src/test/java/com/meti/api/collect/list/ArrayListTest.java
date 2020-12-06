@@ -4,7 +4,7 @@ import com.meti.api.collect.IndexException;
 import com.meti.api.collect.string.Strings;
 import org.junit.jupiter.api.Test;
 
-import static com.meti.api.collect.list.ArrayList.ArrayList;
+import static com.meti.api.collect.list.ArrayList.of;
 import static org.junit.jupiter.api.Assertions.*;
 
 class ArrayListTest {
@@ -26,7 +26,7 @@ class ArrayListTest {
 	}
 
 	private List<String> createList() {
-		return ArrayList(Strings::compareTo, "test");
+		return of(Strings::compareTo, "test");
 	}
 
 	@Test

@@ -17,14 +17,14 @@ public class ArrayList<T> implements List<T> {
 	}
 
 	@SafeVarargs
-	public static <T> List<T> ArrayList(Function2<T, T, Integer> comparator, T... elements) {
+	public static <T> List<T> of(Function2<T, T, Integer> comparator, T... elements) {
 		return elements.length != 0 ?
 				ArrayList(elements, elements.length, comparator) :
 				ArrayList(new Object[DefaultSize], 0, comparator);
 	}
 
 	@SafeVarargs
-	public static <T extends Comparable<T>> List<T> ArrayList(T... elements) {
+	public static <T extends Comparable<T>> List<T> ofComparables(T... elements) {
 		return elements.length != 0 ?
 				ArrayList(elements, elements.length) :
 				ArrayList(new Object[DefaultSize], 0);

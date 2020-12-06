@@ -3,6 +3,7 @@ package com.meti.api.collect.stream;
 import com.meti.api.collect.IndexException;
 import com.meti.api.collect.Sequence;
 
+import static com.meti.api.collect.stream.EndOfStreamException.EndOfStreamException;
 import static com.meti.api.collect.stream.StreamException.StreamException;
 
 public class SequenceStream<T> extends DelegatedStream<T> {
@@ -14,7 +15,7 @@ public class SequenceStream<T> extends DelegatedStream<T> {
 	}
 
 	public static <T> SequenceStream<T> SequenceStream(Sequence<T> sequence) {
-		return new SequenceStream<T>(sequence);
+		return new SequenceStream<>(sequence);
 	}
 
 	@Override
@@ -26,7 +27,7 @@ public class SequenceStream<T> extends DelegatedStream<T> {
 				throw StreamException("Stream encountered an invalid index.");
 			}
 		} else {
-			throw StreamException("Sequence ran out of items.");
+			throw EndOfStreamException("Sequence ran out of items.");
 		}
 	}
 }

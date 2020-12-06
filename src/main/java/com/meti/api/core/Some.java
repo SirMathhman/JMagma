@@ -42,4 +42,9 @@ public class Some<T> implements Option<T> {
 	public T orElse(T other) {
 		return value;
 	}
+
+	@Override
+	public boolean isPresent() {
+		return true;
+	}
 }

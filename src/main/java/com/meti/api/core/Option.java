@@ -15,4 +15,6 @@ public interface Option<T> {
 	<E extends Exception> T orElseThrow(Function0<E> supplier) throws E;
 
 	T orElse(T other);
+
+	boolean isPresent();
 }
