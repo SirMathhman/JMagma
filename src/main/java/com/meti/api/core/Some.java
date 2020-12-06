@@ -19,8 +19,9 @@ public class Some<T> implements Option<T> {
 	}
 
 	@Override
-	public void ifPresentOrElse(Action1<T> action, Action0 otherwise) {
+	public boolean ifPresentOrElse(Action1<T> action, Action0 otherwise) {
 		action.accept(value);
+		return false;
 	}
 
 	@Override
@@ -46,5 +47,10 @@ public class Some<T> implements Option<T> {
 	@Override
 	public boolean isPresent() {
 		return true;
+	}
+
+	@Override
+	public boolean isEmpty() {
+		return false;
 	}
 }

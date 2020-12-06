@@ -6,7 +6,7 @@ import com.meti.api.extern.Function0;
 import com.meti.api.extern.Function1;
 
 public interface Option<T> {
-	void ifPresentOrElse(Action1<T> action, Action0 otherwise);
+	boolean ifPresentOrElse(Action1<T> action, Action0 otherwise);
 
 	<R> Option<R> map(Function1<T, R> mapper);
 
@@ -17,4 +17,6 @@ public interface Option<T> {
 	T orElse(T other);
 
 	boolean isPresent();
+
+	boolean isEmpty();
 }

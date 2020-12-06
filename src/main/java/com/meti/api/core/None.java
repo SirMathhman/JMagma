@@ -14,8 +14,9 @@ public class None<T> implements Option<T> {
 	}
 
 	@Override
-	public void ifPresentOrElse(Action1<T> action, Action0 otherwise) {
+	public boolean ifPresentOrElse(Action1<T> action, Action0 otherwise) {
 		otherwise.run();
+		return false;
 	}
 
 	@Override
@@ -41,5 +42,10 @@ public class None<T> implements Option<T> {
 	@Override
 	public boolean isPresent() {
 		return false;
+	}
+
+	@Override
+	public boolean isEmpty() {
+		return true;
 	}
 }
