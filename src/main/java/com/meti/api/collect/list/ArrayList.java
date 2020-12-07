@@ -7,42 +7,35 @@ import com.meti.api.core.Primitive;
 import com.meti.api.extern.Function1;
 import com.meti.api.extern.Function2;
 
+import static com.meti.api.collect.IndexException.IndexException;
+
 public class ArrayList<T> implements List<T> {
 	private static final int DefaultSize = 10;
 	private final int size;
 	private final Object[] array;
 	private final Function2<T, T, Integer> comparator;
 
-	private ArrayList(Object[] array, int size, Function2<T, T, Integer> comparator) {
-		this.size = size;
+	private ArrayList(Object[] array, int internalSize, Function2<T, T, Integer> comparator) {
+		this.size = internalSize;
 		this.array = array;
 		this.comparator = comparator;
 	}
 
 	public static <T> List<T> empty(Function2<T, T, Integer> comparator) {
-		return ArrayList(new Object[DefaultSize], 0, comparator);
+		return new ArrayList<>(new Object[DefaultSize], 0, comparator);
 	}
 
 	@SafeVarargs
 	public static <T> List<T> of(Function2<T, T, Integer> comparator, T... elements) {
-		return elements.length != 0 ?
-				ArrayList(elements, elements.length, comparator) :
-				ArrayList(new Object[DefaultSize], 0, comparator);
+		return new ArrayList<>(elements, elements.length, comparator);
 	}
 
 	@SafeVarargs
 	public static <T extends Comparable<T>> List<T> ofComparables(T... elements) {
+		Object[] array1 = new Object[DefaultSize];
 		return elements.length != 0 ?
-				ArrayList(elements, elements.length) :
-				ArrayList(new Object[DefaultSize], 0);
-	}
-
-	private static <T extends Comparable<T>> List<T> ArrayList(Object[] array, int size) {
-		return ArrayList(array, size, Comparable::compareTo);
-	}
-
-	private static <T> List<T> ArrayList(Object[] array, int size, Function2<T, T, Integer> comparator) {
-		return new ArrayList<>(array, size, comparator);
+				new ArrayList<>(elements, elements.length, Comparable::compareTo) :
+				new ArrayList<>(array1, 0, Comparable::compareTo);
 	}
 
 	public static <T> List<T> range(T start, T end, Function2<T, T, Integer> comparator, Function1<T, T> next) {
@@ -57,14 +50,15 @@ public class ArrayList<T> implements List<T> {
 
 	@Override
 	public T apply(int index) throws IndexException {
-		if (index < 0) throw IndexException.IndexException("Index can't be negative");
-		if (index >= size) throw IndexException.IndexException("Index is equal to or exceeds the size of this list.");
+		if (index < 0) throw IndexException("Index can't be negative");
+		if (index >= size) throw IndexException("Index is equal to or exceeds the size of this list.");
 		return (T) array[index];
 	}
 
 	@Override
 	public int size() {
-		return size;
+		return size
+				;
 	}
 
 	@Override
@@ -75,7 +69,7 @@ public class ArrayList<T> implements List<T> {
 	@Override
 	public int indexOf(T t) {
 		for (int i = 0; i < size; i++) {
-			if ((double) comparator.apply((T) array[i], t) == 0) {
+			if (comparator.apply((T) array[i], t) == 0) {
 				return i;
 			}
 		}
@@ -83,14 +77,14 @@ public class ArrayList<T> implements List<T> {
 	}
 
 	private Object[] resizeTo(int index) {
-		var sizeToAllocate = array.length;
+		var capacity = array.length;
 		if (index < array.length) return array;
-		if (sizeToAllocate == 0) sizeToAllocate = 1;
-		while (sizeToAllocate < index + 1) {
-			sizeToAllocate = sizeToAllocate * 2;
+		if (capacity == 0) capacity = 1;
+		while (capacity < index + 1) {
+			capacity = capacity * 2;
 		}
-		var copy = new Object[sizeToAllocate];
-		if (size >= 0) System.arraycopy(array, 0, copy, 0, size);
+		var copy = new Object[capacity];
+		if (this.size >= 0) System.arraycopy(array, 0, copy, 0, this.size);
 		return copy;
 	}
 
@@ -98,25 +92,17 @@ public class ArrayList<T> implements List<T> {
 	public List<T> set(int index, T t) {
 		var newArray = resizeTo(index);
 		newArray[index] = t;
-		return ArrayList(newArray, Math.max(index + 1, size), comparator);
+		return new ArrayList<>(newArray, Math.max(index + 1, size), comparator);
 	}
 
 	@Override
 	public List<T> remove(T t) {
 		var index = indexOf(t);
 		if (index != -1) {
-			/*
-			Normally, when this code is translated to Magma,
-			the default value will be placed here, i.e. Point.type.default,
-			but because there's not really a way to do that in Java WELL,
-			in addition to that Java doesn't instantly crash when the "null"
-			keyword is used, then we're going to use that here. But note
-			that this line won't actually exist in the Magma implementation.
-			 */
 			for (int i = index; i < array.length - 1; i++) {
 				array[i] = array[i + 1];
 			}
-			return ArrayList(array, size - 1, comparator);
+			return new ArrayList<>(array, size - 1, comparator);
 		}
 		return this;
 	}

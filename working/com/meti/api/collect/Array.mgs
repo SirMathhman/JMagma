@@ -1,0 +1,9 @@
+const Array = [T](block : Ref[T], length : U16) {
+	const bounded = [R](index : U16, action : (U16) => R) => {
+		if(index < 0) throw IndexException("Index can't be negative.");
+		if(index >= length) throw IndexException("Index can't be greater than or equal to array length.");
+		return action(index);
+	}
+	called const get = (index : U16) => bounded(index, array[_]);
+	called const set = (index : U16, value : T) => bounded(index, array[_] = value);
+}
