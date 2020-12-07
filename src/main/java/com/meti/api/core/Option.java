@@ -1,9 +1,6 @@
 package com.meti.api.core;
 
-import com.meti.api.extern.Action0;
-import com.meti.api.extern.Action1;
-import com.meti.api.extern.Function0;
-import com.meti.api.extern.Function1;
+import com.meti.api.extern.*;
 
 public interface Option<T> {
 	boolean ifPresentOrElse(Action1<T> action, Action0 otherwise);
@@ -19,4 +16,6 @@ public interface Option<T> {
 	boolean isPresent();
 
 	boolean isEmpty();
+
+	<E extends Exception> T orElseGet(ExceptionFunction0<T, E> supplier) throws E;
 }

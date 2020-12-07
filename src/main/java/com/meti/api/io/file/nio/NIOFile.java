@@ -4,21 +4,21 @@ import com.meti.api.io.InStream;
 import com.meti.api.io.JavaInStream;
 import com.meti.api.io.JavaOutStream;
 import com.meti.api.io.OutStream;
-import com.meti.api.io.file.Extant;
+import com.meti.api.io.file.File;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-public class NIOExtant implements Extant {
+public class NIOFile implements File {
 	private final Path path;
 
-	private NIOExtant(Path path) {
+	private NIOFile(Path path) {
 		this.path = path;
 	}
 
-	public static NIOExtant NIOExtant(Path path) {
-		return new NIOExtant(path);
+	public static NIOFile NIOExtant(Path path) {
+		return new NIOFile(path);
 	}
 
 	@Override

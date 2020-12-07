@@ -4,9 +4,18 @@ import com.meti.api.collect.stream.DelegatedStream;
 import com.meti.api.collect.stream.EndOfStreamException;
 import com.meti.api.collect.stream.Stream;
 import com.meti.api.collect.stream.StreamException;
+import com.meti.api.core.Characters;
 
 public class Strings {
 	public Strings() {
+	}
+
+	public static long hash(String this_) {
+		long value = 0;
+		for (int i = 0; i < this_.length(); i++) {
+			value += Characters.hash(this_.charAt(i));
+		}
+		return value;
 	}
 
 	public static int length(String this_) {

@@ -5,7 +5,9 @@ import com.meti.api.io.OutStream;
 
 import java.io.IOException;
 
-public interface Extant {
+public interface File extends Comparable<File> {
+	Path asPath();
+
 	InStream read() throws IOException;
 
 	OutStream write() throws IOException;

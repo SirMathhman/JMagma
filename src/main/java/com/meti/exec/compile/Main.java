@@ -7,7 +7,7 @@ import com.meti.api.extern.Action0;
 import com.meti.api.extern.ExceptionFunction1;
 import com.meti.api.io.InStream;
 import com.meti.api.io.OutStream;
-import com.meti.api.io.file.Extant;
+import com.meti.api.io.file.File;
 import com.meti.api.log.Logger;
 import com.meti.api.log.OutputStreamLogger;
 
@@ -33,8 +33,8 @@ public class Main {
 		}
 	}
 
-	private static void compileMain(Extant nioExtant) {
-		var content = readInput(nioExtant);
+	private static void compileMain(File nioFile) {
+		var content = readInput(nioFile);
 		var compile = compile(content);
 		writeOutput(compile);
 	}
@@ -67,7 +67,7 @@ public class Main {
 		return new MapResult().with(Result.Group.Target, "int main(){return 0;}");
 	}
 
-	private static String readInput(Extant file) {
+	private static String readInput(File file) {
 		try {
 			ExceptionFunction1<InStream, String, StreamException> mapper = inStream -> inStream.stream()
 					.map(integer -> (char) (int) integer)

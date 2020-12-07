@@ -1,4 +1,4 @@
-package com.meti.api.math;
+package com.meti.api.core.math;
 
 public class JavaMath implements Math {
 	public static final JavaMath Math_ = new JavaMath();

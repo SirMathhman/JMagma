@@ -1,7 +1,10 @@
 package com.meti.api.collect.list;
 
 import com.meti.api.collect.IndexException;
+import com.meti.api.collect.Sequence;
 import com.meti.api.core.Comparable;
+import com.meti.api.core.Primitive;
+import com.meti.api.extern.Function1;
 import com.meti.api.extern.Function2;
 
 public class ArrayList<T> implements List<T> {
@@ -14,6 +17,10 @@ public class ArrayList<T> implements List<T> {
 		this.size = size;
 		this.array = array;
 		this.comparator = comparator;
+	}
+
+	public static <T> List<T> empty(Function2<T, T, Integer> comparator) {
+		return ArrayList(new Object[DefaultSize], 0, comparator);
 	}
 
 	@SafeVarargs
@@ -36,6 +43,16 @@ public class ArrayList<T> implements List<T> {
 
 	private static <T> List<T> ArrayList(Object[] array, int size, Function2<T, T, Integer> comparator) {
 		return new ArrayList<>(array, size, comparator);
+	}
+
+	public static <T> List<T> range(T start, T end, Function2<T, T, Integer> comparator, Function1<T, T> next) {
+		var current = start;
+		var list = ArrayList.empty(comparator);
+		while (comparator.apply(current, end) != 0) {
+			list.add(current);
+			current = next.apply(current);
+		}
+		return list;
 	}
 
 	@Override
@@ -114,5 +131,24 @@ public class ArrayList<T> implements List<T> {
 	@Override
 	public List<T> add(T t) {
 		return set(size, t);
+	}
+
+	@Override
+	public int compareTo(Sequence<T> o) {
+		var compSize = Primitive.compareToInts(size, o.size());
+		if (compSize == 0) {
+			for (int i = 0; i < size; i++) {
+				try {
+					var thisElement = apply(i);
+					var otherElement = o.apply(i);
+					var compElement = comparator.apply(thisElement, otherElement);
+					if (compElement != 0) return compElement;
+				} catch (IndexException ignored) {
+				}
+			}
+			return 0;
+		} else {
+			return compSize;
+		}
 	}
 }
