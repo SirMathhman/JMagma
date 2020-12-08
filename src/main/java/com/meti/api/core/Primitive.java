@@ -4,7 +4,7 @@ public class Primitive {
 	public Primitive() {
 	}
 
-	public static int compareToInts(int first, int second) {
+	public static int comparingInts(int first, int second) {
 		return first - second;
 	}
 }

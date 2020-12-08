@@ -121,7 +121,7 @@ public class ArrayList<T> implements List<T> {
 
 	@Override
 	public int compareTo(Sequence<T> o) {
-		var compSize = Primitive.compareToInts(size, o.size());
+		var compSize = Primitive.comparingInts(size, o.size());
 		if (compSize == 0) {
 			for (int i = 0; i < size; i++) {
 				try {

@@ -10,6 +10,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
+import static com.meti.api.io.file.nio.NIOPath.NIOPath;
+
 public class NIOFile implements File {
 	private final Path path;
 
@@ -17,8 +19,13 @@ public class NIOFile implements File {
 		this.path = path;
 	}
 
-	public static NIOFile NIOExtant(Path path) {
+	public static NIOFile NIOFile(Path path) {
 		return new NIOFile(path);
+	}
+
+	@Override
+	public com.meti.api.io.file.Path asPath() {
+		return NIOPath(path);
 	}
 
 	@Override
@@ -29,5 +36,10 @@ public class NIOFile implements File {
 	@Override
 	public OutStream write() throws IOException {
 		return new JavaOutStream(Files.newOutputStream(path));
+	}
+
+	@Override
+	public int compareTo(File o) {
+		return asPath().compareTo(o.asPath());
 	}
 }

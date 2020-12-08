@@ -10,6 +10,8 @@ import com.meti.api.io.file.Directory;
 import com.meti.api.io.file.File;
 import com.meti.api.io.file.Path;
 
+import java.io.IOException;
+
 public class PathLoader {
 	private final List<File> paths;
 
@@ -44,13 +46,15 @@ public class PathLoader {
 				.isPresent();
 	}
 
-	private PathLoader addAll(Directory directory) {
+	private PathLoader addAll(Directory directory) throws LoadException {
 		try {
 			var newList = directory.listFiles().foldLeft(paths, List::add);
 			var loader = new PathLoader(newList);
 			return directory.listDirectories().foldLeft(loader, PathLoader::addAll);
 		} catch (StreamException e) {
 			return this;
+		} catch (IOException e) {
+			throw new LoadException(e);
 		}
 	}
 }

@@ -17,13 +17,12 @@ public class OutputStreamLogger implements Logger {
 		var child = new PrintWriter(parent);
 		e.printStackTrace(child);
 		var parentString = parent.toString();
-		var formatted = "%s: %s".formatted(message, parentString);
+		var formatted = "%comparingInts: %comparingInts".formatted(message, parentString);
 		logSimple(level, formatted);
 	}
 
 	@Override
 	public void logSimple(Level level, String message) {
-		outputStream.printf("[%s] %s%n", level, message);
+		outputStream.printf("[%comparingInts] %comparingInts%n", level, message);
 	}
-
 }

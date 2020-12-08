@@ -1,9 +1,6 @@
 package com.meti.api.core;
 
-import com.meti.api.extern.Action0;
-import com.meti.api.extern.Action1;
-import com.meti.api.extern.Function0;
-import com.meti.api.extern.Function1;
+import com.meti.api.extern.*;
 
 public class None<T> implements Option<T> {
 	private None() {
@@ -20,7 +17,7 @@ public class None<T> implements Option<T> {
 	}
 
 	@Override
-	public <R> Option<R> map(Function1<T, R> mapper) {
+	public <R, E extends Exception> Option<R> map(ExceptionFunction1<T, R, E> mapper) throws E {
 		return None();
 	}
 
@@ -47,5 +44,15 @@ public class None<T> implements Option<T> {
 	@Override
 	public boolean isEmpty() {
 		return true;
+	}
+
+	@Override
+	public <E extends Exception> T orElseGet(ExceptionFunction0<T, E> supplier) throws E {
+		return supplier.get();
+	}
+
+	@Override
+	public <R> Option<R> flatMap(Function1<T, Option<R>> mapper) {
+		return None();
 	}
 }

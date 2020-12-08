@@ -31,7 +31,7 @@ public class NIOPath implements com.meti.api.io.file.Path {
 	@Override
 	public Sequence<String> computeNames() {
 		try {
-			return SequenceStream(ArrayList.range(0, path.getNameCount(), Primitive::compareToInts, value -> value + 1))
+			return SequenceStream(ArrayList.range(0, path.getNameCount(), Primitive::comparingInts, value -> value + 1))
 					.map(path::getName)
 					.map(Path::toString)
 					.foldLeft(ArrayList.empty(Strings::compareTo), List::add);
@@ -43,7 +43,7 @@ public class NIOPath implements com.meti.api.io.file.Path {
 	@Override
 	public File ensuringAsFile() throws IOException {
 		if (!Files.exists(path)) Files.createFile(path);
-		return NIOFile.NIOExtant(path);
+		return NIOFile.NIOFile(path);
 	}
 
 	@Override
@@ -51,7 +51,7 @@ public class NIOPath implements com.meti.api.io.file.Path {
 		return Some(path)
 				.filter(Files::exists)
 				.filter(Files::isRegularFile)
-				.map(NIOFile::NIOExtant);
+				.map(NIOFile::NIOFile);
 	}
 
 	@Override
@@ -63,7 +63,38 @@ public class NIOPath implements com.meti.api.io.file.Path {
 	}
 
 	@Override
+	public boolean isFile() {
+		return Files.isRegularFile(path);
+	}
+
+	@Override
+	public boolean isDirectory() {
+		return Files.isDirectory(path);
+	}
+
+	@Override
+	public Option<String> computeExtension() {
+		var fileName = computeFileName();
+		var asString = fileName.toString();
+		return Some(asString)
+				.map(string -> string.indexOf('.'))
+				.filter(index -> index != -1)
+				.map(index -> asString.substring(index + 1))
+				.map(Strings::trim);
+	}
+
+	@Override
+	public Path computeFileName() {
+		return path.getName(path.getNameCount() - 1);
+	}
+
+	@Override
 	public int compareTo(com.meti.api.io.file.Path o) {
 		return computeNames().compareTo(o.computeNames());
+	}
+
+	@Override
+	public String asString() {
+		return path.toString();
 	}
 }
