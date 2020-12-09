@@ -1,46 +1,58 @@
 package com.meti.api.core;
 
-import java.util.Optional;
-import java.util.function.Consumer;
-import java.util.function.Function;
-import java.util.function.Predicate;
-import java.util.function.Supplier;
+import com.meti.api.extern.*;
 
 public class None<T> implements Option<T> {
-    private None() {
-    }
+	private None() {
+	}
 
-    public static <T> None<T> None() {
-        return new None<>();
-    }
+	public static <T> None<T> None() {
+		return new None<>();
+	}
 
-    @Override
-    public Optional<T> toJava() {
-        return Optional.empty();
-    }
+	@Override
+	public boolean ifPresentOrElse(Action1<T> action, Action0 otherwise) {
+		otherwise.run();
+		return false;
+	}
 
-    @Override
-    public Option<T> filter(Predicate<T> predicate) {
-        return None();
-    }
+	@Override
+	public <R, E extends Exception> Option<R> map(ExceptionFunction1<T, R, E> mapper) throws E {
+		return None();
+	}
 
-    @Override
-    public Option<T> peek(Consumer<T> consumer) {
-        return None();
-    }
+	@Override
+	public Option<T> filter(Function1<T, Boolean> predicate) {
+		return None();
+	}
 
-    @Override
-    public T orElseSupply(Supplier<T> supplier) {
-        return supplier.get();
-    }
+	@Override
+	public <E extends Exception> T orElseThrow(Function0<E> supplier) throws E {
+		throw supplier.get();
+	}
 
-    @Override
-    public <R> Option<R> flatMap(Function<T, Option<R>> function) {
-        return None();
-    }
+	@Override
+	public T orElse(T other) {
+		return other;
+	}
 
-    @Override
-    public <R> Option<R> map(Function<T, R> mapper) {
-        return None();
-    }
+	@Override
+	public boolean isPresent() {
+		return false;
+	}
+
+	@Override
+	public boolean isEmpty() {
+		return true;
+	}
+
+	@Override
+	public <E extends Exception> T orElseGet(ExceptionFunction0<T, E> supplier) throws E {
+		return supplier.get();
+	}
+
+	@Override
+	public <R> Option<R> flatMap(Function1<T, Option<R>> mapper) {
+		return None();
+	}
 }

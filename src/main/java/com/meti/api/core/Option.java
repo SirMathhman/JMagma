@@ -1,21 +1,23 @@
 package com.meti.api.core;
 
-import java.util.Optional;
-import java.util.function.Consumer;
-import java.util.function.Function;
-import java.util.function.Predicate;
-import java.util.function.Supplier;
+import com.meti.api.extern.*;
 
 public interface Option<T> {
-	Optional<T> toJava();
+	boolean ifPresentOrElse(Action1<T> action, Action0 otherwise);
 
-	Option<T> filter(Predicate<T> predicate);
+	<R, E extends Exception> Option<R> map(ExceptionFunction1<T, R, E> mapper) throws E;
 
-	Option<T> peek(Consumer<T> consumer);
+	Option<T> filter(Function1<T, Boolean> predicate);
 
-	T orElseSupply(Supplier<T> supplier);
+	<E extends Exception> T orElseThrow(Function0<E> supplier) throws E;
 
-	<R> Option<R> flatMap(Function<T, Option<R>> function);
+	T orElse(T other);
 
-	<R> Option<R> map(Function<T, R> mapper);
+	boolean isPresent();
+
+	boolean isEmpty();
+
+	<E extends Exception> T orElseGet(ExceptionFunction0<T, E> supplier) throws E;
+
+	<R> Option<R> flatMap(Function1<T, Option<R>> mapper);
 }
