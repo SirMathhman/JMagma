@@ -1,0 +1,3 @@
+struct Sequence[T] << Comparable[Sequence[T]] {
+	called const apply : (I16) => T ? IndexException;
+}

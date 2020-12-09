@@ -1,10 +1,6 @@
 package com.meti.api.core;
 
-import java.util.Objects;
-import java.util.Optional;
-import java.util.function.Function;
-import java.util.function.Predicate;
-import java.util.function.Supplier;
+import com.meti.api.extern.*;
 
 import static com.meti.api.core.None.None;
 
@@ -15,51 +11,53 @@ public class Some<T> implements Option<T> {
 		this.value = value;
 	}
 
-	public static <T> Option<T> Some(T value) {
+	public static <T> Some<T> Some(T value) {
 		return new Some<>(value);
 	}
 
 	@Override
-	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
-		Some<?> some = (Some<?>) o;
-		return Objects.equals(value, some.value);
+	public boolean ifPresentOrElse(Action1<T> action, Action0 otherwise) {
+		action.accept(value);
+		return true;
 	}
 
 	@Override
-	public int hashCode() {
-		return Objects.hash(value);
-	}
-
-	@Override
-	public Optional<T> toJava() {
-		return Optional.of(value);
-	}
-
-	@Override
-	public Option<T> filter(Predicate<T> predicate) {
-		if (predicate.test(value)) return this;
-		else return None();
-	}
-
-	@Override
-	public T orElseSupply(Supplier<T> supplier) {
-		return value;
-	}
-
-	@Override
-	public <R> Option<R> flatMap(Function<T, Option<R>> function) {
-		return function.apply(value);
-	}
-
-	@Override
-	public <R> Option<R> map(Function<T, R> mapper) {
+	public <R, E extends Exception> Option<R> map(ExceptionFunction1<T, R, E> mapper) throws E {
 		return Some(mapper.apply(value));
+	}
+
+	@Override
+	public Option<T> filter(Function1<T, Boolean> predicate) {
+		return predicate.apply(value) ? this : None();
+	}
+
+	@Override
+	public <E extends Exception> T orElseThrow(Function0<E> supplier) throws E {
+		return value;
 	}
 
 	@Override
 	public T orElse(T other) {
 		return value;
+	}
+
+	@Override
+	public boolean isPresent() {
+		return true;
+	}
+
+	@Override
+	public boolean isEmpty() {
+		return false;
+	}
+
+	@Override
+	public <E extends Exception> T orElseGet(ExceptionFunction0<T, E> supplier) throws E {
+		return value;
+	}
+
+	@Override
+	public <R> Option<R> flatMap(Function1<T, Option<R>> mapper) {
+		return mapper.apply(value);
 	}
 }

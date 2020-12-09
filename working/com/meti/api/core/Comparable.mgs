@@ -1,0 +1,4 @@
+struct Comparable[S, T] {
+	in const compareTo : (T) => I16;
+	const equalsTo ==> compareTo(_) == 0;
+}
