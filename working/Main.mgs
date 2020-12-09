@@ -1,5 +1,0 @@
-ls -l | grep "ku[d|D]os\>"
-
-list(AsLong).filter((line : String) => line.streamWords()
-	.filter(_.slice(-5))
-	.anyMatch(_.equals("kudos") || _.equals("kuDos"));
