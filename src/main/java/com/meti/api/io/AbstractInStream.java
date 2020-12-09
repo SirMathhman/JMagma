@@ -32,7 +32,7 @@ public abstract class AbstractInStream implements InStream {
 				return value;
 			}
 		} catch (IOException e) {
-			throw StreamException("Cannot read from in stream.", e);
+			throw StreamException("Cannot load from in stream.", e);
 		}
 	}
 }

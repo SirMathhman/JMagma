@@ -1,5 +1,7 @@
 package com.meti.api.collect.string;
 
-public interface StringBuffer {
+import com.meti.api.core.Stringable;
+
+public interface StringBuffer extends Stringable {
 	StringBuffer append(char c);
 }

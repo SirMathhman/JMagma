@@ -16,6 +16,7 @@ import java.nio.file.Path;
 
 import static com.meti.api.collect.stream.SequenceStream.SequenceStream;
 import static com.meti.api.core.Some.Some;
+import static com.meti.api.io.file.nio.NIODirectory.NIODirectory;
 
 public class NIOPath implements com.meti.api.io.file.Path {
 	private final Path path;
@@ -68,11 +69,6 @@ public class NIOPath implements com.meti.api.io.file.Path {
 	}
 
 	@Override
-	public boolean isDirectory() {
-		return Files.isDirectory(path);
-	}
-
-	@Override
 	public Option<String> computeExtension() {
 		var fileName = computeFileName();
 		var asString = fileName.toString();
@@ -86,6 +82,13 @@ public class NIOPath implements com.meti.api.io.file.Path {
 	@Override
 	public Path computeFileName() {
 		return path.getName(path.getNameCount() - 1);
+	}
+
+	@Override
+	public Directory ensuringAsDirectory() throws IOException {
+		if (!Files.exists(path)) Files.createDirectory(path);
+		if (!Files.isDirectory(path)) throw new IOException(path + " isn't a directory.");
+		return NIODirectory(path);
 	}
 
 	@Override

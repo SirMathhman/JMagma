@@ -9,6 +9,7 @@ import com.meti.api.extern.Function0;
 import com.meti.api.io.file.Directory;
 import com.meti.api.io.file.File;
 import com.meti.api.io.file.Path;
+import com.meti.exec.compile.source.LoadException;
 
 import java.io.IOException;
 
@@ -54,7 +55,7 @@ public class PathLoader {
 		} catch (StreamException e) {
 			return this;
 		} catch (IOException e) {
-			throw new LoadException(e);
+			throw LoadException.LoadException(e);
 		}
 	}
 }

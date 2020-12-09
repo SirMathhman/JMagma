@@ -71,7 +71,7 @@ public class Main {
 					.toString();
 			return file.read().enclosing(mapper);
 		} catch (IOException | StreamException e) {
-			LOGGER.logExceptionally(Error, "Failed to read main file.", e);
+			LOGGER.logExceptionally(Error, "Failed to load main file.", e);
 			return "";
 		}
 	}

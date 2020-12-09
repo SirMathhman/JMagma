@@ -24,4 +24,9 @@ public class SimpleStringBuffer implements StringBuffer {
 	public String toString() {
 		return internalValue;
 	}
+
+	@Override
+	public String asString() {
+		return internalValue;
+	}
 }

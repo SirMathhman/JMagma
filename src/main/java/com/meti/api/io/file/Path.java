@@ -18,9 +18,9 @@ public interface Path extends Comparable<Path>, Stringable {
 
 	boolean isFile();
 
-	boolean isDirectory();
-
 	Option<String> computeExtension();
 
 	java.nio.file.Path computeFileName();
+
+	Directory ensuringAsDirectory() throws IOException;
 }
