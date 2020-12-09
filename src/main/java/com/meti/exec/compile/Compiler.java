@@ -1,5 +1,5 @@
 package com.meti.exec.compile;
 
-public class Compiler {
-
+public interface Compiler {
+	Result<Result.Group> compiler(String content) throws CompileException;
 }

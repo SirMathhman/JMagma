@@ -56,15 +56,11 @@ public class Main {
 
 	private static Result<Result.Group> compile(String content) {
 		try {
-			return compileExceptionally(content);
+			return MagmaCompiler.Compiler_.compiler(content);
 		} catch (CompileException e) {
 			LOGGER.logExceptionally(Error, "Failed to compile content.", e);
 			return EmptyMapResult_;
 		}
-	}
-
-	private static Result<Result.Group> compileExceptionally(String content) throws CompileException {
-		return new MapResult().with(Result.Group.Target, "int main(){return 0;}");
 	}
 
 	private static String readInput(File file) {
