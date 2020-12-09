@@ -37,6 +37,10 @@ class MainTest extends Feature {
 	void main() throws IOException {
 		Main.main(new String[0]);
 		assertTrue(Files.exists(Target));
-		assertEquals(formatTarget("int main(){return 0;}"), formatTarget(Files.readString(Target)));
+		assertEquals(formatTarget("""
+				int main(){
+					return 0;
+				}
+				"""), formatTarget(Files.readString(Target)));
 	}
 }
