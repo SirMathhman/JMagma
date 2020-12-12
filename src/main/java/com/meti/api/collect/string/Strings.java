@@ -5,9 +5,8 @@ import com.meti.api.collect.stream.DelegatedStream;
 import com.meti.api.collect.stream.EndOfStreamException;
 import com.meti.api.collect.stream.Stream;
 import com.meti.api.collect.stream.StreamException;
-import com.meti.api.core.Characters;
 import com.meti.api.core.Option;
-import com.meti.api.core.Primitive;
+import com.meti.api.core.Primitives;
 import com.meti.api.core.Stringable;
 import com.meti.api.extern.Function1;
 
@@ -61,7 +60,7 @@ public class Strings {
 
 	public static String slice(String self, int from, int to) {
 		try {
-			return SequenceStream(ArrayList.range(from, to, Primitive::comparingInts, i -> i + 1))
+			return SequenceStream(ArrayList.range(from, to, Primitives::comparingInts, i -> i + 1))
 					.map(self::charAt)
 					.foldLeft(StringBuffer(), StringBuffer::append)
 					.toString();
@@ -89,7 +88,7 @@ public class Strings {
 	}
 
 	public static String trim(String self) {
-		var first = first(self, Characters::isWhitespace).orElse(0);
+		var first = first(self, Primitives::isWhitespace).orElse(0);
 		var last = last(self, Character::isWhitespace).orElse(self.length());
 		return slice(self, first, last);
 	}
@@ -97,7 +96,7 @@ public class Strings {
 	public static long hash(CharSequence self) {
 		long value = 0;
 		for (int i = 0; i < self.length(); i++) {
-			value += Characters.hash(self.charAt(i));
+			value += Primitives.hash(self.charAt(i));
 		}
 		return value;
 	}

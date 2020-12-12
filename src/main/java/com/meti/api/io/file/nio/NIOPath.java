@@ -6,7 +6,7 @@ import com.meti.api.collect.list.List;
 import com.meti.api.collect.stream.StreamException;
 import com.meti.api.collect.string.Strings;
 import com.meti.api.core.Option;
-import com.meti.api.core.Primitive;
+import com.meti.api.core.Primitives;
 import com.meti.api.io.file.Directory;
 import com.meti.api.io.file.File;
 
@@ -32,7 +32,7 @@ public class NIOPath implements com.meti.api.io.file.Path {
 	@Override
 	public Sequence<String> computeNames() {
 		try {
-			return SequenceStream(ArrayList.range(0, path.getNameCount(), Primitive::comparingInts, value -> value + 1))
+			return SequenceStream(ArrayList.range(0, path.getNameCount(), Primitives::comparingInts, value -> value + 1))
 					.map(path::getName)
 					.map(Path::toString)
 					.foldLeft(ArrayList.empty(Strings::compareTo), List::add);

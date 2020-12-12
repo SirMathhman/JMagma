@@ -1,7 +1,11 @@
 package com.meti.api.core;
 
-public class Characters {
-	private Characters() {
+public class Primitives {
+	public Primitives() {
+	}
+
+	public static int comparingInts(int first, int second) {
+		return first - second;
 	}
 
 	public static boolean isWhitespace(char c) {

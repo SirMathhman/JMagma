@@ -3,7 +3,7 @@ package com.meti.api.collect.list;
 import com.meti.api.collect.IndexException;
 import com.meti.api.collect.Sequence;
 import com.meti.api.core.Comparable;
-import com.meti.api.core.Primitive;
+import com.meti.api.core.Primitives;
 import com.meti.api.extern.Function1;
 import com.meti.api.extern.Function2;
 
@@ -121,7 +121,7 @@ public class ArrayList<T> implements List<T> {
 
 	@Override
 	public int compareTo(Sequence<T> o) {
-		var compSize = Primitive.comparingInts(size, o.size());
+		var compSize = Primitives.comparingInts(size, o.size());
 		if (compSize == 0) {
 			for (int i = 0; i < size; i++) {
 				try {
