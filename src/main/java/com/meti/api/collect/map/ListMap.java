@@ -5,6 +5,7 @@ import com.meti.api.collect.list.List;
 import com.meti.api.collect.stream.StreamException;
 import com.meti.api.core.Comparable;
 import com.meti.api.core.Option;
+import com.meti.api.extern.Function0;
 import com.meti.api.extern.Function2;
 
 import static com.meti.api.collect.stream.SequenceStream.SequenceStream;
@@ -81,6 +82,15 @@ public class ListMap<K, V> implements Map<K, V> {
 					.head();
 		} catch (StreamException e) {
 			return None();
+		}
+	}
+
+	@Override
+	public Map<K, V> ensure(K key, Function0<V> value) {
+		if(containsKey(key)) {
+			return this;
+		} else {
+			return put(key, value.get());
 		}
 	}
 

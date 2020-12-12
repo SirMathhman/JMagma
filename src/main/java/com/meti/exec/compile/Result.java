@@ -2,6 +2,7 @@ package com.meti.exec.compile;
 
 import com.meti.api.core.Comparable;
 
+@Deprecated
 public interface Result<E> {
 	Result<E> with(E group, String result);
 

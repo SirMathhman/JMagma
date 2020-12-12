@@ -19,5 +19,7 @@ public interface Option<T> {
 
 	<E extends Exception> T orElseGet(ExceptionFunction0<T, E> supplier) throws E;
 
+	T orElseGet(Function0<T> supplier);
+
 	<R> Option<R> flatMap(Function1<T, Option<R>> mapper);
 }
