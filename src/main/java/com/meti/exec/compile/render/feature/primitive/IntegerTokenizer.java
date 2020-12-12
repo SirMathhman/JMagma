@@ -22,7 +22,7 @@ public class IntegerTokenizer implements Tokenizer {
 	}
 
 	@Override
-	public Option<Node> tokenize() {
+	public Option<Node<?>> tokenize() {
 		try {
 			var value = Strings.asInt(content);
 			return Some(Integer(value));
