@@ -67,7 +67,7 @@ public class Main {
 		try {
 			ExceptionFunction1<InStream, String, StreamException> mapper = inStream -> inStream.stream()
 					.map(integer -> (char) (int) integer)
-					.foldLeft(StringBuffer(), StringBuffer::append)
+					.foldLeft(StringBuffer(), StringBuffer::add)
 					.toString();
 			return file.read().enclosing(mapper);
 		} catch (IOException | StreamException e) {

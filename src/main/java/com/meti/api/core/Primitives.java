@@ -4,6 +4,18 @@ public class Primitives {
 	public Primitives() {
 	}
 
+	public static String valueOfInt(int value) {
+		if (value == 0) return "0";
+		if (value < 0) return "-" + valueOfInt(-value);
+		else {
+			var parent = value / 10;
+			var parentString = (parent == 0) ? "" : valueOfInt(parent);
+			var digit = value % 10;
+			var digitChar = '0' + digit;
+			return parentString + (char) digitChar;
+		}
+	}
+
 	public static int comparingInts(int first, int second) {
 		return first - second;
 	}

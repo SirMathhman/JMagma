@@ -9,7 +9,7 @@ class SimpleStringBufferTest {
 
 	@Test
 	void append() {
-		assertEquals("x", StringBuffer().append('x').toString());
+		assertEquals("x", StringBuffer().add('x').toString());
 	}
 
 	@Test

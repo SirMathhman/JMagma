@@ -16,7 +16,7 @@ public class SimpleStringBuffer implements StringBuffer {
 	}
 
 	@Override
-	public StringBuffer append(char c) {
+	public StringBuffer add(char c) {
 		return StringBuffer(internalValue + c);
 	}
 

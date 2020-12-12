@@ -62,7 +62,7 @@ public class Strings {
 		try {
 			return SequenceStream(ArrayList.range(from, to, Primitives::comparingInts, i -> i + 1))
 					.map(self::charAt)
-					.foldLeft(StringBuffer(), StringBuffer::append)
+					.foldLeft(StringBuffer(), StringBuffer::add)
 					.toString();
 		} catch (StreamException e) {
 			return "";

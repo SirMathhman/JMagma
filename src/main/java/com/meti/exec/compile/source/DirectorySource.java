@@ -47,7 +47,7 @@ public class DirectorySource implements Source {
 		};
 		ExceptionFunction1<InStream, String, StreamException> mapper = inStream -> inStream.stream()
 				.map(integer -> (char) (int) integer)
-				.foldLeft(StringBuffer(), StringBuffer::append)
+				.foldLeft(StringBuffer(), StringBuffer::add)
 				.asString();
 		try {
 			return p.apply(foldDirectory, resolveFile).read().enclosing(mapper);

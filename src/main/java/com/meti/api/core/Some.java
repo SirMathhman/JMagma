@@ -57,6 +57,11 @@ public class Some<T> implements Option<T> {
 	}
 
 	@Override
+	public T orElseGet(Function0<T> supplier) {
+		return value;
+	}
+
+	@Override
 	public <R> Option<R> flatMap(Function1<T, Option<R>> mapper) {
 		return mapper.apply(value);
 	}
