@@ -2,12 +2,22 @@ package com.meti.api.collect.list;
 
 import com.meti.api.collect.IndexException;
 import com.meti.api.collect.string.Strings;
+import com.meti.api.core.Primitives;
 import org.junit.jupiter.api.Test;
 
 import static com.meti.api.collect.list.ArrayList.of;
 import static org.junit.jupiter.api.Assertions.*;
 
 class ArrayListTest {
+	@Test
+	void range() throws IndexException {
+		var list = ArrayList.range(1, 4, Primitives::comparingInts, i -> i + 1);
+		assertEquals(3, list.size());
+		assertEquals(1, list.apply(0));
+		assertEquals(2, list.apply(1));
+		assertEquals(3, list.apply(2));
+	}
+
 	@Test
 	void applyLower() {
 		assertThrows(IndexException.class, () -> createList().apply(-1));

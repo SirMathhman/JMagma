@@ -22,7 +22,12 @@ public class Some<T> implements Option<T> {
 	}
 
 	@Override
-	public <R, E extends Exception> Option<R> map(ExceptionFunction1<T, R, E> mapper) throws E {
+	public <R> Option<R> map(Function1<T, R> mapper) {
+		return Some(mapper.apply(value));
+	}
+
+	@Override
+	public <R, E extends Exception> Option<R> mapExceptionally(ExceptionFunction1<T, R, E> mapper) throws E {
 		return Some(mapper.apply(value));
 	}
 

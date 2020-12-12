@@ -1,10 +1,12 @@
 package com.meti.api.collect.string;
 
 import com.meti.api.collect.list.ArrayList;
+import com.meti.api.collect.list.List;
 import com.meti.api.collect.stream.DelegatedStream;
 import com.meti.api.collect.stream.EndOfStreamException;
 import com.meti.api.collect.stream.Stream;
 import com.meti.api.collect.stream.StreamException;
+import com.meti.api.core.FormatException;
 import com.meti.api.core.Option;
 import com.meti.api.core.Primitives;
 import com.meti.api.core.Stringable;
@@ -14,6 +16,7 @@ import java.util.Arrays;
 
 import static com.meti.api.collect.stream.SequenceStream.SequenceStream;
 import static com.meti.api.collect.string.SimpleStringBuffer.StringBuffer;
+import static com.meti.api.core.FormatException.FormatException;
 import static com.meti.api.core.None.None;
 import static com.meti.api.core.Some.Some;
 
@@ -60,7 +63,8 @@ public class Strings {
 
 	public static String slice(String self, int from, int to) {
 		try {
-			return SequenceStream(ArrayList.range(from, to, Primitives::comparingInts, i -> i + 1))
+			var list = ArrayList.range(from, to, Primitives::comparingInts, i -> i + 1);
+			return SequenceStream(list)
 					.map(self::charAt)
 					.foldLeft(StringBuffer(), StringBuffer::add)
 					.toString();
@@ -125,6 +129,30 @@ public class Strings {
 
 	public static Stream<Character> stream(String value) {
 		return new StringStream(value);
+	}
+
+	public static int asInt(String value) throws FormatException {
+		if (value.length() == 0) throw FormatException("Value is blank.");
+		if (value.charAt(0) == '-') return -asInt(slice(value, 1, value.length()));
+		var last = value.charAt(value.length() - 1);
+		if (Primitives.isDigit(last)) {
+			var slice = slice(value, 0, value.length() - 1);
+			var parent = (slice.length() == 0) ? 0 : asInt(slice) * 10;
+			return parent + Primitives.asDigit(last);
+		}
+		throw FormatException("Not an integer: " + value);
+	}
+
+	public static String valueOfInt(int value) {
+		if (value == 0) return "0";
+		if (value < 0) return "-" + valueOfInt(-value);
+		else {
+			var parent = value / 10;
+			var parentString = (parent == 0) ? "" : valueOfInt(parent);
+			var digit = value % 10;
+			var digitChar = '0' + digit;
+			return parentString + (char) digitChar;
+		}
 	}
 
 	private static class StringStream extends DelegatedStream<Character> {

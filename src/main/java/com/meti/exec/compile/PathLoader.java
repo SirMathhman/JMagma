@@ -31,7 +31,7 @@ public class PathLoader {
 			return new LoadException(concat);
 		};
 		ExceptionFunction0<PathLoader, LoadException> addAsDirectory = () -> path.existingAsDirectory()
-				.map(PathLoader.this::addAll)
+				.mapExceptionally(PathLoader.this::addAll)
 				.orElseThrow(loadExceptionFunction0);
 		return path.existingAsFile()
 				.filter(this::isMagmaFile)

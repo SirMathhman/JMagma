@@ -38,11 +38,11 @@ public class ArrayList<T> implements List<T> {
 				new ArrayList<>(array1, 0, Comparable::compareTo);
 	}
 
-	public static <T> List<T> range(T start, T end, Function2<T, T, Integer> comparator, Function1<T, T> next) {
-		var current = start;
+	public static <T> List<T> range(T startInclusive, T endExclusive, Function2<T, T, Integer> comparator, Function1<T, T> next) {
+		var current = startInclusive;
 		var list = ArrayList.empty(comparator);
-		while (comparator.apply(current, end) != 0) {
-			list.add(current);
+		while (comparator.apply(current, endExclusive) != 0) {
+			list = list.add(current);
 			current = next.apply(current);
 		}
 		return list;

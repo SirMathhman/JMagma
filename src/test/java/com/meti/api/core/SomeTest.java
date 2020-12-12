@@ -21,7 +21,7 @@ class SomeTest {
 	@Test
 	void map() {
 		assertEquals(4, Some("test")
-				.map(Strings::length)
+				.mapExceptionally(Strings::length)
 				.orElse(-1));
 	}
 

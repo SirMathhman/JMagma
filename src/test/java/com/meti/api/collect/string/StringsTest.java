@@ -1,12 +1,48 @@
 package com.meti.api.collect.string;
 
 import com.meti.api.collect.stream.StreamException;
+import com.meti.api.core.FormatException;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static com.meti.api.collect.string.Strings.asInt;
+import static com.meti.api.collect.string.Strings.valueOfInt;
+import static org.junit.jupiter.api.Assertions.*;
 
 class StringsTest {
+	@Test
+	void asIntBlank(){
+		assertThrows(FormatException.class, () -> asInt(""));
+	}
+
+	@Test
+	void asIntPositive() throws FormatException {
+		assertEquals(10, asInt("10"));
+	}
+
+	@Test
+	void asIntNegative() throws FormatException {
+		assertEquals(-10, asInt("-10"));
+	}
+
+	@Test
+	void asIntInvalid(){
+		assertThrows(FormatException.class, () -> asInt(" 2 3"));
+	}
+
+	@Test
+	void valueOfIntNegative() {
+		assertEquals("-55", valueOfInt(-55));
+	}
+
+	@Test
+	void valueOfIntZero() {
+		assertEquals("0", valueOfInt(0));
+	}
+
+	@Test
+	void valueOfIntPositive() {
+		assertEquals("343", valueOfInt(343));
+	}
 
 	@Test
 	void concat() {
@@ -33,6 +69,11 @@ class StringsTest {
 		assertEquals('t', Strings.stream("test")
 				.head()
 				.orElse('\0'));
+	}
+
+	@Test
+	void slice(){
+		assertEquals("1", Strings.slice("10", 0, 1));
 	}
 
 	@Test

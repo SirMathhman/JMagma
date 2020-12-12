@@ -5,7 +5,9 @@ import com.meti.api.extern.*;
 public interface Option<T> {
 	boolean ifPresentOrElse(Action1<T> action, Action0 otherwise);
 
-	<R, E extends Exception> Option<R> map(ExceptionFunction1<T, R, E> mapper) throws E;
+	<R> Option<R> map(Function1<T, R> mapper);
+
+	<R, E extends Exception> Option<R> mapExceptionally(ExceptionFunction1<T, R, E> mapper) throws E;
 
 	Option<T> filter(Function1<T, Boolean> predicate);
 

@@ -17,7 +17,12 @@ public class None<T> implements Option<T> {
 	}
 
 	@Override
-	public <R, E extends Exception> Option<R> map(ExceptionFunction1<T, R, E> mapper) throws E {
+	public <R> Option<R> map(Function1<T, R> mapper) {
+		return None();
+	}
+
+	@Override
+	public <R, E extends Exception> Option<R> mapExceptionally(ExceptionFunction1<T, R, E> mapper) throws E {
 		return None();
 	}
 

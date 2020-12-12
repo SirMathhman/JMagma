@@ -1,19 +1,21 @@
 package com.meti.api.core;
 
+import static com.meti.api.core.FormatException.FormatException;
+
 public class Primitives {
 	public Primitives() {
 	}
 
-	public static String valueOfInt(int value) {
-		if (value == 0) return "0";
-		if (value < 0) return "-" + valueOfInt(-value);
-		else {
-			var parent = value / 10;
-			var parentString = (parent == 0) ? "" : valueOfInt(parent);
-			var digit = value % 10;
-			var digitChar = '0' + digit;
-			return parentString + (char) digitChar;
+	public static int asDigit(char c) throws FormatException {
+		if (isDigit(c)) {
+			return c - '0';
+		} else {
+			throw FormatException("'" + c + "' isn't a digit.");
 		}
+	}
+
+	public static boolean isDigit(char c) {
+		return c >= '0' && c <= '9';
 	}
 
 	public static int comparingInts(int first, int second) {
