@@ -65,13 +65,6 @@ class StringsTest {
 	}
 
 	@Test
-	void stream() throws StreamException {
-		assertEquals('t', Strings.stream("test")
-				.head()
-				.orElse('\0'));
-	}
-
-	@Test
 	void slice(){
 		assertEquals("1", Strings.slice("10", 0, 1));
 	}

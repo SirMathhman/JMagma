@@ -57,7 +57,7 @@ public class ListMap<K, V> implements Map<K, V> {
 			return new ListMap<K, V>(SequenceStream(bindings)
 					.filter(binding -> binding.hasKey(key))
 					.head()
-					.map(bindings::remove)
+					.map(bindings::removeFirst)
 					.orElse(bindings), comparator);
 		} catch (StreamException e) {
 			return this;
@@ -110,6 +110,11 @@ public class ListMap<K, V> implements Map<K, V> {
 		@Override
 		public int compareTo(Binding other) {
 			return comparator.apply(this.key, key);
+		}
+
+		@Override
+		public int compareTo2(Object other) {
+			return 0;
 		}
 	}
 }

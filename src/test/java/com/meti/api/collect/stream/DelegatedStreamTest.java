@@ -14,7 +14,7 @@ class DelegatedStreamTest {
 	void map() throws StreamException {
 		assertEquals("1, 2, 3, ", createStream()
 				.map(value -> Strings.concat(value, ", "))
-				.foldLeft("", (s, s2) -> s + s2));
+				.foldLeftExceptionally("", (s, s2) -> s + s2));
 	}
 
 	@Test
@@ -37,11 +37,11 @@ class DelegatedStreamTest {
 	void filter() throws StreamException {
 		assertEquals("1", createStream()
 				.filter(value -> Strings.compareTo(value, "1") == 0)
-				.foldLeft("", (s, s2) -> s + s2));
+				.foldLeftExceptionally("", (s, s2) -> s + s2));
 	}
 
 	@Test
 	void foldLeft() throws StreamException {
-		assertEquals("123", createStream().foldLeft("", (s, s2) -> s + s2));
+		assertEquals("123", createStream().foldLeftExceptionally("", (s, s2) -> s + s2));
 	}
 }

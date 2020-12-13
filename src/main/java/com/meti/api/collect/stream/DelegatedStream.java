@@ -3,6 +3,7 @@ package com.meti.api.collect.stream;
 import com.meti.api.core.Option;
 import com.meti.api.extern.ExceptionFunction2;
 import com.meti.api.extern.Function1;
+import com.meti.api.extern.Function2;
 
 import static com.meti.api.collect.stream.StreamException.StreamException;
 import static com.meti.api.core.None.None;
@@ -12,6 +13,15 @@ public abstract class DelegatedStream<T> implements Stream<T> {
 	@Override
 	public <R> Stream<R> map(Function1<T, R> mapper) {
 		return new SuppliedStream<>(() -> mapper.apply(get()));
+	}
+
+	@Override
+	public <R> R foldLeft(R identity, Function2<R, T, R> mapper) {
+		try {
+			return foldLeftExceptionally(identity, mapper::apply);
+		} catch (StreamException e) {
+			return identity;
+		}
 	}
 
 	@Override
@@ -49,7 +59,7 @@ public abstract class DelegatedStream<T> implements Stream<T> {
 	protected abstract T get() throws StreamException;
 
 	@Override
-	public <R> R foldLeft(R identity, ExceptionFunction2<R, T, R, ?> mapper) throws StreamException {
+	public <R> R foldLeftExceptionally(R identity, ExceptionFunction2<R, T, R, ?> mapper) throws StreamException {
 		var current = identity;
 		while (true) {
 			try {

@@ -40,18 +40,18 @@ public class Main {
 	}
 
 	private static void writeOutput(Result<Result.Group> compile) {
-		try {
-			ExceptionFunction1<OutStream, OutStream, StreamException> mapper = stream -> Strings
-					.stream(compile.apply(Result.Group.Target))
-					.foldLeft(stream, OutStream::write);
-			NIO_FILE_SYSTEM__.findWorking()
-					.resolve("main.c")
-					.ensuringAsFile()
-					.write()
-					.enclosing(mapper);
-		} catch (StreamException | IOException e) {
-			LOGGER.logExceptionally(Error, "Failed to write content to target.", e);
-		}
+//		try {
+//			ExceptionFunction1<OutStream, OutStream, StreamException> mapper = stream -> Strings
+//					.stream(compile.apply(Result.Group.Target))
+//					.foldLeftExceptionally(stream, OutStream::write);
+//			NIO_FILE_SYSTEM__.findWorking()
+//					.resolve("main.c")
+//					.ensuringAsFile()
+//					.write()
+//					.enclosing(mapper);
+//		} catch (StreamException | IOException e) {
+//			LOGGER.logExceptionally(Error, "Failed to write content to target.", e);
+//		}
 	}
 
 	private static Result<Result.Group> compile(String content) {
@@ -67,7 +67,7 @@ public class Main {
 		try {
 			ExceptionFunction1<InStream, String, StreamException> mapper = inStream -> inStream.stream()
 					.map(integer -> (char) (int) integer)
-					.foldLeft(StringBuffer(), StringBuffer::add)
+					.foldLeftExceptionally(StringBuffer(), StringBuffer::add)
 					.toString();
 			return file.read().enclosing(mapper);
 		} catch (IOException | StreamException e) {

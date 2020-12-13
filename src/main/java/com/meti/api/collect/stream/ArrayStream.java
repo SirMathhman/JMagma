@@ -1,5 +1,7 @@
 package com.meti.api.collect.stream;
 
+import com.meti.api.extern.ExceptionFunction1;
+
 import static com.meti.api.collect.stream.EndOfStreamException.EndOfStreamException;
 
 public class ArrayStream<T> extends DelegatedStream<T> {
@@ -21,5 +23,15 @@ public class ArrayStream<T> extends DelegatedStream<T> {
 		} else {
 			throw EndOfStreamException("No more elements left.");
 		}
+	}
+
+	@Override
+	public <E extends Exception> Stream<T> filterExceptionally(ExceptionFunction1<T, Boolean, E> predicate) throws StreamException {
+		return null;
+	}
+
+	@Override
+	public <R, E extends Exception> Stream<R> mapExceptionally(ExceptionFunction1<T, R, E> predicate) throws StreamException {
+		return null;
 	}
 }

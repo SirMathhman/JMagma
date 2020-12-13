@@ -2,7 +2,7 @@ package com.meti.api.io.file.nio;
 
 import com.meti.api.collect.Sequence;
 import com.meti.api.collect.list.ArrayList;
-import com.meti.api.collect.list.List;
+import com.meti.api.collect.Set;
 import com.meti.api.collect.stream.StreamException;
 import com.meti.api.collect.string.Strings;
 import com.meti.api.core.Option;
@@ -35,7 +35,7 @@ public class NIOPath implements com.meti.api.io.file.Path {
 			return SequenceStream(ArrayList.range(0, path.getNameCount(), Primitives::comparingInts, value -> value + 1))
 					.map(path::getName)
 					.map(Path::toString)
-					.foldLeft(ArrayList.empty(Strings::compareTo), List::add);
+					.foldLeftExceptionally(ArrayList.empty(Strings::compareTo), Set::add);
 		} catch (StreamException e) {
 			return ArrayList.empty(String::compareTo);
 		}
@@ -94,6 +94,11 @@ public class NIOPath implements com.meti.api.io.file.Path {
 	@Override
 	public int compareTo(com.meti.api.io.file.Path o) {
 		return computeNames().compareTo(o.computeNames());
+	}
+
+	@Override
+	public int compareTo2(Object other) {
+		return 0;
 	}
 
 	@Override

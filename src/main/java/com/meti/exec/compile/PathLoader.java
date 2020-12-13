@@ -1,6 +1,7 @@
 package com.meti.exec.compile;
 
 import com.meti.api.collect.list.ArrayList;
+import com.meti.api.collect.Set;
 import com.meti.api.collect.list.List;
 import com.meti.api.collect.stream.StreamException;
 import com.meti.api.collect.string.Strings;
@@ -14,13 +15,13 @@ import com.meti.exec.compile.source.LoadException;
 import java.io.IOException;
 
 public class PathLoader {
-	private final List<File> paths;
+	private final Set<File, List<File>> paths;
 
 	public PathLoader() {
 		this(ArrayList.empty(File::compareTo));
 	}
 
-	public PathLoader(List<File> paths) {
+	public PathLoader(Set<File, List<File>> paths) {
 		this.paths = paths;
 	}
 
@@ -49,9 +50,9 @@ public class PathLoader {
 
 	private PathLoader addAll(Directory directory) throws LoadException {
 		try {
-			var newList = directory.listFiles().foldLeft(paths, List::add);
+			var newList = directory.listFiles().foldLeftExceptionally(paths, Set::add);
 			var loader = new PathLoader(newList);
-			return directory.listDirectories().foldLeft(loader, PathLoader::addAll);
+			return directory.listDirectories().foldLeftExceptionally(loader, PathLoader::addAll);
 		} catch (StreamException e) {
 			return this;
 		} catch (IOException e) {

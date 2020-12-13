@@ -1,7 +1,7 @@
 package com.meti.exec.compile;
 
 public class CompileException extends Exception {
-	private CompileException(String message) {
+	protected CompileException(String message) {
 		super(message);
 	}
 

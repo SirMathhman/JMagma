@@ -33,7 +33,7 @@ public class DirectorySource implements Source {
 		};
 		ExceptionFunction1<Stream<String>, Directory, LoadException> foldDirectory = stream -> {
 			try {
-				return stream.foldLeft(directory, resolveDirectory);
+				return stream.foldLeftExceptionally(directory, resolveDirectory);
 			} catch (StreamException e) {
 				throw LoadException(e);
 			}
@@ -47,7 +47,7 @@ public class DirectorySource implements Source {
 		};
 		ExceptionFunction1<InStream, String, StreamException> mapper = inStream -> inStream.stream()
 				.map(integer -> (char) (int) integer)
-				.foldLeft(StringBuffer(), StringBuffer::add)
+				.foldLeftExceptionally(StringBuffer(), StringBuffer::add)
 				.asString();
 		try {
 			return p.apply(foldDirectory, resolveFile).read().enclosing(mapper);

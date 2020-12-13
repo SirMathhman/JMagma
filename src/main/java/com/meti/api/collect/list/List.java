@@ -1,21 +1,16 @@
 package com.meti.api.collect.list;
 
-import com.meti.api.collect.IndexException;
 import com.meti.api.collect.Sequence;
+import com.meti.api.collect.Set;
+import com.meti.api.collect.stream.Stream;
+import com.meti.api.extern.Function1;
 
-public interface List<T> extends Sequence<T> {
-	@Override
-	T apply(int index) throws IndexException;
-
-	boolean contains(T t);
-
-	int indexOf(T t);
+public interface List<T> extends Sequence<T>, Set<T, List<T>> {
+	Stream<T> stream();
 
 	List<T> set(int index, T t);
 
-	List<T> remove(T t);
+	List<T> clear();
 
-	Object[] asArray();
-
-	List<T> add(T t);
+	List<T> allValues(Function1<T, Boolean> predicate);
 }

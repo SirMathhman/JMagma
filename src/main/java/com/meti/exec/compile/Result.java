@@ -20,5 +20,10 @@ public interface Result<E> {
 		public int compareTo(Group o) {
 			return order;
 		}
+
+		@Override
+		public int compareTo2(Object other) {
+			return 0;
+		}
 	}
 }

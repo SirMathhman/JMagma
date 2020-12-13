@@ -4,13 +4,13 @@ import com.meti.api.collect.string.Strings;
 import com.meti.api.core.FormatException;
 import com.meti.api.core.Option;
 import com.meti.exec.compile.render.Node;
-import com.meti.exec.compile.render.feature.Tokenizer;
+import com.meti.exec.compile.render.feature.NodeTokenizer;
 
 import static com.meti.api.core.None.None;
 import static com.meti.api.core.Some.Some;
 import static com.meti.exec.compile.render.feature.primitive.Integer.Integer;
 
-public class IntegerTokenizer implements Tokenizer {
+public class IntegerTokenizer implements NodeTokenizer {
 	private final String content;
 
 	private IntegerTokenizer(String content) {

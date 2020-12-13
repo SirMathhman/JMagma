@@ -51,7 +51,7 @@ class ArrayListTest {
 
 	@Test
 	void indexOf() {
-		assertEquals(0, createList().indexOf("test"));
+		assertEquals(0, createList().first("test"));
 	}
 
 	@Test
@@ -68,7 +68,7 @@ class ArrayListTest {
 
 	@Test
 	void remove() {
-		assertArrayEquals(new Object[0], createList().remove("test").asArray());
+		assertArrayEquals(new Object[0], createList().removeFirst("test").asArray());
 	}
 
 	@Test
