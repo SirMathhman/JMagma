@@ -12,7 +12,6 @@ import com.meti.exec.compile.render.*;
 
 import static com.meti.api.collect.string.SimpleStringBuffer.StringBuffer;
 import static com.meti.api.collect.string.Strings.*;
-import static com.meti.api.core.Some.Some;
 import static com.meti.exec.compile.render.ContentNode.ContentNode;
 import static com.meti.exec.compile.render.TokenizationException.TokenizationException;
 import static com.meti.exec.compile.render.field.FieldBuilders.FieldBuilder;
@@ -28,13 +27,11 @@ public class FieldTokenizer extends AbstractTokenizer<Field<?>> {
 
 	@Override
 	public Option<Field<?>> tokenize() throws TokenizationException {
-		var typeOptional = firstIndexOf(content, c -> c == ':');
-		var equalsOptional = firstIndexOf(content, c -> c == '=');
 		Function1<Integer, Field<?>> withTypeSeparator = typeSeparator -> {
 			var headerSlice = slice(content, 0, typeSeparator);
 			var header = trim(headerSlice);
 			var withName = tokenizeHeader(header);
-			Function1<Integer, Field<?>> asBoth = equals -> {
+			Function1<Integer, Field<?>> withBoth = equals -> {
 				var typeSlice = slice(content, typeSeparator + 1, equals);
 				var typeTrim = trim(typeSlice);
 				var type = ContentType.ContentType(typeTrim);
@@ -43,13 +40,15 @@ public class FieldTokenizer extends AbstractTokenizer<Field<?>> {
 						.withValue(value)
 						.complete();
 			};
-			Function0<Field<?>> fieldFunction0 = () -> {
+			Function0<Field<?>> withType = () -> {
 				var typeSlice = slice(content, typeSeparator + 1, content.length());
 				var typeTrim = trim(typeSlice);
 				var type = ContentType.ContentType(typeTrim);
 				return withName.withType(type).complete();
 			};
-			return equalsOptional.map(asBoth).orElseGet(fieldFunction0);
+			return firstIndexOf(content, c -> c == '=')
+					.map(withBoth)
+					.orElseGet(withType);
 		};
 		ExceptionFunction0<Field<?>, TokenizationException> withoutTypeSeparator = () -> {
 			Function1<Integer, Field<?>> withDefaultValue = valueSeparator -> {
@@ -60,13 +59,14 @@ public class FieldTokenizer extends AbstractTokenizer<Field<?>> {
 						.withType(ImplicitType.ImplicitType_)
 						.withValue(value).complete();
 			};
-			Function0<TokenizationException> withoutDefaultValue = () -> TokenizationException("No type or default value is present.");
-			return equalsOptional.map(withDefaultValue)
-					.orElseThrow(withoutDefaultValue);
+			Function0<TokenizationException> asInvalid = () -> TokenizationException("No type or default value is present.");
+			return firstIndexOf(content, c -> c == '=')
+					.map(withDefaultValue)
+					.orElseThrow(asInvalid);
 		};
-		return Some(typeOptional
+		return firstIndexOf(content, c -> c == ':')
 				.map(withTypeSeparator)
-				.orElseGet(withoutTypeSeparator));
+				.ensure(withoutTypeSeparator);
 	}
 
 	private ContentNode tokenizeValue(int separator) {

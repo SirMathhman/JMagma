@@ -2,6 +2,8 @@ package com.meti.api.core;
 
 import com.meti.api.extern.*;
 
+import static com.meti.api.core.Some.Some;
+
 public class None<T> implements Option<T> {
 	private None() {
 	}
@@ -54,6 +56,11 @@ public class None<T> implements Option<T> {
 	@Override
 	public <E extends Exception> T orElseGet(ExceptionFunction0<T, E> supplier) throws E {
 		return supplier.get();
+	}
+
+	@Override
+	public <E extends Exception> Option<T> ensure(ExceptionFunction0<T, E> supplier) throws E {
+		return Some(supplier.get());
 	}
 
 	@Override

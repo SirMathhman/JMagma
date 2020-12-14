@@ -21,6 +21,8 @@ public interface Option<T> extends Equatable<Option<T>> {
 
 	<E extends Exception> T orElseGet(ExceptionFunction0<T, E> supplier) throws E;
 
+	<E extends Exception> Option<T> ensure(ExceptionFunction0<T, E> supplier) throws E;
+
 	T orElseGet(Function0<T> supplier);
 
 	<R> Option<R> flatMap(Function1<T, Option<R>> mapper);
