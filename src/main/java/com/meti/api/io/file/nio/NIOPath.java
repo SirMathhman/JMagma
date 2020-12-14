@@ -1,11 +1,13 @@
 package com.meti.api.io.file.nio;
 
+import com.meti.api.collect.IndexException;
 import com.meti.api.collect.Sequence;
 import com.meti.api.collect.Set;
 import com.meti.api.collect.list.ArrayList;
 import com.meti.api.collect.stream.StreamException;
 import com.meti.api.collect.string.Strings;
 import com.meti.api.core.Option;
+import com.meti.api.extern.Function1;
 import com.meti.api.io.file.Directory;
 import com.meti.api.io.file.File;
 
@@ -31,11 +33,11 @@ public class NIOPath implements com.meti.api.io.file.Path {
 	@Override
 	public Sequence<String> computeNames() {
 		try {
-			return SequenceStream(ArrayList.range(0, path.getNameCount(), Integer::equals, value -> value + 1))
+			return SequenceStream(ArrayList.range(0, path.getNameCount(), Integer::compareTo, i -> i + 1))
 					.map(path::getName)
 					.map(Path::toString)
 					.foldLeftExceptionally(ArrayList.empty(Strings::equalsTo), Set::add);
-		} catch (StreamException e) {
+		} catch (StreamException | IndexException e) {
 			return ArrayList.empty(Strings::equalsTo);
 		}
 	}

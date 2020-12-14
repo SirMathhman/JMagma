@@ -46,7 +46,7 @@ public class FieldTokenizer extends AbstractTokenizer<Field> {
 				var type = ContentType.ContentType(typeTrim);
 				return withName.withType(type).complete();
 			};
-			return firstIndexOf(content, c -> c == '=')
+			return first(content, c -> c == '=')
 					.map(withBoth)
 					.orElseGet(withType);
 		};
@@ -60,11 +60,11 @@ public class FieldTokenizer extends AbstractTokenizer<Field> {
 						.withValue(value).complete();
 			};
 			Function0<TokenizationException> asInvalid = () -> TokenizationException("No type or default value is present.");
-			return firstIndexOf(content, c -> c == '=')
+			return first(content, c -> c == '=')
 					.map(withDefaultValue)
 					.orElseThrow(asInvalid);
 		};
-		return firstIndexOf(content, c -> c == ':')
+		return first(content, c -> c == ':')
 				.map(withTypeSeparator)
 				.ensure(withoutTypeSeparator);
 	}
@@ -90,7 +90,7 @@ public class FieldTokenizer extends AbstractTokenizer<Field> {
 			}
 		};
 		Function0<FieldBuilders.WithName> asNoSpace = () -> FieldBuilder().withName(header);
-		return lastIndex(header, c -> c == ' ')
+		return last(header, c -> c == ' ')
 				.map(usingSpace)
 				.orElseGet(asNoSpace);
 	}

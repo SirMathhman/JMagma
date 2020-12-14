@@ -3,13 +3,22 @@ package com.meti.api.collect.string;
 import com.meti.api.core.FormatException;
 import org.junit.jupiter.api.Test;
 
-import static com.meti.api.collect.string.Strings.toInt;
-import static com.meti.api.collect.string.Strings.fromInt;
+import static com.meti.api.collect.string.Strings.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 class StringsTest {
 	@Test
-	void asIntBlank(){
+	void firstPresent(){
+		assertEquals(1, first("test", c -> c == 'e').orElse(-1));
+	}
+
+	@Test
+	void firstEmpty(){
+		assertTrue(first("test", c -> c == 'c').isEmpty());
+	}
+
+	@Test
+	void asIntBlank() {
 		assertThrows(FormatException.class, () -> toInt(""));
 	}
 
@@ -24,7 +33,7 @@ class StringsTest {
 	}
 
 	@Test
-	void asIntInvalid(){
+	void asIntInvalid() {
 		assertThrows(FormatException.class, () -> toInt(" 2 3"));
 	}
 
@@ -64,7 +73,7 @@ class StringsTest {
 	}
 
 	@Test
-	void slice(){
+	void slice() {
 		assertEquals("1", Strings.slice("10", 0, 1));
 	}
 

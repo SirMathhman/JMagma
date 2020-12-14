@@ -5,7 +5,7 @@ import com.meti.api.collect.IndexException;
 import com.meti.api.collect.Sequence;
 import com.meti.api.collect.Set;
 import com.meti.api.collect.stream.Stream;
-import com.meti.api.core.Equatable;
+import com.meti.api.core.Comparator;
 import com.meti.api.core.Equator;
 import com.meti.api.extern.Function1;
 import com.meti.api.extern.Function2;
@@ -34,17 +34,12 @@ public class ArrayList<T> implements List<T> {
 		return new ArrayList<>(elements, elements.length, comparator);
 	}
 
-	@SafeVarargs
-	public static <T extends Equatable<T>> List<T> ofEquatables(T... elements) {
-		return elements.length != 0 ?
-				new ArrayList<>(elements, elements.length, Equatable::equalsTo) :
-				new ArrayList<>(new Object[DefaultSize], 0, Equatable::equalsTo);
-	}
-
-	public static <T> List<T> range(T startInclusive, T endExclusive, Equator<T> equator, Function1<T, T> next) {
+	public static <T> List<T> range(T startInclusive, T endExclusive, Comparator<T> comparator, Function1<T, T> next) throws IndexException {
+		if (comparator.equalsTo(endExclusive, startInclusive)) return ArrayList.empty(comparator);
+		if (comparator.compareTo(endExclusive, startInclusive) < 0) throw IndexException("End is less than start.");
 		var current = startInclusive;
-		var list = ArrayList.empty(equator);
-		while (!equator.equalsTo(current, endExclusive)) {
+		var list = ArrayList.empty(comparator);
+		while (!comparator.equalsTo(current, endExclusive)) {
 			list = list.add(current);
 			current = next.apply(current);
 		}

@@ -1,5 +1,6 @@
 package com.meti.api.collect.string;
 
+import com.meti.api.collect.IndexException;
 import com.meti.api.collect.list.ArrayList;
 import com.meti.api.collect.stream.StreamException;
 import com.meti.api.core.FormatException;
@@ -28,17 +29,17 @@ public class Strings {
 
 	public static String slice(String self, int from, int to) {
 		try {
-			return ArrayList.range(from, to, Integer::equals, i -> i + 1)
+			return ArrayList.range(from, to, Integer::compareTo, i -> i + 1)
 					.stream()
 					.map(index -> self.charAt(index))
 					.foldLeftExceptionally(StringBuffer(), StringBuffer::add)
 					.toString();
-		} catch (StreamException e) {
+		} catch (StreamException | IndexException e) {
 			return "";
 		}
 	}
 
-	public static Option<Integer> firstIndexOf(String self, Function1<Character, Boolean> predicate) {
+	public static Option<Integer> first(String self, Function1<Character, Boolean> predicate) {
 		for (int i = 0; i < self.length(); i++) {
 			if (predicate.apply(self.charAt(i))) {
 				return Some(i);
@@ -47,7 +48,7 @@ public class Strings {
 		return None();
 	}
 
-	public static Option<Integer> lastIndex(String self, Function1<Character, Boolean> predicate) {
+	public static Option<Integer> last(String self, Function1<Character, Boolean> predicate) {
 		for (int i = self.length() - 1; i >= 0; i--) {
 			if (predicate.apply(self.charAt(i))) {
 				return Some(i);
@@ -57,8 +58,8 @@ public class Strings {
 	}
 
 	public static String trim(String self) {
-		var first = firstIndexOf(self, Primitives::isWhitespace).orElse(0);
-		var last = lastIndex(self, Character::isWhitespace).orElse(self.length());
+		var first = first(self, Primitives::isWhitespace).orElse(0);
+		var last = last(self, Character::isWhitespace).orElse(self.length());
 		return slice(self, first, last);
 	}
 
