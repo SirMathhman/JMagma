@@ -18,38 +18,38 @@ import static com.meti.api.collect.stream.SequenceStream.SequenceStream;
 import static com.meti.api.core.None.None;
 import static com.meti.api.core.Some.Some;
 
-public class ArrayList<T> implements List<T> {
+@Deprecated
+public class ComparableArrayList<T> implements List<T> {
 	private static final int DefaultSize = 10;
 	private final int size;
 	private final Object[] array;
 	private final Comparator<T> comparator;
 
-	private ArrayList(Object[] array, int internalSize, Comparator<T> comparator) {
+	private ComparableArrayList(Object[] array, int internalSize, Comparator<T> comparator) {
 		this.size = internalSize;
 		this.array = array;
 		this.comparator = comparator;
 	}
 
 	public static <T> List<T> empty(Comparator<T> comparator) {
-		return new ArrayList<>(new Object[DefaultSize], 0, comparator);
+		return new ComparableArrayList<>(new Object[DefaultSize], 0, comparator);
 	}
 
 	@SafeVarargs
 	public static <T> List<T> of(Comparator<T> comparator, T... elements) {
-		return new ArrayList<>(elements, elements.length, comparator);
+		return new ComparableArrayList<>(elements, elements.length, comparator);
 	}
 
 	@SafeVarargs
 	public static <T extends Comparable<T>> List<T> ofComparables(T... elements) {
-		Object[] array1 = new Object[DefaultSize];
 		return elements.length != 0 ?
-				new ArrayList<>(elements, elements.length, Comparable::compareTo) :
-				new ArrayList<>(array1, 0, Comparable::compareTo);
+				new ComparableArrayList<>(elements, elements.length, Comparable::compareTo) :
+				new ComparableArrayList<>(new Object[DefaultSize], 0, Comparable::compareTo);
 	}
 
 	public static <T> List<T> range(T startInclusive, T endExclusive, Comparator<T> comparator, Function1<T, T> next) {
 		var current = startInclusive;
-		var list = ArrayList.empty(comparator);
+		var list = ComparableArrayList.empty(comparator);
 		while (!comparator.equals(current, endExclusive)) {
 			list = list.add(current);
 			current = next.apply(current);
@@ -126,7 +126,7 @@ public class ArrayList<T> implements List<T> {
 	public List<T> set(int index, T t) {
 		var newArray = resizeTo(index);
 		newArray[index] = t;
-		return new ArrayList<>(newArray, Math.max(index + 1, size), comparator);
+		return new ComparableArrayList<>(newArray, Math.max(index + 1, size), comparator);
 	}
 
 	@Override
@@ -158,7 +158,7 @@ public class ArrayList<T> implements List<T> {
 		for (int i = index; i < array.length - 1; i++) {
 			array[i] = array[i + 1];
 		}
-		return new ArrayList<>(array, size - 1, comparator);
+		return new ComparableArrayList<>(array, size - 1, comparator);
 	}
 
 	@Override

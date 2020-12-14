@@ -1,6 +1,6 @@
 package com.meti.api.collect.map;
 
-import com.meti.api.collect.list.ArrayList;
+import com.meti.api.collect.list.ComparableArrayList;
 import com.meti.api.collect.list.List;
 import com.meti.api.collect.stream.StreamException;
 import com.meti.api.core.Comparable;
@@ -16,7 +16,7 @@ public class ListMap<K, V> implements Map<K, V> {
 	private final Function2<K, K, Integer> comparator;
 
 	private ListMap(Function2<K, K, Integer> comparator) {
-		this(ArrayList.ofComparables(), comparator);
+		this(ComparableArrayList.ofComparables(), comparator);
 	}
 
 	private ListMap(List<Binding> bindings, Function2<K, K, Integer> comparator) {

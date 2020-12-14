@@ -1,6 +1,6 @@
 package com.meti.api.collect.string;
 
-import com.meti.api.collect.list.ArrayList;
+import com.meti.api.collect.list.ComparableArrayList;
 import com.meti.api.collect.stream.StreamException;
 import com.meti.api.core.FormatException;
 import com.meti.api.core.Option;
@@ -29,7 +29,7 @@ public class Strings {
 
 	public static String slice(String self, int from, int to) {
 		try {
-			var list = ArrayList.range(from, to, Primitives::comparingInts, i -> i + 1);
+			var list = ComparableArrayList.range(from, to, Primitives::comparingInts, i -> i + 1);
 			return SequenceStream(list)
 					.map(self::charAt)
 					.foldLeftExceptionally(StringBuffer(), StringBuffer::add)

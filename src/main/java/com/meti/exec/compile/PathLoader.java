@@ -1,6 +1,6 @@
 package com.meti.exec.compile;
 
-import com.meti.api.collect.list.ArrayList;
+import com.meti.api.collect.list.ComparableArrayList;
 import com.meti.api.collect.Set;
 import com.meti.api.collect.list.List;
 import com.meti.api.collect.stream.StreamException;
@@ -18,7 +18,7 @@ public class PathLoader {
 	private final Set<File, List<File>> paths;
 
 	public PathLoader() {
-		this(ArrayList.empty(File::compareTo));
+		this(ComparableArrayList.empty(File::compareTo));
 	}
 
 	public PathLoader(Set<File, List<File>> paths) {

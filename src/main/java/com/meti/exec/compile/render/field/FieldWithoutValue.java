@@ -1,7 +1,7 @@
 package com.meti.exec.compile.render.field;
 
 import com.meti.api.collect.Set;
-import com.meti.api.collect.list.ArrayList;
+import com.meti.api.collect.list.ComparableArrayList;
 import com.meti.exec.compile.render.RenderException;
 import com.meti.exec.compile.render.Type;
 
@@ -11,7 +11,7 @@ public class FieldWithoutValue extends AbstractField<FieldWithoutValue> {
 	}
 
 	static Builder Builder() {
-		return new Builder(ArrayList.empty(Flag::compareTo));
+		return new Builder(ComparableArrayList.empty(Flag::compareTo));
 	}
 
 	@Override

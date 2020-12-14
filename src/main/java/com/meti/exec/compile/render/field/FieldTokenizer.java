@@ -1,6 +1,6 @@
 package com.meti.exec.compile.render.field;
 
-import com.meti.api.collect.list.ArrayList;
+import com.meti.api.collect.list.ComparableArrayList;
 import com.meti.api.collect.stream.Stream;
 import com.meti.api.collect.stream.StreamException;
 import com.meti.api.collect.string.Strings;
@@ -96,7 +96,7 @@ public class FieldTokenizer extends AbstractTokenizer<Field<?>> {
 	}
 
 	private Stream<Field.Flag> tokenizeFlags(String flagString) throws StreamException {
-		var flagStrings = ArrayList.empty(Strings::compareTo);
+		var flagStrings = ComparableArrayList.empty(Strings::compareTo);
 		var buffer = StringBuffer();
 		for (int i = 0; i < flagString.length(); i++) {
 			char c = flagString.charAt(i);
