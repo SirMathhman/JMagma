@@ -1,5 +1,6 @@
 package com.meti.api.collect;
 
+import com.meti.api.core.Comparable;
 import com.meti.api.extern.Function1;
 
 public interface Sequence<T> extends Comparable<Sequence<T>>, Container<T> {

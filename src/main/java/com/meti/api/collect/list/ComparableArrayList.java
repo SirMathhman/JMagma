@@ -73,11 +73,6 @@ public class ComparableArrayList<T> implements List<T> {
 	}
 
 	@Override
-	public boolean containsAll(Container<T> other) {
-		return false;
-	}
-
-	@Override
 	public int first(T item) {
 		return first(element -> comparator.equals(element, item));
 	}
@@ -181,6 +176,11 @@ public class ComparableArrayList<T> implements List<T> {
 		} else {
 			return compSize;
 		}
+	}
+
+	@Override
+	public int compareTo2(Object other) {
+		return 0;
 	}
 
 	@Override
