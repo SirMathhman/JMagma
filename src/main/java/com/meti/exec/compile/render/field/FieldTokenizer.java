@@ -16,7 +16,7 @@ import static com.meti.exec.compile.render.ContentNode.ContentNode;
 import static com.meti.exec.compile.render.TokenizationException.TokenizationException;
 import static com.meti.exec.compile.render.field.FieldBuilders.FieldBuilder;
 
-public class FieldTokenizer extends AbstractTokenizer<Field<?>> {
+public class FieldTokenizer extends AbstractTokenizer<Field> {
 	private FieldTokenizer(String content) {
 		super(content);
 	}
@@ -26,12 +26,12 @@ public class FieldTokenizer extends AbstractTokenizer<Field<?>> {
 	}
 
 	@Override
-	public Option<Field<?>> tokenize() throws TokenizationException {
-		Function1<Integer, Field<?>> withTypeSeparator = typeSeparator -> {
+	public Option<Field> tokenize() throws TokenizationException {
+		Function1<Integer, Field> withTypeSeparator = typeSeparator -> {
 			var headerSlice = slice(content, 0, typeSeparator);
 			var header = trim(headerSlice);
 			var withName = tokenizeHeader(header);
-			Function1<Integer, Field<?>> withBoth = equals -> {
+			Function1<Integer, Field> withBoth = equals -> {
 				var typeSlice = slice(content, typeSeparator + 1, equals);
 				var typeTrim = trim(typeSlice);
 				var type = ContentType.ContentType(typeTrim);
@@ -40,7 +40,7 @@ public class FieldTokenizer extends AbstractTokenizer<Field<?>> {
 						.withValue(value)
 						.complete();
 			};
-			Function0<Field<?>> withType = () -> {
+			Function0<Field> withType = () -> {
 				var typeSlice = slice(content, typeSeparator + 1, content.length());
 				var typeTrim = trim(typeSlice);
 				var type = ContentType.ContentType(typeTrim);
@@ -50,8 +50,8 @@ public class FieldTokenizer extends AbstractTokenizer<Field<?>> {
 					.map(withBoth)
 					.orElseGet(withType);
 		};
-		ExceptionFunction0<Field<?>, TokenizationException> withoutTypeSeparator = () -> {
-			Function1<Integer, Field<?>> withDefaultValue = valueSeparator -> {
+		ExceptionFunction0<Field, TokenizationException> withoutTypeSeparator = () -> {
+			Function1<Integer, Field> withDefaultValue = valueSeparator -> {
 				var headerSlice = slice(content, 0, valueSeparator);
 				var header = trim(headerSlice);
 				var value = tokenizeValue(valueSeparator);

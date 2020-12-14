@@ -13,18 +13,18 @@ public class FieldBuilders {
 		return new Empty(ArrayList.empty(Field.Flag::equals));
 	}
 
-	static record All(Set<Field.Flag, ?> flags, String name, Type type, Node<?> value) {
-		Field<?> complete() {
+	static record All(Set<Field.Flag, ?> flags, String name, Type type, Node value) {
+		Field complete() {
 			return new FieldWithValue(flags, name, type, value);
 		}
 	}
 
 	static record WithoutValue(Set<Field.Flag, ?> flags, String name, Type type) {
-		public All withValue(Node<?> value) {
+		public All withValue(Node value) {
 			return new All(flags, name, type, value);
 		}
 
-		public Field<FieldWithoutValue> complete() {
+		public Field complete() {
 			return new FieldWithoutValue(flags, name, type);
 		}
 	}

@@ -1,10 +1,15 @@
 package com.meti.exec.compile.render.feature.primitive;
 
+import com.meti.api.collect.string.Strings;
+import com.meti.api.core.None;
 import com.meti.api.core.Option;
-import com.meti.api.core.Primitives;
+import com.meti.api.core.Some;
 import com.meti.exec.compile.render.Node;
 
-public class Integer implements Node<Integer> {
+import static com.meti.api.core.None.None;
+import static com.meti.api.core.Some.Some;
+
+public class Integer implements Node {
 	private final int value;
 
 	private Integer(int value) {
@@ -16,12 +21,12 @@ public class Integer implements Node<Integer> {
 	}
 
 	@Override
-	public int compareTo(Integer o) {
-		return Primitives.comparingInts(value, o.value);
+	public Option<String> render() {
+		return Some(Strings.fromInt(value));
 	}
 
 	@Override
-	public Option<String> render() {
-		return null;
+	public Option<String> findContent(){
+		return None();
 	}
 }

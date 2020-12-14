@@ -2,24 +2,36 @@ package com.meti.exec.compile.render.field;
 
 import com.meti.api.collect.Set;
 import com.meti.api.core.Option;
+import com.meti.api.extern.Function1;
 import com.meti.exec.compile.render.Node;
 import com.meti.exec.compile.render.Type;
 
-public class FieldWithValue extends AbstractField<FieldWithValue> {
-	private final Node<?> value;
+import static com.meti.api.core.Some.Some;
 
-	public FieldWithValue(Set<Flag, ?> flags, String name, Type type, Node<?> value) {
+public class FieldWithValue extends AbstractField<FieldWithValue> {
+	private final Node value;
+
+	public FieldWithValue(Set<Flag, ?> flags, String name, Type type, Node value) {
 		super(flags, name, type);
 		this.value = value;
 	}
 
 	@Override
 	public Option<String> render() {
-		return null;
+		Function1<String, Option<String>> mapper = typeString -> value.render().map(valueString -> typeString + "=" + valueString);
+		return type.render(name).flatMap(mapper);
 	}
 
 	@Override
-	public boolean equalsTo(FieldWithValue other) {
-		return false;
+	public boolean equalsTo(Field other) {
+		return other.isNamed(name) &&
+		       other.isTyped(type) &&
+		       other.hasFlags(flags) &&
+		       other.findDefaultValue().map(value::equalsTo).orElse(false);
+	}
+
+	@Override
+	public Option<Node> findDefaultValue() {
+		return Some(value);
 	}
 }

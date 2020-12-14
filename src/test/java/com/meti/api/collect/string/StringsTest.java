@@ -3,44 +3,44 @@ package com.meti.api.collect.string;
 import com.meti.api.core.FormatException;
 import org.junit.jupiter.api.Test;
 
-import static com.meti.api.collect.string.Strings.asInt;
-import static com.meti.api.collect.string.Strings.valueOfInt;
+import static com.meti.api.collect.string.Strings.toInt;
+import static com.meti.api.collect.string.Strings.fromInt;
 import static org.junit.jupiter.api.Assertions.*;
 
 class StringsTest {
 	@Test
 	void asIntBlank(){
-		assertThrows(FormatException.class, () -> asInt(""));
+		assertThrows(FormatException.class, () -> toInt(""));
 	}
 
 	@Test
 	void asIntPositive() throws FormatException {
-		assertEquals(10, asInt("10"));
+		assertEquals(10, toInt("10"));
 	}
 
 	@Test
 	void asIntNegative() throws FormatException {
-		assertEquals(-10, asInt("-10"));
+		assertEquals(-10, toInt("-10"));
 	}
 
 	@Test
 	void asIntInvalid(){
-		assertThrows(FormatException.class, () -> asInt(" 2 3"));
+		assertThrows(FormatException.class, () -> toInt(" 2 3"));
 	}
 
 	@Test
 	void valueOfIntNegative() {
-		assertEquals("-55", valueOfInt(-55));
+		assertEquals("-55", fromInt(-55));
 	}
 
 	@Test
 	void valueOfIntZero() {
-		assertEquals("0", valueOfInt(0));
+		assertEquals("0", fromInt(0));
 	}
 
 	@Test
 	void valueOfIntPositive() {
-		assertEquals("343", valueOfInt(343));
+		assertEquals("343", fromInt(343));
 	}
 
 	@Test

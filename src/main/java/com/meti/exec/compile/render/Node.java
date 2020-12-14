@@ -1,4 +1,14 @@
 package com.meti.exec.compile.render;
 
-public interface Node<N> extends Renderable, Comparable<N> {
+import com.meti.api.core.Equatable;
+import com.meti.api.core.Option;
+
+public interface Node extends Renderable, Equatable<Node> {
+	Option<String> findContent();
+
+	@Override
+	default boolean equalsTo(Node other) {
+		return findContent().equalsTo(other.findContent()) &&
+		       render().equalsTo(other.render());
+	}
 }

@@ -22,9 +22,9 @@ public class IntegerTokenizer implements NodeTokenizer {
 	}
 
 	@Override
-	public Option<Node<?>> tokenize() {
+	public Option<Node> tokenize() {
 		try {
-			var value = Strings.asInt(content);
+			var value = Strings.toInt(content);
 			return Some(Integer(value));
 		} catch (FormatException e) {
 			return None();
