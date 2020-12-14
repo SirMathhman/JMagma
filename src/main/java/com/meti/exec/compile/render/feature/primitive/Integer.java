@@ -1,6 +1,6 @@
 package com.meti.exec.compile.render.feature.primitive;
 
-import com.meti.api.collect.string.Strings;
+import com.meti.api.core.Option;
 import com.meti.api.core.Primitives;
 import com.meti.exec.compile.render.Node;
 
@@ -16,12 +16,12 @@ public class Integer implements Node<Integer> {
 	}
 
 	@Override
-	public String render() {
-		return Strings.valueOfInt(value);
+	public int compareTo(Integer o) {
+		return Primitives.comparingInts(value, o.value);
 	}
 
 	@Override
-	public int compareTo(Integer o) {
-		return Primitives.comparingInts(value, o.value);
+	public Option<String> render() {
+		return null;
 	}
 }

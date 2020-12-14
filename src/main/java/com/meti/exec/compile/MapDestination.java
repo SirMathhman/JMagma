@@ -11,7 +11,7 @@ public class MapDestination<G> implements Destination<G> {
 	private final Map<Package, Map<Group, String>> internalMap;
 
 	public MapDestination() {
-		this(ListMap(Package::compareTo));
+		this(ListMap(Package::equalsTo));
 	}
 
 	public MapDestination(Map<Package, Map<Group, String>> internalMap) {
@@ -20,12 +20,12 @@ public class MapDestination<G> implements Destination<G> {
 
 	@Override
 	public Destination<G> put(Package p, Group group, String value) throws CompileException {
-		Function0<Map<Group, String>> mapFunction0 = () -> ListMap(Group::compareTo);
+		Function0<Map<Group, String>> mapFunction0 = () -> ListMap(Group::equalsTo);
 		var map = internalMap.ensure(p, mapFunction0)
 				.get(p)
 				.orElseGet(mapFunction0);
 		if (map.containsKey(group)) {
-			throw CompileException("Value for package " + p + " and group " + group + " has already been set.");
+			throw CompileException("Value for package " + p + " and findGroup " + group + " has already been set.");
 		} else {
 			var withValue = map.put(group, value);
 			var withGroup = internalMap.put(p, withValue);

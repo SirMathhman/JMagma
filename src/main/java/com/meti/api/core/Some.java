@@ -70,4 +70,9 @@ public class Some<T> implements Option<T> {
 	public <R> Option<R> flatMap(Function1<T, Option<R>> mapper) {
 		return mapper.apply(value);
 	}
+
+	@Override
+	public boolean equalsTo(Option<T> other) {
+		return other.isPresent();
+	}
 }

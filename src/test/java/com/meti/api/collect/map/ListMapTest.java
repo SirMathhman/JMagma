@@ -11,26 +11,26 @@ class ListMapTest {
 
 	@Test
 	void size() {
-		assertEquals(1, ListMap(Strings::compareTo, "test0", "test1").size());
+		assertEquals(1, ListMap(Strings::equalsTo, "test0", "test1").size());
 	}
 
 	@Test
 	void containsKey() {
-		assertTrue(ListMap(Strings::compareTo, "test0", "test1").containsKey("test0"));
+		assertTrue(ListMap(Strings::equalsTo, "test0", "test1").containsKey("test0"));
 	}
 
 	@Test
 	void remove() {
-		assertEquals(0, ListMap(Strings::compareTo, "test0", "test1").remove("test0").size());
+		assertEquals(0, ListMap(Strings::equalsTo, "test0", "test1").remove("test0").size());
 	}
 
 	@Test
 	void put() {
-		assertTrue(ListMap(Strings::compareTo).put("test0", "test1").containsKey("test0"));
+		assertTrue(ListMap(Strings::equalsTo).put("test0", "test1").containsKey("test0"));
 	}
 
 	@Test
 	void get() {
-		assertEquals("test1", ListMap(Strings::compareTo, "test0", "test1").get("test0").orElse(""));
+		assertEquals("test1", ListMap(Strings::equalsTo, "test0", "test1").get("test0").orElse(""));
 	}
 }

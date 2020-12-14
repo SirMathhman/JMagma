@@ -42,7 +42,7 @@ public class Main {
 	private static void writeOutput(Result<Result.Group> compile) {
 //		try {
 //			ExceptionFunction1<OutStream, OutStream, StreamException> mapper = stream -> Strings
-//					.stream(compile.apply(Result.Group.Target))
+//					.stream(compile.apply(Result.findGroup.Target))
 //					.foldLeftExceptionally(stream, OutStream::write);
 //			NIO_FILE_SYSTEM__.findWorking()
 //					.resolve("main.c")
@@ -50,7 +50,7 @@ public class Main {
 //					.write()
 //					.enclosing(mapper);
 //		} catch (StreamException | IOException e) {
-//			LOGGER.logExceptionally(Error, "Failed to write content to target.", e);
+//			LOGGER.logExceptionally(Error, "Failed to write findContent to target.", e);
 //		}
 	}
 
@@ -58,7 +58,7 @@ public class Main {
 		try {
 			return MagmaCompiler.Compiler_.compiler(content);
 		} catch (CompileException e) {
-			LOGGER.logExceptionally(Error, "Failed to compile content.", e);
+			LOGGER.logExceptionally(Error, "Failed to compile findContent.", e);
 			return EmptyMapResult_;
 		}
 	}

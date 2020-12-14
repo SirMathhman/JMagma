@@ -2,7 +2,7 @@ package com.meti.api.core;
 
 import com.meti.api.extern.*;
 
-public interface Option<T> {
+public interface Option<T> extends Equatable<Option<T>> {
 	boolean ifPresentOrElse(Action1<T> action, Action0 otherwise);
 
 	<R> Option<R> map(Function1<T, R> mapper);

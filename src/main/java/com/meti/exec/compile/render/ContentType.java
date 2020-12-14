@@ -1,6 +1,6 @@
 package com.meti.exec.compile.render;
 
-import static com.meti.exec.compile.render.RenderException.RenderException;
+import com.meti.api.core.Option;
 
 public class ContentType implements Type {
 	private String content;
@@ -14,7 +14,22 @@ public class ContentType implements Type {
 	}
 
 	@Override
-	public String render(String name) throws RenderException {
-		throw RenderException("Cannot render types with content.");
+	public Option<String> render(String name) {
+		return null;
+	}
+
+	@Override
+	public Option<String> findContent() {
+		return null;
+	}
+
+	@Override
+	public Group findGroup() {
+		return null;
+	}
+
+	@Override
+	public Option<String> render() {
+		return null;
 	}
 }

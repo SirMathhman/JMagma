@@ -1,5 +1,7 @@
 package com.meti.exec.compile.render;
 
+import com.meti.api.core.Option;
+
 public interface Renderable {
-	String render() throws RenderException;
+	Option<String> render();
 }

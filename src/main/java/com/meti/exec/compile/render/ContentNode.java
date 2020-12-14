@@ -1,5 +1,10 @@
 package com.meti.exec.compile.render;
 
+import com.meti.api.core.None;
+import com.meti.api.core.Option;
+
+import static com.meti.api.core.None.None;
+
 public class ContentNode implements Node<ContentNode> {
 	private final String content;
 
@@ -12,12 +17,12 @@ public class ContentNode implements Node<ContentNode> {
 	}
 
 	@Override
-	public String render() throws RenderException {
-		return null;
+	public int compareTo(ContentNode o) {
+		return 0;
 	}
 
 	@Override
-	public int compareTo(ContentNode o) {
-		return 0;
+	public Option<String> render() {
+		return None();
 	}
 }

@@ -1,8 +1,8 @@
 package com.meti.exec.compile.render.field;
 
 import com.meti.api.collect.Set;
+import com.meti.api.core.Option;
 import com.meti.exec.compile.render.Node;
-import com.meti.exec.compile.render.RenderException;
 import com.meti.exec.compile.render.Type;
 
 public class FieldWithValue extends AbstractField<FieldWithValue> {
@@ -14,13 +14,12 @@ public class FieldWithValue extends AbstractField<FieldWithValue> {
 	}
 
 	@Override
-	public String render() throws RenderException {
-		return type.render(name) + "=" + value.render();
+	public Option<String> render() {
+		return null;
 	}
 
 	@Override
-	public int compareTo(FieldWithValue other) {
-		return -1;
+	public boolean equalsTo(FieldWithValue other) {
+		return false;
 	}
-
 }
