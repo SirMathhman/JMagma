@@ -8,15 +8,12 @@ import com.meti.api.collect.stream.SequenceStream;
 import com.meti.api.collect.stream.Stream;
 import com.meti.api.core.Comparable;
 import com.meti.api.core.Comparator;
-import com.meti.api.core.Option;
 import com.meti.api.core.Primitives;
 import com.meti.api.extern.Function1;
 import com.meti.api.extern.Function2;
 
 import static com.meti.api.collect.IndexException.IndexException;
 import static com.meti.api.collect.stream.SequenceStream.SequenceStream;
-import static com.meti.api.core.None.None;
-import static com.meti.api.core.Some.Some;
 
 @Deprecated
 public class ComparableArrayList<T> implements List<T> {
@@ -62,21 +59,6 @@ public class ComparableArrayList<T> implements List<T> {
 		if (index < 0) throw IndexException("Index can't be negative");
 		if (index >= size) throw IndexException("Index is equal to or exceeds the size of this list.");
 		return (T) array[index];
-	}
-
-	@Override
-	public Option<Integer> firstOptionally(T t) {
-		return firstOptionally(element -> comparator.equals(element, t));
-	}
-
-	@Override
-	public Option<Integer> firstOptionally(Function1<T, Boolean> predicate) {
-		for (int i = 0; i < size; i++) {
-			if (predicate.apply((T) array[i])) {
-				return Some(i);
-			}
-		}
-		return None();
 	}
 
 	@Override
