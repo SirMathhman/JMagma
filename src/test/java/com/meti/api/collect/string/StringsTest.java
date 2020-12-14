@@ -1,6 +1,5 @@
 package com.meti.api.collect.string;
 
-import com.meti.api.collect.stream.StreamException;
 import com.meti.api.core.FormatException;
 import org.junit.jupiter.api.Test;
 
@@ -76,6 +75,6 @@ class StringsTest {
 
 	@Test
 	void testEquals() {
-		assertTrue(Strings.equals("test", "test"));
+		assertTrue(Strings.equalsTo("test", "test"));
 	}
 }

@@ -1,40 +1,40 @@
 package com.meti.api.collect.map;
 
-import com.meti.api.collect.list.ComparableArrayList;
+import com.meti.api.collect.list.ArrayList;
 import com.meti.api.collect.list.List;
 import com.meti.api.collect.stream.StreamException;
-import com.meti.api.core.Comparable;
+import com.meti.api.core.Equatable;
+import com.meti.api.core.Equator;
 import com.meti.api.core.Option;
 import com.meti.api.extern.Function0;
-import com.meti.api.extern.Function2;
 
 import static com.meti.api.collect.stream.SequenceStream.SequenceStream;
 import static com.meti.api.core.None.None;
 
 public class ListMap<K, V> implements Map<K, V> {
-	private final List<Binding> bindings;
-	private final Function2<K, K, Integer> comparator;
+	private final List<Binding<K, V>> bindings;
+	private final Equator<K> equator;
 
-	private ListMap(Function2<K, K, Integer> comparator) {
-		this(ComparableArrayList.ofComparables(), comparator);
+	private ListMap(Equator<K> equator) {
+		this(ArrayList.empty(Binding::equalsTo), equator);
 	}
 
-	private ListMap(List<Binding> bindings, Function2<K, K, Integer> comparator) {
+	private ListMap(List<Binding<K, V>> bindings, Equator<K> equator) {
 		this.bindings = bindings;
-		this.comparator = comparator;
+		this.equator = equator;
 	}
 
-	public static <K extends Comparable<K>, V> Map<K, V> ListMap(K key, V value) {
-		return ListMap(Comparable::compareTo, key, value);
+	public static <K extends Equatable<K>, V> Map<K, V> ListMap(K key, V value) {
+		return ListMap(Equatable::equalsTo, key, value);
 	}
 
-	public static <K, V> Map<K, V> ListMap(Function2<K, K, Integer> comparator, K key, V value) {
-		return new ListMap<K, V>(comparator).put(key, value);
+	public static <K, V> Map<K, V> ListMap(Equator<K> equator, K key, V value) {
+		return new ListMap<K, V>(equator).put(key, value);
 	}
 
 
-	public static <K, V> Map<K, V> ListMap(Function2<K, K, Integer> comparator) {
-		return new ListMap<>(comparator);
+	public static <K, V> Map<K, V> ListMap(Equator<K> equator) {
+		return new ListMap<>(equator);
 	}
 
 	@Override
@@ -54,11 +54,11 @@ public class ListMap<K, V> implements Map<K, V> {
 	@Override
 	public Map<K, V> remove(K key) {
 		try {
-			return new ListMap<K, V>(SequenceStream(bindings)
+			return new ListMap<>(SequenceStream(bindings)
 					.filter(binding -> binding.hasKey(key))
 					.head()
 					.map(bindings::removeFirst)
-					.orElse(bindings), comparator);
+					.orElse(bindings), equator);
 		} catch (StreamException e) {
 			return this;
 		}
@@ -69,7 +69,7 @@ public class ListMap<K, V> implements Map<K, V> {
 		if (containsKey(key)) {
 			return remove(key).put(key, value);
 		} else {
-			return new ListMap<K, V>(bindings.add(new Binding(key, value)), comparator);
+			return new ListMap<>(bindings.add(new Binding<>(equator, key, value)), equator);
 		}
 	}
 
@@ -87,30 +87,31 @@ public class ListMap<K, V> implements Map<K, V> {
 
 	@Override
 	public Map<K, V> ensure(K key, Function0<V> value) {
-		if(containsKey(key)) {
+		if (containsKey(key)) {
 			return this;
 		} else {
 			return put(key, value.get());
 		}
 	}
 
-	private class Binding implements Comparable<Binding> {
+	private static class Binding<K, V> implements Equatable<Binding<K, V>> {
 		private final K key;
 		private final V value;
+		private final Equator<K> equator;
 
-		Binding(K key, V value) {
+		Binding(Equator<K> equator, K key, V value) {
 			this.key = key;
 			this.value = value;
+			this.equator = equator;
 		}
 
 		boolean hasKey(K key) {
-			return comparator.apply(this.key, key) == 0;
+			return equator.equalsTo(this.key, key);
 		}
 
 		@Override
-		public int compareTo(Binding other) {
-			return comparator.apply(this.key, key);
+		public boolean equalsTo(Binding<K, V> other) {
+			return equator.equalsTo(this.key, other.key);
 		}
-
 	}
 }

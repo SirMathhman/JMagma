@@ -39,7 +39,7 @@ public class NIOFile implements File {
 	}
 
 	@Override
-	public int compareTo(File o) {
-		return asPath().compareTo(o.asPath());
+	public boolean equalsTo(File other) {
+		return asPath().equalsTo(other.asPath());
 	}
 }

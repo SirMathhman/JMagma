@@ -28,7 +28,7 @@ class SomeTest {
 	@Test
 	void filter() {
 		assertTrue(Some("test")
-				.filter(value -> Strings.equals(value, "test1"))
+				.filter(value -> Strings.equalsTo(value, "test1"))
 				.isEmpty());
 	}
 

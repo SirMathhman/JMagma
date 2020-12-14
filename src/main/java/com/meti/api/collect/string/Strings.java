@@ -1,6 +1,6 @@
 package com.meti.api.collect.string;
 
-import com.meti.api.collect.list.ComparableArrayList;
+import com.meti.api.collect.list.ArrayList;
 import com.meti.api.collect.stream.StreamException;
 import com.meti.api.core.FormatException;
 import com.meti.api.core.Option;
@@ -29,9 +29,9 @@ public class Strings {
 
 	public static String slice(String self, int from, int to) {
 		try {
-			var list = ComparableArrayList.range(from, to, Primitives::comparingInts, i -> i + 1);
-			return SequenceStream(list)
-					.map(self::charAt)
+			return ArrayList.range(from, to, Integer::equals, i -> i + 1)
+					.stream()
+					.map(index -> self.charAt(index))
 					.foldLeftExceptionally(StringBuffer(), StringBuffer::add)
 					.toString();
 		} catch (StreamException e) {
@@ -63,19 +63,11 @@ public class Strings {
 		return slice(self, first, last);
 	}
 
-	public static long hash(CharSequence self) {
-		long value = 0;
-		for (int i = 0; i < self.length(); i++) {
-			value += Primitives.hash(self.charAt(i));
-		}
-		return value;
-	}
-
 	public static int length(String self) {
 		return self.length();
 	}
 
-	public static boolean equals(String self, String other) {
+	public static boolean equalsTo(String self, String other) {
 		return compareTo(self, other) == 0;
 	}
 
@@ -117,7 +109,7 @@ public class Strings {
 		}
 	}
 
-	public static boolean isBlank(String self) {
+	private static boolean isBlank(String self) {
 		for (int i = 0; i < self.length(); i++) {
 			if (!Primitives.isWhitespace(self.charAt(i))) {
 				return false;

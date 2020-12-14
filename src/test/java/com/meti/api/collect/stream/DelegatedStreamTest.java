@@ -1,6 +1,6 @@
 package com.meti.api.collect.stream;
 
-import com.meti.api.collect.list.ComparableArrayList;
+import com.meti.api.collect.list.ArrayList;
 import com.meti.api.collect.string.Strings;
 import org.junit.jupiter.api.Test;
 
@@ -25,7 +25,7 @@ class DelegatedStreamTest {
 	}
 
 	private Stream<String> createStream() {
-		return SequenceStream(ComparableArrayList.of(Strings::compareTo, "1", "2", "3"));
+		return SequenceStream(ArrayList.of(Strings::equalsTo, "1", "2", "3"));
 	}
 
 	@Test

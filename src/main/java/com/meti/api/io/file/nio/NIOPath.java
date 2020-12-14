@@ -1,12 +1,11 @@
 package com.meti.api.io.file.nio;
 
 import com.meti.api.collect.Sequence;
-import com.meti.api.collect.list.ComparableArrayList;
 import com.meti.api.collect.Set;
+import com.meti.api.collect.list.ArrayList;
 import com.meti.api.collect.stream.StreamException;
 import com.meti.api.collect.string.Strings;
 import com.meti.api.core.Option;
-import com.meti.api.core.Primitives;
 import com.meti.api.io.file.Directory;
 import com.meti.api.io.file.File;
 
@@ -32,12 +31,12 @@ public class NIOPath implements com.meti.api.io.file.Path {
 	@Override
 	public Sequence<String> computeNames() {
 		try {
-			return SequenceStream(ComparableArrayList.range(0, path.getNameCount(), Primitives::comparingInts, value -> value + 1))
+			return SequenceStream(ArrayList.range(0, path.getNameCount(), Integer::equals, value -> value + 1))
 					.map(path::getName)
 					.map(Path::toString)
-					.foldLeftExceptionally(ComparableArrayList.empty(Strings::compareTo), Set::add);
+					.foldLeftExceptionally(ArrayList.empty(Strings::equalsTo), Set::add);
 		} catch (StreamException e) {
-			return ComparableArrayList.empty(String::compareTo);
+			return ArrayList.empty(Strings::equalsTo);
 		}
 	}
 
@@ -92,12 +91,12 @@ public class NIOPath implements com.meti.api.io.file.Path {
 	}
 
 	@Override
-	public int compareTo(com.meti.api.io.file.Path o) {
-		return computeNames().compareTo(o.computeNames());
+	public String asString() {
+		return path.toString();
 	}
 
 	@Override
-	public String asString() {
-		return path.toString();
+	public boolean equalsTo(com.meti.api.io.file.Path other) {
+		return computeNames().equalsTo(other.computeNames());
 	}
 }

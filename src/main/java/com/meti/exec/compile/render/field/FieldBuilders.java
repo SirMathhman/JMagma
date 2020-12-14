@@ -1,7 +1,7 @@
 package com.meti.exec.compile.render.field;
 
 import com.meti.api.collect.Set;
-import com.meti.api.collect.list.ComparableArrayList;
+import com.meti.api.collect.list.ArrayList;
 import com.meti.exec.compile.render.Node;
 import com.meti.exec.compile.render.Type;
 
@@ -10,11 +10,11 @@ public class FieldBuilders {
 	}
 
 	static Empty FieldBuilder() {
-		return new Empty(ComparableArrayList.empty(Field.Flag::compareTo));
+		return new Empty(ArrayList.empty(Field.Flag::equals));
 	}
 
 	static record All(Set<Field.Flag, ?> flags, String name, Type type, Node<?> value) {
-		Field<?> complete(){
+		Field<?> complete() {
 			return new FieldWithValue(flags, name, type, value);
 		}
 	}

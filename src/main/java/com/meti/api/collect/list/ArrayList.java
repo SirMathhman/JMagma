@@ -4,50 +4,47 @@ import com.meti.api.collect.Container;
 import com.meti.api.collect.IndexException;
 import com.meti.api.collect.Sequence;
 import com.meti.api.collect.Set;
-import com.meti.api.collect.stream.SequenceStream;
 import com.meti.api.collect.stream.Stream;
-import com.meti.api.core.Comparable;
-import com.meti.api.core.Comparator;
-import com.meti.api.core.Primitives;
+import com.meti.api.core.Equatable;
+import com.meti.api.core.Equator;
 import com.meti.api.extern.Function1;
 import com.meti.api.extern.Function2;
 
 import static com.meti.api.collect.IndexException.IndexException;
 import static com.meti.api.collect.stream.SequenceStream.SequenceStream;
 
-@Deprecated
-public class ComparableArrayList<T> implements List<T> {
+public class ArrayList<T> implements List<T> {
 	private static final int DefaultSize = 10;
 	private final int size;
 	private final Object[] array;
-	private final Comparator<T> comparator;
+	private final Equator<T> comparator;
 
-	private ComparableArrayList(Object[] array, int internalSize, Comparator<T> comparator) {
+	private ArrayList(Object[] array, int internalSize, Equator<T> comparator) {
 		this.size = internalSize;
 		this.array = array;
 		this.comparator = comparator;
 	}
 
-	public static <T> List<T> empty(Comparator<T> comparator) {
-		return new ComparableArrayList<>(new Object[DefaultSize], 0, comparator);
+	public static <T> List<T> empty(Equator<T> comparator) {
+		return new ArrayList<>(new Object[DefaultSize], 0, comparator);
 	}
 
 	@SafeVarargs
-	public static <T> List<T> of(Comparator<T> comparator, T... elements) {
-		return new ComparableArrayList<>(elements, elements.length, comparator);
+	public static <T> List<T> of(Equator<T> comparator, T... elements) {
+		return new ArrayList<>(elements, elements.length, comparator);
 	}
 
 	@SafeVarargs
-	public static <T extends Comparable<T>> List<T> ofComparables(T... elements) {
+	public static <T extends Equatable<T>> List<T> ofEquatables(T... elements) {
 		return elements.length != 0 ?
-				new ComparableArrayList<>(elements, elements.length, Comparable::compareTo) :
-				new ComparableArrayList<>(new Object[DefaultSize], 0, Comparable::compareTo);
+				new ArrayList<>(elements, elements.length, Equatable::equalsTo) :
+				new ArrayList<>(new Object[DefaultSize], 0, Equatable::equalsTo);
 	}
 
-	public static <T> List<T> range(T startInclusive, T endExclusive, Comparator<T> comparator, Function1<T, T> next) {
+	public static <T> List<T> range(T startInclusive, T endExclusive, Equator<T> equator, Function1<T, T> next) {
 		var current = startInclusive;
-		var list = ComparableArrayList.empty(comparator);
-		while (!comparator.equals(current, endExclusive)) {
+		var list = ArrayList.empty(equator);
+		while (!equator.equalsTo(current, endExclusive)) {
 			list = list.add(current);
 			current = next.apply(current);
 		}
@@ -63,13 +60,12 @@ public class ComparableArrayList<T> implements List<T> {
 
 	@Override
 	public int size() {
-		return size
-				;
+		return size;
 	}
 
 	@Override
 	public boolean contains(T t) {
-		return first(element -> comparator.equals(element, t)) != -1;
+		return first(element -> comparator.equalsTo(element, t)) != -1;
 	}
 
 	private int first(Function1<T, Boolean> predicate) {
@@ -97,7 +93,7 @@ public class ComparableArrayList<T> implements List<T> {
 	public List<T> set(int index, T t) {
 		var newArray = resizeTo(index);
 		newArray[index] = t;
-		return new ComparableArrayList<>(newArray, Math.max(index + 1, size), comparator);
+		return new ArrayList<>(newArray, Math.max(index + 1, size), comparator);
 	}
 
 	@Override
@@ -129,13 +125,13 @@ public class ComparableArrayList<T> implements List<T> {
 		for (int i = index; i < array.length - 1; i++) {
 			array[i] = array[i + 1];
 		}
-		return new ComparableArrayList<>(array, size - 1, comparator);
+		return new ArrayList<>(array, size - 1, comparator);
 	}
 
 	@Override
 	public List<T> removeFirst(T t) {
 		try {
-			return remove(first(element -> comparator.equals(element, t)));
+			return remove(first(element -> comparator.equalsTo(element, t)));
 		} catch (IndexException e) {
 			return this;
 		}
@@ -154,26 +150,12 @@ public class ComparableArrayList<T> implements List<T> {
 	}
 
 	@Override
-	public int compareTo(Sequence<T> o) {
-		var compSize = Primitives.comparingInts(size, o.size());
-		if (compSize == 0) {
-			for (int i = 0; i < size; i++) {
-				try {
-					var thisElement = apply(i);
-					var otherElement = o.apply(i);
-					var compElement = comparator.compareTo(thisElement, otherElement);
-					if (compElement != 0) return compElement;
-				} catch (IndexException ignored) {
-				}
-			}
-			return 0;
-		} else {
-			return compSize;
-		}
+	public Stream<T> stream() {
+		return SequenceStream(this);
 	}
 
 	@Override
-	public Stream<T> stream() {
-		return SequenceStream.SequenceStream(this);
+	public boolean equalsTo(Sequence<T> other) {
+		return false;
 	}
 }

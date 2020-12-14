@@ -1,6 +1,6 @@
 package com.meti.exec.compile;
 
-import com.meti.api.collect.list.ComparableArrayList;
+import com.meti.api.collect.list.ArrayList;
 import com.meti.api.collect.Set;
 import com.meti.api.collect.list.List;
 import com.meti.api.collect.stream.StreamException;
@@ -18,7 +18,7 @@ public class PathLoader {
 	private final Set<File, List<File>> paths;
 
 	public PathLoader() {
-		this(ComparableArrayList.empty(File::compareTo));
+		this(ArrayList.empty(File::equalsTo));
 	}
 
 	public PathLoader(Set<File, List<File>> paths) {
@@ -44,7 +44,7 @@ public class PathLoader {
 	private boolean isMagmaFile(File file) {
 		return file.asPath()
 				.computeExtension()
-				.filter(s -> Strings.equals(s, "mgs"))
+				.filter(s -> Strings.equalsTo(s, "mgs"))
 				.isPresent();
 	}
 
