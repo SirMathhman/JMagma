@@ -15,13 +15,4 @@ public class SuppliedStream<T> extends DelegatedStream<T> {
 		return function.get();
 	}
 
-	@Override
-	public <E extends Exception> Stream<T> filterExceptionally(ExceptionFunction1<T, Boolean, E> predicate) throws StreamException {
-		return null;
-	}
-
-	@Override
-	public <R, E extends Exception> Stream<R> mapExceptionally(ExceptionFunction1<T, R, E> predicate) throws StreamException {
-		return null;
-	}
 }

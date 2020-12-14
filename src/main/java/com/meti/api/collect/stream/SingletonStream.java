@@ -37,17 +37,12 @@ public class SingletonStream<T> implements Stream<T> {
 	}
 
 	@Override
-	public <E extends Exception> Stream<T> filterExceptionally(ExceptionFunction1<T, Boolean, E> predicate) throws StreamException {
-		return null;
-	}
-
-	@Override
 	public <R> Stream<R> map(Function1<T, R> mapper) {
 		return SingletonStream(mapper.apply(value));
 	}
 
 	@Override
-	public <R, E extends Exception> Stream<R> mapExceptionally(ExceptionFunction1<T, R, E> predicate) throws StreamException {
+	public <R, E extends Exception> Stream<R> mapExceptionally(ExceptionFunction1<T, R, E> mapper) throws StreamException {
 		return null;
 	}
 

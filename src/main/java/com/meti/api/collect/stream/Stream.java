@@ -13,11 +13,9 @@ public interface Stream<T> {
 
 	Stream<T> filter(Function1<T, Boolean> predicate);
 
-	<E extends Exception> Stream<T> filterExceptionally(ExceptionFunction1<T, Boolean, E> predicate) throws StreamException;
-
 	<R> Stream<R> map(Function1<T, R> mapper);
 
-	<R, E extends Exception> Stream<R> mapExceptionally(ExceptionFunction1<T, R, E> predicate) throws StreamException;
+	<R, E extends Exception> Stream<R> mapExceptionally(ExceptionFunction1<T, R, E> mapper) throws StreamException;
 
 	<R> R foldLeft(R identity, Function2<R, T, R> mapper);
 

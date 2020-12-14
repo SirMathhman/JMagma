@@ -1,6 +1,11 @@
 package com.meti.exec.compile.render;
 
+import com.meti.api.core.None;
 import com.meti.api.core.Option;
+import com.meti.api.core.Some;
+
+import static com.meti.api.core.None.None;
+import static com.meti.api.core.Some.Some;
 
 public class ImplicitType implements Type {
 	public static final Type ImplicitType_ = new ImplicitType();
@@ -10,21 +15,16 @@ public class ImplicitType implements Type {
 
 	@Override
 	public Option<String> render(String name) {
-		return null;
+		return Some("? " + name);
 	}
 
 	@Override
 	public Option<String> findContent() {
-		return null;
+		return None();
 	}
 
 	@Override
 	public Group findGroup() {
-		return null;
-	}
-
-	@Override
-	public Option<String> render() {
-		return null;
+		return Group.Implicit;
 	}
 }

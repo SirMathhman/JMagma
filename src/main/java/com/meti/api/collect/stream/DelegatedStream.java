@@ -1,6 +1,7 @@
 package com.meti.api.collect.stream;
 
 import com.meti.api.core.Option;
+import com.meti.api.extern.ExceptionFunction1;
 import com.meti.api.extern.ExceptionFunction2;
 import com.meti.api.extern.Function1;
 import com.meti.api.extern.Function2;
@@ -71,5 +72,16 @@ public abstract class DelegatedStream<T> implements Stream<T> {
 			}
 		}
 		return current;
+	}
+
+	@Override
+	public <R, E extends Exception> Stream<R> mapExceptionally(ExceptionFunction1<T, R, E> mapper) throws StreamException {
+		return new SuppliedStream<>(() -> {
+			try {
+				return mapper.apply(get());
+			} catch (Exception e) {
+				throw StreamException(e);
+			}
+		});
 	}
 }

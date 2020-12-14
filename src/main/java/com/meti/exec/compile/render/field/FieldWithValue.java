@@ -8,7 +8,7 @@ import com.meti.exec.compile.render.Type;
 
 import static com.meti.api.core.Some.Some;
 
-public class FieldWithValue extends AbstractField<FieldWithValue> {
+public class FieldWithValue extends AbstractField {
 	private final Node value;
 
 	public FieldWithValue(Set<Flag, ?> flags, String name, Type type, Node value) {
@@ -27,7 +27,9 @@ public class FieldWithValue extends AbstractField<FieldWithValue> {
 		return other.isNamed(name) &&
 		       other.isTyped(type) &&
 		       other.hasFlags(flags) &&
-		       other.findDefaultValue().map(value::equalsTo).orElse(false);
+		       other.findDefaultValue()
+				       .map(value::equalsTo)
+				       .orElse(false);
 	}
 
 	@Override

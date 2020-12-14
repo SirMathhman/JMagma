@@ -18,7 +18,7 @@ public class ContentNode implements Node {
 
 	@Override
 	public Option<String> render() {
-		return None();
+		return Some(content);
 	}
 
 	@Override

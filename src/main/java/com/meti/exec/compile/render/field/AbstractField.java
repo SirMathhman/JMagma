@@ -4,7 +4,7 @@ import com.meti.api.collect.Set;
 import com.meti.api.collect.string.Strings;
 import com.meti.exec.compile.render.Type;
 
-public abstract class AbstractField<F> implements Field {
+public abstract class AbstractField implements Field {
 	protected final String name;
 	protected final Type type;
 	protected final Set<Field.Flag, ?> flags;

@@ -4,6 +4,10 @@ import com.meti.api.core.Equatable;
 import com.meti.api.core.Option;
 
 public interface Type extends Renderable, Equatable<Type> {
+	default Option<String> render() {
+		return render("");
+	}
+
 	Option<String> render(String name);
 
 	Option<String> findContent();
@@ -18,6 +22,7 @@ public interface Type extends Renderable, Equatable<Type> {
 	Group findGroup();
 
 	enum Group {
+		Implicit,
 		Content
 	}
 }

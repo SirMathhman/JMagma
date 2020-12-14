@@ -1,11 +1,15 @@
 package com.meti.exec.compile.render.field;
 
+import com.meti.api.extern.Action1;
+import com.meti.exec.compile.render.ImplicitType;
 import com.meti.exec.compile.render.TokenizationException;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import static com.meti.exec.compile.render.ContentNode.ContentNode;
+import static com.meti.exec.compile.render.field.FieldBuilders.FieldBuilder;
 import static com.meti.exec.compile.render.field.FieldTokenizer.FieldTokenizer;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 class FieldTokenizerTest {
 	@Test
@@ -26,10 +30,15 @@ class FieldTokenizerTest {
 
 	@Test
 	void tokenizeDefaultValue() throws TokenizationException {
-		assertEquals("? x=10", FieldTokenizer("const x = 10")
+		Action1<Field> x = field -> assertTrue(FieldBuilder()
+				.withFlag(Field.Flag.Const)
+				.withName("x")
+				.withType(ImplicitType.ImplicitType_)
+				.withValue(ContentNode("10"))
+				.complete().equalsTo(field));
+		FieldTokenizer("const x = 10")
 				.tokenize()
-				.flatMap(Field::render)
-				.orElse(""));
+				.ifPresentOrElse(x, Assertions::fail);
 	}
 
 	@Test

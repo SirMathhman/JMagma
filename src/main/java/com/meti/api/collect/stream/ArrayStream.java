@@ -26,12 +26,7 @@ public class ArrayStream<T> extends DelegatedStream<T> {
 	}
 
 	@Override
-	public <E extends Exception> Stream<T> filterExceptionally(ExceptionFunction1<T, Boolean, E> predicate) throws StreamException {
-		return null;
-	}
-
-	@Override
-	public <R, E extends Exception> Stream<R> mapExceptionally(ExceptionFunction1<T, R, E> predicate) throws StreamException {
-		return null;
+	public <R, E extends Exception> Stream<R> mapExceptionally(ExceptionFunction1<T, R, E> mapper) throws StreamException {
+		return mapExceptionally(null);
 	}
 }
