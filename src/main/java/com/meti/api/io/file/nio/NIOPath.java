@@ -97,11 +97,6 @@ public class NIOPath implements com.meti.api.io.file.Path {
 	}
 
 	@Override
-	public int compareTo2(Object other) {
-		return 0;
-	}
-
-	@Override
 	public String asString() {
 		return path.toString();
 	}

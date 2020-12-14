@@ -50,11 +50,6 @@ class ComparableArrayListTest {
 	}
 
 	@Test
-	void indexOf() {
-		assertEquals(0, createList().first("test"));
-	}
-
-	@Test
 	void set() throws IndexException {
 		assertEquals("test1", createList().set(0, "test1").apply(0));
 	}

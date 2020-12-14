@@ -69,16 +69,10 @@ public class ComparableArrayList<T> implements List<T> {
 
 	@Override
 	public boolean contains(T t) {
-		return first(t) != -1;
+		return first(element -> comparator.equals(element, t)) != -1;
 	}
 
-	@Override
-	public int first(T item) {
-		return first(element -> comparator.equals(element, item));
-	}
-
-	@Override
-	public int first(Function1<T, Boolean> predicate) {
+	private int first(Function1<T, Boolean> predicate) {
 		for (int i = 0; i < size; i++) {
 			if (predicate.apply((T) array[i])) {
 				return i;
@@ -141,7 +135,7 @@ public class ComparableArrayList<T> implements List<T> {
 	@Override
 	public List<T> removeFirst(T t) {
 		try {
-			return remove(first(t));
+			return remove(first(element -> comparator.equals(element, t)));
 		} catch (IndexException e) {
 			return this;
 		}
@@ -179,12 +173,7 @@ public class ComparableArrayList<T> implements List<T> {
 	}
 
 	@Override
-	public int compareTo2(Object other) {
-		return 0;
-	}
-
-	@Override
-	public Stream<T> stream(){
+	public Stream<T> stream() {
 		return SequenceStream.SequenceStream(this);
 	}
 }

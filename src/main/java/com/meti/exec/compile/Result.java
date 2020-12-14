@@ -21,9 +21,5 @@ public interface Result<E> {
 			return order;
 		}
 
-		@Override
-		public int compareTo2(Object other) {
-			return 0;
-		}
 	}
 }

@@ -1,7 +1,6 @@
 package com.meti.exec.compile.render.field;
 
 import com.meti.api.collect.Set;
-import com.meti.api.collect.string.Strings;
 import com.meti.exec.compile.render.Node;
 import com.meti.exec.compile.render.RenderException;
 import com.meti.exec.compile.render.Type;
@@ -24,8 +23,4 @@ public class FieldWithValue extends AbstractField<FieldWithValue> {
 		return -1;
 	}
 
-	@Override
-	public int compareTo2(Object other) {
-		return 0;
-	}
 }

@@ -24,11 +24,6 @@ public class FieldWithoutValue extends AbstractField<FieldWithoutValue> {
 		return 0;
 	}
 
-	@Override
-	public int compareTo2(Object other) {
-		return 0;
-	}
-
 	static record Builder(Set<Flag, ?> flags) {
 
 	}

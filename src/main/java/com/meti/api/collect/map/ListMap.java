@@ -112,9 +112,5 @@ public class ListMap<K, V> implements Map<K, V> {
 			return comparator.apply(this.key, key);
 		}
 
-		@Override
-		public int compareTo2(Object other) {
-			return 0;
-		}
 	}
 }
