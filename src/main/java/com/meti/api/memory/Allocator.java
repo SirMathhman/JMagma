@@ -1,4 +1,4 @@
-package com.meti.api.string;
+package com.meti.api.memory;
 
 public interface Allocator {
 	Allocator JavaAllocator = new JavaAllocator();
