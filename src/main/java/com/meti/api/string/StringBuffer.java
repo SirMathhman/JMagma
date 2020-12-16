@@ -1,7 +1,9 @@
 package com.meti.api.string;
 
 public interface StringBuffer {
-	StringBuffer add(char c);
+	StringBuffer addChar(char c);
 
 	String asString();
+
+	StringBuffer addString(String s);
 }
