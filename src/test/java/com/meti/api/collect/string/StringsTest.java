@@ -8,13 +8,18 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class StringsTest {
 	@Test
+	void toUpperCase(){
+		assertEquals("DUMMY", Strings.toUpperCase("dUmmY"));
+	}
+
+	@Test
 	void firstPresent(){
-		assertEquals(1, first("test", c -> c == 'e').orElse(-1));
+		assertEquals(1, firstChar("test", c -> c == 'e').orElse(-1));
 	}
 
 	@Test
 	void firstEmpty(){
-		assertTrue(first("test", c -> c == 'c').isEmpty());
+		assertTrue(firstChar("test", c -> c == 'c').isEmpty());
 	}
 
 	@Test
@@ -78,6 +83,21 @@ class StringsTest {
 	}
 
 	@Test
+	void firstString(){
+		assertEquals(6, Strings.firstString("test1 %o", "%o").orElse(-1));
+	}
+
+	@Test
+	void replaceFirst(){
+		assertEquals("test1 test2", Strings.replaceFirst("test1 %o", "%o", "test2"));
+	}
+
+	@Test
+	void format(){
+		assertEquals("test1 test2", Strings.format("%o %o", "test1", "test2"));
+	}
+
+	@Test
 	void length() {
 		assertEquals(4, Strings.length("test"));
 	}
@@ -85,5 +105,25 @@ class StringsTest {
 	@Test
 	void testEquals() {
 		assertTrue(Strings.equalsTo("test", "test"));
+	}
+
+	@Test
+	void trimFirst(){
+		assertEquals("firstChar", Strings.trim(" firstChar"));
+	}
+
+	@Test
+	void trimLast(){
+		assertEquals("last", Strings.trim("last "));
+	}
+
+	@Test
+	void trimNone(){
+		assertEquals("test", Strings.trim("test"));
+	}
+
+	@Test
+	void trimBoth() {
+		assertEquals("const x", Strings.trim(" const x "));
 	}
 }

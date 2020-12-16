@@ -11,7 +11,7 @@ import com.meti.api.extern.Function0;
 import static com.meti.api.collect.stream.SequenceStream.SequenceStream;
 import static com.meti.api.core.None.None;
 
-public class ListMap<K, V> implements Map<K, V> {
+public class ListMap<K, V> implements OrderedMap<K, V> {
 	private final List<Binding<K, V>> bindings;
 	private final Equator<K> equator;
 

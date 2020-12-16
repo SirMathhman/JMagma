@@ -31,10 +31,10 @@ class AbstractFieldTest {
 	@Test
 	void hasFlags() {
 		assertTrue(FieldBuilder()
-				.withFlag(Flag.Const)
+				.withFlag(Flag.CONST)
 				.withName("test")
 				.withType(ImplicitType_)
 				.complete()
-				.hasFlags(ArrayList.of(Flag::equals, Flag.Const)));
+				.hasFlags(ArrayList.of(Flag::equals, Flag.CONST)));
 	}
 }

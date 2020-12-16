@@ -6,6 +6,7 @@ import com.meti.api.collect.stream.StreamException;
 import com.meti.api.collect.string.Strings;
 import com.meti.api.core.Option;
 import com.meti.api.extern.ExceptionFunction0;
+import com.meti.api.extern.ExceptionFunction1;
 import com.meti.api.extern.Function0;
 import com.meti.api.extern.Function1;
 import com.meti.exec.compile.render.*;
@@ -46,7 +47,7 @@ public class FieldTokenizer extends AbstractTokenizer<Field> {
 				var type = ContentType.ContentType(typeTrim);
 				return withName.withType(type).complete();
 			};
-			return first(content, c -> c == '=')
+			return firstChar(content, c -> c == '=')
 					.map(withBoth)
 					.orElseGet(withType);
 		};
@@ -60,11 +61,11 @@ public class FieldTokenizer extends AbstractTokenizer<Field> {
 						.withValue(value).complete();
 			};
 			Function0<TokenizationException> asInvalid = () -> TokenizationException("No type or default value is present.");
-			return first(content, c -> c == '=')
+			return firstChar(content, c -> c == '=')
 					.map(withDefaultValue)
 					.orElseThrow(asInvalid);
 		};
-		return first(content, c -> c == ':')
+		return firstChar(content, c -> c == ':')
 				.map(withTypeSeparator)
 				.ensure(withoutTypeSeparator);
 	}
@@ -110,6 +111,7 @@ public class FieldTokenizer extends AbstractTokenizer<Field> {
 		return flagStrings.add(buffer.asString())
 				.stream()
 				.filter(Strings::isContent)
-				.mapExceptionally(Field.Flag::valueOf);
+				.map(Strings::toUpperCase)
+				.mapExceptionally((ExceptionFunction1<String, Field.Flag, Exception>) Field.Flag::valueOf);
 	}
 }

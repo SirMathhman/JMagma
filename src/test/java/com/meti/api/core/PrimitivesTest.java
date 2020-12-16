@@ -30,4 +30,14 @@ class PrimitivesTest {
 	void isDigitValid() {
 		assertTrue(isDigit('3'));
 	}
+
+	@Test
+	void toUpperCaseNot() {
+		assertEquals('X', Primitives.toUpperCase('x'));
+	}
+
+	@Test
+	void toUpperCaseAlready(){
+		assertEquals('X', Primitives.toUpperCase('X'));
+	}
 }

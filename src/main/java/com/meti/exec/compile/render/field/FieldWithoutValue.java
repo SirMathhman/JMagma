@@ -1,6 +1,6 @@
 package com.meti.exec.compile.render.field;
 
-import com.meti.api.collect.Set;
+import com.meti.api.collect.list.List;
 import com.meti.api.core.Option;
 import com.meti.exec.compile.render.Node;
 import com.meti.exec.compile.render.Type;
@@ -8,7 +8,7 @@ import com.meti.exec.compile.render.Type;
 import static com.meti.api.core.None.None;
 
 public class FieldWithoutValue extends AbstractField {
-	public FieldWithoutValue(Set<Flag, ?> flags, String name, Type type) {
+	public FieldWithoutValue(List<Flag> flags, String name, Type type) {
 		super(flags, name, type);
 	}
 
@@ -27,5 +27,10 @@ public class FieldWithoutValue extends AbstractField {
 		return other.isNamed(name) &&
 		       other.isTyped(type) &&
 		       other.hasFlags(flags);
+	}
+
+	@Override
+	public String asString() {
+		return "";
 	}
 }

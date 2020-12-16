@@ -6,6 +6,7 @@ import com.meti.api.collect.stream.StreamException;
 import com.meti.api.core.FormatException;
 import com.meti.api.core.Option;
 import com.meti.api.core.Primitives;
+import com.meti.api.extern.Function0;
 import com.meti.api.extern.Function1;
 
 import static com.meti.api.collect.string.SimpleStringBuffer.StringBuffer;
@@ -17,14 +18,45 @@ public class Strings {
 	public Strings() {
 	}
 
-	@Deprecated
-	public static int indexOfChar(CharSequence self, char c) {
-		for (int i = 0; i < self.length(); i++) {
-			if (self.charAt(i) == c) {
-				return i;
+	public static Option<Integer> firstString(String self, String item) {
+		var length = item.length();
+		for (int i = 0; i < self.length() - length + 1; i++) {
+			var slice = slice(self, i, i + length);
+			if (equalsTo(slice, item)) {
+				return Some(i);
 			}
 		}
-		return -1;
+		return None();
+	}
+
+	public static String replaceFirst(String format, String source, String destination) {
+		Function1<Integer, String> split = index -> {
+			var before = slice(format, 0, index);
+			var after = slice(format, index + 2, format.length());
+			return before + destination + after;
+		};
+		return firstString(format, source)
+				.map(split)
+				.orElse(format);
+	}
+
+	public static String format(String format, String... strings) {
+		var length = strings.length;
+		var value = format;
+		for (int i = 0; i < length; i++) {
+			value = replaceFirst(value, "%o", strings[i]);
+		}
+		return value;
+	}
+
+	public static String toUpperCase(String value) {
+		var buffer = StringBuffer.Empty;
+		for (int i = 0; i < value.length(); i++) {
+			var c = value.charAt(i);
+			var asUpperCase = Primitives.toUpperCase(c);
+			buffer = buffer.add(asUpperCase);
+		}
+		return buffer.asString();
 	}
 
 	public static String slice(String self, int from, int to) {
@@ -39,7 +71,7 @@ public class Strings {
 		}
 	}
 
-	public static Option<Integer> first(String self, Function1<Character, Boolean> predicate) {
+	public static Option<Integer> firstChar(String self, Function1<Character, Boolean> predicate) {
 		for (int i = 0; i < self.length(); i++) {
 			if (predicate.apply(self.charAt(i))) {
 				return Some(i);
@@ -58,9 +90,17 @@ public class Strings {
 	}
 
 	public static String trim(String self) {
-		var first = first(self, Primitives::isWhitespace).orElse(0);
-		var last = last(self, Character::isWhitespace).orElse(self.length());
-		return slice(self, first, last);
+		Function1<Character, Boolean> isNotWhitespace = c -> !Primitives.isWhiteSpace(c);
+		Function1<Integer, String> withFirst = first -> last(self, isNotWhitespace)
+				.filter(last -> last > first)
+				.map(last -> slice(self, first, last + 1))
+				.orElseGet(() -> slice(self, first, self.length()));
+		Function0<String> withoutFirst = () -> last(self, isNotWhitespace)
+				.map(last -> slice(self, 0, last + 1))
+				.orElse(self);
+		return firstChar(self, isNotWhitespace)
+				.map(withFirst)
+				.orElseGet(withoutFirst);
 	}
 
 	public static int length(String self) {
@@ -111,7 +151,7 @@ public class Strings {
 
 	private static boolean isBlank(String self) {
 		for (int i = 0; i < self.length(); i++) {
-			if (!Primitives.isWhitespace(self.charAt(i))) {
+			if (!Primitives.isWhiteSpace(self.charAt(i))) {
 				return false;
 			}
 		}
@@ -120,5 +160,13 @@ public class Strings {
 
 	public static boolean isContent(String self) {
 		return !isBlank(self);
+	}
+
+	public static String toLowerCase(String value) {
+		var buffer = StringBuffer.Empty;
+		for (int i = 0; i < value.length(); i++) {
+			buffer = buffer.add(Primitives.toLowerCase(value.charAt(i)));
+		}
+		return buffer.asString();
 	}
 }

@@ -3,6 +3,7 @@ package com.meti.api.collect.stream;
 import com.meti.api.collect.IndexException;
 import com.meti.api.collect.Sequence;
 import com.meti.api.extern.ExceptionFunction1;
+import com.meti.api.extern.Function1;
 
 import static com.meti.api.collect.stream.EndOfStreamException.EndOfStreamException;
 import static com.meti.api.collect.stream.StreamException.StreamException;

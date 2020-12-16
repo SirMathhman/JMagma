@@ -11,4 +11,9 @@ public interface Node extends Renderable, Equatable<Node> {
 		return findContent().equalsTo(other.findContent()) &&
 		       render().equalsTo(other.render());
 	}
+
+	@Override
+	default String asString() {
+		return "";
+	}
 }

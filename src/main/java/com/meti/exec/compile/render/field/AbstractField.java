@@ -1,15 +1,16 @@
 package com.meti.exec.compile.render.field;
 
 import com.meti.api.collect.Set;
+import com.meti.api.collect.list.List;
 import com.meti.api.collect.string.Strings;
 import com.meti.exec.compile.render.Type;
 
 public abstract class AbstractField implements Field {
 	protected final String name;
 	protected final Type type;
-	protected final Set<Field.Flag, ?> flags;
+	protected final List<Flag> flags;
 
-	public AbstractField(Set<Flag, ?> flags, String name, Type type) {
+	public AbstractField(List<Flag> flags, String name, Type type) {
 		this.name = name;
 		this.type = type;
 		this.flags = flags;
@@ -27,6 +28,6 @@ public abstract class AbstractField implements Field {
 
 	@Override
 	public boolean hasFlags(Set<Flag, ?> flags) {
-		return this.flags.intersects(flags);
+		return flags.isSubSetOf(this.flags);
 	}
 }

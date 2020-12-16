@@ -5,6 +5,7 @@ import com.meti.api.collect.IndexException;
 import com.meti.api.collect.Sequence;
 import com.meti.api.collect.Set;
 import com.meti.api.collect.stream.Stream;
+import com.meti.api.collect.stream.StreamException;
 import com.meti.api.core.Comparator;
 import com.meti.api.core.Equator;
 import com.meti.api.extern.Function1;
@@ -104,8 +105,12 @@ public class ArrayList<T> implements List<T> {
 	}
 
 	@Override
-	public boolean intersects(Container<T> other) {
-		return false;
+	public boolean isSubSetOf(Container<T> other) {
+		try {
+			return stream().allMatch(other::contains);
+		} catch (StreamException e) {
+			return false;
+		}
 	}
 
 	@Override

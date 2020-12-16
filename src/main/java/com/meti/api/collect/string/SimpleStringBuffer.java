@@ -1,5 +1,6 @@
 package com.meti.api.collect.string;
 
+@Deprecated
 public class SimpleStringBuffer implements StringBuffer {
 	private final String internalValue;
 
@@ -18,6 +19,11 @@ public class SimpleStringBuffer implements StringBuffer {
 	@Override
 	public StringBuffer add(char c) {
 		return StringBuffer(internalValue + c);
+	}
+
+	@Override
+	public StringBuffer add(String s) {
+		return new SimpleStringBuffer(internalValue + s);
 	}
 
 	@Override

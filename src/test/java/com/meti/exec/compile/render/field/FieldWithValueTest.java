@@ -12,7 +12,7 @@ class FieldWithValueTest {
 	@Test
 	void equalsTo() {
 		var field = FieldBuilder()
-				.withFlag(Field.Flag.Const)
+				.withFlag(Field.Flag.CONST)
 				.withName("x")
 				.withType(ImplicitType.ImplicitType_)
 				.withValue(ContentNode("10"))

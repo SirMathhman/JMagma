@@ -19,7 +19,7 @@ public interface Option<T> extends Equatable<Option<T>> {
 
 	boolean isEmpty();
 
-	<E extends Exception> T orElseGet(ExceptionFunction0<T, E> supplier) throws E;
+	<E extends Exception> T orElseGetExceptionally(ExceptionFunction0<T, E> supplier) throws E;
 
 	<E extends Exception> Option<T> ensure(ExceptionFunction0<T, E> supplier) throws E;
 

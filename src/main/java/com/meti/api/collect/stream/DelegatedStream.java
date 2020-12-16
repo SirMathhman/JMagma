@@ -17,6 +17,18 @@ public abstract class DelegatedStream<T> implements Stream<T> {
 	}
 
 	@Override
+	public boolean allMatch(Function1<T, Boolean> predicate) throws StreamException {
+		while (true) {
+			try {
+				if (!predicate.apply(get())) return false;
+			} catch (EndOfStreamException e) {
+				break;
+			}
+		}
+		return true;
+	}
+
+	@Override
 	public <R> R foldLeft(R identity, Function2<R, T, R> mapper) {
 		try {
 			return foldLeftExceptionally(identity, mapper::apply);

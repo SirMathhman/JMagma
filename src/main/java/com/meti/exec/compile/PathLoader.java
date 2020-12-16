@@ -38,7 +38,7 @@ public class PathLoader {
 				.filter(this::isMagmaFile)
 				.map(paths::add)
 				.map(PathLoader::new)
-				.orElseGet(addAsDirectory);
+				.orElseGetExceptionally(addAsDirectory);
 	}
 
 	private boolean isMagmaFile(File file) {

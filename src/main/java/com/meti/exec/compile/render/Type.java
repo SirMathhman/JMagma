@@ -21,6 +21,11 @@ public interface Type extends Renderable, Equatable<Type> {
 
 	Group findGroup();
 
+	@Override
+	default String asString() {
+		return "";
+	}
+
 	enum Group {
 		Implicit,
 		Content

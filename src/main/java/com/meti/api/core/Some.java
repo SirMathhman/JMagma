@@ -57,7 +57,7 @@ public class Some<T> implements Option<T> {
 	}
 
 	@Override
-	public <E extends Exception> T orElseGet(ExceptionFunction0<T, E> supplier) throws E {
+	public <E extends Exception> T orElseGetExceptionally(ExceptionFunction0<T, E> supplier) throws E {
 		return value;
 	}
 
