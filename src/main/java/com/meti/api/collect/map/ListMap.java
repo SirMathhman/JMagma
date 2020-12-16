@@ -2,6 +2,7 @@ package com.meti.api.collect.map;
 
 import com.meti.api.collect.list.ArrayList;
 import com.meti.api.collect.list.List;
+import com.meti.api.collect.stream.Stream;
 import com.meti.api.collect.stream.StreamException;
 import com.meti.api.core.Equatable;
 import com.meti.api.core.Equator;
@@ -94,6 +95,11 @@ public class ListMap<K, V> implements OrderedMap<K, V> {
 		}
 	}
 
+	@Override
+	public Stream<K> streamKeys() {
+		return bindings.stream().map(Binding::asKey);
+	}
+
 	private static class Binding<K, V> implements Equatable<Binding<K, V>> {
 		private final K key;
 		private final V value;
@@ -103,6 +109,10 @@ public class ListMap<K, V> implements OrderedMap<K, V> {
 			this.key = key;
 			this.value = value;
 			this.equator = equator;
+		}
+
+		K asKey() {
+			return key;
 		}
 
 		boolean hasKey(K key) {

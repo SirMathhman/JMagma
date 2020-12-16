@@ -13,6 +13,7 @@ public class ObjectNode implements JSONNode {
 
 	@Override
 	public String asString() {
+		return "";
 	/*	internalMap.streamKeys()
 				.map(new Function1<String, Option<String>>() {
 					@Override
