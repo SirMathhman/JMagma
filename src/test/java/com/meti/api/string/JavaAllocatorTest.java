@@ -10,4 +10,9 @@ class JavaAllocatorTest {
 	void allocateChars() {
 		assertArrayEquals(new char[1], JavaAllocator.allocateChars(1));
 	}
+
+	@Test
+	void allocateObjects() {
+		assertArrayEquals(new Object[1], JavaAllocator.allocateObjects(1));
+	}
 }

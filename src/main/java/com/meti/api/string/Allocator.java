@@ -5,10 +5,17 @@ public interface Allocator {
 
 	char[] allocateChars(int length);
 
+	Object[] allocateObjects(int length);
+
 	class JavaAllocator implements Allocator {
 		@Override
 		public char[] allocateChars(int length) {
 			return new char[length];
+		}
+
+		@Override
+		public Object[] allocateObjects(int length) {
+			return new Object[length];
 		}
 	}
 }
