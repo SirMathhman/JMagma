@@ -8,10 +8,10 @@ class CompilerTest {
 
 	@Test
 	void compileMain() {
-		assertEquals("#include <stdio.h>\nint main(){printf(\"Hello World!\");return 0;}", """
+		assertEquals("#include <stdio.h>\nint main(){printf(\"Hello World!\");return 0;}", Compiler.compile("""
 				import native stdio;
 				native def printf(format : String, value : Any...) : Void;
 				printf("Hello World!);
-				""");
+				"""));
 	}
 }
