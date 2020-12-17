@@ -3,7 +3,7 @@ package com.meti.compile;
 import java.util.Optional;
 
 public class IntTokenizer implements Tokenizer {
-	static final IntTokenizer IntTokenizer_ = new IntTokenizer();
+	static final Tokenizer IntTokenizer_ = new IntTokenizer();
 
 	private IntTokenizer() {
 	}
