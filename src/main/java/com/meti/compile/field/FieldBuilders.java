@@ -2,6 +2,7 @@ package com.meti.compile.field;
 
 import com.meti.compile.Node;
 import com.meti.compile.Type;
+import com.meti.compile.field.Field.Flag;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -17,8 +18,8 @@ public class FieldBuilders {
 		return new None(new HashSet<>());
 	}
 
-	public static record None(Set<Field.Flag> flags) {
-		public None withFlag(Field.Flag flag) {
+	public static record None(Set<Flag> flags) {
+		public None withFlag(Flag flag) {
 			flags.add(flag);
 			return new None(flags);
 		}
@@ -28,13 +29,13 @@ public class FieldBuilders {
 		}
 	}
 
-	public static record WithName(Set<Field.Flag> flags, String name) {
+	public static record WithName(Set<Flag> flags, String name) {
 		public WithoutValue withType(Type type) {
 			return new WithoutValue(flags, name, type);
 		}
 	}
 
-	public static record WithoutValue(Set<Field.Flag> flags, String name, Type type) {
+	public static record WithoutValue(Set<Flag> flags, String name, Type type) {
 		public Field complete() {
 			return EmptyField(flags, name, type);
 		}
@@ -44,8 +45,8 @@ public class FieldBuilders {
 		}
 	}
 
-	public static record All(Set<Field.Flag> flags, String name, Type type, Node value) {
-		public ValueField complete() {
+	public static record All(Set<Flag> flags, String name, Type type, Node value) {
+		public Field complete() {
 			return ValueField(flags, name, type, value);
 		}
 	}
