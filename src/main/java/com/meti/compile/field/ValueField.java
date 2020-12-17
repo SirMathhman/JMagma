@@ -24,6 +24,16 @@ public class ValueField implements Field {
 	}
 
 	@Override
+	public String toString() {
+		return "ValueField{" +
+		       "name='" + name + '\'' +
+		       ", type=" + type +
+		       ", flags=" + flags +
+		       ", value=" + value +
+		       '}';
+	}
+
+	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
