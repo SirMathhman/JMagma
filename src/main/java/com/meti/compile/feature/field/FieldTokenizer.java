@@ -1,16 +1,18 @@
-package com.meti.compile;
+package com.meti.compile.feature.field;
 
-import com.meti.compile.field.Field;
-import com.meti.compile.field.FieldBuilders;
+import com.meti.compile.feature.ImplicitType;
+import com.meti.compile.feature.Node;
+import com.meti.compile.feature.Tokenizer;
+import com.meti.compile.feature.Type;
 
 import java.util.Arrays;
 import java.util.Optional;
 import java.util.stream.Stream;
 
-import static com.meti.compile.ContentNode.ContentNode;
-import static com.meti.compile.ContentType.ContentType;
-import static com.meti.compile.field.FieldBuilders.FieldBuilder;
-import static com.meti.compile.field.FieldBuilders.None;
+import static com.meti.compile.feature.content.ContentNode.ContentNode;
+import static com.meti.compile.feature.content.ContentType.ContentType;
+import static com.meti.compile.feature.field.FieldBuilders.FieldBuilder;
+import static com.meti.compile.feature.field.FieldBuilders.None;
 
 public class FieldTokenizer implements Tokenizer<Field> {
 	static final Tokenizer<Field> FieldTokenizer_ = new FieldTokenizer();

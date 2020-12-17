@@ -1,4 +1,4 @@
-package com.meti.compile;
+package com.meti.compile.feature;
 
 public class ImplicitType implements Type {
 	public static final Type ImplicitType_ = new ImplicitType();

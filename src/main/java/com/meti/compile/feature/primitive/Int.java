@@ -1,4 +1,6 @@
-package com.meti.compile;
+package com.meti.compile.feature.primitive;
+
+import com.meti.compile.feature.Node;
 
 import java.math.BigInteger;
 import java.util.Objects;

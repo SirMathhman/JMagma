@@ -1,13 +1,13 @@
-package com.meti.compile.field;
+package com.meti.compile.feature.field;
 
-import com.meti.compile.Int;
-import com.meti.compile.Primitive;
+import com.meti.compile.feature.primitive.Int;
+import com.meti.compile.feature.primitive.Primitive;
 import org.junit.jupiter.api.Test;
 
 import java.util.Set;
 
-import static com.meti.compile.field.Field.Flag.CONST;
-import static com.meti.compile.field.ValueField.ValueField;
+import static com.meti.compile.feature.field.Field.Flag.CONST;
+import static com.meti.compile.feature.field.ValueField.ValueField;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class ValueFieldTest {

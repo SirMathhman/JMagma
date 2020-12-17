@@ -1,4 +1,6 @@
-package com.meti.compile;
+package com.meti.compile.feature.content;
+
+import com.meti.compile.feature.Node;
 
 import java.util.Objects;
 

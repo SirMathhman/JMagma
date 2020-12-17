@@ -1,12 +1,16 @@
-package com.meti.compile;
+package com.meti.compile.feature.primitive;
+
+import com.meti.compile.feature.Node;
+import com.meti.compile.feature.NodeTokenizer;
+import com.meti.compile.feature.Tokenizer;
 
 import java.math.BigInteger;
 import java.util.Optional;
 
-import static com.meti.compile.Int.Int;
+import static com.meti.compile.feature.primitive.Int.Int;
 
 public class IntTokenizer implements NodeTokenizer {
-	static final Tokenizer<Node> IntTokenizer_ = new IntTokenizer();
+	public static final Tokenizer<Node> IntTokenizer_ = new IntTokenizer();
 	private static final int Base10 = 10;
 
 	private IntTokenizer() {

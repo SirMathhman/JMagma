@@ -1,4 +1,6 @@
-package com.meti.compile;
+package com.meti.compile.feature.primitive;
+
+import com.meti.compile.feature.Type;
 
 public enum Primitive implements Type {
 	U8("unsigned char"),

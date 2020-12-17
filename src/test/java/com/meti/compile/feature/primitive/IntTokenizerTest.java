@@ -1,10 +1,10 @@
-package com.meti.compile;
+package com.meti.compile.feature.primitive;
 
 import org.junit.jupiter.api.Test;
 
 import java.math.BigInteger;
 
-import static com.meti.compile.Int.Int;
+import static com.meti.compile.feature.primitive.Int.Int;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class IntTokenizerTest {

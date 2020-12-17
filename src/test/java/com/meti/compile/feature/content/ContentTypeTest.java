@@ -1,8 +1,8 @@
-package com.meti.compile;
+package com.meti.compile.feature.content;
 
 import org.junit.jupiter.api.Test;
 
-import static com.meti.compile.ContentType.ContentType;
+import static com.meti.compile.feature.content.ContentType.ContentType;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class ContentTypeTest {

@@ -1,7 +1,7 @@
-package com.meti.compile.field;
+package com.meti.compile.feature.field;
 
-import com.meti.compile.Node;
-import com.meti.compile.Type;
+import com.meti.compile.feature.Node;
+import com.meti.compile.feature.Type;
 
 import java.util.Objects;
 import java.util.Set;
