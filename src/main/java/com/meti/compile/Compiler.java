@@ -1,12 +1,12 @@
 package com.meti.compile;
 
+import java.util.function.Supplier;
+
 public class Compiler {
+	private final Tokenizer tokenizer = IntTokenizer.IntTokenizer_;
+
 	String compile(String content) throws CompileException {
-		try {
-			var value = Integer.parseInt(content);
-			return String.valueOf(value);
-		} catch (NumberFormatException e) {
-			throw new CompileException("Unable to compile content: " + content);
-		}
+		Supplier<CompileException> invalidContent = () -> new CompileException("Unable to tokenize content: " + content);
+		return tokenizer.tokenize(content).orElseThrow(invalidContent);
 	}
 }
