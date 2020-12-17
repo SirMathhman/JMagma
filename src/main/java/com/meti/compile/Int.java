@@ -14,6 +14,10 @@ public class Int implements Node {
 		return new Int(integer);
 	}
 
+	static Int Int(int val) {
+		return Int(BigInteger.valueOf(val));
+	}
+
 	@Override
 	public String render() {
 		return integer.toString(Base10);
