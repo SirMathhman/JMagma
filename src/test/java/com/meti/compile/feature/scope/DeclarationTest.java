@@ -20,11 +20,9 @@ class DeclarationTest {
 	}
 
 	private Node createDeclaration() {
-		var field = FieldBuilder()
+		return new Declaration(FieldBuilder()
 				.withName("x")
 				.withType(Primitive.I16)
-				.complete();
-		var node = new Declaration(field);
-		return node;
+				.complete());
 	}
 }
