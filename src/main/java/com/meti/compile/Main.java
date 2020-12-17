@@ -22,12 +22,12 @@ public class Main {
 		}
 		String output;
 		if (content.isBlank()) {
-			output = "";
+			output = "int main(){return 0;}";
 		} else {
 			output = "int main(){return 0;}";
 		}
-		var outputFile = Paths.get(".", "output.c");
-		if(!Files.exists(outputFile)) {
+		var outputFile = Paths.get(".", "Main.c");
+		if (!Files.exists(outputFile)) {
 			try {
 				Files.createFile(outputFile);
 			} catch (IOException e) {
@@ -37,6 +37,17 @@ public class Main {
 		try {
 			Files.writeString(outputFile, output);
 		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		try {
+			var builder = new ProcessBuilder("gcc", "-o", "Main", "Main.c");
+			var start = builder.start();
+			start.getInputStream().transferTo(System.out);
+			start.getErrorStream().transferTo(System.err);
+			start.waitFor();
+
+			Files.deleteIfExists(outputFile);
+		} catch (IOException | InterruptedException e) {
 			e.printStackTrace();
 		}
 	}
