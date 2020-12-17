@@ -63,7 +63,11 @@ public class Main {
 		if (input.isBlank()) {
 			output = "int main(){return 0;}";
 		} else {
-			output = Compiler.compile(input);
+			try {
+				output = Compiler.compile(input);
+			} catch (CompileException e) {
+				output = "int main(){return 0;}";
+			}
 		}
 		return output;
 	}

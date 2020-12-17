@@ -8,7 +8,7 @@ class CompilerTest {
 	private static final Compiler Compiler = new Compiler();
 
 	@Test
-	void compileInt() {
+	void compileInt() throws CompileException {
 		assertEquals("5", Compiler.compile("5"));
 	}
 }
