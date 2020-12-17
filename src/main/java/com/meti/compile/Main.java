@@ -8,6 +8,7 @@ import java.nio.file.Paths;
 public class Main {
 	private static final Path inputPath = Paths.get(".", "Main.mg");
 	private static final Path intermediatePath = Paths.get(".", "Main.c");
+	private static final Compiler Compiler = new Compiler();
 
 	public static void main(String[] args) {
 		ensureInputPath();
@@ -62,7 +63,7 @@ public class Main {
 		if (input.isBlank()) {
 			output = "int main(){return 0;}";
 		} else {
-			output = "int main(){return 0;}";
+			output = Compiler.compile(input);
 		}
 		return output;
 	}
