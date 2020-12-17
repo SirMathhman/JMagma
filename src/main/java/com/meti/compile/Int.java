@@ -28,7 +28,7 @@ public class Int implements Node {
 		return Objects.hash(integer);
 	}
 
-	static Int Int(int val) {
+	public static Int Int(int val) {
 		return Int(BigInteger.valueOf(val));
 	}
 

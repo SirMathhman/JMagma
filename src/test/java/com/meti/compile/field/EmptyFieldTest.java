@@ -1,10 +1,11 @@
-package com.meti.compile;
+package com.meti.compile.field;
 
+import com.meti.compile.Primitive;
 import org.junit.jupiter.api.Test;
 
 import java.util.Set;
 
-import static com.meti.compile.EmptyField.EmptyField;
+import static com.meti.compile.field.EmptyField.EmptyField;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class EmptyFieldTest {

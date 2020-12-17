@@ -1,10 +1,13 @@
-package com.meti.compile;
+package com.meti.compile.field;
+
+import com.meti.compile.Node;
+import com.meti.compile.Type;
 
 import java.util.HashSet;
 import java.util.Set;
 
-import static com.meti.compile.EmptyField.EmptyField;
-import static com.meti.compile.ValueField.ValueField;
+import static com.meti.compile.field.EmptyField.EmptyField;
+import static com.meti.compile.field.ValueField.ValueField;
 
 public class FieldBuilders {
 	public FieldBuilders() {

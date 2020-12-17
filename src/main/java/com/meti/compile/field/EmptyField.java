@@ -1,4 +1,6 @@
-package com.meti.compile;
+package com.meti.compile.field;
+
+import com.meti.compile.Type;
 
 import java.util.Objects;
 import java.util.Set;
