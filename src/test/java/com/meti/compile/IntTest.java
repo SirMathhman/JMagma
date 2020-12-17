@@ -13,4 +13,9 @@ class IntTest {
 	void render() {
 		assertEquals("123456789", Int(BigInteger.valueOf(123456789)).render());
 	}
+
+	@Test
+	void testEquals() {
+		assertEquals(Int(10), Int(10));
+	}
 }
