@@ -1,11 +1,12 @@
 package com.meti.compile.feature.primitive;
 
-import com.meti.compile.feature.Node;
+import com.meti.compile.feature.LeafNode;
 
 import java.math.BigInteger;
 import java.util.Objects;
+import java.util.Optional;
 
-public class Int implements Node {
+public class Int implements LeafNode {
 	private static final int Base10 = 10;
 	private final BigInteger integer;
 
@@ -15,6 +16,10 @@ public class Int implements Node {
 
 	public static Int Int(BigInteger integer) {
 		return new Int(integer);
+	}
+
+	public static Int Int(int val) {
+		return Int(BigInteger.valueOf(val));
 	}
 
 	@Override
@@ -30,12 +35,18 @@ public class Int implements Node {
 		return Objects.hash(integer);
 	}
 
-	public static Int Int(int val) {
-		return Int(BigInteger.valueOf(val));
-	}
-
 	@Override
 	public String render() {
 		return integer.toString(Base10);
+	}
+
+	@Override
+	public Optional<String> findContent() {
+		return Optional.empty();
+	}
+
+	@Override
+	public boolean is(Group group) {
+		return false;
 	}
 }

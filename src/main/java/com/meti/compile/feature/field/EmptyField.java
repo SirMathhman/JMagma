@@ -1,5 +1,6 @@
 package com.meti.compile.feature.field;
 
+import com.meti.api.core.EF1;
 import com.meti.compile.feature.Type;
 
 import java.util.Objects;
@@ -38,5 +39,10 @@ public class EmptyField implements Field {
 	@Override
 	public String render() {
 		return type.render(name);
+	}
+
+	@Override
+	public <E extends Exception> Field mapByType(EF1<Type, Type, E> mapper) throws E {
+		return EmptyField(flags, name, mapper.apply(type));
 	}
 }

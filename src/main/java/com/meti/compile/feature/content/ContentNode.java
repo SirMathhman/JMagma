@@ -1,10 +1,11 @@
 package com.meti.compile.feature.content;
 
-import com.meti.compile.feature.Node;
+import com.meti.compile.feature.LeafNode;
 
 import java.util.Objects;
+import java.util.Optional;
 
-public class ContentNode implements Node {
+public class ContentNode implements LeafNode {
 	private final String content;
 
 	private ContentNode(String content) {
@@ -31,5 +32,15 @@ public class ContentNode implements Node {
 	@Override
 	public String render() {
 		return content;
+	}
+
+	@Override
+	public Optional<String> findContent(){
+		return Optional.of(content);
+	}
+
+	@Override
+	public boolean is(Group group) {
+		return group == Group.Content;
 	}
 }

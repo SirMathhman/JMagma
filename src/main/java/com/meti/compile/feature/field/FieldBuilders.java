@@ -1,5 +1,6 @@
 package com.meti.compile.feature.field;
 
+import com.meti.compile.feature.LeafNode;
 import com.meti.compile.feature.Node;
 import com.meti.compile.feature.Type;
 import com.meti.compile.feature.field.Field.Flag;

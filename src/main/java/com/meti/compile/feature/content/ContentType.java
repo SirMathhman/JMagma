@@ -3,6 +3,7 @@ package com.meti.compile.feature.content;
 import com.meti.compile.feature.Type;
 
 import java.util.Objects;
+import java.util.Optional;
 
 public class ContentType implements Type {
 	private final String content;
@@ -16,9 +17,19 @@ public class ContentType implements Type {
 	}
 
 	@Override
+	public Optional<String> findContent() {
+		return Optional.of(content);
+	}
+
+	@Override
+	public boolean is(Group group) {
+		return group == Group.Content;
+	}
+
+	@Override
 	public String toString() {
 		return "ContentType{" +
-		       "content='" + content + '\'' +
+		       "findContent='" + content + '\'' +
 		       '}';
 	}
 

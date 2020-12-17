@@ -1,5 +1,6 @@
 package com.meti.compile.feature.field;
 
+import com.meti.api.core.EF1;
 import com.meti.compile.feature.Node;
 import com.meti.compile.feature.Type;
 
@@ -52,5 +53,10 @@ public class ValueField implements Field {
 	@Override
 	public String render() {
 		return type.render(name) + "=" + value.render();
+	}
+
+	@Override
+	public <E extends Exception> Field mapByType(EF1<Type, Type, E> mapper) throws E {
+		return ValueField(flags, name, mapper.apply(type), value);
 	}
 }

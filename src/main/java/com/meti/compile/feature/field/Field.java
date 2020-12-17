@@ -1,8 +1,24 @@
 package com.meti.compile.feature.field;
 
-import com.meti.compile.feature.Node;
+import com.meti.api.core.EF1;
+import com.meti.compile.feature.LeafNode;
+import com.meti.compile.feature.Type;
 
-public interface Field extends Node {
+import java.util.Optional;
+
+public interface Field extends LeafNode {
+	<E extends Exception> Field mapByType(EF1<Type, Type, E> mapper) throws E;
+
+	@Override
+	default Optional<String> findContent() {
+		return Optional.empty();
+	}
+
+	@Override
+	default boolean is(Group group) {
+		return group == Group.Field;
+	}
+
 	enum Flag {
 		CONST,
 		LET

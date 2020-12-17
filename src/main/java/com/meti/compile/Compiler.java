@@ -1,17 +1,9 @@
 package com.meti.compile;
 
-import com.meti.compile.feature.Node;
-import com.meti.compile.feature.Tokenizer;
-
-import java.util.function.Supplier;
+import static com.meti.compile.TokenizationStage.TokenizationStage_;
 
 public class Compiler {
-	private final Tokenizer<Node> tokenizer = MagmaTokenizer.MagmaTokenizer_;
-
 	String compile(String content) throws CompileException {
-		Supplier<CompileException> invalidContent = () -> new CompileException("Unable to tokenize content: " + content);
-		return tokenizer.tokenize(content)
-				.map(Node::render)
-				.orElseThrow(invalidContent);
+		return TokenizationStage_.apply(content).render();
 	}
 }

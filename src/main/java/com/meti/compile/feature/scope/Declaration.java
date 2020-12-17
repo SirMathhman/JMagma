@@ -1,15 +1,22 @@
 package com.meti.compile.feature.scope;
 
+import com.meti.api.core.EF1;
+import com.meti.compile.feature.LeafNode;
 import com.meti.compile.feature.Node;
 import com.meti.compile.feature.field.Field;
 
 import java.util.Objects;
 
-public class Declaration implements Node {
+public class Declaration implements LeafNode {
 	private final Field field;
 
 	public Declaration(Field field) {
 		this.field = field;
+	}
+
+	@Override
+	public <E extends Exception> Node mapByFields(EF1<Field, Field, E> mapper) throws E {
+		return new Declaration(mapper.apply(field));
 	}
 
 	@Override
@@ -35,5 +42,10 @@ public class Declaration implements Node {
 	@Override
 	public String render() {
 		return field.render() + ";";
+	}
+
+	@Override
+	public boolean is(Group group) {
+		return group == Group.Declaration;
 	}
 }
