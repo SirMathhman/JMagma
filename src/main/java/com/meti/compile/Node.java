@@ -1,5 +1,4 @@
 package com.meti.compile;
 
-public interface Node {
-	String render();
+public interface Node extends Renderable {
 }
