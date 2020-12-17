@@ -2,53 +2,86 @@ package com.meti.compile;
 
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 
 public class Main {
+	private static final Path inputPath = Paths.get(".", "Main.mg");
+	private static final Path intermediatePath = Paths.get(".", "Main.c");
+
 	public static void main(String[] args) {
-		var input = Paths.get(".", "Main.mg");
-		if (!Files.exists(input)) {
-			try {
-				Files.createFile(input);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-		String content;
+		ensureInputPath();
+		var input = readContent(inputPath);
+		var output = compile(input);
+		ensureIntermediatePath();
+		writeIntermediate(output);
+		compileIntermediate();
+		deleteIntermediate();
+	}
+
+	private static void deleteIntermediate() {
 		try {
-			content = Files.readString(input);
-		} catch (IOException e) {
-			content = "";
-		}
-		String output;
-		if (content.isBlank()) {
-			output = "int main(){return 0;}";
-		} else {
-			output = "int main(){return 0;}";
-		}
-		var outputFile = Paths.get(".", "Main.c");
-		if (!Files.exists(outputFile)) {
-			try {
-				Files.createFile(outputFile);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-		try {
-			Files.writeString(outputFile, output);
+			Files.deleteIfExists(intermediatePath);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+
+	private static void compileIntermediate() {
 		try {
-			var builder = new ProcessBuilder("gcc", "-o", "Main", outputFile.toAbsolutePath().toString());
+			var builder = new ProcessBuilder("gcc", "-o", "Main", intermediatePath.toAbsolutePath().toString());
 			var start = builder.start();
 			start.getInputStream().transferTo(System.out);
 			start.getErrorStream().transferTo(System.err);
 			start.waitFor();
-
-			Files.deleteIfExists(outputFile);
 		} catch (IOException | InterruptedException e) {
 			e.printStackTrace();
+		}
+	}
+
+	private static void writeIntermediate(String output) {
+		try {
+			Files.writeString(intermediatePath, output);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	private static void ensureIntermediatePath() {
+		if (!Files.exists(intermediatePath)) {
+			try {
+				Files.createFile(intermediatePath);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	private static String compile(String input) {
+		String output;
+		if (input.isBlank()) {
+			output = "int main(){return 0;}";
+		} else {
+			output = "int main(){return 0;}";
+		}
+		return output;
+	}
+
+	private static void ensureInputPath() {
+		if (!Files.exists(inputPath)) {
+			try {
+				Files.createFile(inputPath);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	private static String readContent(java.nio.file.Path input) {
+		try {
+			return Files.readString(input);
+		} catch (IOException e) {
+			return "";
 		}
 	}
 }
