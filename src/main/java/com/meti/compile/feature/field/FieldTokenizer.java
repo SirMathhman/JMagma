@@ -15,7 +15,7 @@ import static com.meti.compile.feature.field.FieldBuilders.FieldBuilder;
 import static com.meti.compile.feature.field.FieldBuilders.None;
 
 public class FieldTokenizer implements Tokenizer<Field> {
-	static final Tokenizer<Field> FieldTokenizer_ = new FieldTokenizer();
+	public static final Tokenizer<Field> FieldTokenizer_ = new FieldTokenizer();
 
 	private FieldTokenizer() {
 	}
