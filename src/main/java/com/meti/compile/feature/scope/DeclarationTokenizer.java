@@ -8,6 +8,11 @@ import java.util.Optional;
 import static com.meti.compile.feature.field.FieldTokenizer.FieldTokenizer_;
 
 public class DeclarationTokenizer implements NodeTokenizer {
+	public static final DeclarationTokenizer DeclarationTokenizer_ = new DeclarationTokenizer();
+
+	private DeclarationTokenizer() {
+	}
+
 	@Override
 	public Optional<Node> tokenize(String content) {
 		return FieldTokenizer_

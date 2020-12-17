@@ -1,10 +1,7 @@
 package com.meti.compile.feature.scope;
 
 import com.meti.compile.feature.Node;
-import com.meti.compile.feature.content.ContentNode;
-import com.meti.compile.feature.content.ContentType;
 import com.meti.compile.feature.field.Field;
-import com.meti.compile.feature.primitive.Primitive;
 import org.junit.jupiter.api.Test;
 
 import static com.meti.compile.feature.content.ContentNode.ContentNode;
@@ -25,7 +22,7 @@ class DeclarationTokenizerTest {
 
 	@Test
 	void tokenize() {
-		assertEquals(createDeclaration(), new DeclarationTokenizer()
+		assertEquals(createDeclaration(), DeclarationTokenizer.DeclarationTokenizer_
 				.tokenize("const x : I16 = 10")
 				.orElseThrow());
 	}
