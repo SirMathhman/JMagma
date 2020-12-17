@@ -2,6 +2,6 @@ package com.meti.compile;
 
 import java.util.Optional;
 
-public interface Tokenizer {
-	Optional<Node> tokenize(String content);
+public interface Tokenizer<T> {
+	Optional<T> tokenize(String content);
 }
