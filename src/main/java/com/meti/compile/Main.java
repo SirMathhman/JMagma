@@ -40,7 +40,7 @@ public class Main {
 			e.printStackTrace();
 		}
 		try {
-			var builder = new ProcessBuilder("gcc", "-o", "Main", "Main.c");
+			var builder = new ProcessBuilder("gcc", "-o", "Main", outputFile.toAbsolutePath().toString());
 			var start = builder.start();
 			start.getInputStream().transferTo(System.out);
 			start.getErrorStream().transferTo(System.err);
