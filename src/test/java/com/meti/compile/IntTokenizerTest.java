@@ -8,14 +8,6 @@ import static com.meti.compile.Int.Int;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class IntTokenizerTest {
-
-	@Test
-	void tokenizeToString() {
-		assertEquals("5", IntTokenizer.IntTokenizer_
-				.tokenizeToString("5")
-				.orElse(""));
-	}
-
 	@Test
 	void tokenize() {
 		assertEquals("5", IntTokenizer.IntTokenizer_
