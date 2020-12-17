@@ -60,7 +60,7 @@ public class FieldTokenizer implements Tokenizer<Field> {
 		var colon = content.indexOf(':');
 		var equals = content.indexOf('=');
 
-		var type = createType(content, equals, colon + 1);
+		var type = createType(content, colon + 1, equals);
 		var value = createValue(content, equals + 1);
 		return tokenizeHeader(content, colon)
 				.withType(type)
@@ -88,7 +88,7 @@ public class FieldTokenizer implements Tokenizer<Field> {
 		return ContentNode(valueContent);
 	}
 
-	private Type createType(String content, int to, int from) {
+	private Type createType(String content, int from, int to) {
 		var typeSlice = content.substring(from, to);
 		var typeContent = typeSlice.trim();
 		return ContentType(typeContent);
