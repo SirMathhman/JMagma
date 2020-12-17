@@ -6,8 +6,8 @@ import java.util.Optional;
 import static com.meti.compile.Int.Int;
 
 public class IntTokenizer implements Tokenizer {
-	public static final int Base10 = 10;
 	static final Tokenizer IntTokenizer_ = new IntTokenizer();
+	private static final int Base10 = 10;
 
 	private IntTokenizer() {
 	}
