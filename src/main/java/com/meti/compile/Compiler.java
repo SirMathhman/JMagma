@@ -7,6 +7,6 @@ public class Compiler {
 
 	String compile(String content) throws CompileException {
 		Supplier<CompileException> invalidContent = () -> new CompileException("Unable to tokenize content: " + content);
-		return tokenizer.tokenize(content).orElseThrow(invalidContent);
+		return tokenizer.tokenizeToString(content).orElseThrow(invalidContent);
 	}
 }
