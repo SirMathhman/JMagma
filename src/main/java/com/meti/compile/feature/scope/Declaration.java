@@ -10,13 +10,17 @@ import java.util.Objects;
 public class Declaration implements LeafNode {
 	private final Field field;
 
-	public Declaration(Field field) {
+	private Declaration(Field field) {
 		this.field = field;
+	}
+
+	public static Declaration Declaration(Field field) {
+		return new Declaration(field);
 	}
 
 	@Override
 	public <E extends Exception> Node mapByFields(EF1<Field, Field, E> mapper) throws E {
-		return new Declaration(mapper.apply(field));
+		return Declaration(mapper.apply(field));
 	}
 
 	@Override

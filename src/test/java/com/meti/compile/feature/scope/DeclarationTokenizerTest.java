@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class DeclarationTokenizerTest {
 	private Node createDeclaration() {
-		return new Declaration(FieldBuilder()
+		return Declaration.Declaration(FieldBuilder()
 				.withFlag(Field.Flag.CONST)
 				.withName("x")
 				.withType(ContentType("I16"))
