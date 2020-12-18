@@ -5,6 +5,8 @@ import com.meti.compile.feature.Node;
 import java.util.Objects;
 
 public class Boolean implements Node {
+	public static final Node True = new Boolean(true);
+	public static final Node False = new Boolean(false);
 	private final boolean value;
 
 	@Override
