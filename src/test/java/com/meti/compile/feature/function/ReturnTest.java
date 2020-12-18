@@ -7,6 +7,10 @@ import static com.meti.compile.feature.primitive.Int.Int;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class ReturnTest {
+	@Test
+	void testEquals(){
+		assertEquals(Return(Int(10)), Return(Int(10)));
+	}
 
 	@Test
 	void render() {

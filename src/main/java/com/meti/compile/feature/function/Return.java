@@ -3,6 +3,8 @@ package com.meti.compile.feature.function;
 import com.meti.api.core.EF1;
 import com.meti.compile.feature.Node;
 
+import java.util.Objects;
+
 public class Return implements Node{
 	private final Node value;
 
@@ -12,6 +14,19 @@ public class Return implements Node{
 
 	public static Return Return(Node value) {
 		return new Return(value);
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		Return aReturn = (Return) o;
+		return Objects.equals(value, aReturn.value);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(value);
 	}
 
 	@Override
