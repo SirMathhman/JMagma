@@ -17,6 +17,13 @@ public class ContentNode implements LeafNode {
 	}
 
 	@Override
+	public String toString() {
+		return "ContentNode{" +
+		       "content='" + content + '\'' +
+		       '}';
+	}
+
+	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
@@ -35,7 +42,7 @@ public class ContentNode implements LeafNode {
 	}
 
 	@Override
-	public Optional<String> findContent(){
+	public Optional<String> findContent() {
 		return Optional.of(content);
 	}
 
