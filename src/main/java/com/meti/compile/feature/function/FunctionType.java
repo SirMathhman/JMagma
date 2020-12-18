@@ -3,10 +3,7 @@ package com.meti.compile.feature.function;
 import com.meti.api.core.EF1;
 import com.meti.compile.feature.Type;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class FunctionType implements Type {
@@ -20,6 +17,20 @@ public class FunctionType implements Type {
 
 	static P0 FunctionType() {
 		return new P0(Collections.emptyList());
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		FunctionType that = (FunctionType) o;
+		return Objects.equals(returnType, that.returnType) &&
+		       Objects.equals(paramTypes, that.paramTypes);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(returnType, paramTypes);
 	}
 
 	@Override

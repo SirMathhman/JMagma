@@ -11,13 +11,21 @@ public class Abstraction extends Function {
 		super(identity, parameters);
 	}
 
+	static Abstraction Abstraction(Field identity, List<Field> parameters) {
+		return new Abstraction(identity, parameters);
+	}
+
 	@Override
 	protected Node copy(Field identity, List<Field> parameters) {
 		return new Abstraction(identity, parameters);
 	}
 
-	static Abstraction Abstraction(Field identity, List<Field> parameters) {
-		return new Abstraction(identity, parameters);
+	@Override
+	public String toString() {
+		return "Function{" +
+		       "identity=" + identity +
+		       ", parameters=" + parameters +
+		       '}';
 	}
 
 	@Override

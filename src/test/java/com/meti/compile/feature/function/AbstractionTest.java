@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class AbstractionTest {
 	@Test
-	void testEqualas() {
+	void testEquals() {
 		assertEquals(createNode(), createNode());
 	}
 
@@ -34,7 +34,6 @@ class AbstractionTest {
 				.withName("value")
 				.withType(U64)
 				.complete();
-		var value = Abstraction(identity, List.of(parameter));
-		return value;
+		return Abstraction(identity, List.of(parameter));
 	}
 }

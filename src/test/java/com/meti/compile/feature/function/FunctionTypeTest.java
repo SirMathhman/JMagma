@@ -9,6 +9,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class FunctionTypeTest {
 	@Test
+	void testEquals(){
+		assertEquals(createType(), createType());
+	}
+
+	@Test
 	void findChild() {
 		assertEquals(Primitive.I8, createType().findChild().orElseThrow());
 	}
