@@ -5,11 +5,22 @@ import com.meti.compile.feature.Type;
 
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Function;
 
 public class EmptyField implements Field {
 	protected final String name;
 	private final Type type;
 	private final Set<Flag> flags;
+
+	private EmptyField(Set<Flag> flags, String name, Type type) {
+		this.name = name;
+		this.type = type;
+		this.flags = flags;
+	}
+
+	protected static Field EmptyField(Set<Flag> flags, String name, Type type) {
+		return new EmptyField(flags, name, type);
+	}
 
 	@Override
 	public boolean equals(Object o) {
@@ -26,16 +37,6 @@ public class EmptyField implements Field {
 		return Objects.hash(name, type, flags);
 	}
 
-	private EmptyField(Set<Flag> flags, String name, Type type) {
-		this.name = name;
-		this.type = type;
-		this.flags = flags;
-	}
-
-	protected static Field EmptyField(Set<Flag> flags, String name, Type type) {
-		return new EmptyField(flags, name, type);
-	}
-
 	@Override
 	public String render() {
 		return type.render(name);
@@ -44,5 +45,15 @@ public class EmptyField implements Field {
 	@Override
 	public <E extends Exception> Field mapByType(EF1<Type, Type, E> mapper) throws E {
 		return EmptyField(flags, name, mapper.apply(type));
+	}
+
+	@Override
+	public <T> T applyToType(Function<Type, T> mapper) {
+		return mapper.apply(type);
+	}
+
+	@Override
+	public <T> T applyToName(Function<String, T> mapper) {
+		return mapper.apply(name);
 	}
 }

@@ -6,6 +6,7 @@ import com.meti.compile.feature.Type;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class FunctionType implements Type {
@@ -19,6 +20,11 @@ public class FunctionType implements Type {
 
 	static P0 FunctionType() {
 		return new P0(Collections.emptyList());
+	}
+
+	@Override
+	public Optional<Type> findChild() {
+		return Optional.of(returnType);
 	}
 
 	@Override

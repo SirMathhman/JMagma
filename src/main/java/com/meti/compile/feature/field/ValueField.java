@@ -6,6 +6,7 @@ import com.meti.compile.feature.Type;
 
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Function;
 
 public class ValueField implements Field {
 	private final String name;
@@ -58,5 +59,15 @@ public class ValueField implements Field {
 	@Override
 	public <E extends Exception> Field mapByType(EF1<Type, Type, E> mapper) throws E {
 		return ValueField(flags, name, mapper.apply(type), value);
+	}
+
+	@Override
+	public <T> T applyToType(Function<Type, T> mapper) {
+		return mapper.apply(type);
+	}
+
+	@Override
+	public <T> T applyToName(Function<String, T> mapper) {
+		return mapper.apply(name);
 	}
 }

@@ -5,9 +5,14 @@ import com.meti.compile.feature.LeafNode;
 import com.meti.compile.feature.Type;
 
 import java.util.Optional;
+import java.util.function.Function;
 
 public interface Field extends LeafNode {
 	<E extends Exception> Field mapByType(EF1<Type, Type, E> mapper) throws E;
+
+	<T> T applyToType(Function<Type, T> mapper);
+
+	<T> T applyToName(Function<String, T> mapper);
 
 	@Override
 	default Optional<String> findContent() {

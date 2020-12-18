@@ -24,6 +24,10 @@ public interface Type extends Renderable {
 		return false;
 	}
 
+	default Optional<Type> findChild() {
+		return Optional.empty();
+	}
+
 	enum Group {
 		Content
 	}
