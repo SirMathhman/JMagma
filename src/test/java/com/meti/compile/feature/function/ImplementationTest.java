@@ -37,7 +37,6 @@ class ImplementationTest {
 				.withName("value")
 				.withType(U64)
 				.complete();
-		var value = Implementation(identity, List.of(parameter), Block(Return(Variable("value"))));
-		return value;
+		return Implementation(identity, List.of(parameter), Block(Return(Variable("value"))));
 	}
 }

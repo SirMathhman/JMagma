@@ -1,10 +1,12 @@
 package com.meti.compile.feature.function;
 
+import com.meti.api.core.EF1;
 import com.meti.compile.feature.Node;
 import com.meti.compile.feature.Type;
 import com.meti.compile.feature.field.Field;
 import com.meti.compile.feature.primitive.Primitive;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -16,6 +18,17 @@ public abstract class Function implements Node {
 		this.identity = identity;
 		this.parameters = parameters;
 	}
+
+	@Override
+	public <E extends Exception> Node mapByFields(EF1<Field, Field, E> mapper) throws E {
+		var newParameters = new ArrayList<Field>();
+		for (Field parameter : parameters) {
+			newParameters.add(mapper.apply(parameter));
+		}
+		return copy(mapper.apply(identity), newParameters);
+	}
+
+	protected abstract Node copy(Field identity, List<Field> parameters);
 
 	@Override
 	public String render() {

@@ -1,5 +1,6 @@
 package com.meti.compile.feature.function;
 
+import com.meti.api.core.EF1;
 import com.meti.compile.feature.Node;
 import com.meti.compile.feature.field.Field;
 
@@ -17,6 +18,8 @@ public class Implementation extends Function {
 	public static Function Implementation(Field identity, List<Field> parameters, Node value) {
 		return new Implementation(identity, parameters, value);
 	}
+
+
 
 	@Override
 	public String toString() {
@@ -38,6 +41,16 @@ public class Implementation extends Function {
 	@Override
 	public int hashCode() {
 		return Objects.hash(value);
+	}
+
+	@Override
+	public <E extends Exception> Node mapByChildren(EF1<Node, Node, E> mapper) throws E {
+		return new Implementation(identity, parameters, mapper.apply(value));
+	}
+
+	@Override
+	protected Node copy(Field identity, List<Field> parameters) {
+		return new Implementation(identity, parameters, value);
 	}
 
 	@Override

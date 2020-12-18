@@ -1,5 +1,6 @@
 package com.meti.compile.feature.function;
 
+import com.meti.compile.feature.Node;
 import com.meti.compile.feature.field.Field;
 
 import java.util.List;
@@ -8,6 +9,11 @@ import java.util.Objects;
 public class Abstraction extends Function {
 	private Abstraction(Field identity, List<Field> parameters) {
 		super(identity, parameters);
+	}
+
+	@Override
+	protected Node copy(Field identity, List<Field> parameters) {
+		return new Abstraction(identity, parameters);
 	}
 
 	static Abstraction Abstraction(Field identity, List<Field> parameters) {
