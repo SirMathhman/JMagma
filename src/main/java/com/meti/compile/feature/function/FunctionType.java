@@ -28,6 +28,14 @@ public class FunctionType implements Type {
 	}
 
 	@Override
+	public String toString() {
+		return "FunctionType{" +
+		       "returnType=" + returnType +
+		       ", paramTypes=" + paramTypes +
+		       '}';
+	}
+
+	@Override
 	public <E extends Exception> Type mapByChildren(EF1<Type, Type, E> mapper) throws E {
 		var newParameters = new ArrayList<Type>();
 		for (Type paramType : paramTypes) {

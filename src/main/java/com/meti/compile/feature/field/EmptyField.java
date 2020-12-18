@@ -23,6 +23,15 @@ public class EmptyField implements Field {
 	}
 
 	@Override
+	public String toString() {
+		return "EmptyField{" +
+		       "name='" + name + '\'' +
+		       ", type=" + type +
+		       ", flags=" + flags +
+		       '}';
+	}
+
+	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
@@ -55,5 +64,10 @@ public class EmptyField implements Field {
 	@Override
 	public <T> T applyToName(Function<String, T> mapper) {
 		return mapper.apply(name);
+	}
+
+	@Override
+	public Type type() {
+		return type;
 	}
 }

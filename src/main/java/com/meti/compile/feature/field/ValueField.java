@@ -70,4 +70,9 @@ public class ValueField implements Field {
 	public <T> T applyToName(Function<String, T> mapper) {
 		return mapper.apply(name);
 	}
+
+	@Override
+	public Type type() {
+		return type;
+	}
 }

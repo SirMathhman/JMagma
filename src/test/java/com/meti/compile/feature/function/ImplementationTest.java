@@ -14,9 +14,18 @@ import static com.meti.compile.feature.scope.Variable.Variable;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class ImplementationTest {
+	@Test
+	void testEquals() {
+		assertEquals(createNode(), createNode());
+	}
 
 	@Test
 	void render() {
+		var value = createNode();
+		assertEquals("unsigned long long pass(unsigned long long value){return value;}", value.render());
+	}
+
+	private Function createNode() {
 		var identity = FieldBuilder()
 				.withName("pass")
 				.withType(FunctionType()
@@ -29,6 +38,6 @@ class ImplementationTest {
 				.withType(U64)
 				.complete();
 		var value = Implementation(identity, List.of(parameter), Block(Return(Variable("value"))));
-		assertEquals("unsigned long long pass(unsigned long long value){return value;}", value.render());
+		return value;
 	}
 }

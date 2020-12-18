@@ -1,5 +1,6 @@
 package com.meti.compile.feature.block;
 
+import com.meti.compile.TokenizationException;
 import org.junit.jupiter.api.Test;
 
 import static com.meti.compile.feature.block.Block.Block;
@@ -10,17 +11,17 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class BlockTokenizerTest {
 
 	@Test
-	void tokenize() {
+	void tokenize() throws TokenizationException {
 		assertEquals(Block(ContentNode("return 10")), BlockTokenizer_.tokenize("{return 10;}").orElseThrow());
 	}
 
 	@Test
-	void tokenizeMultiple() {
+	void tokenizeMultiple() throws TokenizationException {
 		assertEquals(Block(ContentNode("const x : I16 = 10"), ContentNode("return x")), BlockTokenizer_.tokenize("{const x : I16 = 10; return x;}").orElseThrow());
 	}
 
 	@Test
-	void tokenizeBrackets() {
+	void tokenizeBrackets() throws TokenizationException {
 		assertEquals(Block(ContentNode("{}"), ContentNode("{}")), BlockTokenizer_.tokenize("{{}{}}").orElseThrow());
 	}
 }

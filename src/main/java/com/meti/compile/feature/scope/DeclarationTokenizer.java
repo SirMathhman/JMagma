@@ -1,5 +1,6 @@
 package com.meti.compile.feature.scope;
 
+import com.meti.compile.TokenizationException;
 import com.meti.compile.feature.Node;
 import com.meti.compile.feature.Tokenizer;
 
@@ -14,7 +15,7 @@ public class DeclarationTokenizer implements Tokenizer<Node> {
 	}
 
 	@Override
-	public Optional<Node> tokenize(String content) {
+	public Optional<Node> tokenize(String content) throws TokenizationException {
 		return FieldTokenizer_
 				.tokenize(content)
 				.map(Declaration::Declaration);

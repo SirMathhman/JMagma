@@ -1,5 +1,6 @@
 package com.meti.compile.feature.field;
 
+import com.meti.compile.TokenizationException;
 import org.junit.jupiter.api.Test;
 
 import static com.meti.compile.feature.content.ContentNode.ContentNode;
@@ -14,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 class FieldTokenizerTest {
 
 	@Test
-	void tokenize() {
+	void tokenize() throws TokenizationException {
 		var expected = FieldBuilder()
 				.withFlag(CONST)
 				.withName("x")
@@ -26,7 +27,7 @@ class FieldTokenizerTest {
 	}
 
 	@Test
-	void tokenizeWithoutType() {
+	void tokenizeWithoutType() throws TokenizationException {
 		var expected = FieldBuilder()
 				.withFlag(CONST)
 				.withName("x")
@@ -38,7 +39,7 @@ class FieldTokenizerTest {
 	}
 
 	@Test
-	void tokenizeWithoutValue() {
+	void tokenizeWithoutValue() throws TokenizationException {
 		var expected = FieldBuilder()
 				.withFlag(CONST)
 				.withName("x")
@@ -49,7 +50,7 @@ class FieldTokenizerTest {
 	}
 
 	@Test
-	void tokenizeInvalid() {
+	void tokenizeInvalid() throws TokenizationException {
 		assertTrue(FieldTokenizer_.tokenize("5").isEmpty());
 	}
 }

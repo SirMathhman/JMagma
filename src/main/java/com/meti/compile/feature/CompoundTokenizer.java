@@ -1,16 +1,22 @@
 package com.meti.compile.feature;
 
+import com.meti.compile.TokenizationException;
+
+import java.util.List;
 import java.util.Optional;
-import java.util.stream.Stream;
 
 public abstract class CompoundTokenizer<T> implements Tokenizer<T> {
-	protected abstract Stream<Tokenizer<T>> streamChildren();
+	protected abstract List<Tokenizer<T>> listChildren();
 
 	@Override
-	public Optional<T> tokenize(String content) {
-		return streamChildren()
-				.map(tokenizer -> tokenizer.tokenize(content))
-				.flatMap(Optional::stream)
-				.findFirst();
+	public Optional<T> tokenize(String content) throws TokenizationException {
+		var children = listChildren();
+		for (Tokenizer<T> child : children) {
+			var optional = child.tokenize(content);
+			if (optional.isPresent()) {
+				return optional;
+			}
+		}
+		return Optional.empty();
 	}
 }

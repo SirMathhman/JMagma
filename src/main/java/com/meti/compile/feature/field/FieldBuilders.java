@@ -1,6 +1,5 @@
 package com.meti.compile.feature.field;
 
-import com.meti.compile.feature.LeafNode;
 import com.meti.compile.feature.Node;
 import com.meti.compile.feature.Type;
 import com.meti.compile.feature.field.Field.Flag;
@@ -21,12 +20,19 @@ public class FieldBuilders {
 
 	public static record None(Set<Flag> flags) {
 		public None withFlag(Flag flag) {
-			flags.add(flag);
-			return new None(flags);
+			Set<Flag> newFlags = new HashSet<>(flags);
+			newFlags.add(flag);
+			return new None(newFlags);
 		}
 
 		public WithName withName(String name) {
 			return new WithName(flags, name);
+		}
+
+		public None withFlags(Set<Flag> flags) {
+			Set<Flag> newFlags = new HashSet<>(flags);
+			newFlags.addAll(flags);
+			return new None(newFlags);
 		}
 	}
 

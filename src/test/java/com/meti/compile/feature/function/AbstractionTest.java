@@ -12,7 +12,17 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class AbstractionTest {
 	@Test
+	void testEqualas() {
+		assertEquals(createNode(), createNode());
+	}
+
+	@Test
 	void render() {
+		var value = createNode();
+		assertEquals("unsigned long long pass(unsigned long long value);", value.render());
+	}
+
+	private Abstraction createNode() {
 		var identity = FieldBuilder()
 				.withName("pass")
 				.withType(FunctionType()
@@ -25,6 +35,6 @@ class AbstractionTest {
 				.withType(U64)
 				.complete();
 		var value = Abstraction(identity, List.of(parameter));
-		assertEquals("unsigned long long pass(unsigned long long value);", value.render());
+		return value;
 	}
 }

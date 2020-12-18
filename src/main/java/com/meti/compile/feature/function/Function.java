@@ -9,8 +9,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public abstract class Function implements Node {
-	private final Field identity;
-	private final List<Field> parameters;
+	protected final Field identity;
+	protected final List<Field> parameters;
 
 	Function(Field identity, List<Field> parameters) {
 		this.identity = identity;

@@ -24,8 +24,10 @@ public interface Field extends LeafNode {
 		return group == Group.Field;
 	}
 
+	Type type();
+
 	enum Flag {
 		CONST,
-		LET
+		DEF, LET
 	}
 }

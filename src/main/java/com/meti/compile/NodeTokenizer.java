@@ -4,7 +4,7 @@ import com.meti.compile.feature.CompoundTokenizer;
 import com.meti.compile.feature.Node;
 import com.meti.compile.feature.Tokenizer;
 
-import java.util.stream.Stream;
+import java.util.List;
 
 import static com.meti.compile.feature.primitive.IntTokenizer.IntTokenizer_;
 import static com.meti.compile.feature.scope.DeclarationTokenizer.DeclarationTokenizer_;
@@ -16,7 +16,7 @@ class NodeTokenizer extends CompoundTokenizer<Node> {
 	}
 
 	@Override
-	protected Stream<Tokenizer<Node>> streamChildren() {
-		return Stream.of(DeclarationTokenizer_, IntTokenizer_);
+	protected List<Tokenizer<Node>> listChildren() {
+		return List.of(DeclarationTokenizer_, IntTokenizer_);
 	}
 }
