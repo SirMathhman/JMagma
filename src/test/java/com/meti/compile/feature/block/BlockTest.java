@@ -3,7 +3,7 @@ package com.meti.compile.feature.block;
 import org.junit.jupiter.api.Test;
 
 import static com.meti.compile.feature.block.Block.Block;
-import static com.meti.compile.feature.field.FieldBuilders.FieldBuilder;
+import static com.meti.compile.feature.field.FieldBuilder.FieldBuilder;
 import static com.meti.compile.feature.primitive.Primitive.U64;
 import static com.meti.compile.feature.scope.Declaration.Declaration;
 import static org.junit.jupiter.api.Assertions.assertEquals;

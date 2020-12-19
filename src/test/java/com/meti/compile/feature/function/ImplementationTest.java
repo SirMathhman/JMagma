@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 import java.util.List;
 
 import static com.meti.compile.feature.block.Block.Block;
-import static com.meti.compile.feature.field.FieldBuilders.FieldBuilder;
+import static com.meti.compile.feature.field.FieldBuilder.FieldBuilder;
 import static com.meti.compile.feature.function.FunctionType.FunctionType;
 import static com.meti.compile.feature.function.Implementation.Implementation;
 import static com.meti.compile.feature.function.Return.Return;

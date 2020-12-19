@@ -8,13 +8,13 @@ import java.util.Set;
 import static com.meti.compile.feature.field.EmptyField.EmptyField;
 import static com.meti.compile.feature.field.Field.Flag.CONST;
 import static com.meti.compile.feature.field.Field.Flag.LET;
-import static com.meti.compile.feature.field.FieldBuilders.FieldBuilder;
+import static com.meti.compile.feature.field.FieldBuilder.FieldBuilder;
 import static com.meti.compile.feature.primitive.Primitive.U16;
 import static com.meti.compile.feature.primitive.Primitive.U8;
 import static com.meti.compile.feature.field.ValueField.ValueField;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class FieldBuildersTest {
+class FieldBuilderTest {
 	@Test
 	void withoutValue() {
 		assertEquals(EmptyField(Set.of(LET), "x", U8), FieldBuilder()

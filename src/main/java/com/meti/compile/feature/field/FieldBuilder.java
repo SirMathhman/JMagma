@@ -10,8 +10,8 @@ import java.util.Set;
 import static com.meti.compile.feature.field.EmptyField.EmptyField;
 import static com.meti.compile.feature.field.ValueField.ValueField;
 
-public class FieldBuilders {
-	public FieldBuilders() {
+public class FieldBuilder {
+	public FieldBuilder() {
 	}
 
 	public static None FieldBuilder() {

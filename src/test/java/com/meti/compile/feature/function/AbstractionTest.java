@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-import static com.meti.compile.feature.field.FieldBuilders.FieldBuilder;
+import static com.meti.compile.feature.field.FieldBuilder.FieldBuilder;
 import static com.meti.compile.feature.function.Abstraction.Abstraction;
 import static com.meti.compile.feature.function.FunctionType.FunctionType;
 import static com.meti.compile.feature.primitive.Primitive.U64;

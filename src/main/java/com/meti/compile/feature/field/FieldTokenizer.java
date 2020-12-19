@@ -11,8 +11,8 @@ import java.util.stream.Stream;
 
 import static com.meti.compile.feature.content.ContentNode.ContentNode;
 import static com.meti.compile.feature.content.ContentType.ContentType;
-import static com.meti.compile.feature.field.FieldBuilders.FieldBuilder;
-import static com.meti.compile.feature.field.FieldBuilders.None;
+import static com.meti.compile.feature.field.FieldBuilder.FieldBuilder;
+import static com.meti.compile.feature.field.FieldBuilder.None;
 
 public class FieldTokenizer implements Tokenizer<Field> {
 	public static final Tokenizer<Field> FieldTokenizer_ = new FieldTokenizer();
@@ -70,7 +70,7 @@ public class FieldTokenizer implements Tokenizer<Field> {
 				.complete();
 	}
 
-	private FieldBuilders.WithName tokenizeHeader(String content, int extent) {
+	private FieldBuilder.WithName tokenizeHeader(String content, int extent) {
 		var headerSlice = content.substring(0, extent);
 		var header = headerSlice.trim();
 		if (header.contains(" ")) {
