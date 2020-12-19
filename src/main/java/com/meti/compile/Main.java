@@ -2,17 +2,14 @@ package com.meti.compile;
 
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 
 public class Main {
-	private static final Path inputPath = Paths.get(".", "Main.mg");
-	private static final Path intermediatePath = Paths.get(".", "Main.c");
 	private static final Compiler Compiler = new Compiler();
 
 	public static void main(String[] args) {
 		ensureInputPath();
-		var input = readContent(inputPath);
+		var input = readContent(Paths.get(".", "Main.mg"));
 		var output = compile(input);
 		ensureIntermediatePath();
 		writeIntermediate(output);
@@ -22,7 +19,7 @@ public class Main {
 
 	private static void deleteIntermediate() {
 		try {
-			Files.deleteIfExists(intermediatePath);
+			Files.deleteIfExists(Paths.get(".", "Main.c"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -30,7 +27,7 @@ public class Main {
 
 	private static void compileIntermediate() {
 		try {
-			var builder = new ProcessBuilder("gcc", "-o", "Main", intermediatePath.toAbsolutePath().toString());
+			var builder = new ProcessBuilder("gcc", "-o", "Main", Paths.get(".", "Main.c").toAbsolutePath().toString());
 			var start = builder.start();
 			start.getInputStream().transferTo(System.out);
 			start.getErrorStream().transferTo(System.err);
@@ -42,16 +39,16 @@ public class Main {
 
 	private static void writeIntermediate(String output) {
 		try {
-			Files.writeString(intermediatePath, output);
+			Files.writeString(Paths.get(".", "Main.c"), output);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 
 	private static void ensureIntermediatePath() {
-		if (!Files.exists(intermediatePath)) {
+		if (!Files.exists(Paths.get(".", "Main.c"))) {
 			try {
-				Files.createFile(intermediatePath);
+				Files.createFile(Paths.get(".", "Main.c"));
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -73,9 +70,9 @@ public class Main {
 	}
 
 	private static void ensureInputPath() {
-		if (!Files.exists(inputPath)) {
+		if (!Files.exists(Paths.get(".", "Main.mg"))) {
 			try {
-				Files.createFile(inputPath);
+				Files.createFile(Paths.get(".", "Main.mg"));
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
