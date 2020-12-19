@@ -9,6 +9,18 @@ class CompilerTest {
 	private static final Compiler Compiler = new Compiler();
 
 	@Test
+	void helloWorld(){
+		assertCompile("#include <stdio.h>\nint main(){printf(\"Hello World!\");return 0;}", """
+				import native stdio;
+				native def printf(format : Ref[I8], args : Any...);
+				def main() : I16 => {
+					printf("Hello World!");
+					return 0;
+				}
+				""");
+	}
+
+	@Test
 	void order(){
 		assertCompile("struct Wrapper{}void test(){}", "def test() : Void => {}struct Wrapper{}");
 	}
