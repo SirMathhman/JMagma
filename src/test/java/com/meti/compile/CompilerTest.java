@@ -3,57 +3,76 @@ package com.meti.compile;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
 
 class CompilerTest {
 	private static final Compiler Compiler = new Compiler();
 
 	@Test
-	void testTrue() throws CompileException {
-		assertEquals("1", Compiler.compile("true"));
+	void structure() {
+		assertCompile("struct Wrapper{int value;}", "struct Wrapper {const value : I16}");
 	}
 
 	@Test
-	void testFalse() throws CompileException {
-		assertEquals("0", Compiler.compile("false"));
+	void emptyStructure() {
+		assertCompile("struct Empty{}", "struct Empty{}");
+	}
+
+	private void assertCompile(String s, String s2) {
+		try {
+			assertEquals(s, Compiler.compile(s2));
+		} catch (CompileException e) {
+			fail(e);
+		}
 	}
 
 	@Test
-	void testIf() throws CompileException {
-		assertEquals("if(1){}", Compiler.compile("if(true){}"));
+	void testTrue() {
+		assertCompile("1", "true");
 	}
 
 	@Test
-	void testWhile() throws CompileException {
-		assertEquals("while(0){}", Compiler.compile("while(false){}"));
+	void testFalse() {
+		assertCompile("0", "false");
 	}
 
 	@Test
-	void compileDeclarations() throws CompileException {
-		assertEquals("int x=10;", Compiler.compile("const x : I16 = 10"));
+	void testIf() {
+		assertCompile("if(1){}", "if(true){}");
 	}
 
 	@Test
-	void compileBlocks() throws CompileException {
-		assertEquals("{{}{}}", Compiler.compile("{{}{}}"));
+	void testWhile() {
+		assertCompile("while(0){}", "while(false){}");
 	}
 
 	@Test
-	void blockChildren() throws CompileException {
-		assertEquals("{return 0;}", Compiler.compile("{return 0;}"));
+	void compileDeclarations() {
+		assertCompile("int x=10;", "const x : I16 = 10");
 	}
 
 	@Test
-	void compileReturn() throws CompileException {
-		assertEquals("return 10;", Compiler.compile("return 10"));
+	void compileBlocks() {
+		assertCompile("{{}{}}", "{{}{}}");
 	}
 
 	@Test
-	void compileMain() throws CompileException {
-		assertEquals("int main(){return 0;}", Compiler.compile("def main() : I16 => {return 0;}"));
+	void blockChildren() {
+		assertCompile("{return 0;}", "{return 0;}");
 	}
 
 	@Test
-	void compileInt() throws CompileException {
-		assertEquals("5", Compiler.compile("5"));
+	void compileReturn() {
+		assertCompile("return 10;", "return 10");
+	}
+
+	@Test
+	void compileMain() {
+		assertCompile("int main(){return 0;}", "def main() : I16 => {return 0;}");
+	}
+
+	@Test
+	void compileInt() {
+		assertCompile("5", "5");
 	}
 }

@@ -18,6 +18,7 @@ import static com.meti.compile.feature.function.FunctionTokenizer.FunctionTokeni
 import static com.meti.compile.feature.function.ReturnTokenizer.ReturnTokenizer_;
 import static com.meti.compile.feature.primitive.IntTokenizer.IntTokenizer_;
 import static com.meti.compile.feature.scope.DeclarationTokenizer.DeclarationTokenizer_;
+import static com.meti.compile.feature.struct.StructureTokenizer.StructureTokenizer_;
 
 class NodeTokenizer extends CompoundTokenizer<Node> {
 	static final NodeTokenizer NodeTokenizer_ = new NodeTokenizer();
@@ -28,6 +29,7 @@ class NodeTokenizer extends CompoundTokenizer<Node> {
 	@Override
 	protected List<Tokenizer<Node>> listChildren() {
 		return List.of(
+				StructureTokenizer_,
 				BooleanTokenizer_,
 				ConditionalTokenizer_,
 				BlockTokenizer_,
