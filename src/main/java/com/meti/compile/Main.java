@@ -1,15 +1,21 @@
 package com.meti.compile;
 
+import com.meti.api.io.NIOFile;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Optional;
+
+import static com.meti.api.io.NIOPath.Root;
 
 public class Main {
 	private static final Compiler Compiler = new Compiler();
 
 	public static void main(String[] args) {
-		ensureInputPath();
-		var input = readContent(Paths.get(".", "Main.mg"));
+		var input = ensureInputPath()
+				.map(Main::readContent)
+				.orElse("");
 		var output = compile(input);
 		ensureIntermediatePath();
 		writeIntermediate(output);
@@ -46,7 +52,7 @@ public class Main {
 	}
 
 	private static void ensureIntermediatePath() {
-		if (!Files.exists(Paths.get(".", "Main.c"))) {
+		if (Root.resolve("Main.c").doesNotExist()) {
 			try {
 				Files.createFile(Paths.get(".", "Main.c"));
 			} catch (IOException e) {
@@ -56,32 +62,30 @@ public class Main {
 	}
 
 	private static String compile(String input) {
-		String output;
 		if (input.isBlank()) {
-			output = "int main(){return 0;}";
+			return "int main(){return 0;}";
 		} else {
 			try {
-				output = Compiler.compile(input);
+				return Compiler.compile(input);
 			} catch (CompileException e) {
-				output = "int main(){return 0;}";
-			}
-		}
-		return output;
-	}
-
-	private static void ensureInputPath() {
-		if (!Files.exists(Paths.get(".", "Main.mg"))) {
-			try {
-				Files.createFile(Paths.get(".", "Main.mg"));
-			} catch (IOException e) {
 				e.printStackTrace();
+				return "int main(){return 0;}";
 			}
 		}
 	}
 
-	private static String readContent(java.nio.file.Path input) {
+	private static Optional<NIOFile> ensureInputPath() {
 		try {
-			return Files.readString(input);
+			return Optional.of(Root.resolve("Main.mg").ensureAsFile());
+		} catch (IOException e) {
+			e.printStackTrace();
+			return Optional.empty();
+		}
+	}
+
+	private static String readContent(NIOFile nioFile) {
+		try {
+			return Files.readString(nioFile.getValue());
 		} catch (IOException e) {
 			return "";
 		}
