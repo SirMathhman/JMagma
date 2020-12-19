@@ -9,6 +9,11 @@ class CompilerTest {
 	private static final Compiler Compiler = new Compiler();
 
 	@Test
+	void nativeFunctions(){
+		assertCompile("", "native def test() : Void");
+	}
+
+	@Test
 	void nativeImports(){
 		assertCompile("#include <stdio.h>\n", "import native stdio");
 	}

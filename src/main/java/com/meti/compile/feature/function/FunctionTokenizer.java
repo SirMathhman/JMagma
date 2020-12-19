@@ -106,7 +106,7 @@ public class FunctionTokenizer implements Tokenizer<Node> {
 
 	private FunctionBuilder.WithName tokenizeHeader(String header) {
 		if (header.contains(" ")) {
-			var space = header.indexOf(' ');
+			var space = header.lastIndexOf(' ');
 			var flagSlice = header.substring(0, space);
 			var flagString = flagSlice.trim();
 			var flags = tokenizeFlags(flagString);

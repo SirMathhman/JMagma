@@ -27,7 +27,9 @@ public interface Field extends LeafNode {
 	Type type();
 
 	enum Flag {
+		NATIVE,
 		CONST,
-		DEF, LET
+		DEF,
+		LET,
 	}
 }
