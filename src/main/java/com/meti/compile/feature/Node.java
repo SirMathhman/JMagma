@@ -26,8 +26,12 @@ public interface Node extends Renderable {
 		return false;
 	}
 
+	default Optional<Field> findIdentity() {
+		return Optional.empty();
+	}
+
 	enum Group {
 		Content,
-		Declaration, Field
+		Declaration, Function, Field
 	}
 }

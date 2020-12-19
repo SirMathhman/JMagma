@@ -70,4 +70,9 @@ public class EmptyField implements Field {
 	public Type type() {
 		return type;
 	}
+
+	@Override
+	public boolean isFlagged(Flag flag) {
+		return flags.contains(flag);
+	}
 }

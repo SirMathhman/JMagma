@@ -19,8 +19,6 @@ public class Implementation extends Function {
 		return new Implementation(identity, parameters, value);
 	}
 
-
-
 	@Override
 	public String toString() {
 		return "Function{" +

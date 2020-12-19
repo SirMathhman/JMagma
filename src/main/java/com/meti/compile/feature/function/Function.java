@@ -8,6 +8,7 @@ import com.meti.compile.feature.primitive.Primitive;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public abstract class Function implements Node {
@@ -17,6 +18,16 @@ public abstract class Function implements Node {
 	Function(Field identity, List<Field> parameters) {
 		this.identity = identity;
 		this.parameters = parameters;
+	}
+
+	@Override
+	public boolean is(Group group) {
+		return group == Group.Function;
+	}
+
+	@Override
+	public Optional<Field> findIdentity() {
+		return Optional.of(identity);
 	}
 
 	@Override
