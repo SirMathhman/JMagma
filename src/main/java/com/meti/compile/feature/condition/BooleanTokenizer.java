@@ -9,9 +9,9 @@ import java.util.Optional;
 import static com.meti.compile.feature.condition.Boolean.Boolean;
 
 public class BooleanTokenizer implements Tokenizer<Node> {
-	static final Tokenizer<Node> BooleanTokenizer_ = new BooleanTokenizer();
+	public static final Tokenizer<Node> BooleanTokenizer_ = new BooleanTokenizer();
 
-	public BooleanTokenizer() {
+	private BooleanTokenizer() {
 	}
 
 	@Override

@@ -8,6 +8,26 @@ class CompilerTest {
 	private static final Compiler Compiler = new Compiler();
 
 	@Test
+	void testTrue() throws CompileException {
+		assertEquals("1", Compiler.compile("true"));
+	}
+
+	@Test
+	void testFalse() throws CompileException {
+		assertEquals("0", Compiler.compile("false"));
+	}
+
+	@Test
+	void testIf() throws CompileException {
+		assertEquals("if(1){}", Compiler.compile("if(true){}"));
+	}
+
+	@Test
+	void testWhile() throws CompileException {
+		assertEquals("while(0){}", Compiler.compile("while(false){}"));
+	}
+
+	@Test
 	void compileDeclarations() throws CompileException {
 		assertEquals("int x=10;", Compiler.compile("const x : I16 = 10"));
 	}

@@ -20,12 +20,12 @@ class ConditionalTest {
 	@Test
 	void render() {
 		var conditional = If(False, Block());
-		assertEquals("if(false){}", conditional.render());
+		assertEquals("if(0){}", conditional.render());
 	}
 
 	@Test
 	void renderWhile() {
 		var conditional = While(True, Block());
-		assertEquals("while(true){}", conditional.render());
+		assertEquals("while(1){}", conditional.render());
 	}
 }

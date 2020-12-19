@@ -32,6 +32,6 @@ public class Boolean implements Node {
 
 	@Override
 	public String render() {
-		return value ? "true" : "false";
+		return value ? "1" : "0";
 	}
 }

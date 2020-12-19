@@ -9,7 +9,7 @@ class BooleanTest {
 
 	@Test
 	void render() {
-		assertEquals("true", Boolean(true).render());
+		assertEquals("1", Boolean(true).render());
 	}
 
 	@Test
