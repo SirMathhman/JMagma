@@ -9,6 +9,14 @@ class CompilerTest {
 	private static final Compiler Compiler = new Compiler();
 
 	@Test
+	void multipleLines(){
+		assertCompile("int x=10;int y=20;", """
+				const x : I16 = 10;
+				const y : I16 = 20;
+				""");
+	}
+
+	@Test
 	void nativeFunctions(){
 		assertCompile("", "native def test() : Void");
 	}
