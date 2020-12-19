@@ -9,6 +9,11 @@ class CompilerTest {
 	private static final Compiler Compiler = new Compiler();
 
 	@Test
+	void nativeImports(){
+		assertCompile("#include <stdio.h>\n", "import native stdio");
+	}
+
+	@Test
 	void invocations() {
 		assertCompile("myFunction(10,20)", "myFunction(10, 20)");
 	}
