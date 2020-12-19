@@ -1,39 +1,56 @@
 package com.meti.compile;
 
-import com.meti.api.io.NIOFile;
+import com.meti.api.core.Option;
+import com.meti.api.io.File;
+import com.meti.api.io.Path;
 
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.Optional;
 
-import static com.meti.api.io.NIOPath.Root;
+import static com.meti.api.core.None.None;
+import static com.meti.api.core.Some.Some;
+import static com.meti.api.io.NIOFileSystem.NIOFileSystem_;
 
 public class Main {
+	private static final Path Root = NIOFileSystem_.Root();
+	private static final Path Intermediate = Root.resolve("Main.c");
+	private static final Path Source = NIOFileSystem_.Root().resolve("Main.mg");
 	private static final Compiler Compiler = new Compiler();
 
 	public static void main(String[] args) {
-		var input = ensureInputPath()
-				.map(Main::readContent)
-				.orElse("");
-		var output = compile(input);
-		ensureIntermediatePath();
-		writeIntermediate(output);
-		compileIntermediate();
-		deleteIntermediate();
+		ensureIntermediatePath()
+				.map(Main::writeIntermediate)
+				.map(Main::compileIntermediate)
+				.ifPresent(Main::deleteIntermediate);
 	}
 
-	private static void deleteIntermediate() {
+	private static Path writeIntermediate(File file) {
 		try {
-			Files.deleteIfExists(Paths.get(".", "Main.c"));
+			return file.writeString(compileOutput());
+		} catch (IOException e) {
+			e.printStackTrace();
+			return file.asPath();
+		}
+	}
+
+	private static String compileOutput() {
+		return ensureInputPath()
+				.map(Main::readContent)
+				.map(Main::compile)
+				.orElse("");
+	}
+
+	private static void deleteIntermediate(Path resolve) {
+		try {
+			resolve.existing().ifPresentExceptionally(File::delete);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 
-	private static void compileIntermediate() {
+	private static Path compileIntermediate(Path resolve) {
 		try {
-			var builder = new ProcessBuilder("gcc", "-o", "Main", Paths.get(".", "Main.c").toAbsolutePath().toString());
+			var intermediateString = resolve.asAbsolute().toString();
+			var builder = new ProcessBuilder("gcc", "-o", "Main", intermediateString);
 			var start = builder.start();
 			start.getInputStream().transferTo(System.out);
 			start.getErrorStream().transferTo(System.err);
@@ -41,23 +58,15 @@ public class Main {
 		} catch (IOException | InterruptedException e) {
 			e.printStackTrace();
 		}
+		return resolve;
 	}
 
-	private static void writeIntermediate(String output) {
+	private static Option<File> ensureIntermediatePath() {
 		try {
-			Files.writeString(Paths.get(".", "Main.c"), output);
+			return Some(Intermediate.ensureAsFile());
 		} catch (IOException e) {
 			e.printStackTrace();
-		}
-	}
-
-	private static void ensureIntermediatePath() {
-		if (Root.resolve("Main.c").doesNotExist()) {
-			try {
-				Files.createFile(Paths.get(".", "Main.c"));
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+			return None();
 		}
 	}
 
@@ -74,20 +83,21 @@ public class Main {
 		}
 	}
 
-	private static Optional<NIOFile> ensureInputPath() {
+	private static Option<File> ensureInputPath() {
 		try {
-			return Optional.of(Root.resolve("Main.mg").ensureAsFile());
+			return Some(Source.ensureAsFile());
 		} catch (IOException e) {
 			e.printStackTrace();
-			return Optional.empty();
+			return None();
 		}
 	}
 
-	private static String readContent(NIOFile nioFile) {
+	private static String readContent(File file) {
 		try {
-			return Files.readString(nioFile.getValue());
+			return file.readString();
 		} catch (IOException e) {
 			return "";
 		}
 	}
+
 }
