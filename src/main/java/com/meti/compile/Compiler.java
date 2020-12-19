@@ -6,8 +6,6 @@ import com.meti.compile.process.ProcessException;
 
 import java.util.ArrayList;
 import java.util.EnumMap;
-import java.util.List;
-import java.util.stream.Collectors;
 
 import static com.meti.compile.TokenizationException.TokenizationException;
 import static com.meti.compile.TokenizationStage.TokenizationStage_;
@@ -60,33 +58,26 @@ public class Compiler {
 				newList.add(node);
 			}
 		}
-		var map = new EnumMap<Group, List<Node>>(Group.class);
+		var cache = new Cache<>(new EnumMap<>(Type.class));
 		for (Node node : newList) {
-			if (node.is(Structure)) {
-				put(map, Group.Structure, node);
-			} else if (node.is(Function)) {
-				put(map, Group.Function, node);
-			} else {
-				put(map, Group.Other, node);
-			}
+			cache = attach(cache, node);
 		}
-		return map.keySet()
-				.stream()
-				.sorted((o1, o2) -> -o1.compareTo(o2))
-				.map(map::get)
-				.flatMap(List::stream)
-				.map(Node::render)
-				.collect(Collectors.joining());
+		return cache.render();
 	}
 
-	private void put(EnumMap<Group, List<Node>> map, Group group, Node node) {
-		if (!map.containsKey(group)) {
-			map.put(group, new ArrayList<>());
+	private Cache<Type> attach(Cache<Type> cache, Node node) {
+		Cache<Type> newCache;
+		if (node.is(Structure)) {
+			newCache = cache.put(Type.Structure, node);
+		} else if (node.is(Function)) {
+			newCache = cache.put(Type.Function, node);
+		} else {
+			newCache = cache.put(Type.Other, node);
 		}
-		map.get(group).add(node);
+		return newCache;
 	}
 
-	enum Group {
+	enum Type {
 		Structure,
 		Function,
 		Other
