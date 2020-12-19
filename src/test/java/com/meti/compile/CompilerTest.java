@@ -9,6 +9,11 @@ class CompilerTest {
 	private static final Compiler Compiler = new Compiler();
 
 	@Test
+	void order(){
+		assertCompile("struct Wrapper{}void test(){}", "def test() : Void => {}struct Wrapper{}");
+	}
+
+	@Test
 	void multipleLines(){
 		assertCompile("int x=10;int y=20;", """
 				const x : I16 = 10;

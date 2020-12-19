@@ -32,6 +32,6 @@ public interface Node extends Renderable {
 
 	enum Group {
 		Content,
-		Declaration, Function, Field
+		Declaration, Function, Structure, Field
 	}
 }
