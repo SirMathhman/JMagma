@@ -9,6 +9,11 @@ class CompilerTest {
 	private static final Compiler Compiler = new Compiler();
 
 	@Test
+	void invocations(){
+		assertCompile("myFunction(10,20)", "myFunction(10, 20)");
+	}
+
+	@Test
 	void structure() {
 		assertCompile("struct Wrapper{int value;}", "struct Wrapper {const value : I16}");
 	}
