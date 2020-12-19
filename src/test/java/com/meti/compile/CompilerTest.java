@@ -9,7 +9,7 @@ class CompilerTest {
 	private static final Compiler Compiler = new Compiler();
 
 	@Test
-	void invocations(){
+	void invocations() {
 		assertCompile("myFunction(10,20)", "myFunction(10, 20)");
 	}
 
