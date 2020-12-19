@@ -35,7 +35,7 @@ public class TokenizationStage implements Stage<String, Node> {
 
 	private Node tokenizeNodeTree(Node node) throws TokenizationException {
 		return tokenizeNode(node)
-				.mapByChildren(this::tokenizeNodeTree)
+				.mapByChildrenExceptionally(this::tokenizeNodeTree)
 				.mapByFields(this::tokenizeField)
 				.mapByTypes(this::tokenizeTypeTree);
 	}

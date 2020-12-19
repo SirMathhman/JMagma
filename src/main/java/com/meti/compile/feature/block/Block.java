@@ -24,6 +24,11 @@ public class Block implements Node {
 	}
 
 	@Override
+	public boolean is(Group group) {
+		return group == Group.Block;
+	}
+
+	@Override
 	public String toString() {
 		return "Block{" +
 		       "children=" + children +
@@ -44,7 +49,7 @@ public class Block implements Node {
 	}
 
 	@Override
-	public <E extends Exception> Node mapByChildren(EF1<Node, Node, E> mapper) throws E {
+	public <E extends Exception> Node mapByChildrenExceptionally(EF1<Node, Node, E> mapper) throws E {
 		var newChildren = new ArrayList<Node>();
 		for (Node child : children) {
 			newChildren.add(mapper.apply(child));

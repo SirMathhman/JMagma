@@ -10,6 +10,7 @@ import java.util.EnumMap;
 import static com.meti.compile.TokenizationException.TokenizationException;
 import static com.meti.compile.TokenizationStage.TokenizationStage_;
 import static com.meti.compile.feature.EmptyNode.EmptyNode_;
+import static com.meti.compile.feature.Line.Line;
 import static com.meti.compile.feature.Node.Group.Function;
 import static com.meti.compile.feature.Node.Group.Structure;
 
@@ -46,23 +47,37 @@ public class Compiler {
 		if (nodes.isEmpty()) throw TokenizationException("No nodes were found.");
 		var newList = new ArrayList<Node>();
 		for (Node node : nodes) {
-			if (node.is(Node.Group.Function)) {
-				var identity = node.findIdentity()
-						.orElseThrow(() -> new ProcessException(node + " was a function but didn't have an identity."));
-				if (identity.isFlagged(Field.Flag.NATIVE)) {
-					newList.add(EmptyNode_);
-				} else {
-					newList.add(node);
-				}
-			} else {
-				newList.add(node);
-			}
+			newList.add(process(node));
 		}
 		var cache = new Cache<>(new EnumMap<>(Type.class));
 		for (Node node : newList) {
 			cache = attach(cache, node);
 		}
 		return cache.render();
+	}
+
+	private Node process(Node node) throws ProcessException {
+		Node newNode;
+		if (node.is(Node.Group.Function)) {
+			var identity = node.findIdentity()
+					.orElseThrow(() -> new ProcessException(node + " was a function but didn't have an identity."));
+			if (identity.isFlagged(Field.Flag.NATIVE)) {
+				newNode = EmptyNode_;
+			} else {
+				newNode = node;
+			}
+		} else if (node.is(Node.Group.Block)) {
+			newNode = node.mapByChildren(child -> {
+				if (child.is(Node.Group.Invocation)) {
+					return Line(child);
+				} else {
+					return child;
+				}
+			});
+		} else {
+			newNode = node;
+		}
+		return newNode.mapByChildrenExceptionally(this::process);
 	}
 
 	private Cache<Type> attach(Cache<Type> cache, Node node) {

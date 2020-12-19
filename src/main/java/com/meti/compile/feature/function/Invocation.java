@@ -23,6 +23,11 @@ public class Invocation implements Node {
 	}
 
 	@Override
+	public boolean is(Group group) {
+		return group == Group.Invocation;
+	}
+
+	@Override
 	public String toString() {
 		return "Invocation{" +
 		       "caller=" + caller +
@@ -45,7 +50,7 @@ public class Invocation implements Node {
 	}
 
 	@Override
-	public <E extends Exception> Node mapByChildren(EF1<Node, Node, E> mapper) throws E {
+	public <E extends Exception> Node mapByChildrenExceptionally(EF1<Node, Node, E> mapper) throws E {
 		var newArguments = new ArrayList<Node>();
 		for (Node argument : arguments) {
 			newArguments.add(mapper.apply(argument));

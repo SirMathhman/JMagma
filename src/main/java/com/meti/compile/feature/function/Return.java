@@ -37,7 +37,7 @@ public class Return implements Node{
 	}
 
 	@Override
-	public <E extends Exception> Node mapByChildren(EF1<Node, Node, E> mapper) throws E {
+	public <E extends Exception> Node mapByChildrenExceptionally(EF1<Node, Node, E> mapper) throws E {
 		return Return(mapper.apply(value));
 	}
 

@@ -42,7 +42,7 @@ public class Implementation extends Function {
 	}
 
 	@Override
-	public <E extends Exception> Node mapByChildren(EF1<Node, Node, E> mapper) throws E {
+	public <E extends Exception> Node mapByChildrenExceptionally(EF1<Node, Node, E> mapper) throws E {
 		return new Implementation(identity, parameters, mapper.apply(value));
 	}
 
