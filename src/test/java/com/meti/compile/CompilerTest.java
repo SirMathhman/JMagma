@@ -12,7 +12,7 @@ class CompilerTest {
 	void helloWorld(){
 		assertCompile("#include <stdio.h>\nint main(){printf(\"Hello World!\");return 0;}", """
 				import native stdio;
-				native def printf(format : Ref[I8], args : Any...);
+				native def printf(format : Ref[I8], args : Any...) : Void;
 				def main() : I16 => {
 					printf("Hello World!");
 					return 0;
