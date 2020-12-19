@@ -1,13 +1,22 @@
 package com.meti.compile.feature.extern;
 
+import com.meti.compile.feature.Node;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class DirectiveTest {
+	@Test
+	void testEquals() {
+		assertEquals(createNode(), createNode());
+	}
 
 	@Test
 	void toNode() {
-		assertEquals("#include <stdio.h>\n", Directive.Include.toNode("<stdio.h>").render());
+		assertEquals("#include <stdio.h>\n", createNode().render());
+	}
+
+	private Node createNode() {
+		return Directive.Include.toNode("<stdio.h>");
 	}
 }
