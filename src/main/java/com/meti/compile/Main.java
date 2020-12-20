@@ -1,36 +1,81 @@
 package com.meti.compile;
 
+import com.meti.api.core.Option;
+import com.meti.api.io.File;
+import com.meti.api.io.Path;
+
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import static com.meti.api.core.None.None;
+import static com.meti.api.core.Some.Some;
+import static com.meti.api.io.NIOFileSystem.NIOFileSystem_;
 
 public class Main {
-	private static final Path inputPath = Paths.get(".", "Main.mg");
-	private static final Path intermediatePath = Paths.get(".", "Main.c");
-	private static final Compiler Compiler = new Compiler();
+	private static final MagmaCompiler Compiler = MagmaCompiler.MagmaCompiler_;
 
 	public static void main(String[] args) {
-		ensureInputPath();
-		var input = readContent(inputPath);
-		var output = compile(input);
-		ensureIntermediatePath();
-		writeIntermediate(output);
-		compileIntermediate();
-		deleteIntermediate();
+		List<Path> children;
+		try {
+			children = NIOFileSystem_.Root()
+					.resolve("source")
+					.ensuringAsDirectory()
+					.walk();
+		} catch (IOException e) {
+			e.printStackTrace();
+			children = Collections.emptyList();
+		}
+		var intermediates = new ArrayList<Path>();
+		for (Path child : children) {
+			var name = child.name();
+			if (child.hasExtensionOf("mg")) {
+				try {
+					var file = child.ensureAsFile();
+					var input = readContent(file);
+					var output = compile(input);
+					var intermediate = child.resolveSibling(name, "c");
+					ensureIntermediatePath(intermediate)
+							.map(file1 -> writeIntermediate(file1, output))
+							.ifPresent(intermediates::add);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		compileIntermediates(intermediates);
+		for (Path intermediate : intermediates) {
+			deleteIntermediate(intermediate);
+		}
 	}
 
-	private static void deleteIntermediate() {
+	private static Path writeIntermediate(File file, String output) {
 		try {
-			Files.deleteIfExists(intermediatePath);
+			return file.writeString(output);
+		} catch (IOException e) {
+			e.printStackTrace();
+			return file.asPath();
+		}
+	}
+
+	private static void deleteIntermediate(Path resolve) {
+		try {
+			resolve.existing().ifPresentExceptionally(File::delete);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 
-	private static void compileIntermediate() {
+	private static void compileIntermediates(List<Path> intermediates) {
 		try {
-			var builder = new ProcessBuilder("gcc", "-o", "Main", intermediatePath.toAbsolutePath().toString());
+			var command = new ArrayList<>(List.of("gcc", "-o", "Main"));
+			command.addAll(intermediates.stream()
+					.map(Path::asAbsolute)
+					.map(Path::toString)
+					.collect(Collectors.toList()));
+			var builder = new ProcessBuilder(command);
 			var start = builder.start();
 			start.getInputStream().transferTo(System.out);
 			start.getErrorStream().transferTo(System.err);
@@ -40,53 +85,34 @@ public class Main {
 		}
 	}
 
-	private static void writeIntermediate(String output) {
+	private static Option<File> ensureIntermediatePath(Path intermediate) {
 		try {
-			Files.writeString(intermediatePath, output);
+			return Some(intermediate.ensureAsFile());
 		} catch (IOException e) {
 			e.printStackTrace();
-		}
-	}
-
-	private static void ensureIntermediatePath() {
-		if (!Files.exists(intermediatePath)) {
-			try {
-				Files.createFile(intermediatePath);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+			return None();
 		}
 	}
 
 	private static String compile(String input) {
-		String output;
 		if (input.isBlank()) {
-			output = "int main(){return 0;}";
+			return "int main(){return 0;}";
 		} else {
 			try {
-				output = Compiler.compile(input);
+				return Compiler.compile(input);
 			} catch (CompileException e) {
-				output = "int main(){return 0;}";
-			}
-		}
-		return output;
-	}
-
-	private static void ensureInputPath() {
-		if (!Files.exists(inputPath)) {
-			try {
-				Files.createFile(inputPath);
-			} catch (IOException e) {
 				e.printStackTrace();
+				return "int main(){return 0;}";
 			}
 		}
 	}
 
-	private static String readContent(java.nio.file.Path input) {
+	private static String readContent(File file) {
 		try {
-			return Files.readString(input);
+			return file.readString();
 		} catch (IOException e) {
 			return "";
 		}
 	}
+
 }

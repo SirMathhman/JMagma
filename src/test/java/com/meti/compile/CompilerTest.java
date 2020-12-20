@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
 class CompilerTest {
-	private static final Compiler Compiler = new Compiler();
+	private static final MagmaCompiler Compiler = MagmaCompiler.MagmaCompiler_;
 
 	@Test
 	void helloWorld(){
