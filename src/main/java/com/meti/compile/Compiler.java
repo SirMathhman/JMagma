@@ -7,6 +7,7 @@ import com.meti.compile.process.ProcessException;
 import java.util.ArrayList;
 import java.util.EnumMap;
 
+import static com.meti.compile.BracketSplitter.BracketSplitter_;
 import static com.meti.compile.TokenizationException.TokenizationException;
 import static com.meti.compile.TokenizationStage.TokenizationStage_;
 import static com.meti.compile.feature.EmptyNode.EmptyNode_;
@@ -15,34 +16,12 @@ import static com.meti.compile.feature.Node.Group.Function;
 import static com.meti.compile.feature.Node.Group.Structure;
 
 public class Compiler {
+
 	String compile(String content) throws CompileException {
-		var list = new ArrayList<String>();
-		var buffer = new StringBuilder();
-		var depth = 0;
-		for (int i = 0; i < content.length(); i++) {
-			var c = content.charAt(i);
-			if (c == '}' && depth == 1) {
-				buffer.append('}');
-				depth--;
-				list.add(buffer.toString());
-				buffer = new StringBuilder();
-			} else if (c == ';' && depth == 0) {
-				list.add(buffer.toString());
-				buffer = new StringBuilder();
-			} else {
-				if (c == '{') {
-					depth++;
-				} else if (c == '}') {
-					depth--;
-				}
-				buffer.append(c);
-			}
-		}
-		list.add(buffer.toString());
-		list.removeIf(String::isBlank);
+		var lines = BracketSplitter_.split(content);
 		var nodes = new ArrayList<Node>();
-		for (String s : list) {
-			nodes.add(TokenizationStage_.apply(s));
+		for (String line : lines) {
+			nodes.add(TokenizationStage_.apply(line));
 		}
 		if (nodes.isEmpty()) throw TokenizationException("No nodes were found.");
 		var newList = new ArrayList<Node>();
