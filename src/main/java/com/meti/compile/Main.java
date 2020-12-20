@@ -1,42 +1,66 @@
 package com.meti.compile;
 
+import com.meti.api.core.EF1;
+import com.meti.api.core.F1;
 import com.meti.api.core.Option;
+import com.meti.api.io.Directory;
 import com.meti.api.io.File;
 import com.meti.api.io.Path;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import static com.meti.api.core.None.None;
 import static com.meti.api.core.Some.Some;
 import static com.meti.api.io.NIOFileSystem.NIOFileSystem_;
 
 public class Main {
-	private static final Path Root = NIOFileSystem_.Root();
-	private static final Path Intermediate = Root.resolve("Main.c");
-	private static final Path Source = NIOFileSystem_.Root().resolve("Main.mg");
 	private static final Compiler Compiler = new Compiler();
 
 	public static void main(String[] args) {
-		ensureIntermediatePath()
-				.map(Main::writeIntermediate)
-				.map(Main::compileIntermediate)
-				.ifPresent(Main::deleteIntermediate);
+		List<Path> children;
+		try {
+			children = NIOFileSystem_.Root()
+					.resolve("source")
+					.ensuringAsDirectory()
+					.walk();
+		} catch (IOException e) {
+			e.printStackTrace();
+			children = Collections.emptyList();
+		}
+		var intermediates = new ArrayList<Path>();
+		for (Path child : children) {
+			var name = child.name();
+			if (child.hasExtensionOf("mg")) {
+				try {
+					var file = child.ensureAsFile();
+					var input = readContent(file);
+					var output = compile(input);
+					var intermediate = child.resolveSibling(name, "c");
+					ensureIntermediatePath(intermediate)
+							.map(file1 -> writeIntermediate(file1, output))
+							.ifPresent(intermediates::add);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		compileIntermediates(intermediates);
+		for (Path intermediate : intermediates) {
+			deleteIntermediate(intermediate);
+		}
 	}
 
-	private static Path writeIntermediate(File file) {
+	private static Path writeIntermediate(File file, String output) {
 		try {
-			return file.writeString(compileOutput());
+			return file.writeString(output);
 		} catch (IOException e) {
 			e.printStackTrace();
 			return file.asPath();
 		}
-	}
-
-	private static String compileOutput() {
-		return ensureInputPath()
-				.map(Main::readContent)
-				.map(Main::compile)
-				.orElse("");
 	}
 
 	private static void deleteIntermediate(Path resolve) {
@@ -47,10 +71,14 @@ public class Main {
 		}
 	}
 
-	private static Path compileIntermediate(Path resolve) {
+	private static void compileIntermediates(List<Path> intermediates) {
 		try {
-			var intermediateString = resolve.asAbsolute().toString();
-			var builder = new ProcessBuilder("gcc", "-o", "Main", intermediateString);
+			var command = new ArrayList<>(List.of("gcc", "-o", "Main"));
+			command.addAll(intermediates.stream()
+					.map(Path::asAbsolute)
+					.map(Path::toString)
+					.collect(Collectors.toList()));
+			var builder = new ProcessBuilder(command);
 			var start = builder.start();
 			start.getInputStream().transferTo(System.out);
 			start.getErrorStream().transferTo(System.err);
@@ -58,12 +86,11 @@ public class Main {
 		} catch (IOException | InterruptedException e) {
 			e.printStackTrace();
 		}
-		return resolve;
 	}
 
-	private static Option<File> ensureIntermediatePath() {
+	private static Option<File> ensureIntermediatePath(Path intermediate) {
 		try {
-			return Some(Intermediate.ensureAsFile());
+			return Some(intermediate.ensureAsFile());
 		} catch (IOException e) {
 			e.printStackTrace();
 			return None();
@@ -80,15 +107,6 @@ public class Main {
 				e.printStackTrace();
 				return "int main(){return 0;}";
 			}
-		}
-	}
-
-	private static Option<File> ensureInputPath() {
-		try {
-			return Some(Source.ensureAsFile());
-		} catch (IOException e) {
-			e.printStackTrace();
-			return None();
 		}
 	}
 

@@ -8,4 +8,6 @@ public interface Option<T> {
 	void ifPresent(F0<T> consumer);
 
 	T orElse(T other);
+
+	<R, E extends Exception> Option<R> mapExceptionally(EF1<T, R, E> mapper) throws E;
 }

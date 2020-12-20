@@ -30,4 +30,9 @@ public class Some<T> implements Option<T> {
 	public T orElse(T other) {
 		return value;
 	}
+
+	@Override
+	public <R, E extends Exception> Option<R> mapExceptionally(EF1<T, R, E> mapper) throws E {
+		return Some(mapper.apply(value));
+	}
 }

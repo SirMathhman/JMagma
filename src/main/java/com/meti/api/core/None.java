@@ -25,4 +25,9 @@ public class None<T> implements Option<T> {
 	public T orElse(T other) {
 		return other;
 	}
+
+	@Override
+	public <R, E extends Exception> Option<R> mapExceptionally(EF1<T, R, E> mapper) throws E {
+		return None();
+	}
 }
