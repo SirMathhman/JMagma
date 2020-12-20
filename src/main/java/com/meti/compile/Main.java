@@ -1,9 +1,6 @@
 package com.meti.compile;
 
-import com.meti.api.core.EF1;
-import com.meti.api.core.F1;
 import com.meti.api.core.Option;
-import com.meti.api.io.Directory;
 import com.meti.api.io.File;
 import com.meti.api.io.Path;
 
