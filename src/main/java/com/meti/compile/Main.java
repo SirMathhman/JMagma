@@ -15,7 +15,7 @@ import static com.meti.api.core.Some.Some;
 import static com.meti.api.io.NIOFileSystem.NIOFileSystem_;
 
 public class Main {
-	private static final Compiler Compiler = new Compiler();
+	private static final MagmaCompiler Compiler = MagmaCompiler.MagmaCompiler_;
 
 	public static void main(String[] args) {
 		List<Path> children;
