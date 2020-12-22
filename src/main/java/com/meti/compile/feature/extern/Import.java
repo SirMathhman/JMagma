@@ -8,12 +8,7 @@ import java.util.Objects;
 
 import static com.meti.api.core.Some.Some;
 
-public class Import implements Node {
-	private final Script script;
-
-	private Import(Script script) {
-		this.script = script;
-	}
+public record Import(Script script) implements Node {
 
 	static Import Import(Script script) {
 		return new Import(script);
