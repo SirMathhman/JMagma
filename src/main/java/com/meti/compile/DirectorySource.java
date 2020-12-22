@@ -9,17 +9,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DirectorySource implements Source {
-	private final Directory root;
-
-	public DirectorySource(Directory root) {
-		this.root = root;
-	}
-
+public record DirectorySource(Directory root) implements Source {
 	@Override
 	public Option<String> read(Script script) throws IOException {
 		var path = root.asPath();
-		var reduce = script.stream().reduce(path, Path::resolve, (path1, path2) -> path2);
+		var reduce = script.streamAll().reduce(path, Path::resolve, (path1, path2) -> path2);
 		return reduce.existingAsFile().mapExceptionally(File::readString);
 	}
 
@@ -35,7 +29,13 @@ public class DirectorySource implements Source {
 				for (String rootName : rootNames) {
 					pathNames.remove(rootName);
 				}
-				packages.add(ListScript.ListScript(pathNames));
+				var last = pathNames.get(pathNames.size() - 1);
+				var period = last.indexOf('.');
+				var slice = last.substring(period + 1);
+				var name = slice.trim();
+				pathNames.add(name);
+				var script = new ListScript(pathNames);
+				packages.add(script);
 			}
 		}
 		return packages;

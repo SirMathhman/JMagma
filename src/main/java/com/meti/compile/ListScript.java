@@ -3,19 +3,20 @@ package com.meti.compile;
 import java.util.List;
 import java.util.stream.Stream;
 
-public class ListScript implements Script {
-	private final List<String> args;
+public record ListScript(List<String> args) implements Script {
 
-	private ListScript(List<String> args) {
-		this.args = args;
-	}
-
-	public static ListScript ListScript(List<String> args) {
-		return new ListScript(args);
+	@Override
+	public Stream<String> streamAll() {
+		return args.stream();
 	}
 
 	@Override
-	public Stream<String> stream() {
-		return args.stream();
+	public Stream<String> streamParents() {
+		return args.subList(0, args.size() - 1).stream();
+	}
+
+	@Override
+	public String name() {
+		return args.get(args.size() - 1);
 	}
 }

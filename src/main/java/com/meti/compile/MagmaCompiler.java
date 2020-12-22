@@ -1,5 +1,6 @@
 package com.meti.compile;
 
+import com.meti.api.io.File;
 import com.meti.compile.feature.Node;
 import com.meti.compile.feature.field.Field;
 import com.meti.compile.process.ProcessException;
@@ -7,6 +8,7 @@ import com.meti.compile.process.ProcessException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.EnumMap;
+import java.util.List;
 
 import static com.meti.compile.BracketSplitter.BracketSplitter_;
 import static com.meti.compile.TokenizationException.TokenizationException;
@@ -18,18 +20,20 @@ import static com.meti.compile.feature.Node.Group.Structure;
 
 public class MagmaCompiler implements Compiler {
 	static final MagmaCompiler MagmaCompiler_ = new MagmaCompiler();
-	private final DirectoryTarget directoryTarget = new DirectoryTarget();
 
 	private MagmaCompiler() {
 	}
 
-	public void compile(Source source) throws IOException, CompileException {
+	public <T> List<T> compile(Source source, Target<T> target) throws IOException, CompileException {
 		var scripts = source.list();
+		var output = new ArrayList<T>();
 		for (Script script : scripts) {
 			source.read(script)
 					.mapExceptionally(this::compile)
-					.ifPresentExceptionally(value -> directoryTarget.write(script, value));
+					.mapExceptionally(value -> target.write(script, value))
+					.ifPresent(output::add);
 		}
+		return output;
 	}
 
 	@Override

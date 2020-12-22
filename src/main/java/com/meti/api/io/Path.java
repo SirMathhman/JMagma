@@ -26,7 +26,7 @@ public interface Path {
 
 	Option<Directory> existingAsDirectory();
 
-	Directory ensuringAsDirectory() throws IOException;
+	Directory ensureAsDirectory() throws IOException;
 
 	Path resolve(String name);
 

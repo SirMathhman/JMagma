@@ -15,7 +15,7 @@ public interface Node extends Renderable {
 		return this;
 	}
 
-	default <E extends Exception> Node mapByFields(EF1<Field, Field, E> mapper) {
+	default <E extends Exception> Node mapByFields(EF1<Field, Field, E> mapper) throws E {
 		return this;
 	}
 
@@ -28,7 +28,7 @@ public interface Node extends Renderable {
 		}
 	}
 
-	default <E extends Exception> Node mapByChildrenExceptionally(EF1<Node, Node, E> mapper) {
+	default <E extends Exception> Node mapByChildrenExceptionally(EF1<Node, Node, E> mapper) throws E {
 		return this;
 	}
 

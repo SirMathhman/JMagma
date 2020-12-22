@@ -1,5 +1,6 @@
 package com.meti.compile.feature.extern;
 
+import com.meti.compile.ListScript;
 import com.meti.compile.feature.Node;
 import com.meti.compile.feature.Tokenizer;
 
@@ -7,7 +8,6 @@ import java.util.Arrays;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import static com.meti.compile.ListScript.ListScript;
 import static com.meti.compile.feature.extern.Import.Import;
 
 public class ImportTokenizer implements Tokenizer<Node> {
@@ -30,7 +30,7 @@ public class ImportTokenizer implements Tokenizer<Node> {
 					.filter(s -> !s.isBlank())
 					.map(String::trim)
 					.collect(Collectors.toList());
-			return Optional.of(Import(ListScript(scriptArgs)));
+			return Optional.of(Import(new ListScript(scriptArgs)));
 		}
 		return Optional.empty();
 	}

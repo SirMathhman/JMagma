@@ -5,10 +5,12 @@ import com.meti.api.core.Option;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.meti.api.core.None.None;
 import static com.meti.api.core.Some.Some;
+import static com.meti.api.io.NIOFile.NIOFile;
 
 public record NIOPath(Path path) implements com.meti.api.io.Path {
 	@Override
@@ -23,7 +25,7 @@ public record NIOPath(Path path) implements com.meti.api.io.Path {
 
 	@Override
 	public Option<File> existing() {
-		return Files.exists(path) ? Some(new NIOFile(path)) : None();
+		return Files.exists(path) ? Some(NIOFile(path)) : None();
 	}
 
 	@Override
@@ -36,7 +38,7 @@ public record NIOPath(Path path) implements com.meti.api.io.Path {
 
 	@Override
 	public File createAsFile() throws IOException {
-		return new NIOFile(Files.createFile(path));
+		return NIOFile(Files.createFile(path));
 	}
 
 	@Override
@@ -50,7 +52,7 @@ public record NIOPath(Path path) implements com.meti.api.io.Path {
 	}
 
 	private File asFile() {
-		return new NIOFile(path);
+		return NIOFile(path);
 	}
 
 	@Override
@@ -79,7 +81,7 @@ public record NIOPath(Path path) implements com.meti.api.io.Path {
 	}
 
 	@Override
-	public Directory ensuringAsDirectory() throws IOException {
+	public Directory ensureAsDirectory() throws IOException {
 		if (!Files.exists(path)) Files.createDirectory(path);
 		return new NIODirectory(path);
 	}
@@ -92,7 +94,7 @@ public record NIOPath(Path path) implements com.meti.api.io.Path {
 	@Override
 	public Option<File> existingAsFile() {
 		if (Files.isRegularFile(path)) {
-			return Some(new NIOFile(path));
+			return Some(NIOFile(path));
 		} else {
 			return None();
 		}
@@ -100,6 +102,11 @@ public record NIOPath(Path path) implements com.meti.api.io.Path {
 
 	@Override
 	public List<String> names() {
-		return null;
+		var names = new ArrayList<String>();
+		var count = path.getNameCount();
+		for (int i = 0; i < count; i++) {
+			names.add(path.getName(i).toString());
+		}
+		return names;
 	}
 }
