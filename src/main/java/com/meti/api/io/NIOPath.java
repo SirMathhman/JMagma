@@ -1,18 +1,18 @@
-package com.api.io;
+package com.meti.api.io;
 
-import com.api.core.Option;
+import com.meti.api.core.Option;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 
-import static com.api.core.None.None;
-import static com.api.core.Some.Some;
+import static com.meti.api.core.None.None;
+import static com.meti.api.core.Some.Some;
 
-public record NIOPath(Path path) implements com.api.io.Path {
+public record NIOPath(Path path) implements com.meti.api.io.Path {
 	@Override
-	public com.api.io.Path asAbsolute() {
+	public com.meti.api.io.Path asAbsolute() {
 		return new NIOPath(path.toAbsolutePath());
 	}
 
@@ -54,7 +54,7 @@ public record NIOPath(Path path) implements com.api.io.Path {
 	}
 
 	@Override
-	public com.api.io.Path resolveSibling(String name, String extension) {
+	public com.meti.api.io.Path resolveSibling(String name, String extension) {
 		return new NIOPath(path.resolveSibling(name + "." + extension));
 	}
 
@@ -85,7 +85,7 @@ public record NIOPath(Path path) implements com.api.io.Path {
 	}
 
 	@Override
-	public com.api.io.Path resolve(String name) {
+	public com.meti.api.io.Path resolve(String name) {
 		return new NIOPath(path.resolve(name));
 	}
 

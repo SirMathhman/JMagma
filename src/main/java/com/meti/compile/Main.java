@@ -1,8 +1,8 @@
 package com.meti.compile;
 
-import com.api.core.Option;
-import com.api.io.File;
-import com.api.io.Path;
+import com.meti.api.core.Option;
+import com.meti.api.io.File;
+import com.meti.api.io.Path;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -12,9 +12,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
-import static com.api.core.None.None;
-import static com.api.core.Some.Some;
-import static com.api.io.NIOFileSystem.NIOFileSystem_;
+import static com.meti.api.core.None.None;
+import static com.meti.api.core.Some.Some;
+import static com.meti.api.io.NIOFileSystem.NIOFileSystem_;
 
 public class Main {
 	private static final MagmaCompiler Compiler = MagmaCompiler.MagmaCompiler_;

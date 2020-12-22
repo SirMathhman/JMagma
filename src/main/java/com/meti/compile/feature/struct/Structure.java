@@ -1,6 +1,6 @@
 package com.meti.compile.feature.struct;
 
-import com.api.core.EF1;
+import com.meti.api.core.EF1;
 import com.meti.compile.feature.Node;
 import com.meti.compile.feature.field.Field;
 

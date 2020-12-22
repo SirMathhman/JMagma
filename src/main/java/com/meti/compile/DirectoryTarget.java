@@ -1,7 +1,7 @@
 package com.meti.compile;
 
-import com.api.io.NIOFileSystem;
-import com.api.io.Path;
+import com.meti.api.io.NIOFileSystem;
+import com.meti.api.io.Path;
 
 import java.io.IOException;
 

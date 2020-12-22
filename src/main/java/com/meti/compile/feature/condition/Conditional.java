@@ -1,6 +1,6 @@
 package com.meti.compile.feature.condition;
 
-import com.api.core.EF1;
+import com.meti.api.core.EF1;
 import com.meti.compile.feature.Node;
 
 import java.util.Objects;

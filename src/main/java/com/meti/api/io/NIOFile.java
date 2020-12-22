@@ -1,4 +1,4 @@
-package com.api.io;
+package com.meti.api.io;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -23,12 +23,12 @@ public class NIOFile implements File {
 	}
 
 	@Override
-	public com.api.io.Path asPath() {
+	public com.meti.api.io.Path asPath() {
 		return new NIOPath(value);
 	}
 
 	@Override
-	public com.api.io.Path writeString(String output) throws IOException {
+	public com.meti.api.io.Path writeString(String output) throws IOException {
 		Files.writeString(value, output);
 		return new NIOPath(value);
 	}
