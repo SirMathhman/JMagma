@@ -35,7 +35,7 @@ public class DirectorySource implements Source {
 				for (String rootName : rootNames) {
 					pathNames.remove(rootName);
 				}
-				packages.add(new ListScript(pathNames));
+				packages.add(ListScript.ListScript(pathNames));
 			}
 		}
 		return packages;

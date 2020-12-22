@@ -6,8 +6,12 @@ import java.util.stream.Stream;
 public class ListScript implements Script {
 	private final List<String> args;
 
-	public ListScript(List<String> args) {
+	private ListScript(List<String> args) {
 		this.args = args;
+	}
+
+	public static ListScript ListScript(List<String> args) {
+		return new ListScript(args);
 	}
 
 	@Override
