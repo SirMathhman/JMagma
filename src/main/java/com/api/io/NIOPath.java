@@ -1,24 +1,18 @@
-package com.meti.api.io;
+package com.api.io;
 
-import com.meti.api.core.Option;
+import com.api.core.Option;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 
-import static com.meti.api.core.None.None;
-import static com.meti.api.core.Some.Some;
+import static com.api.core.None.None;
+import static com.api.core.Some.Some;
 
-public class NIOPath implements com.meti.api.io.Path {
-	private final Path path;
-
-	public NIOPath(Path path) {
-		this.path = path;
-	}
-
+public record NIOPath(Path path) implements com.api.io.Path {
 	@Override
-	public com.meti.api.io.Path asAbsolute() {
+	public com.api.io.Path asAbsolute() {
 		return new NIOPath(path.toAbsolutePath());
 	}
 
@@ -55,13 +49,12 @@ public class NIOPath implements com.meti.api.io.Path {
 		return Files.exists(path);
 	}
 
-	@Override
-	public File asFile() {
+	private File asFile() {
 		return new NIOFile(path);
 	}
 
 	@Override
-	public com.meti.api.io.Path resolveSibling(String name, String extension) {
+	public com.api.io.Path resolveSibling(String name, String extension) {
 		return new NIOPath(path.resolveSibling(name + "." + extension));
 	}
 
@@ -92,13 +85,13 @@ public class NIOPath implements com.meti.api.io.Path {
 	}
 
 	@Override
-	public com.meti.api.io.Path resolve(String name) {
+	public com.api.io.Path resolve(String name) {
 		return new NIOPath(path.resolve(name));
 	}
 
 	@Override
 	public Option<File> existingAsFile() {
-		if(Files.isRegularFile(path)) {
+		if (Files.isRegularFile(path)) {
 			return Some(new NIOFile(path));
 		} else {
 			return None();

@@ -1,6 +1,6 @@
 package com.meti.compile.feature.function;
 
-import com.meti.api.core.EF1;
+import com.api.core.EF1;
 import com.meti.compile.feature.Type;
 
 import java.util.*;

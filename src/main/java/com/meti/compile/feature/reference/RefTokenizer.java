@@ -1,6 +1,5 @@
 package com.meti.compile.feature.reference;
 
-import com.meti.compile.TokenizationException;
 import com.meti.compile.feature.Tokenizer;
 import com.meti.compile.feature.Type;
 

@@ -1,7 +1,6 @@
 package com.meti.compile.feature.function;
 
 import com.meti.compile.feature.Node;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import static com.meti.compile.feature.function.Invocation.Invocation;

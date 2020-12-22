@@ -1,4 +1,4 @@
-package com.meti.api.core;
+package com.api.core;
 
 public interface Option<T> {
 	<R> Option<R> map(F1<T, R> mapper);

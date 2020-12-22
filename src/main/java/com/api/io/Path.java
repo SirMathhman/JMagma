@@ -1,6 +1,6 @@
-package com.meti.api.io;
+package com.api.io;
 
-import com.meti.api.core.Option;
+import com.api.core.Option;
 
 import java.io.IOException;
 import java.util.List;
@@ -17,9 +17,6 @@ public interface Path {
 	boolean doesNotExist();
 
 	boolean exists();
-
-	@Deprecated
-	File asFile();
 
 	Path resolveSibling(String name, String extension);
 

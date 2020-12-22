@@ -1,9 +1,9 @@
 package com.meti.compile;
 
-import com.meti.api.core.Option;
-import com.meti.api.io.Directory;
-import com.meti.api.io.File;
-import com.meti.api.io.Path;
+import com.api.core.Option;
+import com.api.io.Directory;
+import com.api.io.File;
+import com.api.io.Path;
 
 import java.io.IOException;
 import java.util.ArrayList;

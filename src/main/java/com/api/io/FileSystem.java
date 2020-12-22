@@ -1,4 +1,4 @@
-package com.meti.api.io;
+package com.api.io;
 
 public interface FileSystem {
 	Path Root();

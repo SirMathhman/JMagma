@@ -1,11 +1,8 @@
 package com.meti.compile.feature;
 
 import com.meti.compile.TokenizationException;
-import com.meti.compile.feature.primitive.IntTokenizer;
-import com.meti.compile.feature.scope.DeclarationTokenizer;
 import org.junit.jupiter.api.Test;
 
-import javax.lang.model.type.DeclaredType;
 import java.util.List;
 
 import static com.meti.compile.feature.primitive.IntTokenizer.IntTokenizer_;
