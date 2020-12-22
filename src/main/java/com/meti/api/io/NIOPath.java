@@ -5,6 +5,7 @@ import com.meti.api.core.Option;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.List;
 
 import static com.meti.api.core.None.None;
 import static com.meti.api.core.Some.Some;
@@ -93,5 +94,19 @@ public class NIOPath implements com.meti.api.io.Path {
 	@Override
 	public com.meti.api.io.Path resolve(String name) {
 		return new NIOPath(path.resolve(name));
+	}
+
+	@Override
+	public Option<File> existingAsFile() {
+		if(Files.isRegularFile(path)) {
+			return Some(new NIOFile(path));
+		} else {
+			return None();
+		}
+	}
+
+	@Override
+	public List<String> names() {
+		return null;
 	}
 }

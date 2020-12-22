@@ -3,6 +3,7 @@ package com.meti.api.io;
 import com.meti.api.core.Option;
 
 import java.io.IOException;
+import java.util.List;
 
 public interface Path {
 	Path asAbsolute();
@@ -17,6 +18,7 @@ public interface Path {
 
 	boolean exists();
 
+	@Deprecated
 	File asFile();
 
 	Path resolveSibling(String name, String extension);
@@ -30,4 +32,8 @@ public interface Path {
 	Directory ensuringAsDirectory() throws IOException;
 
 	Path resolve(String name);
+
+	Option<File> existingAsFile();
+
+	List<String> names();
 }

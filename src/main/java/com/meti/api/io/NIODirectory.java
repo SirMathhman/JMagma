@@ -8,15 +8,15 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class NIODirectory implements Directory {
-	private final java.nio.file.Path value;
+	private final java.nio.file.Path path;
 
-	public NIODirectory(java.nio.file.Path value) {
-		this.value = value;
+	public NIODirectory(java.nio.file.Path path) {
+		this.path = path;
 	}
 
 	@Override
 	public List<Path> list() throws IOException {
-		return Files.list(value)
+		return Files.list(path)
 				.map(NIOPath::new)
 				.collect(Collectors.toList());
 	}
@@ -31,5 +31,10 @@ public class NIODirectory implements Directory {
 					.orElse(Collections.singletonList(child)));
 		}
 		return list;
+	}
+
+	@Override
+	public Path asPath() {
+		return new NIOPath(path);
 	}
 }

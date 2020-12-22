@@ -1,19 +1,12 @@
 package com.meti.compile;
 
-import com.meti.api.io.Directory;
+import com.meti.api.core.Option;
 
 import java.io.IOException;
-import java.util.Collections;
 import java.util.List;
 
-public class Source {
-	private final Directory root;
+public interface Source {
+	Option<String> read(Script script) throws IOException;
 
-	public Source(Directory root) {
-		this.root = root;
-	}
-
-	public List<Package> list() throws IOException {
-		return Collections.emptyList();
-	}
+	List<Script> list() throws IOException;
 }

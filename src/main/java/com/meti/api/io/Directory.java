@@ -7,4 +7,6 @@ public interface Directory {
 	List<Path> list() throws IOException;
 
 	List<Path> walk() throws IOException;
+
+	Path asPath();
 }

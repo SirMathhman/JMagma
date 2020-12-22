@@ -28,8 +28,8 @@ class MainTest {
 
 	@AfterEach
 	void tearDown() throws IOException {
-		Files.delete(input);
-		Files.delete(output);
+		Files.deleteIfExists(input);
+		Files.deleteIfExists(output);
 	}
 
 	@Test
