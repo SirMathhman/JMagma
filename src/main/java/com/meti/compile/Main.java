@@ -41,9 +41,6 @@ public class Main {
 				logger.log(Level.WARNING, "No intermediate files were found.");
 			} else {
 				compileIntermediates(intermediates);
-				for (Path intermediate : intermediates) {
-					deleteIntermediate(intermediate);
-				}
 			}
 		}
 	}
@@ -73,14 +70,6 @@ public class Main {
 		} catch (IOException e) {
 			logger.log(Level.WARNING, "Failed to write to intermediate file " + file + " with data size of " + output.length(), e);
 			return file.asPath();
-		}
-	}
-
-	private static void deleteIntermediate(Path resolve) {
-		try {
-			resolve.existing().ifPresentExceptionally(File::delete);
-		} catch (IOException e) {
-			logger.log(Level.WARNING, "Failed to delete intermediate file: " + resolve, e);
 		}
 	}
 
