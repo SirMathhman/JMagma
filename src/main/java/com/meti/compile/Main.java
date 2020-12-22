@@ -8,6 +8,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 import static com.meti.api.core.None.None;
@@ -16,6 +18,7 @@ import static com.meti.api.io.NIOFileSystem.NIOFileSystem_;
 
 public class Main {
 	private static final MagmaCompiler Compiler = MagmaCompiler.MagmaCompiler_;
+	private static final Logger logger = Logger.getAnonymousLogger();
 
 	public static void main(String[] args) {
 		List<Path> children;
@@ -25,7 +28,7 @@ public class Main {
 					.ensuringAsDirectory()
 					.walk();
 		} catch (IOException e) {
-			e.printStackTrace();
+			logger.log(Level.SEVERE, "Failed to read source directory.", e);
 			children = Collections.emptyList();
 		}
 		var intermediates = new ArrayList<Path>();
@@ -41,7 +44,7 @@ public class Main {
 							.map(file1 -> writeIntermediate(file1, output))
 							.ifPresent(intermediates::add);
 				} catch (IOException e) {
-					e.printStackTrace();
+					logger.log(Level.WARNING, "Failed to compile path: " + child, e);
 				}
 			}
 		}
@@ -55,7 +58,7 @@ public class Main {
 		try {
 			return file.writeString(output);
 		} catch (IOException e) {
-			e.printStackTrace();
+			logger.log(Level.WARNING, "Failed to write to intermediate file " + file + " with data size of " + output.length(), e);
 			return file.asPath();
 		}
 	}
@@ -64,7 +67,7 @@ public class Main {
 		try {
 			resolve.existing().ifPresentExceptionally(File::delete);
 		} catch (IOException e) {
-			e.printStackTrace();
+			logger.log(Level.WARNING, "Failed to delete intermediate file: " + resolve, e);
 		}
 	}
 
@@ -81,7 +84,7 @@ public class Main {
 			start.getErrorStream().transferTo(System.err);
 			start.waitFor();
 		} catch (IOException | InterruptedException e) {
-			e.printStackTrace();
+			logger.log(Level.SEVERE, "Failed to compile intermediate files.", e);
 		}
 	}
 
@@ -89,19 +92,19 @@ public class Main {
 		try {
 			return Some(intermediate.ensureAsFile());
 		} catch (IOException e) {
-			e.printStackTrace();
+			logger.log(Level.SEVERE, "Failed to ensure intermediate path: " + intermediate, e);
 			return None();
 		}
 	}
 
 	private static String compile(String input) {
 		if (input.isBlank()) {
-			return "int main(){return 0;}";
+			return "";
 		} else {
 			try {
 				return Compiler.compile(input);
 			} catch (CompileException e) {
-				e.printStackTrace();
+				logger.log(Level.WARNING, "Failed to compile input: " + input, e);
 				return "int main(){return 0;}";
 			}
 		}
@@ -111,8 +114,8 @@ public class Main {
 		try {
 			return file.readString();
 		} catch (IOException e) {
+			logger.log(Level.WARNING, "Failed to read content from: " + file, e);
 			return "";
 		}
 	}
-
 }
