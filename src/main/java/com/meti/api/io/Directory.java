@@ -10,5 +10,5 @@ public interface Directory {
 
 	Path asPath();
 
-	Path resolve(String name);
+	Path delete() throws IOException;
 }

@@ -102,9 +102,14 @@ public record NIOPath(Path value) implements com.meti.api.io.Path {
 
 	@Override
 	public Directory ensureDirectories() throws IOException {
-		if (!Files.exists(value)) {
-			Files.createDirectories(value);
+		if (Files.exists(value)) {
+			if (Files.isDirectory(value)) {
+				return new NIODirectory(value);
+			} else {
+				throw new IOException("'" + value + "' isn't a directory.");
+			}
 		}
+		Files.createDirectories(value);
 		return new NIODirectory(value);
 	}
 }

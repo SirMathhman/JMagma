@@ -22,7 +22,7 @@ public class ImportProcessor implements ScriptProcessor {
 	}
 
 	private Node processImpl(Script current, Script imported) {
-		var importParent = resolve(current.parent(), imported.parent());
+		var importParent = resolve(current.listParent(), imported.listParent());
 		var list = new ArrayList<>(importParent);
 		list.add(imported.name() + ".h");
 		var join = String.join("/", list);

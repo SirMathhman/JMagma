@@ -5,10 +5,9 @@ import java.util.stream.Stream;
 
 public interface Script {
 	@Deprecated
-	Stream<String> streamParents();
+	Stream<String> streamParent();
 
-	List<String> parent();
+	List<String> listParent();
 
 	String name();
-
 }

@@ -6,8 +6,13 @@ import java.util.stream.Stream;
 
 public record ListScript(List<String> parent, String name) implements Script {
 	@Override
-	public Stream<String> streamParents() {
-		return parent().stream();
+	public Stream<String> streamParent() {
+		return parent.stream();
+	}
+
+	@Override
+	public List<String> listParent() {
+		return parent;
 	}
 
 	@Override

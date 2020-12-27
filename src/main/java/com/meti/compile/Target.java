@@ -1,7 +1,8 @@
 package com.meti.compile;
 
 import java.io.IOException;
+import java.util.List;
 
-public interface Target<T> {
-	T write(Script script, String value) throws IOException;
+public interface Target<T, R> {
+	List<R> write(Script script, Result<T> value) throws IOException;
 }

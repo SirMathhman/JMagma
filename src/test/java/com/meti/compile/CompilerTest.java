@@ -1,7 +1,13 @@
 package com.meti.compile;
 
+import com.meti.api.core.Option;
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
+import java.util.Collections;
+import java.util.List;
+
+import static com.meti.api.core.Some.Some;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
@@ -9,110 +15,127 @@ class CompilerTest {
 	private static final MagmaCompiler Compiler = MagmaCompiler.MagmaCompiler_;
 
 	@Test
-	void helloWorld(){
-		assertCompile("#include <stdio.h>\nint main(){printf(\"Hello World!\");return 0;}", """
+	void helloWorld() {
+		assertSource("#include <stdio.h>\nint main(){printf(\"Hello World!\");return 0;}", """
 				import native stdio;
 				native def printf(format : Ref[I8], args : Any...) : Void;
 				def main() : I16 => {
 					printf("Hello World!");
 					return 0;
 				}
-				""");
+				""", "");
 	}
 
 	@Test
-	void order(){
-		assertCompile("struct Wrapper{}void test(){}", "def test() : Void => {}struct Wrapper{}");
+	void order() {
+		assertSource("struct Wrapper{}void test(){}", "def test() : Void => {}struct Wrapper{}", "");
 	}
 
 	@Test
-	void multipleLines(){
-		assertCompile("int x=10;int y=20;", """
+	void multipleLines() {
+		assertSource("int x=10;int y=20;", """
 				const x : I16 = 10;
 				const y : I16 = 20;
-				""");
+				""", "");
 	}
 
 	@Test
-	void nativeFunctions(){
-		assertCompile("", "native def test() : Void");
+	void nativeFunctions() {
+		assertSource("", "native def test() : Void", "");
 	}
 
 	@Test
-	void nativeImports(){
-		assertCompile("#include <stdio.h>\n", "import native stdio");
+	void nativeImports() {
+		assertSource("#include <stdio.h>\n", "import native stdio", "");
 	}
 
 	@Test
 	void invocations() {
-		assertCompile("myFunction(10,20)", "myFunction(10, 20)");
+		assertSource("myFunction(10,20)", "myFunction(10, 20)", "");
 	}
 
 	@Test
 	void structure() {
-		assertCompile("struct Wrapper{int value;}", "struct Wrapper {const value : I16}");
+		assertSource("struct Wrapper{int value;}", "struct Wrapper {const value : I16}", "");
 	}
 
 	@Test
 	void emptyStructure() {
-		assertCompile("struct Empty{}", "struct Empty{}");
+		assertSource("struct Empty{}", "struct Empty{}", "");
 	}
 
-	private void assertCompile(String s, String s2) {
+	private void assertSource(String input, String target, String header) {
 		try {
-			assertEquals(s, Compiler.compile(null, s2));
-		} catch (CompileException e) {
+			Compiler.compile(new InlineSource(input), (script, value) -> {
+				assertEquals(target, value.renderToString(MagmaCompiler.CTargetType.Source));
+				assertEquals(header, value.renderToString(MagmaCompiler.CTargetType.Header));
+				return Collections.emptyList();
+			});
+		} catch (CompileException | IOException e) {
 			fail(e);
 		}
 	}
 
 	@Test
 	void testTrue() {
-		assertCompile("1", "true");
+		assertSource("1", "true", "");
 	}
 
 	@Test
 	void testFalse() {
-		assertCompile("0", "false");
+		assertSource("0", "false", "");
 	}
 
 	@Test
 	void testIf() {
-		assertCompile("if(1){}", "if(true){}");
+		assertSource("if(1){}", "if(true){}", "");
 	}
 
 	@Test
 	void testWhile() {
-		assertCompile("while(0){}", "while(false){}");
+		assertSource("while(0){}", "while(false){}", "");
 	}
 
 	@Test
 	void compileDeclarations() {
-		assertCompile("int x=10;", "const x : I16 = 10");
+		assertSource("int x=10;", "const x : I16 = 10", "");
 	}
 
 	@Test
 	void compileBlocks() {
-		assertCompile("{{}{}}", "{{}{}}");
+		assertSource("{{}{}}", "{{}{}}", "");
 	}
 
 	@Test
 	void blockChildren() {
-		assertCompile("{return 0;}", "{return 0;}");
+		assertSource("{return 0;}", "{return 0;}", "");
 	}
 
 	@Test
 	void compileReturn() {
-		assertCompile("return 10;", "return 10");
+		assertSource("return 10;", "return 10", "");
 	}
 
 	@Test
 	void compileMain() {
-		assertCompile("int main(){return 0;}", "def main() : I16 => {return 0;}");
+		assertSource("int main(){return 0;}", "def main() : I16 => {return 0;}", "");
 	}
 
 	@Test
 	void compileInt() {
-		assertCompile("5", "5");
+		assertSource("5", "5", "");
+	}
+
+	private static record InlineSource(String s) implements Source {
+		@Override
+		public Option<String> read(Script script) throws IOException {
+			return Some(s);
+		}
+
+		@Override
+		public List<Script> list() throws IOException {
+			var script = new ListScript(Collections.emptyList(), "Main");
+			return List.of(script);
+		}
 	}
 }

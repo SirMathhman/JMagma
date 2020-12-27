@@ -12,7 +12,7 @@ import java.util.List;
 public record DirectorySource(Directory root) implements Source {
 	@Override
 	public Option<String> read(Script script) throws IOException {
-		return script.streamParents()
+		return script.streamParent()
 				.reduce(root.asPath(), Path::resolve, (path1, path2) -> path2)
 				.resolve(script.name() + ".mg")
 				.existingAsFile()

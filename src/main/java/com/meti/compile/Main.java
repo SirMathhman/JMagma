@@ -1,5 +1,6 @@
 package com.meti.compile;
 
+import com.meti.api.core.EF1;
 import com.meti.api.core.Option;
 import com.meti.api.io.Directory;
 import com.meti.api.io.File;
@@ -32,7 +33,7 @@ public class Main {
 				.ifPresent(target -> runWithBoth(source, target));
 	}
 
-	private static void runWithBoth(Source source, Target<File> target) {
+	private static void runWithBoth(Source source, Target<TargetType, File> target) {
 		try {
 			var intermediates = Compiler.compile(source, target);
 			if(intermediates.isEmpty()) {
@@ -49,7 +50,11 @@ public class Main {
 
 	private static Option<Directory> ensureTargetDirectory() {
 		try {
-			return Some(NIOFileSystem_.Root().resolve("target").ensureDirectory());
+			return NIOFileSystem_.Root()
+					.resolve("target")
+					.existingAsDirectory()
+					.mapExceptionally(Directory::delete)
+					.mapExceptionally(Path::ensureDirectories);
 		} catch (IOException e) {
 			logger.log(Level.WARNING, "Failed to ensure target directory.", e);
 			return None();
