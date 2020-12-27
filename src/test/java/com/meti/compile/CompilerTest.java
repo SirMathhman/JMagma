@@ -15,6 +15,15 @@ class CompilerTest {
 	private static final MagmaCompiler Compiler = MagmaCompiler.MagmaCompiler_;
 
 	@Test
+	void compileSimple() throws IOException, CompileException {
+		Compiler.compile(new StringSource("10"), (script, value) -> {
+			assertEquals("10", value.renderToString(MagmaCompiler.CTargetType.Source));
+			assertEquals("", value.renderToString(MagmaCompiler.CTargetType.Header));
+			return Collections.emptyList();
+		});
+	}
+
+	@Test
 	void helloWorld() {
 		assertSource("#include <stdio.h>\nint main(){printf(\"Hello World!\");return 0;}", """
 				import native stdio;
@@ -66,7 +75,7 @@ class CompilerTest {
 
 	private void assertSource(String input, String target, String header) {
 		try {
-			Compiler.compile(new InlineSource(input), (script, value) -> {
+			Compiler.compile(new StringSource(input), (script, value) -> {
 				assertEquals(target, value.renderToString(MagmaCompiler.CTargetType.Source));
 				assertEquals(header, value.renderToString(MagmaCompiler.CTargetType.Header));
 				return Collections.emptyList();
@@ -126,7 +135,7 @@ class CompilerTest {
 		assertSource("5", "5", "");
 	}
 
-	private static record InlineSource(String s) implements Source {
+	private static record StringSource(String s) implements Source {
 		@Override
 		public Option<String> read(Script script) throws IOException {
 			return Some(s);
