@@ -26,7 +26,7 @@ public class Main {
 				.ifPresent(Main::runWithSource);
 	}
 
-	private static void runWithSource( Source source) {
+	private static void runWithSource(Source source) {
 		ensureTargetDirectory()
 				.map(DirectoryTarget::new)
 				.ifPresent(target -> runWithBoth(source, target));
@@ -35,7 +35,11 @@ public class Main {
 	private static void runWithBoth(Source source, Target<File> target) {
 		try {
 			var intermediates = Compiler.compile(source, target);
-			compileIntermediates(intermediates);
+			if(intermediates.isEmpty()) {
+				logger.log(Level.WARNING, "No intermediate files are present to compile.");
+			} else {
+				compileIntermediates(intermediates);
+			}
 		} catch (IOException e) {
 			logger.log(Level.SEVERE, "Failed to compile target.", e);
 		} catch (CompileException e) {
@@ -45,7 +49,7 @@ public class Main {
 
 	private static Option<Directory> ensureTargetDirectory() {
 		try {
-			return Some(NIOFileSystem_.Root().resolve("target").ensureAsDirectory());
+			return Some(NIOFileSystem_.Root().resolve("target").ensureDirectory());
 		} catch (IOException e) {
 			logger.log(Level.WARNING, "Failed to ensure target directory.", e);
 			return None();
@@ -56,7 +60,7 @@ public class Main {
 		var directory = NIOFileSystem_.Root()
 				.resolve("source");
 		try {
-			return Some(directory.ensureAsDirectory());
+			return Some(directory.ensureDirectory());
 		} catch (IOException e) {
 			logger.log(Level.SEVERE, "Failed to ensure soure directory at: ", e);
 			return None();

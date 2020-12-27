@@ -60,7 +60,7 @@ class CompilerTest {
 
 	private void assertCompile(String s, String s2) {
 		try {
-			assertEquals(s, Compiler.compile(s2));
+			assertEquals(s, Compiler.compile(null, s2));
 		} catch (CompileException e) {
 			fail(e);
 		}

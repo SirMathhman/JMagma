@@ -7,7 +7,7 @@ import java.util.Objects;
 public enum Directive {
 	Include;
 
-	Node toNode(String value) {
+	public Node toNode(String value) {
 		return new DirectiveNode(this, value);
 	}
 

@@ -12,9 +12,11 @@ import java.util.List;
 public record DirectorySource(Directory root) implements Source {
 	@Override
 	public Option<String> read(Script script) throws IOException {
-		var path = root.asPath();
-		var reduce = script.streamAll().reduce(path, Path::resolve, (path1, path2) -> path2);
-		return reduce.existingAsFile().mapExceptionally(File::readString);
+		return script.streamParents()
+				.reduce(root.asPath(), Path::resolve, (path1, path2) -> path2)
+				.resolve(script.name() + ".mg")
+				.existingAsFile()
+				.mapExceptionally(File::readString);
 	}
 
 	@Override
@@ -25,16 +27,15 @@ public record DirectorySource(Directory root) implements Source {
 		var packages = new ArrayList<Script>();
 		for (Path file : files) {
 			if (file.hasExtensionOf("mg")) {
-				var pathNames = file.asAbsolute().names();
+				var parent = file.asAbsolute().names();
 				for (String rootName : rootNames) {
-					pathNames.remove(rootName);
+					parent.remove(rootName);
 				}
-				var last = pathNames.get(pathNames.size() - 1);
+				var last = parent.remove(parent.size() - 1);
 				var period = last.indexOf('.');
-				var slice = last.substring(period + 1);
+				var slice = last.substring(0, period);
 				var name = slice.trim();
-				pathNames.add(name);
-				var script = new ListScript(pathNames);
+				var script = new ListScript(parent, name);
 				packages.add(script);
 			}
 		}

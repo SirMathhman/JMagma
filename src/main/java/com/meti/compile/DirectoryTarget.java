@@ -12,6 +12,7 @@ public record DirectoryTarget(Directory directory) implements Target<File> {
 		var name = script.name();
 		return script.streamParents()
 				.reduce(directory.asPath(), Path::resolve, (path, path2) -> path2)
+				.ensureDirectories()
 				.resolve(name + ".c")
 				.ensureAsFile()
 				.writeString(value);

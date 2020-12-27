@@ -1,7 +1,9 @@
 package com.meti.compile;
 
-import com.meti.api.io.File;
+import com.meti.api.core.Supplier;
 import com.meti.compile.feature.Node;
+import com.meti.compile.feature.extern.ImportProcessor;
+import com.meti.compile.feature.extern.ScriptProcessor;
 import com.meti.compile.feature.field.Field;
 import com.meti.compile.process.ProcessException;
 
@@ -20,24 +22,30 @@ import static com.meti.compile.feature.Node.Group.Structure;
 
 public class MagmaCompiler implements Compiler {
 	static final MagmaCompiler MagmaCompiler_ = new MagmaCompiler();
+	private final ScriptProcessor scriptProcessor = new ImportProcessor();
 
 	private MagmaCompiler() {
 	}
 
+	@Override
 	public <T> List<T> compile(Source source, Target<T> target) throws IOException, CompileException {
 		var scripts = source.list();
-		var output = new ArrayList<T>();
-		for (Script script : scripts) {
-			source.read(script)
-					.mapExceptionally(this::compile)
-					.mapExceptionally(value -> target.write(script, value))
-					.ifPresent(output::add);
+		if (scripts.isEmpty()) {
+			throw new CompileException("No scripts were found for source: " + source);
 		}
-		return output;
+		var intermediates = new ArrayList<T>();
+		for (Script script : scripts) {
+			Supplier<IOException> doesNotExist = () -> new IOException(script + " does not exist to be read.");
+			var input = source.read(script).orElseThrow(doesNotExist);
+			var output = compile(script, input);
+			var intermediate = target.write(script, output);
+			intermediates.add(intermediate);
+		}
+		return intermediates;
 	}
 
 	@Override
-	public String compile(String content) throws CompileException {
+	public String compile(Script script, String content) throws CompileException {
 		var lines = BracketSplitter_.split(content);
 		var nodes = new ArrayList<Node>();
 		for (String line : lines) {
@@ -46,7 +54,7 @@ public class MagmaCompiler implements Compiler {
 		if (nodes.isEmpty()) throw TokenizationException("No nodes were found.");
 		var newList = new ArrayList<Node>();
 		for (Node node : nodes) {
-			newList.add(process(node));
+			newList.add(process(script, node));
 		}
 		var cache = new Cache<>(new EnumMap<>(Type.class));
 		for (Node node : newList) {
@@ -55,11 +63,12 @@ public class MagmaCompiler implements Compiler {
 		return cache.render();
 	}
 
-	private Node process(Node node) throws ProcessException {
+	private Node process(Script current, Node node) throws ProcessException {
 		Node newNode;
-		if (node.is(Node.Group.Function)) {
-			var identity = node.findIdentity()
-					.orElseThrow(() -> new ProcessException(node + " was a function but didn't have an identity."));
+		if (node.is(Node.Group.Import)) {
+			newNode = scriptProcessor.process(current, node);
+		} else if (node.is(Node.Group.Function)) {
+			var identity = node.findIdentity().orElseThrow(() -> new ProcessException(node + " was a function but didn't have an identity."));
 			if (identity.isFlagged(Field.Flag.NATIVE)) {
 				newNode = EmptyNode_;
 			} else {
@@ -76,7 +85,7 @@ public class MagmaCompiler implements Compiler {
 		} else {
 			newNode = node;
 		}
-		return newNode.mapByChildrenExceptionally(this::process);
+		return newNode.mapByChildrenExceptionally(node1 -> process(current, node1));
 	}
 
 	private Cache<Type> attach(Cache<Type> cache, Node node) {

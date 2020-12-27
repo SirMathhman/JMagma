@@ -37,4 +37,9 @@ public class NIODirectory implements Directory {
 	public Path asPath() {
 		return new NIOPath(path);
 	}
+
+	@Override
+	public Path resolve(String name) {
+		return new NIOPath(path.resolve(name));
+	}
 }

@@ -9,4 +9,6 @@ public interface Directory {
 	List<Path> walk() throws IOException;
 
 	Path asPath();
+
+	Path resolve(String name);
 }

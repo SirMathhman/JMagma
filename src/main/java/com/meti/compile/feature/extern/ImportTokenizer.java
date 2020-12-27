@@ -5,6 +5,7 @@ import com.meti.compile.feature.Node;
 import com.meti.compile.feature.Tokenizer;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -30,7 +31,9 @@ public class ImportTokenizer implements Tokenizer<Node> {
 					.filter(s -> !s.isBlank())
 					.map(String::trim)
 					.collect(Collectors.toList());
-			return Optional.of(Import(new ListScript(scriptArgs)));
+			var parent = scriptArgs.subList(0, scriptArgs.size() - 1);
+			var name = scriptArgs.get(scriptArgs.size() - 1);
+			return Optional.of(Import(new ListScript(parent, name)));
 		}
 		return Optional.empty();
 	}

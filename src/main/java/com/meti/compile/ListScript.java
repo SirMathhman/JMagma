@@ -1,22 +1,30 @@
 package com.meti.compile;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Stream;
 
-public record ListScript(List<String> args) implements Script {
-
+public record ListScript(List<String> parent, String name) implements Script {
 	@Override
-	public Stream<String> streamAll() {
-		return args.stream();
+	public Stream<String> streamParents() {
+		return parent().stream();
 	}
 
 	@Override
-	public Stream<String> streamParents() {
-		return args.subList(0, args.size() - 1).stream();
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		ListScript that = (ListScript) o;
+		return Objects.equals(parent, that.parent) && Objects.equals(name, that.name);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(parent);
 	}
 
 	@Override
 	public String name() {
-		return args.get(args.size() - 1);
+		return name;
 	}
 }
