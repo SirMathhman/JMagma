@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.meti.compile.RecursiveTokenizationStage.RecursiveTokenizationStage_;
+import static com.meti.compile.MagmaTokenizationStage.MagmaTokenizationStage_;
 
 public class MagmaCompiler implements Compiler<TargetType, File> {
 	static final MagmaCompiler MagmaCompiler_ = new MagmaCompiler();
@@ -36,7 +36,7 @@ public class MagmaCompiler implements Compiler<TargetType, File> {
 	}
 
 	private Result<TargetType> compileContent(Script script, String content) throws TokenizationException, ProcessException {
-		var nodes = RecursiveTokenizationStage_.tokenizeAll(content);
+		var nodes = MagmaTokenizationStage_.tokenizeAll(content);
 		var post = processorStage.process(script, nodes);
 		return renderStage.render(script, post);
 	}

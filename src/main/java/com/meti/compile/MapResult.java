@@ -9,7 +9,7 @@ public final record MapResult<K, V extends Enum<V>>(Map<K, Cache<V>> map) implem
 	MapResult<K, V> put(Node node, K header, V include) {
 		var m = getMap();
 		if(!m.containsKey(header)) {
-			m.put(header, new MapCache<>(Collections.emptyMap()));
+			m.put(header, new MapCache<V>(Collections.emptyMap()));
 		}
 		m.get(header).put(include, node);
 		return this;
