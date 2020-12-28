@@ -52,11 +52,6 @@ class CompilerTest extends CompiledTest {
 	}
 
 	@Test
-	void nativeFunctions() {
-		assertSource("native def test() : Void", "", "");
-	}
-
-	@Test
 	void nativeImports() {
 		assertSource("import native stdio", "#include \"Main.h\"\n", "#include <stdio.h>\n");
 	}
@@ -109,11 +104,6 @@ class CompilerTest extends CompiledTest {
 	@Test
 	void compileReturn() {
 		assertSource("return 10", "return 10;", "");
-	}
-
-	@Test
-	void compileMain() {
-		assertSource("def main() : I16 => {return 0;}", "int main(){return 0;}", "");
 	}
 
 	@Test
