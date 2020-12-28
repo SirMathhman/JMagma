@@ -18,7 +18,7 @@ import static com.meti.api.io.Console.Console_;
 import static com.meti.api.io.NIOFileSystem.NIOFileSystem_;
 import static com.meti.api.log.Logger.Level.Severe;
 import static com.meti.api.log.Logger.Level.Warning;
-import static com.meti.compile.MagmaCompiler.MagmaCompiler_;
+import static com.meti.compile.MagmaToCCompiler.MagmaCompiler_;
 
 public class Main {
 	private static final Logger Logger_ = new OutStreamLogger(Console_);

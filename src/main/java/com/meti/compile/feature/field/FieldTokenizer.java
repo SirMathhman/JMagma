@@ -74,7 +74,7 @@ public class FieldTokenizer implements Tokenizer<Field> {
 		var headerSlice = content.substring(0, extent);
 		var header = headerSlice.trim();
 		if (header.contains(" ")) {
-			var space = header.indexOf(' ');
+			var space = header.lastIndexOf(' ');
 			var flagString = header.substring(0, space);
 			var flags = streamFlags(flagString).reduce(FieldBuilder(), None::withFlag, (none, none2) -> none2);
 			var name = header.substring(space + 1);

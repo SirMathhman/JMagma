@@ -6,27 +6,23 @@ import com.meti.compile.feature.Node;
 import com.meti.compile.feature.field.Field;
 
 import java.util.Objects;
+import java.util.Optional;
 
-public class Declaration implements LeafNode {
-	private final Field field;
-
-	private Declaration(Field field) {
-		this.field = field;
-	}
-
-	public static Declaration Declaration(Field field) {
-		return new Declaration(field);
+public record Declaration(Field identity) implements LeafNode {
+	@Override
+	public <E extends Exception> Node mapByFields(EF1<Field, Field, E> mapper) throws E {
+		return new Declaration(mapper.apply(identity));
 	}
 
 	@Override
-	public <E extends Exception> Node mapByFields(EF1<Field, Field, E> mapper) throws E {
-		return Declaration(mapper.apply(field));
+	public Optional<Field> findIdentity() {
+		return Optional.of(identity);
 	}
 
 	@Override
 	public String toString() {
 		return "Declaration{" +
-		       "field=" + field +
+		       "field=" + identity +
 		       '}';
 	}
 
@@ -35,17 +31,17 @@ public class Declaration implements LeafNode {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
 		Declaration that = (Declaration) o;
-		return Objects.equals(field, that.field);
+		return Objects.equals(identity, that.identity);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(field);
+		return Objects.hash(identity);
 	}
 
 	@Override
 	public String render() {
-		return field.render() + ";";
+		return identity.render() + ";";
 	}
 
 	@Override

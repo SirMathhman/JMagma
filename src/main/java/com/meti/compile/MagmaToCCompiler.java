@@ -2,26 +2,28 @@ package com.meti.compile;
 
 import com.meti.api.core.Supplier;
 import com.meti.api.io.File;
-import com.meti.compile.process.ProcessException;
+import com.meti.compile.process.ParseException;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import static com.meti.compile.CRenderStage.CRenderStage_;
+import static com.meti.compile.MagmaToCFormatter.MagmaToCFormatter_;
 import static com.meti.compile.MagmaTokenizationStage.MagmaTokenizationStage_;
+import static com.meti.compile.MagmaValidator.MagmaValidator_;
 
-public class MagmaCompiler implements Compiler<CClass, File> {
-	static final Compiler<CClass, File> MagmaCompiler_ = new MagmaCompiler();
-	private final ProcessorStage processorStage = new ProcessorStageImpl();
+public class MagmaToCCompiler implements Compiler<CClass, File> {
+	static final Compiler<CClass, File> MagmaCompiler_ = new MagmaToCCompiler();
 
-	private MagmaCompiler() {
+	private MagmaToCCompiler() {
 	}
 
-	private Result<CClass, CGroup> compileContent(Script script, String content) throws TokenizationException, ProcessException {
+	private Result<CClass, CGroup> compileContent(Script script, String content) throws TokenizationException, ParseException {
 		var tokens = MagmaTokenizationStage_.tokenizeAll(content);
-		var renderables = processorStage.process(script, tokens);
-		return CRenderStage_.render(script, renderables);
+		var validated = MagmaValidator_.process(script, tokens);
+		var formatted = MagmaToCFormatter_.process(script, validated);
+		return CRenderStage_.render(script, formatted);
 	}
 
 	@Override

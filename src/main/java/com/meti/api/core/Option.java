@@ -12,4 +12,6 @@ public interface Option<T> {
 	<E extends Exception> T orElseThrow(Supplier<E> supplier) throws E;
 
 	boolean isEmpty();
+
+	boolean isPresent();
 }

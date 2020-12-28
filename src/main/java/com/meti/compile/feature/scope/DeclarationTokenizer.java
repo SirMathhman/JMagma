@@ -18,6 +18,6 @@ public class DeclarationTokenizer implements Tokenizer<Node> {
 	public Optional<Node> tokenize(String content) throws TokenizationException {
 		return FieldTokenizer_
 				.tokenize(content)
-				.map(Declaration::Declaration);
+				.map(Declaration::new);
 	}
 }

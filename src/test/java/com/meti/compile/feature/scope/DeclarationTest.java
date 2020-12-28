@@ -20,7 +20,7 @@ class DeclarationTest {
 	}
 
 	private Node createDeclaration() {
-		return Declaration.Declaration(FieldBuilder()
+		return new Declaration(FieldBuilder()
 				.withName("x")
 				.withType(Primitive.I16)
 				.complete());

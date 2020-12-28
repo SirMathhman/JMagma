@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 import java.io.IOException;
 import java.util.Collections;
 
-import static com.meti.compile.MagmaCompiler.MagmaCompiler_;
+import static com.meti.compile.MagmaToCCompiler.MagmaCompiler_;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 

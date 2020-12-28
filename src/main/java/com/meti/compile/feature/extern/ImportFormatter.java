@@ -1,24 +1,33 @@
 package com.meti.compile.feature.extern;
 
+import com.meti.api.core.Option;
+import com.meti.compile.Processor;
 import com.meti.compile.Script;
 import com.meti.compile.feature.Node;
-import com.meti.compile.process.ProcessException;
+import com.meti.compile.process.ParseException;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class ImportProcessor implements ScriptProcessor {
-	public static final ImportProcessor ImportProcessor_ = new ImportProcessor();
+import static com.meti.api.core.None.None;
+import static com.meti.api.core.Some.Some;
 
-	public ImportProcessor() {
+public class ImportFormatter implements Processor {
+	public static final ImportFormatter ImportFormatter_ = new ImportFormatter();
+
+	public ImportFormatter() {
 	}
 
 	@Override
-	public Node process(Script current, Node node) throws ProcessException {
-		var targetScript = node.findScript();
-		return targetScript.map(imported -> processImpl(current, imported))
-				.orElseThrow(() -> new ProcessException("Import did not have a script."));
+	public Option<Node> processOptionally(Script script, Node node) throws ParseException {
+		return node.is(Node.Group.Import) ? Some(process(script, node)) : None();
+	}
+
+	public Node process(Script current, Node node) throws ParseException {
+		return node.findScript()
+				.map(imported -> processImpl(current, imported))
+				.orElseThrow(() -> new ParseException("Import did not have a script."));
 	}
 
 	private Node processImpl(Script current, Script imported) {
