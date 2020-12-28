@@ -5,9 +5,12 @@ import org.junit.jupiter.api.Test;
 
 class DeclarationFeatureTest extends CompiledTest {
 	@Test
-	void compileDeclarations() {
-		assertSource("const x : I16 = 10", "int x=10;", "");
+	void test() {
+		assertSource("const x : I16 = 10", "int x=10;");
 	}
 
-
+	@Test
+	void withoutValue(){
+		assertSource("let x : U64", "unsigned long long x;");
+	}
 }
