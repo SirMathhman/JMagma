@@ -4,21 +4,24 @@ import com.meti.api.core.Option;
 import com.meti.api.io.Directory;
 import com.meti.api.io.File;
 import com.meti.api.io.Path;
+import com.meti.api.log.Logger;
+import com.meti.api.log.OutStreamLogger;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 import static com.meti.api.core.None.None;
 import static com.meti.api.core.Some.Some;
+import static com.meti.api.io.Console.Console_;
 import static com.meti.api.io.NIOFileSystem.NIOFileSystem_;
+import static com.meti.api.log.Logger.Level.Severe;
+import static com.meti.api.log.Logger.Level.Warning;
 import static com.meti.compile.MagmaCompiler.MagmaCompiler_;
 
 public class Main {
-	private static final Logger logger = Logger.getAnonymousLogger();
+	private static final Logger Logger_ = new OutStreamLogger(Console_);
 
 	public static void main(String[] args) {
 		ensureSourceDirectory()
@@ -36,14 +39,14 @@ public class Main {
 		try {
 			var intermediates = MagmaCompiler_.compile(source, target);
 			if (intermediates.isEmpty()) {
-				logger.log(Level.WARNING, "No intermediate files are present to compile.");
+				Logger_.log(Warning, "No intermediate files are present to compile.");
 			} else {
 				compileIntermediates(intermediates);
 			}
 		} catch (IOException e) {
-			logger.log(Level.SEVERE, "Failed to compile target.", e);
+			Logger_.log(Severe, "Failed to compile target.", e);
 		} catch (CompileException e) {
-			logger.log(Level.SEVERE, "Failed to compile content.", e);
+			Logger_.log(Severe, "Failed to compile content.", e);
 		}
 	}
 
@@ -54,7 +57,7 @@ public class Main {
 					.ensureDirectory()
 					.deleteChildren());
 		} catch (IOException e) {
-			logger.log(Level.WARNING, "Failed to ensure target directory.", e);
+			Logger_.log(Warning, "Failed to ensure target directory.", e);
 			return None();
 		}
 	}
@@ -64,7 +67,7 @@ public class Main {
 		try {
 			return Some(directory.ensureDirectory());
 		} catch (IOException e) {
-			logger.log(Level.SEVERE, "Failed to ensure soure directory at: ", e);
+			Logger_.log(Severe, "Failed to ensure soure directory at: ", e);
 			return None();
 		}
 	}
@@ -73,7 +76,7 @@ public class Main {
 		try {
 			compileIntermediatesExceptionally(intermediates);
 		} catch (IOException | InterruptedException e) {
-			logger.log(Level.SEVERE, "Failed to compile intermediate files.", e);
+			Logger_.log(Severe, "Failed to compile intermediate files.", e);
 		}
 	}
 
