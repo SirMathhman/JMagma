@@ -7,7 +7,8 @@ import java.io.IOException;
 import java.util.Collections;
 
 import static com.meti.compile.MagmaCompiler.MagmaCompiler_;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class CompilerTest extends CompiledTest {
 	@Test
@@ -23,13 +24,13 @@ class CompilerTest extends CompiledTest {
 	@Test
 	void helloWorld() {
 		assertSource("""
-				import native stdio;
-				native def printf(format : Ref[I8], args : Any...) : Void;
-				def main() : I16 => {
-					printf("Hello World!");
-					return 0;
-				}
-				""",
+						import native stdio;
+						native def printf(format : Ref[I8], args : Any...) : Void;
+						def main() : I16 => {
+							printf("Hello World!");
+							return 0;
+						}
+						""",
 				"#include \"Main.h\"\nint main(){printf(\"Hello World!\");return 0;}",
 				"#include <stdio.h>\n");
 	}
@@ -93,11 +94,6 @@ class CompilerTest extends CompiledTest {
 	}
 
 	@Test
-	void compileDeclarations() {
-		assertSource("const x : I16 = 10", "int x=10;", "");
-	}
-
-	@Test
 	void compileBlocks() {
 		assertSource("{{}{}}", "{{}{}}", "");
 	}
@@ -121,5 +117,4 @@ class CompilerTest extends CompiledTest {
 	void compileInt() {
 		assertSource("5", "5", "");
 	}
-
 }
