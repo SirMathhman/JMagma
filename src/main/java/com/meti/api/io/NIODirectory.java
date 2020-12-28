@@ -38,6 +38,15 @@ public class NIODirectory implements Directory {
 		return new NIOPath(value);
 	}
 
+	@Override
+	public Directory deleteChildren() throws IOException {
+		var list = Files.list(value).collect(Collectors.toList());
+		for (java.nio.file.Path path : list) {
+			deleteImpl(path);
+		}
+		return this;
+	}
+
 	private void deleteImpl(java.nio.file.Path path) throws IOException {
 		if (Files.isDirectory(path)) {
 			var children = Files.list(path).collect(Collectors.toList());
@@ -49,7 +58,7 @@ public class NIODirectory implements Directory {
 	}
 
 	@Override
-	public Path delete() throws IOException {
+	public Path deleteAll() throws IOException {
 		deleteImpl(value);
 		return new NIOPath(value);
 	}

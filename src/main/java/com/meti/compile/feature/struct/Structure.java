@@ -10,17 +10,14 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-public class Structure implements Node {
-	private final String name;
-	private final List<Field> fields;
-
-	public Structure(String name, List<Field> fields) {
-		this.name = name;
-		this.fields = fields;
-	}
-
+public record Structure(String name, List<Field> fields) implements Node {
 	static Incomplete Structure() {
 		return new Incomplete(Collections.emptyList());
+	}
+
+	@Override
+	public boolean is(Group group) {
+		return group == Group.Structure;
 	}
 
 	@Override

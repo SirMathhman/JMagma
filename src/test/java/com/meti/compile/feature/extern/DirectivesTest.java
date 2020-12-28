@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class DirectiveTest {
+class DirectivesTest {
 	@Test
 	void testEquals() {
 		assertEquals(createNode(), createNode());
@@ -17,6 +17,6 @@ class DirectiveTest {
 	}
 
 	private Node createNode() {
-		return Directive.Include.toNode("<stdio.h>");
+		return Directives.Include.toNode("<stdio.h>");
 	}
 }

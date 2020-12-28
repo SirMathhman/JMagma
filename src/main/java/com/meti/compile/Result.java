@@ -5,9 +5,9 @@ import com.meti.compile.feature.Node;
 import java.util.List;
 
 public interface Result<C, G> {
-	Result<C, G> put(Node node, C header, G include);
+	Result<C, G> put(C header, G include, Node node);
 
-	List<C> listClasses();
+	List<C> list();
 
 	String render(C clazz);
 }

@@ -5,7 +5,6 @@ import com.meti.compile.feature.Node;
 import com.meti.compile.feature.Tokenizer;
 
 import java.util.Arrays;
-import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -22,7 +21,7 @@ public class ImportTokenizer implements Tokenizer<Node> {
 		if (content.startsWith("import native ")) {
 			var slice = content.substring("import native ".length());
 			var trim = slice.trim();
-			return Optional.of(Directive.Include.toNode("<" + trim + ".h>"));
+			return Optional.of(Directives.Include.toNode("<" + trim + ".h>"));
 		}
 		if (content.startsWith("import ")) {
 			var slice = content.substring(7);

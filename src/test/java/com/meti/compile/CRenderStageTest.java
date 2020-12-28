@@ -1,6 +1,6 @@
 package com.meti.compile;
 
-import com.meti.compile.feature.extern.Directive;
+import com.meti.compile.feature.extern.Directives;
 import org.junit.jupiter.api.Test;
 
 import java.util.Collections;
@@ -16,7 +16,7 @@ class CRenderStageTest {
 	@Test
 	void render() {
 		var result = CRenderStage_.render(new ListScript(Collections.emptyList(), "Main"), List.of(
-				Directive.Include.toNode("<stdio.h>")
+				Directives.Include.toNode("<stdio.h>")
 		));
 		assertEquals("#include \"Main.h\"\n", result.render(Source));
 		assertEquals("#include <stdio.h>\n", result.render(Header));

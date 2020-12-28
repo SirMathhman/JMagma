@@ -48,11 +48,10 @@ public class Main {
 
 	private static Option<Directory> ensureTargetDirectory() {
 		try {
-			return NIOFileSystem_.Root()
+			return Some(NIOFileSystem_.Root()
 					.resolve("target")
-					.existingAsDirectory()
-					.mapExceptionally(Directory::delete)
-					.mapExceptionally(Path::ensureDirectories);
+					.ensureDirectory()
+					.deleteChildren());
 		} catch (IOException e) {
 			logger.log(Level.WARNING, "Failed to ensure target directory.", e);
 			return None();
@@ -60,8 +59,7 @@ public class Main {
 	}
 
 	private static Option<Directory> ensureSourceDirectory() {
-		var directory = NIOFileSystem_.Root()
-				.resolve("source");
+		var directory = NIOFileSystem_.Root().resolve("source");
 		try {
 			return Some(directory.ensureDirectory());
 		} catch (IOException e) {

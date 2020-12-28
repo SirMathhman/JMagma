@@ -10,5 +10,7 @@ public interface Directory {
 
 	Path asPath();
 
-	Path delete() throws IOException;
+	Directory deleteChildren() throws IOException;
+
+	Path deleteAll() throws IOException;
 }

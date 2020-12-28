@@ -4,25 +4,29 @@ import com.meti.compile.feature.Node;
 
 import java.util.*;
 
-public final record MapResult<K, V extends Enum<V>>(Map<K, Cache<V>> map) implements Result<K, V> {
+public final record MapResult<C, G extends Enum<G>>(Map<C, Cache<G>> map) implements Result<C, G> {
 
 	@Override
-	public Result<K, V> put(Node node, K header, V include) {
+	public Result<C, G> put(C clazz, G group, Node node) {
 		var internalMap = map;
-		if (!internalMap.containsKey(header)) {
-			internalMap.put(header, new MapCache<V>(Collections.emptyMap()));
+		if (!internalMap.containsKey(clazz)) {
+			Map<G, List<Node>> vListMap = Collections.emptyMap();
+			var value = new MapCache<G>(vListMap);
+			internalMap.put(clazz, value);
 		}
-		internalMap.get(header).put(include, node);
+		var oldCache = internalMap.get(clazz);
+		var newCache = oldCache.put(group, node);
+		internalMap.put(clazz, newCache);
 		return new MapResult<>(internalMap);
 	}
 
 	@Override
-	public List<K> listClasses() {
+	public List<C> list() {
 		return new ArrayList<>(map.keySet());
 	}
 
 	@Override
-	public String render(K clazz) {
+	public String render(C clazz) {
 		if (map.containsKey(clazz)) {
 			var cache = map.get(clazz);
 			return cache.render();

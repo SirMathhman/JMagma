@@ -26,7 +26,7 @@ public class ImportProcessor implements ScriptProcessor {
 		var list = new ArrayList<>(importParent);
 		list.add(imported.name() + ".h");
 		var join = String.join("/", list);
-		return Directive.Include.toNode("\"" + join + "\"");
+		return Directives.Include.toNode("\"" + join + "\"");
 	}
 
 	List<String> resolve(List<String> from, List<String> to) {

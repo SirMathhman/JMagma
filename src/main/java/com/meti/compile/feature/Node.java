@@ -50,6 +50,13 @@ public interface Node extends Renderable {
 
 	enum Group {
 		Content,
-		Declaration, Function, Structure, Invocation, Block, Import, Field
+		Declaration,
+		Function,
+		Structure,
+		Invocation,
+		Block,
+		Import,
+		Directive,
+		Field
 	}
 }

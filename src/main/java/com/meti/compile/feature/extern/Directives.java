@@ -4,27 +4,19 @@ import com.meti.compile.feature.Node;
 
 import java.util.Objects;
 
-public enum Directive {
+public enum Directives {
 	Include;
 
 	public Node toNode(String value) {
-		return new DirectiveNode(this, value);
+		return new NodeImpl(this, value);
 	}
 
-	private static class DirectiveNode implements Node {
-		private final String value;
-		private final Directive directive;
-
-		public DirectiveNode(Directive directive, String value) {
-			this.value = value;
-			this.directive = directive;
-		}
-
+	private static record NodeImpl(Directives directives, String value) implements Node {
 		@Override
 		public String toString() {
 			return "DirectiveNode{" +
 			       "value='" + value + '\'' +
-			       ", directive=" + directive +
+			       ", directive=" + directives +
 			       '}';
 		}
 
@@ -32,19 +24,24 @@ public enum Directive {
 		public boolean equals(Object o) {
 			if (this == o) return true;
 			if (o == null || getClass() != o.getClass()) return false;
-			DirectiveNode that = (DirectiveNode) o;
+			NodeImpl that = (NodeImpl) o;
 			return Objects.equals(value, that.value) &&
-			       directive == that.directive;
+			       directives == that.directives;
 		}
 
 		@Override
 		public int hashCode() {
-			return Objects.hash(value, directive);
+			return Objects.hash(value, directives);
 		}
 
 		@Override
 		public String render() {
-			return "#" + directive.name().toLowerCase() + " " + value + "\n";
+			return "#" + directives.name().toLowerCase() + " " + value + "\n";
+		}
+
+		@Override
+		public boolean is(Group group) {
+			return group == Group.Directive;
 		}
 	}
 }

@@ -2,10 +2,7 @@ package com.meti.compile;
 
 import com.meti.compile.feature.Node;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public record MapCache<T extends Enum<T>>(Map<T, List<Node>> map) implements Cache<T> {
@@ -13,7 +10,7 @@ public record MapCache<T extends Enum<T>>(Map<T, List<Node>> map) implements Cac
 	public String render() {
 		return map.keySet()
 				.stream()
-				.sorted((o1, o2) -> -o1.compareTo(o2))
+				.sorted(Comparator.naturalOrder())
 				.map(map::get)
 				.flatMap(List::stream)
 				.map(Node::render)
