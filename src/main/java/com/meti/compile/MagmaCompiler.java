@@ -11,21 +11,21 @@ import java.util.List;
 import static com.meti.compile.CRenderStage.CRenderStage_;
 import static com.meti.compile.MagmaTokenizationStage.MagmaTokenizationStage_;
 
-public class MagmaCompiler implements Compiler<CRenderStage.CClass, File> {
-	static final Compiler<CRenderStage.CClass, File> MagmaCompiler_ = new MagmaCompiler();
+public class MagmaCompiler implements Compiler<CClass, File> {
+	static final Compiler<CClass, File> MagmaCompiler_ = new MagmaCompiler();
 	private final ProcessorStage processorStage = new ProcessorStageImpl();
 
 	private MagmaCompiler() {
 	}
 
-	private Result<CRenderStage.CClass, CRenderStage.CGroup> compileContent(Script script, String content) throws TokenizationException, ProcessException {
+	private Result<CClass, CGroup> compileContent(Script script, String content) throws TokenizationException, ProcessException {
 		var tokens = MagmaTokenizationStage_.tokenizeAll(content);
 		var renderables = processorStage.process(script, tokens);
 		return CRenderStage_.render(script, renderables);
 	}
 
 	@Override
-	public List<File> compile(Source source, Target<CRenderStage.CClass, File> target) throws IOException, CompileException {
+	public List<File> compile(Source source, Target<CClass, File> target) throws IOException, CompileException {
 		var scripts = source.list();
 		if (scripts.isEmpty()) {
 			throw new CompileException("No scripts were found for source: " + source);

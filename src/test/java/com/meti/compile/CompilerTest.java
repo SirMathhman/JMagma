@@ -12,9 +12,9 @@ import static org.junit.jupiter.api.Assertions.*;
 class CompilerTest {
 	@Test
 	void compileSimple() throws IOException, CompileException {
-		Target<CRenderStage.CClass, File> target = (script, value) -> {
-			assertEquals("#include \"Main.h\"\n10", value.render(CRenderStage.CClass.Source));
-			assertEquals("", value.render(CRenderStage.CClass.Header));
+		Target<CClass, File> target = (script, value) -> {
+			assertEquals("#include \"Main.h\"\n10", value.render(CClass.Source));
+			assertEquals("", value.render(CClass.Header));
 			return Collections.emptyList();
 		};
 		assertTrue(MagmaCompiler_.compile(new StringSource("10"), target).isEmpty());
@@ -75,8 +75,8 @@ class CompilerTest {
 	private void assertSource(String input, String target, String header) {
 		try {
 			MagmaCompiler_.compile(new StringSource(input), (script, value) -> {
-				assertEquals(target, value.render(CRenderStage.CClass.Source));
-				assertEquals(header, value.render(CRenderStage.CClass.Header));
+				assertEquals(target, value.render(CClass.Source));
+				assertEquals(header, value.render(CClass.Header));
 				return Collections.emptyList();
 			});
 		} catch (CompileException | IOException e) {

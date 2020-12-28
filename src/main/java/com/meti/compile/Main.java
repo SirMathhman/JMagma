@@ -27,11 +27,11 @@ public class Main {
 
 	private static void runWithSource(Source source) {
 		ensureTargetDirectory()
-				.map(directory -> new DirectoryTarget<CRenderStage.CClass>(directory))
+				.map(directory -> new DirectoryTarget<CClass>(directory))
 				.ifPresent(target -> runWithBoth(source, target));
 	}
 
-	private static void runWithBoth(Source source, Target<CRenderStage.CClass, File> target) {
+	private static void runWithBoth(Source source, Target<CClass, File> target) {
 		try {
 			var intermediates = MagmaCompiler.MagmaCompiler_.compile(source, target);
 			if (intermediates.isEmpty()) {

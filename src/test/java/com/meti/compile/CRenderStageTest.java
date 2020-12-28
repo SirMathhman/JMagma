@@ -6,8 +6,8 @@ import org.junit.jupiter.api.Test;
 import java.util.Collections;
 import java.util.List;
 
-import static com.meti.compile.CRenderStage.CClass.Header;
-import static com.meti.compile.CRenderStage.CClass.Source;
+import static com.meti.compile.CClass.Header;
+import static com.meti.compile.CClass.Source;
 import static com.meti.compile.CRenderStage.CRenderStage_;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

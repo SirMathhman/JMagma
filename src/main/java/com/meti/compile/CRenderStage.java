@@ -8,14 +8,14 @@ import java.util.List;
 import static com.meti.compile.feature.Node.Group.*;
 import static com.meti.compile.feature.extern.Directives.Include;
 
-public class CRenderStage implements RenderStage<CRenderStage.CClass, CRenderStage.CGroup> {
+public class CRenderStage implements RenderStage<CClass, CGroup> {
 	static final CRenderStage CRenderStage_ = new CRenderStage();
 
 	private CRenderStage() {
 	}
 
 	@Override
-	public Result<CRenderStage.CClass, CGroup> render(Script script, List<Node> newList) {
+	public Result<CClass, CGroup> render(Script script, List<Node> newList) {
 		Result<CClass, CGroup> result = new MapResult<>(new EnumMap<>(CClass.class));
 		for (Node node : newList) {
 			result = extracted(result, node);
@@ -33,28 +33,5 @@ public class CRenderStage implements RenderStage<CRenderStage.CClass, CRenderSta
 		} else {
 			return result.put(CClass.Source, CGroup.Other, node);
 		}
-	}
-
-	enum CClass implements Class {
-		Source("%s.c"),
-		Header("%s.h");
-
-		public final String format;
-
-		CClass(String format) {
-			this.format = format;
-		}
-
-		@Override
-		public String format(String name) {
-			return format.formatted(name);
-		}
-	}
-
-	enum CGroup {
-		Directive,
-		Structure,
-		Function,
-		Other
 	}
 }
