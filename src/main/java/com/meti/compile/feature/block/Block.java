@@ -59,10 +59,18 @@ public record Block(List<? extends Node> children) implements Node {
 	@Override
 	public <T, E extends Exception> List<T> applyToChildrenExceptionally(EF1<Node, T, E> mapper) throws E {
 		var list = new ArrayList<T>();
-		for(Node child : children) {
+		for (Node child : children) {
 			list.add(mapper.apply(child));
 		}
 		return list;
+	}
+
+	@Override
+	public Node mapByChildren(F1<Node, Node> mapper) {
+		var newChildren = children.stream()
+				.map(mapper::apply)
+				.collect(Collectors.toList());
+		return new Block(newChildren);
 	}
 
 	@Override

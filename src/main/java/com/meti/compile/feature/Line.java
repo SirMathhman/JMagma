@@ -10,20 +10,10 @@ import com.meti.compile.token.Node;
 import java.util.Objects;
 import java.util.Optional;
 
-public class Line implements Node {
-	private final Node value;
-
-	private Line(Node value) {
-		this.value = value;
-	}
-
-	public static Line Line(Node value) {
-		return new Line(value);
-	}
-
+public record Line(Node value) implements Node {
 	@Override
 	public <E extends Exception> Node mapByChildrenExceptionally(EF1<Node, Node, E> mapper) throws E {
-		return Line(mapper.apply(value));
+		return new Line(mapper.apply(value));
 	}
 
 	@Override

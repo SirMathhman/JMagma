@@ -9,7 +9,6 @@ import com.meti.compile.script.Script;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-import java.util.function.Function;
 
 import static com.meti.api.core.None.None;
 
@@ -36,15 +35,6 @@ public interface Node extends Renderable {
 
 	default Node mapByChildren(F1<Node, Node> mapper) {
 		return this;
-	}
-
-	default Node mapByChildren2(Function<Node, Node> mapper) {
-		try {
-			return mapByChildrenExceptionally((EF1<Node, Node, Exception>) mapper::apply);
-		} catch (Exception e) {
-			e.printStackTrace();
-			return this;
-		}
 	}
 
 	default <E extends Exception> Node mapByChildrenExceptionally(EF1<Node, Node, E> mapper) throws E {
