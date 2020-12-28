@@ -1,11 +1,16 @@
 package com.meti.compile.feature.block;
 
 import com.meti.api.core.EF1;
+import com.meti.api.core.None;
+import com.meti.api.core.Option;
+import com.meti.api.core.Some;
+import com.meti.compile.feature.field.Field;
 import com.meti.compile.token.Node;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class Block implements Node {
@@ -62,5 +67,17 @@ public class Block implements Node {
 		return children.stream()
 				.map(Node::render)
 				.collect(Collectors.joining("", "{", "}"));
+	}
+
+	@Override
+	public Option<Field> findIdentity() {
+		return findIdentity2()
+				.map(Some::Some)
+				.orElseGet(None::None);
+	}
+
+	@Deprecated
+	private Optional<Field> findIdentity2() {
+		return Optional.empty();
 	}
 }

@@ -3,15 +3,12 @@ package com.meti.compile.feature.scope;
 import com.meti.api.core.EF1;
 import com.meti.api.core.F1;
 import com.meti.api.core.Option;
-import com.meti.api.core.Some;
 import com.meti.compile.token.Node;
 import com.meti.compile.feature.field.Field;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
-import java.util.function.Function;
 
 import static com.meti.api.core.Some.Some;
 
@@ -47,11 +44,6 @@ public record Declaration(Field identity) implements Node {
 	@Override
 	public Option<Field> findIdentity() {
 		return Some(identity);
-	}
-
-	@Override
-	public Optional<Field> findIdentity2() {
-		return Optional.of(identity);
 	}
 
 	@Override

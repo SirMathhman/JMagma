@@ -1,12 +1,11 @@
 package com.meti.compile.feature.function;
 
 import com.meti.api.core.Option;
+import com.meti.api.core.Supplier;
 import com.meti.compile.script.Script;
 import com.meti.compile.token.Node;
 import com.meti.compile.process.Processor;
 import com.meti.compile.process.ParseException;
-
-import java.util.function.Supplier;
 
 import static com.meti.api.core.None.None;
 import static com.meti.api.core.Some.Some;
@@ -30,7 +29,7 @@ public class NativeFunctionRemover implements Processor {
 
 	private boolean isNative(Node node) throws ParseException {
 		Supplier<ParseException> parseExceptionSupplier = () -> new ParseException(node + " was a function but didn't have an identity.");
-		return node.findIdentity2()
+		return node.findIdentity()
 				.orElseThrow(parseExceptionSupplier)
 				.isFlagged(NATIVE);
 	}

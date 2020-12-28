@@ -1,6 +1,8 @@
 package com.meti.compile.token;
 
-import com.meti.api.core.*;
+import com.meti.api.core.EF1;
+import com.meti.api.core.F1;
+import com.meti.api.core.Option;
 import com.meti.compile.feature.field.Field;
 import com.meti.compile.script.Script;
 
@@ -57,16 +59,7 @@ public interface Node extends Renderable {
 		return false;
 	}
 
-	@Deprecated
-	default Optional<Field> findIdentity2() {
-		return Optional.empty();
-	}
-
-	default Option<Field> findIdentity() {
-		return findIdentity2()
-				.map(Some::Some)
-				.orElseGet(None::None);
-	}
+	Option<Field> findIdentity();
 
 	enum Group {
 		Content,

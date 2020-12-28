@@ -28,6 +28,10 @@ public interface Type extends Renderable {
 		return Optional.empty();
 	}
 
+	default Type replaceChild(Type replacement) {
+		return this;
+	}
+
 	enum Group {
 		Implicit, Content
 	}

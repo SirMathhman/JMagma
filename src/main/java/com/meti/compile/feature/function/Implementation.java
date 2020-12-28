@@ -4,11 +4,17 @@ import com.meti.api.core.EF1;
 import com.meti.compile.token.Node;
 import com.meti.compile.feature.field.Field;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
 public class Implementation extends Function {
 	private final Node value;
+
+	@Override
+	public <T, E extends Exception> List<T> applyToChildren(EF1<Node, T, E> mapper) throws E {
+		return Collections.singletonList(mapper.apply(value));
+	}
 
 	private Implementation(Field identity, List<Field> parameters, Node value) {
 		super(identity, parameters);

@@ -1,9 +1,14 @@
 package com.meti.compile.feature.condition;
 
 import com.meti.api.core.EF1;
+import com.meti.api.core.None;
+import com.meti.api.core.Option;
+import com.meti.api.core.Some;
+import com.meti.compile.feature.field.Field;
 import com.meti.compile.token.Node;
 
 import java.util.Objects;
+import java.util.Optional;
 
 public class Conditional implements Node {
 	private final Node condition;
@@ -60,6 +65,18 @@ public class Conditional implements Node {
 	@Override
 	public String render() {
 		return type.name().toLowerCase() + "(" + condition.render() + ")" + block.render();
+	}
+
+	@Override
+	public Option<Field> findIdentity() {
+		return findIdentity2()
+				.map(Some::Some)
+				.orElseGet(None::None);
+	}
+
+	@Deprecated
+	private Optional<Field> findIdentity2() {
+		return Optional.empty();
 	}
 
 	enum Type {

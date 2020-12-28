@@ -1,6 +1,9 @@
 package com.meti.compile.feature.function;
 
 import com.meti.api.core.EF1;
+import com.meti.api.core.None;
+import com.meti.api.core.Option;
+import com.meti.api.core.Some;
 import com.meti.compile.token.Node;
 import com.meti.compile.token.Type;
 import com.meti.compile.feature.field.Field;
@@ -25,8 +28,7 @@ public abstract class Function implements Node {
 		return group == Group.Function;
 	}
 
-	@Override
-	public Optional<Field> findIdentity2() {
+	private Optional<Field> findIdentity2() {
 		return Optional.of(identity);
 	}
 
@@ -59,5 +61,12 @@ public abstract class Function implements Node {
 		return parameters.stream()
 				.map(Field::render)
 				.collect(Collectors.joining(",", "(", ")"));
+	}
+
+	@Override
+	public Option<Field> findIdentity() {
+		return findIdentity2()
+				.map(Some::Some)
+				.orElseGet(None::None);
 	}
 }

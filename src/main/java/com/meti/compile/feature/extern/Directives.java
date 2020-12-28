@@ -1,8 +1,13 @@
 package com.meti.compile.feature.extern;
 
+import com.meti.api.core.None;
+import com.meti.api.core.Option;
+import com.meti.api.core.Some;
+import com.meti.compile.feature.field.Field;
 import com.meti.compile.token.Node;
 
 import java.util.Objects;
+import java.util.Optional;
 
 public enum Directives {
 	Include;
@@ -42,6 +47,18 @@ public enum Directives {
 		@Override
 		public boolean is(Group group) {
 			return group == Group.Directive;
+		}
+
+		@Override
+		public Option<Field> findIdentity() {
+			return findIdentity2()
+					.map(Some::Some)
+					.orElseGet(None::None);
+		}
+
+		@Deprecated
+		private Optional<Field> findIdentity2() {
+			return Optional.empty();
 		}
 	}
 }

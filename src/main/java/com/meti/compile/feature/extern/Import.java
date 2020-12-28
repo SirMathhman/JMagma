@@ -1,10 +1,14 @@
 package com.meti.compile.feature.extern;
 
+import com.meti.api.core.None;
 import com.meti.api.core.Option;
+import com.meti.api.core.Some;
+import com.meti.compile.feature.field.Field;
 import com.meti.compile.script.Script;
 import com.meti.compile.token.Node;
 
 import java.util.Objects;
+import java.util.Optional;
 
 import static com.meti.api.core.Some.Some;
 
@@ -47,5 +51,17 @@ public record Import(Script script) implements Node {
 	@Override
 	public String render() {
 		return "???";
+	}
+
+	@Override
+	public Option<Field> findIdentity() {
+		return findIdentity2()
+				.map(Some::Some)
+				.orElseGet(None::None);
+	}
+
+	@Deprecated
+	private Optional<Field> findIdentity2() {
+		return Optional.empty();
 	}
 }

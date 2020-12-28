@@ -1,13 +1,13 @@
 package com.meti.compile.feature.struct;
 
 import com.meti.api.core.EF1;
+import com.meti.api.core.None;
+import com.meti.api.core.Option;
+import com.meti.api.core.Some;
 import com.meti.compile.token.Node;
 import com.meti.compile.feature.field.Field;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public record Structure(String name, List<Field> fields) implements Node {
@@ -61,6 +61,18 @@ public record Structure(String name, List<Field> fields) implements Node {
 				.map(Field::render)
 				.map(value -> value + ";")
 				.collect(Collectors.joining("", "{", "}"));
+	}
+
+	@Override
+	public Option<Field> findIdentity() {
+		return findIdentity2()
+				.map(Some::Some)
+				.orElseGet(None::None);
+	}
+
+	@Deprecated
+	private Optional<Field> findIdentity2() {
+		return Optional.empty();
 	}
 
 	public static record Incomplete(List<Field> fields) {
