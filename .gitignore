@@ -2,3 +2,6 @@
 *.log
 /.idea
 /working/target/
+/lib
+/target
+/working/Main.exe

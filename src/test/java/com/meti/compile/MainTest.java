@@ -26,12 +26,6 @@ class MainTest {
 		Files.writeString(input, "def main() : I16 => {return 0}");
 	}
 
-	@AfterEach
-	void tearDown() throws IOException {
-		Files.deleteIfExists(input);
-		Files.deleteIfExists(executable);
-	}
-
 	@Test
 	void main() throws IOException {
 		Main.main(new String[0]);
