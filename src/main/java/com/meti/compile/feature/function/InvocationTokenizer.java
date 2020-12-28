@@ -1,6 +1,5 @@
 package com.meti.compile.feature.function;
 
-import com.meti.compile.TokenizationException;
 import com.meti.compile.feature.Node;
 import com.meti.compile.feature.Tokenizer;
 import com.meti.compile.feature.content.ContentNode;

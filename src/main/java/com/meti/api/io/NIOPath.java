@@ -5,30 +5,22 @@ import com.meti.api.core.Option;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.List;
 
 import static com.meti.api.core.None.None;
 import static com.meti.api.core.Some.Some;
+import static com.meti.api.io.NIOFile.NIOFile;
 
-public class NIOPath implements com.meti.api.io.Path {
-	private final Path path;
-
-	public NIOPath(Path path) {
-		this.path = path;
-	}
-
+public record NIOPath(Path value) implements com.meti.api.io.Path {
 	@Override
 	public com.meti.api.io.Path asAbsolute() {
-		return new NIOPath(path.toAbsolutePath());
+		return new NIOPath(value.toAbsolutePath());
 	}
 
 	@Override
 	public String toString() {
-		return path.toString();
-	}
-
-	@Override
-	public Option<File> existing() {
-		return Files.exists(path) ? Some(new NIOFile(path)) : None();
+		return value.toString();
 	}
 
 	@Override
@@ -41,7 +33,7 @@ public class NIOPath implements com.meti.api.io.Path {
 
 	@Override
 	public File createAsFile() throws IOException {
-		return new NIOFile(Files.createFile(path));
+		return NIOFile(Files.createFile(value));
 	}
 
 	@Override
@@ -51,47 +43,73 @@ public class NIOPath implements com.meti.api.io.Path {
 
 	@Override
 	public boolean exists() {
-		return Files.exists(path);
+		return Files.exists(value);
 	}
 
-	@Override
-	public File asFile() {
-		return new NIOFile(path);
-	}
-
-	@Override
-	public com.meti.api.io.Path resolveSibling(String name, String extension) {
-		return new NIOPath(path.resolveSibling(name + "." + extension));
+	private File asFile() {
+		return NIOFile(value);
 	}
 
 	@Override
 	public boolean hasExtensionOf(String extension) {
-		return path.getFileName().toString().endsWith("." + extension);
+		return value.getFileName().toString().endsWith("." + extension);
 	}
 
 	@Override
 	public String name() {
-		var internalName = path.getFileName().toString();
+		var internalName = value.getFileName().toString();
 		return internalName.contains(".") ? internalName.substring(0, internalName.indexOf('.')) : internalName;
 	}
 
 	@Override
 	public Option<Directory> existingAsDirectory() {
-		if (Files.isDirectory(path)) {
-			return Some(new NIODirectory(path));
+		if (Files.isDirectory(value)) {
+			return Some(new NIODirectory(value));
 		} else {
 			return None();
 		}
 	}
 
 	@Override
-	public Directory ensuringAsDirectory() throws IOException {
-		if (!Files.exists(path)) Files.createDirectory(path);
-		return new NIODirectory(path);
+	public Directory ensureDirectory() throws IOException {
+		if (!Files.exists(value)) Files.createDirectory(value);
+		return new NIODirectory(value);
 	}
 
 	@Override
 	public com.meti.api.io.Path resolve(String name) {
-		return new NIOPath(path.resolve(name));
+		return new NIOPath(value.resolve(name));
+	}
+
+	@Override
+	public Option<File> existingAsFile() {
+		if (Files.isRegularFile(value)) {
+			return Some(NIOFile(value));
+		} else {
+			return None();
+		}
+	}
+
+	@Override
+	public List<String> names() {
+		var names = new ArrayList<String>();
+		var count = value.getNameCount();
+		for (int i = 0; i < count; i++) {
+			names.add(value.getName(i).toString());
+		}
+		return names;
+	}
+
+	@Override
+	public Directory ensureDirectories() throws IOException {
+		if (Files.exists(value)) {
+			if (Files.isDirectory(value)) {
+				return new NIODirectory(value);
+			} else {
+				throw new IOException("'" + value + "' isn't a directory.");
+			}
+		}
+		Files.createDirectories(value);
+		return new NIODirectory(value);
 	}
 }

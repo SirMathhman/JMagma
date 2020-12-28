@@ -1,84 +1,43 @@
 package com.meti.compile;
 
-import com.meti.compile.feature.Node;
-import com.meti.compile.feature.field.Field;
+import com.meti.api.core.Supplier;
+import com.meti.api.io.File;
 import com.meti.compile.process.ProcessException;
 
+import java.io.IOException;
 import java.util.ArrayList;
-import java.util.EnumMap;
+import java.util.List;
 
-import static com.meti.compile.BracketSplitter.BracketSplitter_;
-import static com.meti.compile.TokenizationException.TokenizationException;
-import static com.meti.compile.TokenizationStage.TokenizationStage_;
-import static com.meti.compile.feature.EmptyNode.EmptyNode_;
-import static com.meti.compile.feature.Line.Line;
-import static com.meti.compile.feature.Node.Group.Function;
-import static com.meti.compile.feature.Node.Group.Structure;
+import static com.meti.compile.CRenderStage.CRenderStage_;
+import static com.meti.compile.MagmaTokenizationStage.MagmaTokenizationStage_;
 
-public class MagmaCompiler implements Compiler {
-	static final MagmaCompiler MagmaCompiler_ = new MagmaCompiler();
+public class MagmaCompiler implements Compiler<CClass, File> {
+	static final Compiler<CClass, File> MagmaCompiler_ = new MagmaCompiler();
+	private final ProcessorStage processorStage = new ProcessorStageImpl();
 
 	private MagmaCompiler() {
 	}
 
+	private Result<CClass, CGroup> compileContent(Script script, String content) throws TokenizationException, ProcessException {
+		var tokens = MagmaTokenizationStage_.tokenizeAll(content);
+		var renderables = processorStage.process(script, tokens);
+		return CRenderStage_.render(script, renderables);
+	}
+
 	@Override
-	public String compile(String content) throws CompileException {
-		var lines = BracketSplitter_.split(content);
-		var nodes = new ArrayList<Node>();
-		for (String line : lines) {
-			nodes.add(TokenizationStage_.apply(line));
+	public List<File> compile(Source source, Target<CClass, File> target) throws IOException, CompileException {
+		var scripts = source.list();
+		if (scripts.isEmpty()) {
+			throw new CompileException("No scripts were found for source: " + source);
 		}
-		if (nodes.isEmpty()) throw TokenizationException("No nodes were found.");
-		var newList = new ArrayList<Node>();
-		for (Node node : nodes) {
-			newList.add(process(node));
+		var intermediates = new ArrayList<File>();
+		for (Script script : scripts) {
+			Supplier<IOException> doesNotExist = () -> new IOException(script + " does not exist to be read.");
+			var input = source.read(script).orElseThrow(doesNotExist);
+			var result = compileContent(script, input);
+			var intermediate = target.write(script, result);
+			intermediates.addAll(intermediate);
 		}
-		var cache = new Cache<>(new EnumMap<>(Type.class));
-		for (Node node : newList) {
-			cache = attach(cache, node);
-		}
-		return cache.render();
-	}
-
-	private Node process(Node node) throws ProcessException {
-		Node newNode;
-		if (node.is(Node.Group.Function)) {
-			var identity = node.findIdentity()
-					.orElseThrow(() -> new ProcessException(node + " was a function but didn't have an identity."));
-			if (identity.isFlagged(Field.Flag.NATIVE)) {
-				newNode = EmptyNode_;
-			} else {
-				newNode = node;
-			}
-		} else if (node.is(Node.Group.Block)) {
-			newNode = node.mapByChildren(child -> {
-				if (child.is(Node.Group.Invocation)) {
-					return Line(child);
-				} else {
-					return child;
-				}
-			});
-		} else {
-			newNode = node;
-		}
-		return newNode.mapByChildrenExceptionally(this::process);
-	}
-
-	private Cache<Type> attach(Cache<Type> cache, Node node) {
-		Cache<Type> newCache;
-		if (node.is(Structure)) {
-			newCache = cache.put(Type.Structure, node);
-		} else if (node.is(Function)) {
-			newCache = cache.put(Type.Function, node);
-		} else {
-			newCache = cache.put(Type.Other, node);
-		}
-		return newCache;
-	}
-
-	enum Type {
-		Structure,
-		Function,
-		Other
+		return intermediates;
 	}
 }

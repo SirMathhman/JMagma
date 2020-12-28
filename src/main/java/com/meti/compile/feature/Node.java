@@ -1,13 +1,17 @@
 package com.meti.compile.feature;
 
 import com.meti.api.core.EF1;
+import com.meti.api.core.Option;
+import com.meti.compile.Script;
 import com.meti.compile.feature.field.Field;
 
 import java.util.Optional;
 import java.util.function.Function;
 
+import static com.meti.api.core.None.None;
+
 public interface Node extends Renderable {
-	default <E extends Exception> Node mapByTypes(EF1<Type, Type, E> mapper) throws E {
+	default <E extends Exception> Node mapByTypes(EF1<Type, Type, E> mapper) {
 		return this;
 	}
 
@@ -32,6 +36,10 @@ public interface Node extends Renderable {
 		return Optional.empty();
 	}
 
+	default Option<Script> findScript() {
+		return None();
+	}
+
 	default boolean is(Group group) {
 		return false;
 	}
@@ -42,6 +50,13 @@ public interface Node extends Renderable {
 
 	enum Group {
 		Content,
-		Declaration, Function, Structure, Invocation, Block, Field
+		Declaration,
+		Function,
+		Structure,
+		Invocation,
+		Block,
+		Import,
+		Directive,
+		Field
 	}
 }

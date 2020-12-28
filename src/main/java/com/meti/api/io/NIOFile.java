@@ -4,11 +4,9 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-public class NIOFile implements File {
-	private final Path value;
-
-	public NIOFile(Path value) {
-		this.value = value;
+public record NIOFile(Path value) implements File {
+	static NIOFile NIOFile(Path value) {
+		return new NIOFile(value);
 	}
 
 	@Override
@@ -17,19 +15,13 @@ public class NIOFile implements File {
 	}
 
 	@Override
-	public void delete() throws IOException {
-		Files.delete(value);
-		new NIOPath(value);
-	}
-
-	@Override
 	public com.meti.api.io.Path asPath() {
 		return new NIOPath(value);
 	}
 
 	@Override
-	public com.meti.api.io.Path writeString(String output) throws IOException {
+	public NIOFile writeString(String output) throws IOException {
 		Files.writeString(value, output);
-		return new NIOPath(value);
+		return NIOFile(value);
 	}
 }

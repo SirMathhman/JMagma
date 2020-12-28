@@ -1,118 +1,137 @@
 package com.meti.compile;
 
+import com.meti.api.io.File;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.fail;
+import java.io.IOException;
+import java.util.Collections;
+
+import static com.meti.compile.MagmaCompiler.MagmaCompiler_;
+import static org.junit.jupiter.api.Assertions.*;
 
 class CompilerTest {
-	private static final MagmaCompiler Compiler = MagmaCompiler.MagmaCompiler_;
+	@Test
+	void compileSimple() throws IOException, CompileException {
+		Target<CClass, File> target = (script, value) -> {
+			assertEquals("10", value.render(CClass.Source));
+			assertEquals("", value.render(CClass.Header));
+			return Collections.emptyList();
+		};
+		assertTrue(MagmaCompiler_.compile(new StringSource("10"), target).isEmpty());
+	}
 
 	@Test
-	void helloWorld(){
-		assertCompile("#include <stdio.h>\nint main(){printf(\"Hello World!\");return 0;}", """
+	void helloWorld() {
+		assertSource("""
 				import native stdio;
 				native def printf(format : Ref[I8], args : Any...) : Void;
 				def main() : I16 => {
 					printf("Hello World!");
 					return 0;
 				}
-				""");
+				""",
+				"#include \"Main.h\"\nint main(){printf(\"Hello World!\");return 0;}",
+				"#include <stdio.h>\n");
 	}
 
 	@Test
-	void order(){
-		assertCompile("struct Wrapper{}void test(){}", "def test() : Void => {}struct Wrapper{}");
+	void order() {
+		assertSource("def test() : Void => {}struct Wrapper{}", "struct Wrapper{}void test(){}", "");
 	}
 
 	@Test
-	void multipleLines(){
-		assertCompile("int x=10;int y=20;", """
+	void multipleLines() {
+		assertSource("""
 				const x : I16 = 10;
 				const y : I16 = 20;
-				""");
+				""", "int x=10;int y=20;", "");
 	}
 
 	@Test
-	void nativeFunctions(){
-		assertCompile("", "native def test() : Void");
+	void nativeFunctions() {
+		assertSource("native def test() : Void", "", "");
 	}
 
 	@Test
-	void nativeImports(){
-		assertCompile("#include <stdio.h>\n", "import native stdio");
+	void nativeImports() {
+		assertSource("import native stdio", "#include \"Main.h\"\n", "#include <stdio.h>\n");
 	}
 
 	@Test
 	void invocations() {
-		assertCompile("myFunction(10,20)", "myFunction(10, 20)");
+		assertSource("myFunction(10, 20)", "myFunction(10,20)", "");
 	}
 
 	@Test
 	void structure() {
-		assertCompile("struct Wrapper{int value;}", "struct Wrapper {const value : I16}");
+		assertSource("struct Wrapper {const value : I16}", "struct Wrapper{int value;}", "");
 	}
 
 	@Test
 	void emptyStructure() {
-		assertCompile("struct Empty{}", "struct Empty{}");
+		assertSource("struct Empty{}", "struct Empty{}", "");
 	}
 
-	private void assertCompile(String s, String s2) {
+	private void assertSource(String input, String target, String header) {
 		try {
-			assertEquals(s, Compiler.compile(s2));
-		} catch (CompileException e) {
+			MagmaCompiler_.compile(new StringSource(input), (script, value) -> {
+				assertEquals(target, value.render(CClass.Source));
+				assertEquals(header, value.render(CClass.Header));
+				return Collections.emptyList();
+			});
+		} catch (CompileException | IOException e) {
 			fail(e);
 		}
 	}
 
 	@Test
 	void testTrue() {
-		assertCompile("1", "true");
+		assertSource("true", "1", "");
 	}
 
 	@Test
 	void testFalse() {
-		assertCompile("0", "false");
+		assertSource("false", "0", "");
 	}
 
 	@Test
 	void testIf() {
-		assertCompile("if(1){}", "if(true){}");
+		assertSource("if(true){}", "if(1){}", "");
 	}
 
 	@Test
 	void testWhile() {
-		assertCompile("while(0){}", "while(false){}");
+		assertSource("while(false){}", "while(0){}", "");
 	}
 
 	@Test
 	void compileDeclarations() {
-		assertCompile("int x=10;", "const x : I16 = 10");
+		assertSource("const x : I16 = 10", "int x=10;", "");
 	}
 
 	@Test
 	void compileBlocks() {
-		assertCompile("{{}{}}", "{{}{}}");
+		assertSource("{{}{}}", "{{}{}}", "");
 	}
 
 	@Test
 	void blockChildren() {
-		assertCompile("{return 0;}", "{return 0;}");
+		assertSource("{return 0;}", "{return 0;}", "");
 	}
 
 	@Test
 	void compileReturn() {
-		assertCompile("return 10;", "return 10");
+		assertSource("return 10", "return 10;", "");
 	}
 
 	@Test
 	void compileMain() {
-		assertCompile("int main(){return 0;}", "def main() : I16 => {return 0;}");
+		assertSource("def main() : I16 => {return 0;}", "int main(){return 0;}", "");
 	}
 
 	@Test
 	void compileInt() {
-		assertCompile("5", "5");
+		assertSource("5", "5", "");
 	}
+
 }

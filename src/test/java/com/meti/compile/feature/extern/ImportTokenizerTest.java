@@ -10,6 +10,6 @@ class ImportTokenizerTest {
 
 	@Test
 	void tokenize() throws TokenizationException {
-		assertEquals(Directive.Include.toNode("<stdio.h>"), ImportTokenizer_.tokenize("import native stdio").orElseThrow());
+		assertEquals(Directives.Include.toNode("<stdio.h>"), ImportTokenizer_.tokenize("import native stdio").orElseThrow());
 	}
 }

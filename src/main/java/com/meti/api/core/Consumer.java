@@ -1,5 +1,5 @@
 package com.meti.api.core;
 
-public interface F0<T> {
+public interface Consumer<T> {
 	void apply(T t);
 }

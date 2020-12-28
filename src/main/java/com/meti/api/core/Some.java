@@ -17,12 +17,7 @@ public class Some<T> implements Option<T> {
 	}
 
 	@Override
-	public <E extends Exception> void ifPresentExceptionally(EF0<T, E> consumer) throws E {
-		consumer.apply(value);
-	}
-
-	@Override
-	public void ifPresent(F0<T> consumer) {
+	public void ifPresent(Consumer<T> consumer) {
 		consumer.apply(value);
 	}
 
@@ -34,5 +29,15 @@ public class Some<T> implements Option<T> {
 	@Override
 	public <R, E extends Exception> Option<R> mapExceptionally(EF1<T, R, E> mapper) throws E {
 		return Some(mapper.apply(value));
+	}
+
+	@Override
+	public <E extends Exception> T orElseThrow(Supplier<E> supplier) throws E {
+		return value;
+	}
+
+	@Override
+	public boolean isEmpty() {
+		return false;
 	}
 }

@@ -1,10 +1,6 @@
 package com.meti.compile.feature.function;
 
 import com.meti.compile.TokenizationException;
-import com.meti.compile.feature.content.ContentNode;
-import com.meti.compile.feature.content.ContentType;
-import com.meti.compile.feature.field.Field;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import static com.meti.compile.feature.content.ContentNode.ContentNode;

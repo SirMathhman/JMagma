@@ -7,4 +7,10 @@ public interface Directory {
 	List<Path> list() throws IOException;
 
 	List<Path> walk() throws IOException;
+
+	Path asPath();
+
+	Directory deleteChildren() throws IOException;
+
+	Path deleteAll() throws IOException;
 }
