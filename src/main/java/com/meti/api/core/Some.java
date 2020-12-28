@@ -1,13 +1,9 @@
 package com.meti.api.core;
 
-public class Some<T> implements Option<T> {
-	private final T value;
+import static com.meti.api.core.None.None;
 
-	private Some(T value) {
-		this.value = value;
-	}
-
-	public static <T> Some<T> Some(T value) {
+public record Some<T>(T value) implements Option<T> {
+	public static <T> Option<T> Some(T value) {
 		return new Some<>(value);
 	}
 
@@ -44,5 +40,20 @@ public class Some<T> implements Option<T> {
 	@Override
 	public boolean isPresent() {
 		return true;
+	}
+
+	@Override
+	public <R> Option<R> flatMap(F1<T, Option<R>> mapper) {
+		return mapper.apply(value);
+	}
+
+	@Override
+	public Option<T> filter(F1<T, Boolean> predicate) {
+		return predicate.apply(value) ? this : None();
+	}
+
+	@Override
+	public T orElseGet(Supplier<T> supplier) {
+		return value;
 	}
 }

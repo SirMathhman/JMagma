@@ -17,7 +17,7 @@ public class DeclarationValidator implements Validator {
 
 	@Override
 	public void validate(Node node) throws ParseException {
-		var identity = node.findIdentity().orElseThrow(this::createNoIdentity);
+		var identity = node.findIdentity2().orElseThrow(this::createNoIdentity);
 		if (hasBothFlags(identity))
 			throw new FlagException("Declarations can't be both mutable and immutable at the same time.");
 	}

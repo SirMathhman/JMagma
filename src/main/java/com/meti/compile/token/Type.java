@@ -29,6 +29,6 @@ public interface Type extends Renderable {
 	}
 
 	enum Group {
-		Content
+		Implicit, Content
 	}
 }

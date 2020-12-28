@@ -1,6 +1,9 @@
 package com.meti.compile.feature.field;
 
 import com.meti.api.core.EF1;
+import com.meti.api.core.F1;
+import com.meti.api.core.Option;
+import com.meti.api.core.Some;
 import com.meti.compile.token.Node;
 import com.meti.compile.token.Type;
 
@@ -8,23 +11,9 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.function.Function;
 
-public class ValueField implements Field {
-	private final String name;
-	private final Type type;
-	private final Set<Flag> flags;
-	private final Node value;
+import static com.meti.api.core.Some.Some;
 
-	private ValueField(Set<Flag> flags, String name, Type type, Node value) {
-		this.name = name;
-		this.type = type;
-		this.flags = flags;
-		this.value = value;
-	}
-
-	public static ValueField ValueField(Set<Flag> flags, String name, Type type, Node value) {
-		return new ValueField(flags, name, type, value);
-	}
-
+public record ValueField(Set<Flag> flags, String name, Type type, Node value) implements Field {
 	@Override
 	public String toString() {
 		return "ValueField{" +
@@ -58,7 +47,7 @@ public class ValueField implements Field {
 
 	@Override
 	public <E extends Exception> Field mapByType(EF1<Type, Type, E> mapper) throws E {
-		return ValueField(flags, name, mapper.apply(type), value);
+		return new ValueField(flags, name, mapper.apply(type), value);
 	}
 
 	@Override
@@ -71,13 +60,34 @@ public class ValueField implements Field {
 		return mapper.apply(name);
 	}
 
-	@Override
-	public Type type() {
-		return type;
-	}
 
 	@Override
 	public boolean isFlagged(Flag flag) {
 		return flags.contains(flag);
+	}
+
+	@Override
+	public Field replaceType(Type replacement) {
+		return new ValueField(flags, name, replacement, value);
+	}
+
+	@Override
+	public Option<Node> findValue() {
+		return Some(value);
+	}
+
+	@Override
+	public Field mapByValue(F1<Node, Node> mapper) {
+		return new ValueField(flags, name, type, mapper.apply(value));
+	}
+
+	@Override
+	public <E extends Exception> Field mapByValueExceptionally(EF1<Node, Node, E> mapper) throws E {
+		return new ValueField(flags, name, type, mapper.apply(value));
+	}
+
+	@Override
+	public Option<Type> findType() {
+		return Some(type);
 	}
 }

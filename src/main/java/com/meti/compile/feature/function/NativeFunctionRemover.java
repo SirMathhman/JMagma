@@ -30,7 +30,7 @@ public class NativeFunctionRemover implements Processor {
 
 	private boolean isNative(Node node) throws ParseException {
 		Supplier<ParseException> parseExceptionSupplier = () -> new ParseException(node + " was a function but didn't have an identity.");
-		return node.findIdentity()
+		return node.findIdentity2()
 				.orElseThrow(parseExceptionSupplier)
 				.isFlagged(NATIVE);
 	}

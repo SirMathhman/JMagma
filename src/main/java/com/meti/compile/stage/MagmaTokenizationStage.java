@@ -40,7 +40,7 @@ public class MagmaTokenizationStage implements TokenizationStage {
 	private Node tokenizeNodeTree(Node node) throws TokenizationException {
 		return tokenizeNode(node)
 				.mapByChildrenExceptionally(this::tokenizeNodeTree)
-				.mapByFields(this::tokenizeField)
+				.mapByFieldsExceptionally(this::tokenizeField)
 				.mapByTypes(this::tokenizeTypeTree);
 	}
 

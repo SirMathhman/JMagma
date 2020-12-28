@@ -1,27 +1,19 @@
 package com.meti.compile.feature.field;
 
 import com.meti.api.core.EF1;
+import com.meti.api.core.F1;
+import com.meti.api.core.Option;
+import com.meti.compile.token.Node;
 import com.meti.compile.token.Type;
 
 import java.util.Objects;
 import java.util.Set;
 import java.util.function.Function;
 
-public class EmptyField implements Field {
-	protected final String name;
-	private final Type type;
-	private final Set<Flag> flags;
+import static com.meti.api.core.None.None;
+import static com.meti.api.core.Some.Some;
 
-	private EmptyField(Set<Flag> flags, String name, Type type) {
-		this.name = name;
-		this.type = type;
-		this.flags = flags;
-	}
-
-	protected static Field EmptyField(Set<Flag> flags, String name, Type type) {
-		return new EmptyField(flags, name, type);
-	}
-
+public record EmptyField(Set<Flag> flags, String name, Type type) implements Field {
 	@Override
 	public String toString() {
 		return "EmptyField{" +
@@ -53,7 +45,7 @@ public class EmptyField implements Field {
 
 	@Override
 	public <E extends Exception> Field mapByType(EF1<Type, Type, E> mapper) throws E {
-		return EmptyField(flags, name, mapper.apply(type));
+		return new EmptyField(flags, name, mapper.apply(type));
 	}
 
 	@Override
@@ -66,13 +58,34 @@ public class EmptyField implements Field {
 		return mapper.apply(name);
 	}
 
-	@Override
-	public Type type() {
-		return type;
-	}
 
 	@Override
 	public boolean isFlagged(Flag flag) {
 		return flags.contains(flag);
+	}
+
+	@Override
+	public Field replaceType(Type replacement) {
+		return new EmptyField(flags, name, replacement);
+	}
+
+	@Override
+	public Option<Node> findValue() {
+		return None();
+	}
+
+	@Override
+	public Field mapByValue(F1<Node, Node> mapper) {
+		return this;
+	}
+
+	@Override
+	public <E extends Exception> Field mapByValueExceptionally(EF1<Node, Node, E> mapper) throws E {
+		return this;
+	}
+
+	@Override
+	public Option<Type> findType() {
+		return Some(type);
 	}
 }

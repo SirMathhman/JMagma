@@ -1,11 +1,11 @@
 package com.meti.compile.feature.content;
 
-import com.meti.compile.token.LeafNode;
+import com.meti.compile.token.Node;
 
 import java.util.Objects;
 import java.util.Optional;
 
-public class ContentNode implements LeafNode {
+public class ContentNode implements Node {
 	private final String content;
 
 	private ContentNode(String content) {

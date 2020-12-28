@@ -2,12 +2,13 @@ package com.meti.compile.feature.field;
 
 import com.meti.compile.feature.primitive.Int;
 import com.meti.compile.feature.primitive.Primitive;
+import com.meti.compile.token.Node;
+import com.meti.compile.token.Type;
 import org.junit.jupiter.api.Test;
 
 import java.util.Set;
 
 import static com.meti.compile.feature.field.Field.Flag.CONST;
-import static com.meti.compile.feature.field.ValueField.ValueField;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class ValueFieldTest {
@@ -17,7 +18,7 @@ class ValueFieldTest {
 	}
 
 	private Field createField() {
-		return ValueField(Set.of(CONST), "x", Primitive.I16, Int.Int(10));
+		return new ValueField(Set.of(CONST), "x", (Type) Primitive.I16, (Node) Int.Int(10));
 	}
 
 	@Test

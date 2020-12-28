@@ -1,12 +1,12 @@
 package com.meti.compile.feature.primitive;
 
-import com.meti.compile.token.LeafNode;
+import com.meti.compile.token.Node;
 
 import java.math.BigInteger;
 import java.util.Objects;
 import java.util.Optional;
 
-public class Int implements LeafNode {
+public class Int implements Node {
 	private static final int Base10 = 10;
 	private final BigInteger integer;
 

@@ -20,7 +20,7 @@ public class InvocationFormatter implements Processor {
 
 	private Node process(Node node) {
 		Function<Node, Node> nodeNodeFunction = child -> processImpl(child).orElse(child);
-		return node.mapByChildren(nodeNodeFunction);
+		return node.mapByChildren2(nodeNodeFunction);
 	}
 
 	@Override

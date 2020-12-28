@@ -43,7 +43,7 @@ public record Structure(String name, List<Field> fields) implements Node {
 	}
 
 	@Override
-	public <E extends Exception> Node mapByFields(EF1<Field, Field, E> mapper) throws E {
+	public <E extends Exception> Node mapByFieldsExceptionally(EF1<Field, Field, E> mapper) throws E {
 		var newFields = new ArrayList<Field>();
 		for (Field field : fields) {
 			newFields.add(mapper.apply(field));

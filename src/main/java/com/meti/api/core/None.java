@@ -41,4 +41,19 @@ public class None<T> implements Option<T> {
 	public boolean isPresent() {
 		return false;
 	}
+
+	@Override
+	public <R> Option<R> flatMap(F1<T, Option<R>> mapper) {
+		return None();
+	}
+
+	@Override
+	public Option<T> filter(F1<T, Boolean> predicate) {
+		return None();
+	}
+
+	@Override
+	public T orElseGet(Supplier<T> supplier) {
+		return supplier.apply();
+	}
 }

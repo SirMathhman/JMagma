@@ -26,12 +26,12 @@ public abstract class Function implements Node {
 	}
 
 	@Override
-	public Optional<Field> findIdentity() {
+	public Optional<Field> findIdentity2() {
 		return Optional.of(identity);
 	}
 
 	@Override
-	public <E extends Exception> Node mapByFields(EF1<Field, Field, E> mapper) throws E {
+	public <E extends Exception> Node mapByFieldsExceptionally(EF1<Field, Field, E> mapper) throws E {
 		var newParameters = new ArrayList<Field>();
 		for (Field parameter : parameters) {
 			newParameters.add(mapper.apply(parameter));

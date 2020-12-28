@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Set;
 
-import static com.meti.compile.feature.field.EmptyField.EmptyField;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class EmptyFieldTest {
@@ -16,7 +15,7 @@ class EmptyFieldTest {
 	}
 
 	private Field createField() {
-		return EmptyField(Set.of(Field.Flag.CONST), "x", Primitive.I16);
+		return new EmptyField(Set.of(Field.Flag.CONST), "x", Primitive.I16);
 	}
 
 	@Test

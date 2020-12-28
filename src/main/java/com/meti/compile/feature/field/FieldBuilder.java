@@ -7,9 +7,6 @@ import com.meti.compile.feature.field.Field.Flag;
 import java.util.HashSet;
 import java.util.Set;
 
-import static com.meti.compile.feature.field.EmptyField.EmptyField;
-import static com.meti.compile.feature.field.ValueField.ValueField;
-
 public class FieldBuilder {
 	public FieldBuilder() {
 	}
@@ -44,7 +41,7 @@ public class FieldBuilder {
 
 	public static record WithoutValue(Set<Flag> flags, String name, Type type) {
 		public Field complete() {
-			return EmptyField(flags, name, type);
+			return new EmptyField(flags, name, type);
 		}
 
 		public All withValue(Node value) {
@@ -54,7 +51,7 @@ public class FieldBuilder {
 
 	public static record All(Set<Flag> flags, String name, Type type, Node value) {
 		public Field complete() {
-			return ValueField(flags, name, type, value);
+			return new ValueField(flags, name, type, value);
 		}
 	}
 }

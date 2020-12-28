@@ -14,4 +14,10 @@ public interface Option<T> {
 	boolean isEmpty();
 
 	boolean isPresent();
+
+	<R> Option<R> flatMap(F1<T, Option<R>> mapper);
+
+	Option<T> filter(F1<T, Boolean> predicate);
+
+	T orElseGet(Supplier<T> supplier);
 }
