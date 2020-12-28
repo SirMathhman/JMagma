@@ -17,8 +17,8 @@ class CompilerTest {
 	@Test
 	void compileSimple() throws IOException, CompileException {
 		Compiler.compile(new StringSource("10"), (script, value) -> {
-			assertEquals("10", value.renderToString(MagmaCompiler.CTargetType.Source));
-			assertEquals("", value.renderToString(MagmaCompiler.CTargetType.Header));
+			assertEquals("10", value.renderToString(CRenderStage.CTargetType.Source));
+			assertEquals("", value.renderToString(CRenderStage.CTargetType.Header));
 			return Collections.emptyList();
 		});
 	}
@@ -76,8 +76,8 @@ class CompilerTest {
 	private void assertSource(String input, String target, String header) {
 		try {
 			Compiler.compile(new StringSource(input), (script, value) -> {
-				assertEquals(target, value.renderToString(MagmaCompiler.CTargetType.Source));
-				assertEquals(header, value.renderToString(MagmaCompiler.CTargetType.Header));
+				assertEquals(target, value.renderToString(CRenderStage.CTargetType.Source));
+				assertEquals(header, value.renderToString(CRenderStage.CTargetType.Header));
 				return Collections.emptyList();
 			});
 		} catch (CompileException | IOException e) {
