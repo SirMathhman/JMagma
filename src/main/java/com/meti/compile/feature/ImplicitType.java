@@ -9,6 +9,11 @@ public class ImplicitType implements Type {
 	}
 
 	@Override
+	public boolean is(Group group) {
+		return group == Group.Implicit;
+	}
+
+	@Override
 	public String render(String value) {
 		return "? " + value;
 	}

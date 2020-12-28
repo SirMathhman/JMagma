@@ -4,22 +4,12 @@ import com.meti.compile.token.Node;
 
 import java.math.BigInteger;
 import java.util.Objects;
-import java.util.Optional;
 
-public class Int implements Node {
+public record Int(BigInteger integer) implements Node {
 	private static final int Base10 = 10;
-	private final BigInteger integer;
-
-	private Int(BigInteger integer) {
-		this.integer = integer;
-	}
-
-	public static Int Int(BigInteger integer) {
-		return new Int(integer);
-	}
 
 	public static Int Int(int val) {
-		return Int(BigInteger.valueOf(val));
+		return new Int(BigInteger.valueOf(val));
 	}
 
 	@Override
@@ -41,12 +31,7 @@ public class Int implements Node {
 	}
 
 	@Override
-	public Optional<String> findContent() {
-		return Optional.empty();
-	}
-
-	@Override
 	public boolean is(Group group) {
-		return false;
+		return group == Group.Integer;
 	}
 }

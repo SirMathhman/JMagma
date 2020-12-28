@@ -6,8 +6,6 @@ import com.meti.compile.token.Tokenizer;
 import java.math.BigInteger;
 import java.util.Optional;
 
-import static com.meti.compile.feature.primitive.Int.Int;
-
 public class IntTokenizer implements Tokenizer<Node> {
 	public static final Tokenizer<Node> IntTokenizer_ = new IntTokenizer();
 	private static final int Base10 = 10;
@@ -18,7 +16,7 @@ public class IntTokenizer implements Tokenizer<Node> {
 	@Override
 	public Optional<Node> tokenize(String content) {
 		try {
-			return Optional.of(Int(new BigInteger(content, Base10)));
+			return Optional.of(new Int(new BigInteger(content, Base10)));
 		} catch (NumberFormatException e) {
 			return Optional.empty();
 		}

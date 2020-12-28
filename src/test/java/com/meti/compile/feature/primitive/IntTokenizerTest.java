@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Test;
 
 import java.math.BigInteger;
 
-import static com.meti.compile.feature.primitive.Int.Int;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class IntTokenizerTest {
@@ -13,7 +12,7 @@ class IntTokenizerTest {
 	void tokenize() throws TokenizationException {
 		assertEquals("5", IntTokenizer.IntTokenizer_
 				.tokenize("5")
-				.orElse(Int(BigInteger.ZERO))
+				.orElse(new Int(BigInteger.ZERO))
 				.render());
 	}
 }
