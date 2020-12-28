@@ -9,7 +9,6 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static com.meti.compile.util.BracketSplitter.BracketSplitter_;
-import static com.meti.compile.feature.block.Block.Block;
 
 public class BlockTokenizer implements Tokenizer<Node> {
 	public static final Tokenizer<Node> BlockTokenizer_ = new BlockTokenizer();
@@ -23,7 +22,7 @@ public class BlockTokenizer implements Tokenizer<Node> {
 			var slice = content.substring(1, content.length() - 1);
 			var trim = slice.trim();
 			var nodeList = tokenizeChildren(trim);
-			return Optional.of(Block(nodeList));
+			return Optional.of(new Block(nodeList));
 		}
 		return Optional.empty();
 	}

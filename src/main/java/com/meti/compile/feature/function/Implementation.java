@@ -12,7 +12,7 @@ public class Implementation extends Function {
 	private final Node value;
 
 	@Override
-	public <T, E extends Exception> List<T> applyToChildren(EF1<Node, T, E> mapper) throws E {
+	public <T, E extends Exception> List<T> applyToChildrenExceptionally(EF1<Node, T, E> mapper) throws E {
 		return Collections.singletonList(mapper.apply(value));
 	}
 

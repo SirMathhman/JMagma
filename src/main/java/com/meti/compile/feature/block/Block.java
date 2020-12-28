@@ -1,9 +1,6 @@
 package com.meti.compile.feature.block;
 
-import com.meti.api.core.EF1;
-import com.meti.api.core.None;
-import com.meti.api.core.Option;
-import com.meti.api.core.Some;
+import com.meti.api.core.*;
 import com.meti.compile.feature.field.Field;
 import com.meti.compile.token.Node;
 
@@ -13,19 +10,9 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-public class Block implements Node {
-	private final List<? extends Node> children;
-
-	private Block(List<? extends Node> children) {
-		this.children = children;
-	}
-
+public record Block(List<? extends Node> children) implements Node {
 	public static Block Block(Node... children) {
-		return Block(List.of(children));
-	}
-
-	public static Block Block(List<? extends Node> children) {
-		return new Block(children);
+		return new Block(List.of(children));
 	}
 
 	@Override
@@ -59,7 +46,23 @@ public class Block implements Node {
 		for (Node child : children) {
 			newChildren.add(mapper.apply(child));
 		}
-		return Block(newChildren);
+		return new Block(newChildren);
+	}
+
+	@Override
+	public <T> List<T> applyToChildren(F1<Node, T> mapper) {
+		return children.stream()
+				.map(mapper::apply)
+				.collect(Collectors.toList());
+	}
+
+	@Override
+	public <T, E extends Exception> List<T> applyToChildrenExceptionally(EF1<Node, T, E> mapper) throws E {
+		var list = new ArrayList<T>();
+		for(Node child : children) {
+			list.add(mapper.apply(child));
+		}
+		return list;
 	}
 
 	@Override

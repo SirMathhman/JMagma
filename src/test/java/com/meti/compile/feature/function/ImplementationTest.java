@@ -8,7 +8,6 @@ import static com.meti.compile.feature.block.Block.Block;
 import static com.meti.compile.feature.field.FieldBuilder.FieldBuilder;
 import static com.meti.compile.feature.function.FunctionType.FunctionType;
 import static com.meti.compile.feature.function.Implementation.Implementation;
-import static com.meti.compile.feature.function.Return.Return;
 import static com.meti.compile.feature.primitive.Primitive.U64;
 import static com.meti.compile.feature.scope.Variable.Variable;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -37,6 +36,6 @@ class ImplementationTest {
 				.withName("value")
 				.withType(U64)
 				.complete();
-		return Implementation(identity, List.of(parameter), Block(Return(Variable("value"))));
+		return Implementation(identity, List.of(parameter), Block(new Return(Variable("value"))));
 	}
 }

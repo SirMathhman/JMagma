@@ -1,24 +1,28 @@
 package com.meti.compile.feature.function;
 
-import com.meti.api.core.EF1;
-import com.meti.api.core.None;
-import com.meti.api.core.Option;
-import com.meti.api.core.Some;
+import com.meti.api.core.*;
 import com.meti.compile.feature.field.Field;
 import com.meti.compile.token.Node;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
-public class Return implements Node{
-	private final Node value;
-
-	private Return(Node value) {
-		this.value = value;
+public record Return(Node value) implements Node {
+	@Override
+	public <T> List<T> applyToChildren(F1<Node, T> mapper) {
+		return Collections.singletonList(mapper.apply(value));
 	}
 
-	public static Return Return(Node value) {
-		return new Return(value);
+	@Override
+	public <T, E extends Exception> List<T> applyToChildrenExceptionally(EF1<Node, T, E> mapper) throws E {
+		return Collections.singletonList(mapper.apply(value));
+	}
+
+	@Override
+	public boolean is(Group group) {
+		return group == Group.Return;
 	}
 
 	@Override
@@ -43,7 +47,7 @@ public class Return implements Node{
 
 	@Override
 	public <E extends Exception> Node mapByChildrenExceptionally(EF1<Node, Node, E> mapper) throws E {
-		return Return(mapper.apply(value));
+		return new Return(mapper.apply(value));
 	}
 
 	@Override

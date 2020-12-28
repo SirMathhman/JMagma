@@ -6,17 +6,14 @@ import com.meti.compile.token.Type;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class FunctionType implements Type {
-	private final Type returnType;
-	private final List<Type> paramTypes;
-
-	private FunctionType(Type returnType, List<Type> paramTypes) {
-		this.returnType = returnType;
-		this.paramTypes = paramTypes;
-	}
-
+public record FunctionType(Type returnType, List<Type> paramTypes) implements Type {
 	static P0 FunctionType() {
 		return new P0(Collections.emptyList());
+	}
+
+	@Override
+	public <E extends Exception> Type mapByChildExceptionally(EF1<Type, Type, E> mapper) throws E {
+		return new FunctionType(mapper.apply(returnType), paramTypes);
 	}
 
 	@Override

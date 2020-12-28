@@ -24,6 +24,10 @@ public interface Type extends Renderable {
 		return false;
 	}
 
+	default <E extends Exception> Type mapByChildExceptionally(EF1<Type, Type, E> mapper) throws E {
+		return this;
+	}
+
 	default Optional<Type> findChild() {
 		return Optional.empty();
 	}

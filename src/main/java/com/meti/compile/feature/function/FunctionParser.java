@@ -1,18 +1,14 @@
 package com.meti.compile.feature.function;
 
 import com.meti.api.core.EF1;
-import com.meti.api.core.F1;
 import com.meti.api.core.Supplier;
 import com.meti.compile.feature.field.Field;
 import com.meti.compile.process.ConditionalProcessor;
-import com.meti.compile.process.MagmaResolver;
 import com.meti.compile.process.ParseException;
 import com.meti.compile.process.Processor;
 import com.meti.compile.script.Script;
 import com.meti.compile.token.Node;
 import com.meti.compile.token.Type;
-
-import java.util.List;
 
 import static com.meti.compile.process.MagmaResolver.MagmaResolver_;
 
@@ -24,25 +20,28 @@ public class FunctionParser implements ConditionalProcessor {
 
 	@Override
 	public Node processImpl(Script script, Node node) throws ParseException {
-		return node.mapByFieldsExceptionally(identity -> {
-			var functionType = identity.findType().orElseThrow(() -> new ParseException("No functional type was found."));
-			var returnType = functionType.findChild().orElseThrow(() -> new ParseException("No return type was found."));
-			if (returnType.is(Type.Group.Implicit)) {
-				EF1<Node, Type, ParseException> resolve = body -> {
-					Supplier<ParseException> invalidBody = () -> new ParseException("Invalid function body: " + body);
-					return MagmaResolver_.resolve(body).orElseThrow(invalidBody);
+		EF1<Field, Field, ParseException> withIdentity = identity -> {
+			EF1<Type, Type, ParseException> withFunctionType = functionType -> {
+				EF1<Type, Type, ParseException> withReturnType = returnType -> {
+					if (returnType.is(Type.Group.Implicit)) {
+						EF1<Node, Type, ParseException> resolve = body -> {
+							Supplier<ParseException> invalidBody = () -> new ParseException("Invalid function body: " + body);
+							return MagmaResolver_.resolve(body).orElseThrow(invalidBody);
+						};
+						var list = node.applyToChildrenExceptionally(resolve);
+						if (list.isEmpty()) {
+							throw new ParseException("No body was found in the function to resolve.");
+						} else {
+							return list.get(0);
+						}
+					}
+					return returnType;
 				};
-				var list = node.applyToChildren(resolve);
-				if(list.isEmpty()) {
-					throw new ParseException("No body was found in the function to resolve.");
-				} else {
-					var first = list.get(0);
-					var newFunctionType = functionType.replaceChild(first);
-					return identity.replaceType(newFunctionType);
-				}
-			}
-			return identity;
-		});
+				return functionType.mapByChildExceptionally(withReturnType);
+			};
+			return identity.mapByType(withFunctionType);
+		};
+		return node.mapByFieldsExceptionally(withIdentity);
 	}
 
 	@Override

@@ -14,7 +14,11 @@ import java.util.function.Function;
 import static com.meti.api.core.None.None;
 
 public interface Node extends Renderable {
-	default <T, E extends Exception> List<T> applyToChildren(EF1<Node, T, E> mapper) throws E {
+	default <T> List<T> applyToChildren(F1<Node, T> mapper) {
+		return Collections.emptyList();
+	}
+
+	default <T, E extends Exception> List<T> applyToChildrenExceptionally(EF1<Node, T, E> mapper) throws E {
 		return Collections.emptyList();
 	}
 
@@ -70,6 +74,6 @@ public interface Node extends Renderable {
 		Block,
 		Import,
 		Directive,
-		Integer, Field
+		Integer, Return, Field
 	}
 }

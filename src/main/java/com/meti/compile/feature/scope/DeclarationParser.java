@@ -23,7 +23,7 @@ public class DeclarationParser implements ConditionalProcessor {
 	public Node processImpl(Script script, Node node) throws ParseException {
 		EF1<Node, Type, ParseException> resolve = defaultValue -> MagmaResolver_.resolve(defaultValue)
 				.orElseThrow(() -> new ParseException("Invalid default value: " + defaultValue));
-		var types = node.applyToChildren(resolve);
+		var types = node.applyToChildrenExceptionally(resolve);
 		if (types.isEmpty()) throw new ParseException("Declaration had no child.");
 		var replacement = types.get(0);
 		F1<Field, Field> fieldFieldF1 = field -> field.replaceType(replacement);

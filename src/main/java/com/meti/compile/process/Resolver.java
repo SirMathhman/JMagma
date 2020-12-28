@@ -5,5 +5,5 @@ import com.meti.compile.token.Node;
 import com.meti.compile.token.Type;
 
 public interface Resolver {
-	Option<Type> resolve(Node node);
+	Option<Type> resolve(Node node) throws ResolutionException;
 }
