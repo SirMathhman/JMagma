@@ -4,42 +4,38 @@ import com.meti.compile.feature.Node;
 
 import java.util.*;
 
-public final record MapResult<K, V extends Enum<V>>(Map<K, Cache<V>> map) implements Result<K> {
+public final record MapResult<K, V extends Enum<V>>(Map<K, Cache<V>> map) implements Result<K, V> {
 
-	MapResult<K, V> put(Node node, K header, V include) {
-		var m = getMap();
-		if(!m.containsKey(header)) {
-			m.put(header, new MapCache<V>(Collections.emptyMap()));
+	@Override
+	public Result<K, V> put(Node node, K header, V include) {
+		var internalMap = map;
+		if (!internalMap.containsKey(header)) {
+			internalMap.put(header, new MapCache<V>(Collections.emptyMap()));
 		}
-		m.get(header).put(include, node);
-		return this;
+		internalMap.get(header).put(include, node);
+		return new MapResult<>(internalMap);
 	}
 
 	@Override
-	public List<K> listKeys() {
+	public List<K> listClasses() {
 		return new ArrayList<>(map.keySet());
 	}
 
 	@Override
-	public String renderToString(K type) {
-		if (map.containsKey(type)) {
-			var cache = map.get(type);
+	public String render(K clazz) {
+		if (map.containsKey(clazz)) {
+			var cache = map.get(clazz);
 			return cache.render();
 		} else {
 			return "";
 		}
 	}
 
-	public Map<K, Cache<V>> getMap() {
-		return map;
-	}
-
-
 	@Override
 	public boolean equals(Object obj) {
 		if (obj == this) return true;
 		if (obj == null || obj.getClass() != this.getClass()) return false;
-		var that = (MapResult) obj;
+		var that = (MapResult<?, ?>) obj;
 		return Objects.equals(this.map, that.map);
 	}
 

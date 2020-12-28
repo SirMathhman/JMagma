@@ -1,5 +1,5 @@
 package com.meti.compile;
 
-public interface TargetType {
+public interface Class {
 	String format(String name);
 }

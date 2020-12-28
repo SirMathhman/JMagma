@@ -1,6 +1,5 @@
 package com.meti.compile;
 
-import com.meti.api.core.EF1;
 import com.meti.api.core.Option;
 import com.meti.api.io.Directory;
 import com.meti.api.io.File;
@@ -18,7 +17,6 @@ import static com.meti.api.core.Some.Some;
 import static com.meti.api.io.NIOFileSystem.NIOFileSystem_;
 
 public class Main {
-	private static final MagmaCompiler Compiler = MagmaCompiler.MagmaCompiler_;
 	private static final Logger logger = Logger.getAnonymousLogger();
 
 	public static void main(String[] args) {
@@ -29,14 +27,14 @@ public class Main {
 
 	private static void runWithSource(Source source) {
 		ensureTargetDirectory()
-				.map(DirectoryTarget::new)
+				.map(directory -> new DirectoryTarget<CRenderStage.CClass>(directory))
 				.ifPresent(target -> runWithBoth(source, target));
 	}
 
-	private static void runWithBoth(Source source, Target<TargetType, File> target) {
+	private static void runWithBoth(Source source, Target<CRenderStage.CClass, File> target) {
 		try {
-			var intermediates = Compiler.compile(source, target);
-			if(intermediates.isEmpty()) {
+			var intermediates = MagmaCompiler.MagmaCompiler_.compile(source, target);
+			if (intermediates.isEmpty()) {
 				logger.log(Level.WARNING, "No intermediate files are present to compile.");
 			} else {
 				compileIntermediates(intermediates);

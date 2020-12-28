@@ -4,6 +4,6 @@ import com.meti.compile.feature.Node;
 
 import java.util.List;
 
-public interface RenderStage {
-	Result<TargetType> render(Script script, List<Node> newList);
+public interface RenderStage<C, G> {
+	Result<C, G> render(Script script, List<Node> newList);
 }

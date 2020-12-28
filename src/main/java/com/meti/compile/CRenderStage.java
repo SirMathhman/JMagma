@@ -3,47 +3,46 @@ package com.meti.compile;
 import com.meti.compile.feature.Node;
 import com.meti.compile.feature.extern.Directive;
 
-import java.util.HashMap;
+import java.util.EnumMap;
 import java.util.List;
 
 import static com.meti.compile.feature.Node.Group.*;
 
-public class CRenderStage implements RenderStage {
+public class CRenderStage implements RenderStage<CRenderStage.CClass, CRenderStage.CGroup> {
 	static final CRenderStage CRenderStage_ = new CRenderStage();
 
 	private CRenderStage() {
 	}
 
 	@Override
-	public Result<TargetType> render(Script script, List<Node> newList) {
-		var map = new HashMap<TargetType, Cache<CodeType>>();
-		var result = new MapResult<>(map);
+	public Result<CRenderStage.CClass, CGroup> render(Script script, List<Node> newList) {
+		var result = new MapResult<>(new EnumMap<CClass, Cache<CGroup>>(CClass.class));
 		for (Node node : newList) {
 			extracted(result, node);
 		}
-		result.put(Directive.Include.toNode("\"" + script.name() + ".h\""), CTargetType.Source, CodeType.Include);
+		result.put(Directive.Include.toNode("\"" + script.name() + ".h\""), CClass.Source, CGroup.Include);
 		return result;
 	}
 
-	private void extracted(MapResult<TargetType, CodeType> result, Node node) {
+	private void extracted(MapResult<CClass, CGroup> result, Node node) {
 		if (node.is(Import)) {
-			result.put(node, CTargetType.Header, CodeType.Include);
+			result.put(node, CClass.Header, CGroup.Include);
 		} else if (node.is(Structure)) {
-			result.put(node, CTargetType.Source, CodeType.Structure);
+			result.put(node, CClass.Source, CGroup.Structure);
 		} else if (node.is(Function)) {
-			result.put(node, CTargetType.Source, CodeType.Function);
+			result.put(node, CClass.Source, CGroup.Function);
 		} else {
-			result.put(node, CTargetType.Source, CodeType.Other);
+			result.put(node, CClass.Source, CGroup.Other);
 		}
 	}
 
-	enum CTargetType implements TargetType {
-		Source("%s.c"),
-		Header("%s.h");
+	enum CClass implements Class {
+		Source("%value.c"),
+		Header("%value.h");
 
 		public final String format;
 
-		CTargetType(String format) {
+		CClass(String format) {
 			this.format = format;
 		}
 
@@ -53,7 +52,7 @@ public class CRenderStage implements RenderStage {
 		}
 	}
 
-	enum CodeType {
+	enum CGroup {
 		Structure,
 		Function,
 		Include, Other

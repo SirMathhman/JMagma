@@ -1,9 +1,13 @@
 package com.meti.compile;
 
+import com.meti.compile.feature.Node;
+
 import java.util.List;
 
-public interface Result<T> {
-	List<T> listKeys();
+public interface Result<C, G> {
+	Result<C, G> put(Node node, C header, G include);
 
-	String renderToString(T type);
+	List<C> listClasses();
+
+	String render(C clazz);
 }

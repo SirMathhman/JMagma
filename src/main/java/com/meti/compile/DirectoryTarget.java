@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public record DirectoryTarget<T extends TargetType>(Directory directory) implements Target<T, File> {
+public record DirectoryTarget<C extends Class>(Directory directory) implements Target<C, File> {
 	private Path formatDirectory(Script script) {
 		return script.listParent()
 				.stream()
@@ -16,15 +16,15 @@ public record DirectoryTarget<T extends TargetType>(Directory directory) impleme
 	}
 
 	@Override
-	public List<File> write(Script script, Result<T> value) throws IOException {
+	public List<File> write(Script script, Result<C, ?> value) throws IOException {
 		var directory = formatDirectory(script);
 		var name = script.name();
 		var files = new ArrayList<File>();
-		var keys = value.listKeys();
+		var keys = value.listClasses();
 		for (int i = 0; i < keys.size(); i++) {
-			var type = keys.get(i);
-			var child = directory.resolve(type.format(name));
-			var content = value.renderToString(type);
+			var clazz = keys.get(i);
+			var child = directory.resolve(clazz.format(name));
+			var content = value.render(clazz);
 			var nioFile = child.ensureAsFile().writeString(content);
 			files.add(nioFile);
 		}
