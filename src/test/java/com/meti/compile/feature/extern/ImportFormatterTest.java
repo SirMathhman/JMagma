@@ -1,6 +1,6 @@
 package com.meti.compile.feature.extern;
 
-import com.meti.compile.ListScript;
+import com.meti.compile.script.ListScript;
 import com.meti.compile.process.ParseException;
 import org.junit.jupiter.api.Test;
 

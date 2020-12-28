@@ -1,16 +1,16 @@
 package com.meti.compile.feature.function;
 
 import com.meti.api.core.Option;
-import com.meti.compile.Script;
-import com.meti.compile.feature.Node;
-import com.meti.compile.Processor;
+import com.meti.compile.script.Script;
+import com.meti.compile.token.Node;
+import com.meti.compile.process.Processor;
 import com.meti.compile.process.ParseException;
 
 import java.util.function.Supplier;
 
 import static com.meti.api.core.None.None;
 import static com.meti.api.core.Some.Some;
-import static com.meti.compile.feature.EmptyNode.EmptyNode_;
+import static com.meti.compile.token.EmptyNode.EmptyNode_;
 import static com.meti.compile.feature.field.Field.Flag.NATIVE;
 
 public class NativeFunctionRemover implements Processor {

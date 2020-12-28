@@ -1,7 +1,7 @@
 package com.meti.compile.feature.field;
 
-import com.meti.compile.feature.Node;
-import com.meti.compile.feature.Type;
+import com.meti.compile.token.Node;
+import com.meti.compile.token.Type;
 import com.meti.compile.feature.field.Field.Flag;
 
 import java.util.HashSet;

@@ -1,6 +1,9 @@
 package com.meti.compile.feature;
 
-import com.meti.compile.TokenizationException;
+import com.meti.compile.token.CompoundTokenizer;
+import com.meti.compile.token.Node;
+import com.meti.compile.token.TokenizationException;
+import com.meti.compile.token.Tokenizer;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;

@@ -1,6 +1,6 @@
 package com.meti.compile.feature.extern;
 
-import com.meti.compile.feature.Node;
+import com.meti.compile.token.Node;
 
 import java.util.Objects;
 

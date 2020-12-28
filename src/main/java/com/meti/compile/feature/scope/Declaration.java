@@ -1,8 +1,8 @@
 package com.meti.compile.feature.scope;
 
 import com.meti.api.core.EF1;
-import com.meti.compile.feature.LeafNode;
-import com.meti.compile.feature.Node;
+import com.meti.compile.token.LeafNode;
+import com.meti.compile.token.Node;
 import com.meti.compile.feature.field.Field;
 
 import java.util.Objects;

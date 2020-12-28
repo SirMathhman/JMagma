@@ -1,7 +1,7 @@
 package com.meti.compile.feature.block;
 
 import com.meti.api.core.EF1;
-import com.meti.compile.feature.Node;
+import com.meti.compile.token.Node;
 
 import java.util.ArrayList;
 import java.util.List;

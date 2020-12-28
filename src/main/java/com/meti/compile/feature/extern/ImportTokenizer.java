@@ -1,8 +1,8 @@
 package com.meti.compile.feature.extern;
 
-import com.meti.compile.ListScript;
-import com.meti.compile.feature.Node;
-import com.meti.compile.feature.Tokenizer;
+import com.meti.compile.script.ListScript;
+import com.meti.compile.token.Node;
+import com.meti.compile.token.Tokenizer;
 
 import java.util.Arrays;
 import java.util.Optional;

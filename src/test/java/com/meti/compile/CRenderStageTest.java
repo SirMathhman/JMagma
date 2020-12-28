@@ -1,14 +1,15 @@
 package com.meti.compile;
 
 import com.meti.compile.feature.extern.Directives;
+import com.meti.compile.script.ListScript;
 import org.junit.jupiter.api.Test;
 
 import java.util.Collections;
 import java.util.List;
 
-import static com.meti.compile.CClass.Header;
-import static com.meti.compile.CClass.Source;
-import static com.meti.compile.CRenderStage.CRenderStage_;
+import static com.meti.compile.stage.CClass.Header;
+import static com.meti.compile.stage.CClass.Source;
+import static com.meti.compile.stage.CRenderStage.CRenderStage_;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class CRenderStageTest {

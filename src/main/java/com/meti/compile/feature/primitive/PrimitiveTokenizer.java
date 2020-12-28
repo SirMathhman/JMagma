@@ -1,7 +1,7 @@
 package com.meti.compile.feature.primitive;
 
-import com.meti.compile.feature.Tokenizer;
-import com.meti.compile.feature.Type;
+import com.meti.compile.token.Tokenizer;
+import com.meti.compile.token.Type;
 
 import java.util.Optional;
 

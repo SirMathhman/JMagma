@@ -1,8 +1,8 @@
 package com.meti.compile.feature.scope;
 
-import com.meti.compile.Script;
-import com.meti.compile.Validator;
-import com.meti.compile.feature.Node;
+import com.meti.compile.script.Script;
+import com.meti.compile.process.Validator;
+import com.meti.compile.token.Node;
 import com.meti.compile.feature.field.FlagException;
 import com.meti.compile.process.ParseException;
 

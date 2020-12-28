@@ -1,6 +1,6 @@
 package com.meti.compile.feature.content;
 
-import com.meti.compile.feature.LeafNode;
+import com.meti.compile.token.LeafNode;
 
 import java.util.Objects;
 import java.util.Optional;

@@ -1,6 +1,6 @@
 package com.meti.compile.feature.condition;
 
-import com.meti.compile.TokenizationException;
+import com.meti.compile.token.TokenizationException;
 import org.junit.jupiter.api.Test;
 
 import static com.meti.compile.feature.condition.Conditional.If;

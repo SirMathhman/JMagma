@@ -2,16 +2,23 @@ package com.meti.compile;
 
 import com.meti.api.core.Supplier;
 import com.meti.api.io.File;
+import com.meti.compile.token.TokenizationException;
 import com.meti.compile.process.ParseException;
+import com.meti.compile.script.Result;
+import com.meti.compile.script.Script;
+import com.meti.compile.script.Source;
+import com.meti.compile.script.Target;
+import com.meti.compile.stage.CClass;
+import com.meti.compile.stage.CGroup;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.meti.compile.CRenderStage.CRenderStage_;
-import static com.meti.compile.MagmaToCFormatter.MagmaToCFormatter_;
-import static com.meti.compile.MagmaTokenizationStage.MagmaTokenizationStage_;
-import static com.meti.compile.MagmaValidator.MagmaValidator_;
+import static com.meti.compile.stage.CRenderStage.CRenderStage_;
+import static com.meti.compile.stage.MagmaToCFormatter.MagmaToCFormatter_;
+import static com.meti.compile.stage.MagmaTokenizationStage.MagmaTokenizationStage_;
+import static com.meti.compile.stage.MagmaValidator.MagmaValidator_;
 
 public class MagmaToCCompiler implements Compiler<CClass, File> {
 	static final Compiler<CClass, File> MagmaCompiler_ = new MagmaToCCompiler();

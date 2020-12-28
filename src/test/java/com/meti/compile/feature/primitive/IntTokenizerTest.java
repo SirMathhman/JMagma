@@ -1,6 +1,6 @@
 package com.meti.compile.feature.primitive;
 
-import com.meti.compile.TokenizationException;
+import com.meti.compile.token.TokenizationException;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigInteger;

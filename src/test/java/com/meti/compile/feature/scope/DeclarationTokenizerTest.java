@@ -1,7 +1,7 @@
 package com.meti.compile.feature.scope;
 
-import com.meti.compile.TokenizationException;
-import com.meti.compile.feature.Node;
+import com.meti.compile.token.TokenizationException;
+import com.meti.compile.token.Node;
 import com.meti.compile.feature.field.Field;
 import org.junit.jupiter.api.Test;
 

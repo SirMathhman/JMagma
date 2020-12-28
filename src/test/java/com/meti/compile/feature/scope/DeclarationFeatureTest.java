@@ -19,4 +19,9 @@ class DeclarationFeatureTest extends CompiledTest {
 	void bothFlags() {
 		assertSourceThrows(FlagException.class, "let const x : U32");
 	}
+
+	@Test
+	void implicitType(){
+		assertSource("let x = 10", "int x=10;");
+	}
 }

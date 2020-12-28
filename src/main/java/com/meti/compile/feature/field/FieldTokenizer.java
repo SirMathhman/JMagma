@@ -1,9 +1,9 @@
 package com.meti.compile.feature.field;
 
 import com.meti.compile.feature.ImplicitType;
-import com.meti.compile.feature.Node;
-import com.meti.compile.feature.Tokenizer;
-import com.meti.compile.feature.Type;
+import com.meti.compile.token.Node;
+import com.meti.compile.token.Tokenizer;
+import com.meti.compile.token.Type;
 
 import java.util.Arrays;
 import java.util.Optional;

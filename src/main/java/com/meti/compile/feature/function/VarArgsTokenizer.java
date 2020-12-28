@@ -1,8 +1,8 @@
 package com.meti.compile.feature.function;
 
-import com.meti.compile.TokenizationException;
-import com.meti.compile.feature.Tokenizer;
-import com.meti.compile.feature.Type;
+import com.meti.compile.token.TokenizationException;
+import com.meti.compile.token.Tokenizer;
+import com.meti.compile.token.Type;
 
 import java.util.Optional;
 

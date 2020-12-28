@@ -6,6 +6,11 @@ import com.meti.api.io.File;
 import com.meti.api.io.Path;
 import com.meti.api.log.Logger;
 import com.meti.api.log.OutStreamLogger;
+import com.meti.compile.script.DirectorySource;
+import com.meti.compile.script.DirectoryTarget;
+import com.meti.compile.script.Source;
+import com.meti.compile.script.Target;
+import com.meti.compile.stage.CClass;
 
 import java.io.IOException;
 import java.util.ArrayList;

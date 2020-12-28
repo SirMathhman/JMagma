@@ -1,14 +1,14 @@
 package com.meti.compile.feature.block;
 
-import com.meti.compile.feature.Node;
-import com.meti.compile.feature.Tokenizer;
+import com.meti.compile.token.Node;
+import com.meti.compile.token.Tokenizer;
 import com.meti.compile.feature.content.ContentNode;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import static com.meti.compile.BracketSplitter.BracketSplitter_;
+import static com.meti.compile.util.BracketSplitter.BracketSplitter_;
 import static com.meti.compile.feature.block.Block.Block;
 
 public class BlockTokenizer implements Tokenizer<Node> {

@@ -1,9 +1,9 @@
 package com.meti.compile.feature.function;
 
 import com.meti.api.core.Option;
-import com.meti.compile.Script;
-import com.meti.compile.feature.Node;
-import com.meti.compile.Processor;
+import com.meti.compile.script.Script;
+import com.meti.compile.token.Node;
+import com.meti.compile.process.Processor;
 import com.meti.compile.process.ParseException;
 
 import java.util.function.Function;

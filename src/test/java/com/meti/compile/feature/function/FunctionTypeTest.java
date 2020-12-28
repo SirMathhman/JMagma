@@ -1,6 +1,6 @@
 package com.meti.compile.feature.function;
 
-import com.meti.compile.feature.Type;
+import com.meti.compile.token.Type;
 import com.meti.compile.feature.primitive.Primitive;
 import org.junit.jupiter.api.Test;
 

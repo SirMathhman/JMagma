@@ -1,6 +1,6 @@
 package com.meti.compile.feature.primitive;
 
-import com.meti.compile.feature.LeafNode;
+import com.meti.compile.token.LeafNode;
 
 import java.math.BigInteger;
 import java.util.Objects;

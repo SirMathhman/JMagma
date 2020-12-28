@@ -1,15 +1,15 @@
 package com.meti.compile.feature.function;
 
-import com.meti.compile.TokenizationException;
-import com.meti.compile.feature.Node;
-import com.meti.compile.feature.Tokenizer;
-import com.meti.compile.feature.Type;
+import com.meti.compile.token.TokenizationException;
+import com.meti.compile.token.Node;
+import com.meti.compile.token.Tokenizer;
+import com.meti.compile.token.Type;
 import com.meti.compile.feature.field.Field;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static com.meti.compile.TokenizationException.TokenizationException;
+import static com.meti.compile.token.TokenizationException.TokenizationException;
 import static com.meti.compile.feature.ImplicitType.ImplicitType_;
 import static com.meti.compile.feature.content.ContentNode.ContentNode;
 import static com.meti.compile.feature.content.ContentType.ContentType;

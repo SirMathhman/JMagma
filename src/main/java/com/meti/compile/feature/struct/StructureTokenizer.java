@@ -1,14 +1,14 @@
 package com.meti.compile.feature.struct;
 
-import com.meti.compile.TokenizationException;
-import com.meti.compile.feature.Node;
-import com.meti.compile.feature.Tokenizer;
+import com.meti.compile.token.TokenizationException;
+import com.meti.compile.token.Node;
+import com.meti.compile.token.Tokenizer;
 import com.meti.compile.feature.field.FieldTokenizer;
 
 import java.util.ArrayList;
 import java.util.Optional;
 
-import static com.meti.compile.TokenizationException.TokenizationException;
+import static com.meti.compile.token.TokenizationException.TokenizationException;
 import static com.meti.compile.feature.struct.Structure.Structure;
 
 public class StructureTokenizer implements Tokenizer<Node> {

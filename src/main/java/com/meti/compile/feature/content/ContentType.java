@@ -1,6 +1,6 @@
 package com.meti.compile.feature.content;
 
-import com.meti.compile.feature.Type;
+import com.meti.compile.token.Type;
 
 import java.util.Objects;
 import java.util.Optional;

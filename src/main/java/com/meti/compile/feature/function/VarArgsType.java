@@ -1,6 +1,6 @@
 package com.meti.compile.feature.function;
 
-import com.meti.compile.feature.Type;
+import com.meti.compile.token.Type;
 
 public class VarArgsType implements Type {
 	public static final Type VarArgsType_ = new VarArgsType();

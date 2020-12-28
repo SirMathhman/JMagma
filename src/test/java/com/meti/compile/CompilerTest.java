@@ -1,6 +1,9 @@
 package com.meti.compile;
 
 import com.meti.api.io.File;
+import com.meti.compile.script.StringSource;
+import com.meti.compile.script.Target;
+import com.meti.compile.stage.CClass;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;

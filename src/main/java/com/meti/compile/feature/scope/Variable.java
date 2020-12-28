@@ -1,6 +1,6 @@
 package com.meti.compile.feature.scope;
 
-import com.meti.compile.feature.Node;
+import com.meti.compile.token.Node;
 
 import java.util.Objects;
 import java.util.Optional;
