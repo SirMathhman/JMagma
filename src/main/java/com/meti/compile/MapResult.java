@@ -7,17 +7,21 @@ import java.util.*;
 public final record MapResult<C, G extends Enum<G>>(Map<C, Cache<G>> map) implements Result<C, G> {
 
 	@Override
+	public boolean has(C clazz) {
+		return map.containsKey(clazz);
+	}
+
+	@Override
 	public Result<C, G> put(C clazz, G group, Node node) {
-		var internalMap = map;
-		if (!internalMap.containsKey(clazz)) {
+		if (!map.containsKey(clazz)) {
 			Map<G, List<Node>> vListMap = Collections.emptyMap();
-			var value = new MapCache<G>(vListMap);
-			internalMap.put(clazz, value);
+			var value = new MapCache<>(vListMap);
+			map.put(clazz, value);
 		}
-		var oldCache = internalMap.get(clazz);
+		var oldCache = map.get(clazz);
 		var newCache = oldCache.put(group, node);
-		internalMap.put(clazz, newCache);
-		return new MapResult<>(internalMap);
+		map.put(clazz, newCache);
+		return new MapResult<>(map);
 	}
 
 	@Override

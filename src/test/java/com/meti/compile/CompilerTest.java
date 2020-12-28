@@ -13,7 +13,7 @@ class CompilerTest {
 	@Test
 	void compileSimple() throws IOException, CompileException {
 		Target<CClass, File> target = (script, value) -> {
-			assertEquals("#include \"Main.h\"\n10", value.render(CClass.Source));
+			assertEquals("10", value.render(CClass.Source));
 			assertEquals("", value.render(CClass.Header));
 			return Collections.emptyList();
 		};
@@ -36,7 +36,7 @@ class CompilerTest {
 
 	@Test
 	void order() {
-		assertSource("def test() : Void => {}struct Wrapper{}", "#include \"Main.h\"\nstruct Wrapper{}void test(){}", "");
+		assertSource("def test() : Void => {}struct Wrapper{}", "struct Wrapper{}void test(){}", "");
 	}
 
 	@Test
@@ -44,12 +44,12 @@ class CompilerTest {
 		assertSource("""
 				const x : I16 = 10;
 				const y : I16 = 20;
-				""", "#include \"Main.h\"\nint x=10;int y=20;", "");
+				""", "int x=10;int y=20;", "");
 	}
 
 	@Test
 	void nativeFunctions() {
-		assertSource("native def test() : Void", "#include \"Main.h\"\n", "");
+		assertSource("native def test() : Void", "", "");
 	}
 
 	@Test
@@ -59,17 +59,17 @@ class CompilerTest {
 
 	@Test
 	void invocations() {
-		assertSource("myFunction(10, 20)", "#include \"Main.h\"\nmyFunction(10,20)", "");
+		assertSource("myFunction(10, 20)", "myFunction(10,20)", "");
 	}
 
 	@Test
 	void structure() {
-		assertSource("struct Wrapper {const value : I16}", "#include \"Main.h\"\nstruct Wrapper{int value;}", "");
+		assertSource("struct Wrapper {const value : I16}", "struct Wrapper{int value;}", "");
 	}
 
 	@Test
 	void emptyStructure() {
-		assertSource("struct Empty{}", "#include \"Main.h\"\nstruct Empty{}", "");
+		assertSource("struct Empty{}", "struct Empty{}", "");
 	}
 
 	private void assertSource(String input, String target, String header) {
@@ -86,52 +86,52 @@ class CompilerTest {
 
 	@Test
 	void testTrue() {
-		assertSource("true", "#include \"Main.h\"\n1", "");
+		assertSource("true", "1", "");
 	}
 
 	@Test
 	void testFalse() {
-		assertSource("false", "#include \"Main.h\"\n0", "");
+		assertSource("false", "0", "");
 	}
 
 	@Test
 	void testIf() {
-		assertSource("if(true){}", "#include \"Main.h\"\nif(1){}", "");
+		assertSource("if(true){}", "if(1){}", "");
 	}
 
 	@Test
 	void testWhile() {
-		assertSource("while(false){}", "#include \"Main.h\"\nwhile(0){}", "");
+		assertSource("while(false){}", "while(0){}", "");
 	}
 
 	@Test
 	void compileDeclarations() {
-		assertSource("const x : I16 = 10", "#include \"Main.h\"\nint x=10;", "");
+		assertSource("const x : I16 = 10", "int x=10;", "");
 	}
 
 	@Test
 	void compileBlocks() {
-		assertSource("{{}{}}", "#include \"Main.h\"\n{{}{}}", "");
+		assertSource("{{}{}}", "{{}{}}", "");
 	}
 
 	@Test
 	void blockChildren() {
-		assertSource("{return 0;}", "#include \"Main.h\"\n{return 0;}", "");
+		assertSource("{return 0;}", "{return 0;}", "");
 	}
 
 	@Test
 	void compileReturn() {
-		assertSource("return 10", "#include \"Main.h\"\nreturn 10;", "");
+		assertSource("return 10", "return 10;", "");
 	}
 
 	@Test
 	void compileMain() {
-		assertSource("def main() : I16 => {return 0;}", "#include \"Main.h\"\nint main(){return 0;}", "");
+		assertSource("def main() : I16 => {return 0;}", "int main(){return 0;}", "");
 	}
 
 	@Test
 	void compileInt() {
-		assertSource("5", "#include \"Main.h\"\n5", "");
+		assertSource("5", "5", "");
 	}
 
 }

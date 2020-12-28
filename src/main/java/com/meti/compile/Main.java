@@ -15,6 +15,7 @@ import java.util.stream.Collectors;
 import static com.meti.api.core.None.None;
 import static com.meti.api.core.Some.Some;
 import static com.meti.api.io.NIOFileSystem.NIOFileSystem_;
+import static com.meti.compile.MagmaCompiler.MagmaCompiler_;
 
 public class Main {
 	private static final Logger logger = Logger.getAnonymousLogger();
@@ -33,7 +34,7 @@ public class Main {
 
 	private static void runWithBoth(Source source, Target<CClass, File> target) {
 		try {
-			var intermediates = MagmaCompiler.MagmaCompiler_.compile(source, target);
+			var intermediates = MagmaCompiler_.compile(source, target);
 			if (intermediates.isEmpty()) {
 				logger.log(Level.WARNING, "No intermediate files are present to compile.");
 			} else {

@@ -5,7 +5,8 @@ import com.meti.compile.feature.Node;
 import java.util.EnumMap;
 import java.util.List;
 
-import static com.meti.compile.feature.Node.Group.*;
+import static com.meti.compile.feature.Node.Group.Function;
+import static com.meti.compile.feature.Node.Group.Structure;
 import static com.meti.compile.feature.extern.Directives.Include;
 
 public class CRenderStage implements RenderStage<CClass, CGroup> {
@@ -20,7 +21,11 @@ public class CRenderStage implements RenderStage<CClass, CGroup> {
 		for (Node node : newList) {
 			result = extracted(result, node);
 		}
-		return result.put(CClass.Source, CGroup.Directive, Include.toNode("\"" + script.name() + ".h\""));
+		if (result.has(CClass.Header)) {
+			return result.put(CClass.Source, CGroup.Directive, Include.toNode("\"" + script.name() + ".h\""));
+		} else {
+			return result;
+		}
 	}
 
 	private Result<CClass, CGroup> extracted(Result<CClass, CGroup> result, Node node) {
