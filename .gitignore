@@ -1,5 +1,6 @@
 *.class
 *.log
+/lib
 /.idea
-/working
+/working/Main.exe
 /working/target/
