@@ -29,7 +29,6 @@ class DirectoryLoaderTest {
 		file = directory.resolve("Main.mg")
 				.ensureAsFile()
 				.writeAsString(Expected);
-
 	}
 
 	@Test
