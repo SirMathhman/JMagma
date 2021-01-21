@@ -26,6 +26,7 @@ public interface Token {
 		Name,
 		Parameters,
 		Returns,
+		Type,
 		Value
 	}
 }
