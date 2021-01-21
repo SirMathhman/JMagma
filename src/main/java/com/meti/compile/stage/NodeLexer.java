@@ -2,8 +2,9 @@ package com.meti.compile.stage;
 
 import com.meti.compile.token.Token;
 
-import java.util.stream.Stream;
+import java.util.List;
 
+import static com.meti.compile.feature.function.FunctionNodeLexer_.FunctionNodeLexer_;
 import static com.meti.compile.feature.structure.StructureNodeLexer.StructureNodeLexer_;
 
 public class NodeLexer extends CompoundLexer<Token> {
@@ -13,7 +14,7 @@ public class NodeLexer extends CompoundLexer<Token> {
 	}
 
 	@Override
-	protected Stream<Lexer<Token>> streamLexers() {
-		return Stream.of(StructureNodeLexer_);
+	protected List<Lexer<Token>> listLexers() {
+		return List.of(StructureNodeLexer_, FunctionNodeLexer_);
 	}
 }

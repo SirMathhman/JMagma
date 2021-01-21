@@ -15,7 +15,7 @@ public record Implementation(Field identity, List<Field> parameters, Token body)
 			case Identity -> new FieldAttribute(identity);
 			case Parameters -> new FieldListAttribute(parameters);
 			case Body -> new TokenAttribute(body);
-			default -> throw new UnsupportedOperationException();
+			default -> throw new UnsupportedOperationException("Unknown query: " + query);
 		};
 	}
 
@@ -34,7 +34,7 @@ public record Implementation(Field identity, List<Field> parameters, Token body)
 		return switch (type) {
 			case Field_ -> singletonList(Query.Identity);
 			case FieldList -> singletonList(Query.Parameters);
-			case Node -> singletonList(Query.Value);
+			case Node -> singletonList(Query.Body);
 			default -> emptyList();
 		};
 	}

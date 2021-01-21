@@ -1,11 +1,12 @@
 package com.meti.compile.feature.structure;
 
+import com.meti.compile.CompileException;
 import com.meti.compile.stage.Lexer;
+import com.meti.compile.token.Field;
 import com.meti.compile.token.Token;
 
 import java.util.ArrayList;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import static com.meti.compile.token.FieldLexer.FieldLexer_;
 
@@ -16,7 +17,7 @@ public class StructureNodeLexer implements Lexer<Token> {
 	}
 
 	@Override
-	public Optional<Token> lex(String content) {
+	public Optional<Token> lex(String content) throws CompileException {
 		if (content.startsWith("struct ") &&
 		    content.contains("{") &&
 		    content.endsWith("}")) {
@@ -45,12 +46,13 @@ public class StructureNodeLexer implements Lexer<Token> {
 			memberStrings.add(buffer.toString());
 			memberStrings.removeIf(String::isBlank);
 
-			var members = memberStrings.stream()
-					.filter(s -> !s.isBlank())
-					.map(String::trim)
-					.map(FieldLexer_::lex)
-					.flatMap(Optional::stream)
-					.collect(Collectors.toList());
+			var members = new ArrayList<Field>();
+			for (String memberString : memberStrings) {
+				if (!memberString.isBlank()) {
+					var option = FieldLexer_.lex(memberString.trim());
+					option.ifPresent(members::add);
+				}
+			}
 			return Optional.of(new Structure(name, members));
 		}
 		return Optional.empty();

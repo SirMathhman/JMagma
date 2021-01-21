@@ -17,6 +17,10 @@ public interface Field {
 	Optional<Field> withValue(Token value);
 
 	enum Flag {
-
+		CONST,
+		DEF,
+		IN,
+		LET,
+		OUT
 	}
 }
