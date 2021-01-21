@@ -12,6 +12,18 @@ public class Parents {
 		return new Formatter(format, Collections.emptyList());
 	}
 
+	public static Token join(String delimiter, List<Token> tokens) {
+		if (tokens.isEmpty()) return new Parent(Collections.emptyList());
+		var lines = new ArrayList<Token>();
+		var first = tokens.get(0);
+		lines.add(first);
+		for (int i = 1; i < tokens.size(); i++) {
+			lines.add(new Content(delimiter));
+			lines.add(tokens.get(i));
+		}
+		return new Parent(tokens);
+	}
+
 	public static record Formatter(String format, List<Token> lines) {
 		public Token complete() {
 			return new Parent(lines);
