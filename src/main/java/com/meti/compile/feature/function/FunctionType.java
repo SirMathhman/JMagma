@@ -5,15 +5,7 @@ import com.meti.compile.token.*;
 import java.util.Collections;
 import java.util.List;
 
-public class FunctionType implements Token {
-	private final Token returns;
-	private final List<Token> parameters;
-
-	public FunctionType(Token returns, List<Token> parameters) {
-		this.returns = returns;
-		this.parameters = parameters;
-	}
-
+public record FunctionType(Token returns, List<Token> parameters) implements Token {
 	@Override
 	public Attribute apply(Query query) {
 		return switch (query) {

@@ -12,7 +12,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 import static com.meti.compile.stage.CRenderStage.CRenderStage_;
-import static com.meti.compile.stage.MagmaFlatteningStage.*;
+import static com.meti.compile.stage.MagmaFlatteningStage.MagmaFlatteningStage_;
 import static com.meti.compile.stage.MagmaLexerStage.MagmaLexerStage_;
 import static com.meti.compile.stage.MagmaParsingStage.MagmaParsingStage_;
 
@@ -33,7 +33,7 @@ public class MagmaCCompiler implements Compiler {
 				var source = scripts.get(i);
 				var content = loader.load(source);
 				try {
-					var mapping = compile(stack, content);
+					var mapping = compile(source, stack, content);
 					map.put(source, mapping);
 				} catch (CompileException e) {
 					throw new CompileException("Failed to compile %s.".formatted(source), e);
@@ -45,20 +45,20 @@ public class MagmaCCompiler implements Compiler {
 		}
 	}
 
-	private Result.Mapping compile(MapStack stack, String content) throws CompileException {
-			var tokens = lex(content);
-			var imports = new ArrayList<Source>();
-			for (Token token : tokens) {
-				if (Tokens.is(token, GroupAttribute.Import)) {
-					imports.add(createImport(Tokens.createContent(token)));
-				}
+	private Result.Mapping compile(Source source, MapStack stack, String content) throws CompileException {
+		var tokens = lex(content);
+		var imports = new ArrayList<Source>();
+		for (Token token : tokens) {
+			if (Tokens.is(token, GroupAttribute.Import)) {
+				imports.add(createImport(Tokens.createContent(token)));
 			}
-			var resetStack = stack.reset2(imports);
-			var state = new StageState(resetStack, tokens);
-			var parsed = MagmaParsingStage_.apply(state);
-			var flattened = MagmaFlatteningStage_.apply(parsed);
-			var nodes = flattened.nodes();
-			return CRenderStage_.apply(nodes);
+		}
+		var resetStack = stack.reset2(imports);
+		var state = new StageState(resetStack, tokens);
+		var parsed = MagmaParsingStage_.apply(state);
+		var flattened = MagmaFlatteningStage_.apply(parsed);
+		var nodes = flattened.nodes();
+		return CRenderStage_.apply(source, nodes);
 	}
 
 	private Source createImport(String content) {

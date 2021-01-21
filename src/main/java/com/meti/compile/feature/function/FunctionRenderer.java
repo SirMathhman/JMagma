@@ -22,7 +22,7 @@ public class FunctionRenderer implements Renderer<Token> {
 			var name = identity.findName();
 			var returns = identity.findType().apply(Token.Query.Returns).asToken();
 			var parameters = token.apply(Token.Query.Parameters).asFieldList();
-			var value = token.apply(Token.Query.Value).asToken();
+			var body = token.apply(Token.Query.Body).asToken();
 			var renderedParams = parameters
 					.stream()
 					.map(CFieldRenderer_::render)
@@ -33,7 +33,7 @@ public class FunctionRenderer implements Renderer<Token> {
 			var identityPair = new Pair(returns, formattedName);
 			return Optional.of(Parents.format("%t%t")
 					.format(identityPair)
-					.format(value)
+					.format(body)
 					.complete());
 		}
 		return Optional.empty();

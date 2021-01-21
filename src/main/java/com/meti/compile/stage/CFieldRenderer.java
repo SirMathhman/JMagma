@@ -1,5 +1,6 @@
 package com.meti.compile.stage;
 
+import com.meti.compile.token.Content;
 import com.meti.compile.token.Field;
 import com.meti.compile.token.Pair;
 import com.meti.compile.token.Token;
@@ -14,6 +15,9 @@ public class CFieldRenderer implements Renderer<Field> {
 
 	@Override
 	public Optional<Token> render(Field token) {
-		return Optional.of(new Pair(token.findType(), token.findName()));
+		var type = token.findType();
+		var name = token.findName();
+		var nameNode = new Content(name);
+		return Optional.of(new Pair(type, nameNode));
 	}
 }

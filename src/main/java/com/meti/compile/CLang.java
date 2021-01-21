@@ -6,8 +6,8 @@ public class CLang {
 	public CLang() {
 	}
 
-	enum Formats implements Result.Format {
-		Target("%.c"),
+	public enum Formats implements Result.Format {
+		Source("%.c"),
 		Header("%.h");
 
 		private final String value;
