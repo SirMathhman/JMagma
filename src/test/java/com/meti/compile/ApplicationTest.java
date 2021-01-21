@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class ApplicationTest {
-	private static final Path Root = NIOFileSystem_.Root();
+	private Path Root;
 	private File Source;
 	private Path Intermediate;
 
@@ -25,9 +25,13 @@ class ApplicationTest {
 
 	@BeforeEach
 	void setUp() throws IOException_ {
+		Root = NIOFileSystem_.Root()
+				.ensureAsDirectory()
+				.resolve("test")
+				.ensureAsDirectory();
 		var rootAsDirectory = Root.ensureAsDirectory();
 		Source = rootAsDirectory.resolve("Main.mg").ensureAsFile();
-		Source.writeAsString1("def main() : I16 => {return 0;}");
+		Source.writeAsString("def main() : I16 => {return 0;}");
 		Intermediate = rootAsDirectory.resolve("Main.c");
 	}
 

@@ -1,9 +1,10 @@
 package com.meti.compile.io;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface Result {
-	Mapping apply(Source source);
+	Optional<Mapping> apply(Source source);
 
 	List<Source> listSources();
 

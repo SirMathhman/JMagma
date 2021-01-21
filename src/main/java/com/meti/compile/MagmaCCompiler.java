@@ -30,27 +30,35 @@ public class MagmaCCompiler implements Compiler {
 			var map = new HashMap<Source, Result.Mapping>();
 			var stack = new MapStack();
 			for (int i = 0; i < scriptSize; i++) {
-				var script = scripts.get(i);
-				var content = loader.load(script);
-				var tokens = lex(content);
-				var imports = new ArrayList<Source>();
-				for (Token token : tokens) {
-					if (Tokens.is(token, GroupAttribute.Import)) {
-						imports.add(createImport(Tokens.createContent(token)));
-					}
+				var source = scripts.get(i);
+				var content = loader.load(source);
+				try {
+					var mapping = compile(stack, content);
+					map.put(source, mapping);
+				} catch (CompileException e) {
+					throw new CompileException("Failed to compile %s.".formatted(source), e);
 				}
-				var resetStack = stack.reset2(imports);
-				var state = new StageState(resetStack, tokens);
-				var parsed = MagmaParsingStage_.apply(state);
-				var flattened = MagmaFlatteningStage_.apply(parsed);
-				var nodes = flattened.nodes();
-				var mapping = CRenderStage_.apply(nodes);
-				map.put(script, mapping);
 			}
 			return new MapResult(map);
 		} catch (IOException_ e) {
 			throw new CompileException(e);
 		}
+	}
+
+	private Result.Mapping compile(MapStack stack, String content) throws CompileException {
+			var tokens = lex(content);
+			var imports = new ArrayList<Source>();
+			for (Token token : tokens) {
+				if (Tokens.is(token, GroupAttribute.Import)) {
+					imports.add(createImport(Tokens.createContent(token)));
+				}
+			}
+			var resetStack = stack.reset2(imports);
+			var state = new StageState(resetStack, tokens);
+			var parsed = MagmaParsingStage_.apply(state);
+			var flattened = MagmaFlatteningStage_.apply(parsed);
+			var nodes = flattened.nodes();
+			return CRenderStage_.apply(nodes);
 	}
 
 	private Source createImport(String content) {

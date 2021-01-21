@@ -10,6 +10,6 @@ public class MagmaParsingStage implements SingleStage<StageState, StageState> {
 
 	@Override
 	public StageState apply(StageState stageState) throws CompileException {
-		return null;
+		return stageState;
 	}
 }

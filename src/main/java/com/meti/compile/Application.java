@@ -6,6 +6,7 @@ import com.meti.compile.io.DirectoryLoader;
 import com.meti.compile.io.DirectoryStorer;
 
 import static com.meti.api.java.io.NIOFileSystem.NIOFileSystem_;
+import static com.meti.compile.MagmaCCompiler.MagmaCCompiler_;
 
 record Application(Path root) {
 	static final Application Application_ = new Application(NIOFileSystem_.Root());
@@ -13,7 +14,7 @@ record Application(Path root) {
 	void run() throws IOException_, CompileException {
 		var rootAsDirectory = this.root.ensureAsDirectory();
 		var loader = new DirectoryLoader(rootAsDirectory);
-		var result = MagmaCCompiler.MagmaCCompiler_.compile(loader);
+		var result = MagmaCCompiler_.compile(loader);
 		new DirectoryStorer(rootAsDirectory).write(result);
 	}
 }

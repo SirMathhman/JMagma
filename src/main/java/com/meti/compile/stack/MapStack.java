@@ -7,6 +7,6 @@ import java.util.List;
 public class MapStack implements Stack {
 	@Override
 	public Stack reset(List<Source> imports) {
-		throw new UnsupportedOperationException();
+		return this;
 	}
 }
