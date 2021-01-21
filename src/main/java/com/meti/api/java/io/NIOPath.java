@@ -66,24 +66,6 @@ public class NIOPath implements Path {
 	}
 
 	@Override
-	public String readString() throws IOException_ {
-		try {
-			return Files.readString(value);
-		} catch (IOException e) {
-			throw new IOException_(e);
-		}
-	}
-
-	@Override
-	public void writeString(String content) throws IOException_ {
-		try {
-			Files.writeString(value, content);
-		} catch (IOException e) {
-			throw new IOException_(e);
-		}
-	}
-
-	@Override
 	public int hashCode() {
 		return Objects.hash(value);
 	}

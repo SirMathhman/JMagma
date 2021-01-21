@@ -15,10 +15,4 @@ public interface Path {
 	boolean exists();
 
 	List<String> listNames();
-
-	@Deprecated
-	String readString() throws IOException_;
-
-	@Deprecated
-	void writeString(String content) throws IOException_;
 }
