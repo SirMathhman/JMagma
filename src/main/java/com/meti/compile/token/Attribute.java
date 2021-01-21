@@ -3,25 +3,15 @@ package com.meti.compile.token;
 import java.util.List;
 
 public interface Attribute {
-	default Field asField() {
-		throw new UnsupportedOperationException();
-	}
+	Field asField();
 
-	default List<Field> asFieldList() {
-		throw new UnsupportedOperationException();
-	}
+	List<Field> asFieldList();
 
-	default String asString() {
-		throw new UnsupportedOperationException();
-	}
+	String asString();
 
-	default Token asToken() {
-		throw new UnsupportedOperationException();
-	}
+	Token asToken();
 
-	default List<Token> asTokenList() {
-		throw new UnsupportedOperationException();
-	}
+	List<Token> asTokenList();
 
 	enum Type {
 		Field_,

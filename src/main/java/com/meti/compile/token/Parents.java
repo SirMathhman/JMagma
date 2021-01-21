@@ -21,12 +21,18 @@ public class Parents {
 			lines.add(new Content(delimiter));
 			lines.add(tokens.get(i));
 		}
-		return new Parent(tokens);
+		return new Parent(lines);
+	}
+
+	public static Token of(Token... tokens) {
+		return new Parent(List.of(tokens));
 	}
 
 	public static record Formatter(String format, List<Token> lines) {
 		public Token complete() {
-			return new Parent(lines);
+			var copy = new ArrayList<>(lines);
+			copy.add(new Content(format));
+			return new Parent(copy);
 		}
 
 		public Formatter format(Token token) {

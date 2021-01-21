@@ -4,6 +4,8 @@ import com.meti.compile.token.Token;
 
 import java.util.List;
 
+import static com.meti.compile.feature.primitive.PrimitiveTypeRenderer.PrimitiveTypeRenderer_;
+
 public class CTypeRenderer extends CompoundRenderer<Token> {
 	public static final Renderer<Token> CTypeRenderer_ = new CTypeRenderer();
 
@@ -12,6 +14,6 @@ public class CTypeRenderer extends CompoundRenderer<Token> {
 
 	@Override
 	protected List<Renderer<Token>> listRenderers() {
-		return List.of();
+		return List.of(PrimitiveTypeRenderer_);
 	}
 }

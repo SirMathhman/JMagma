@@ -5,10 +5,7 @@ import com.meti.compile.CompileException;
 import com.meti.compile.io.MapMapping;
 import com.meti.compile.io.Result;
 import com.meti.compile.io.Source;
-import com.meti.compile.token.Content;
-import com.meti.compile.token.Parent;
-import com.meti.compile.token.Token;
-import com.meti.compile.token.Tokens;
+import com.meti.compile.token.*;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -18,6 +15,7 @@ import static com.meti.compile.CLang.Formats.Header;
 import static com.meti.compile.feature.directive.Directive.DEFINE;
 import static com.meti.compile.feature.directive.Directive.IFNDEF;
 import static com.meti.compile.stage.CNodeRenderer.CNodeRenderer_;
+import static com.meti.compile.stage.CTypeRenderer.CTypeRenderer_;
 import static com.meti.compile.token.GroupAttribute.*;
 
 public class CRenderStage {
@@ -63,27 +61,44 @@ public class CRenderStage {
 	}
 
 	Token render(Token token) throws CompileException {
-		Token rendered;
 		var isContent = Tokens.is(token, Content);
 		var isParent = Tokens.is(token, Parent);
-		if (isContent || isParent) {
-			rendered = token;
+		var isPair = Tokens.is(token, Pair);
+		if (isContent) {
+			return token;
+		} else if(isParent){
+			return renderParent(token);
+		} else if (isPair) {
+			return renderPair(token);
 		} else {
-			var optional = CNodeRenderer_.render(token);
-			var rendered1 = optional.orElseThrow(() -> new CompileException("Cannot render: " + token));
-			if (Tokens.is(rendered1, Parent)) {
-				var lines = rendered1.apply(Token.Query.Lines).asTokenList();
-				var newLines = new ArrayList<Token>();
-				for (Token line : lines) {
-					newLines.add(render(line));
-				}
-				rendered = new Parent(newLines);
-			} else if(Tokens.is(rendered1, Content)) {
-				return rendered1;
-			} else {
-				throw new CompileException("Invalid result: " + rendered1);
-			}
+			return renderRoot(token);
 		}
-		return rendered;
+	}
+
+	private Token renderPair(Token token) throws CompileException {
+		var optional = CTypeRenderer_.render(token);
+		return optional.orElseThrow(() -> new CompileException("Pair has invalid type: " + token));
+	}
+
+	com.meti.compile.token.Parent renderParent(Token rendered) throws CompileException {
+		var attribute = rendered.apply(Token.Query.Lines);
+		var lines = attribute.asTokenList();
+		var newLines = new ArrayList<Token>();
+		for (Token line : lines) newLines.add(render(line));
+		return new Parent(newLines);
+	}
+
+	Token renderRoot(Token token) throws CompileException {
+		var optional = CNodeRenderer_.render(token);
+		var rendered = optional.orElseThrow(() -> new CompileException("Cannot render: " + token));
+		if (Tokens.is(rendered, Parent)) {
+			return renderParent(rendered);
+		} else if (Tokens.is(rendered, Content)) {
+			return rendered;
+		} else {
+			var format = "Invalid result: %s";
+			var message = format.formatted(rendered);
+			throw new CompileException(message);
+		}
 	}
 }

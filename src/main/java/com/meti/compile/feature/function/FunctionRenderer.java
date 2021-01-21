@@ -29,7 +29,9 @@ public class FunctionRenderer implements Renderer<Token> {
 					.flatMap(Optional::stream)
 					.collect(Collectors.toList());
 			var joinedParameters = Parents.join(",", renderedParams);
-			var formattedName = Parents.format(name + "(%s)").format(joinedParameters).complete();
+			var formattedName = Parents.format(name + "(%t)")
+					.format(joinedParameters)
+					.complete();
 			var identityPair = new Pair(returns, formattedName);
 			return Optional.of(Parents.format("%t%t")
 					.format(identityPair)

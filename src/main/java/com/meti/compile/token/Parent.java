@@ -20,9 +20,11 @@ public record Parent(List<Token> lines) implements Token {
 			var isContent = Tokens.is(line, GroupAttribute.Content);
 			var isParent = Tokens.is(line, GroupAttribute.Parent);
 			if (isContent || isParent) {
-				builder.append(line.apply(Query.Value));
+				var attribute = line.apply(Query.Value);
+				var string = attribute.asString();
+				builder.append(string);
 			} else {
-				var format = "Cannot render lines of type '%s'.";
+				var format = "Cannot render a node of type '%s'.";
 				var message = format.formatted(line.apply(Query.Group));
 				throw new UnsupportedOperationException(message);
 			}
