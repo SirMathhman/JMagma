@@ -18,9 +18,12 @@ public interface Token {
 	}
 
 	enum Query {
+		Body,
 		Group,
+		Identity,
 		Name,
 		Members,
+		Parameters,
 		Value
 	}
 }
