@@ -1,6 +1,0 @@
-*.class
-*.log
-/lib
-/.idea
-/working/Main.exe
-/working/target/
