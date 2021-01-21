@@ -25,10 +25,10 @@ public class MagmaCCompiler implements Compiler {
 	@Override
 	public Result compile(Loader loader) throws CompileException {
 		try {
-			var scripts = loader.listScripts();
+			var scripts = loader.listSources();
 			var scriptSize = scripts.size();
 			var map = new HashMap<Source, Result.Mapping>();
-			MapStack stack = new MapStack();
+			var stack = new MapStack();
 			for (int i = 0; i < scriptSize; i++) {
 				var script = scripts.get(i);
 				var content = loader.load(script);
@@ -53,15 +53,15 @@ public class MagmaCCompiler implements Compiler {
 		}
 	}
 
-	private Source createImport(String content1) {
+	private Source createImport(String content) {
 		Source import_;
-		if (content1.contains(".")) {
-			import_ = new ListSource(Arrays.stream(content1.split("\\."))
+		if (content.contains(".")) {
+			import_ = new ListSource(Arrays.stream(content.split("\\."))
 					.filter(s -> !s.isBlank())
 					.map(String::trim)
 					.collect(Collectors.toList()));
 		} else {
-			import_ = new ListSource(Collections.singletonList(content1));
+			import_ = new ListSource(Collections.singletonList(content));
 		}
 		return import_;
 	}

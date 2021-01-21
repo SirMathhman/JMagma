@@ -46,8 +46,8 @@ public class NIOPath implements Path {
 	}
 
 	@Override
-	public Optional<File> existing() {
-		throw new UnsupportedOperationException();
+	public Optional<File> existingAsFile() {
+		return exists() ? Optional.of(new NIOFile(value)) : Optional.empty();
 	}
 
 	@Override
@@ -84,15 +84,8 @@ public class NIOPath implements Path {
 	}
 
 	@Override
-	public String toString() {
-		return listNames()
-				.stream()
-				.map("\"%s\""::formatted)
-				.collect(Collectors.joining(",", "[", "]"));
-	}
-
-	public java.nio.file.Path value() {
-		return value;
+	public int hashCode() {
+		return Objects.hash(value);
 	}
 
 	@Override
@@ -104,8 +97,15 @@ public class NIOPath implements Path {
 	}
 
 	@Override
-	public int hashCode() {
-		return Objects.hash(value);
+	public String toString() {
+		return listNames()
+				.stream()
+				.map("\"%s\""::formatted)
+				.collect(Collectors.joining(",", "[", "]"));
+	}
+
+	public java.nio.file.Path value() {
+		return value;
 	}
 
 }

@@ -6,15 +6,36 @@ import com.meti.api.magma.io.IOException_;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public record DirectoryLoader(Directory root) implements Loader {
+	public static final String FileExtension = ".mg";
+	public static final String ScriptExtension = ".mgs";
 	private static final String AsFile = "%s.mg";
 	private static final String AsScript = "%s.mgs";
 
 	@Override
-	public List<Source> listScripts() throws IOException_ {
-		return streamScripts().collect(Collectors.toList());
+	public List<Source> listSources() throws IOException_ {
+		var paths = root.streamTree().collect(Collectors.toList());
+		var sources = new ArrayList<Source>();
+		for (int i = 0; i < paths.size(); i++) {
+			var path = paths.get(i);
+			var names = path.listNames();
+			var lastName = names.get(names.size() - 1);
+			var isFile = lastName.endsWith(FileExtension);
+			var isScript = lastName.endsWith(ScriptExtension);
+			if (isFile || isScript) {
+				var relativized = root.relativize(path);
+				var relativizedNames = relativized.listNames();
+				var parent = relativizedNames.subList(0, relativizedNames.size() - 1);
+				var name = relativizedNames.get(relativizedNames.size() - 1);
+				var extension = isFile ? FileExtension : ScriptExtension;
+				var newName = name.substring(0, name.length() - extension.length());
+				var newList = new ArrayList<>(parent);
+				newList.add(newName);
+				sources.add(new ListSource(newList));
+			}
+		}
+		return sources;
 	}
 
 	@Override
@@ -43,21 +64,5 @@ public record DirectoryLoader(Directory root) implements Loader {
 		var format = "Even though the source '%s' is listed, neither '%s' or '%s' exist.";
 		var message = format.formatted(source, asFile, asScript);
 		throw new IOException_(message);
-	}
-
-	private Stream<Source> streamScripts() throws IOException_ {
-		var paths = root.streamTree().collect(Collectors.toList());
-		var sources = new ArrayList<Source>();
-		for (int i = 0; i < paths.size(); i++) {
-			var path = paths.get(i);
-			var names = path.listNames();
-			var lastName = names.get(names.size() - 1);
-			if (lastName.endsWith(".mg") || lastName.endsWith(".mgs")) {
-				var relativized = root.relativize(path);
-				var relativizedNames = relativized.listNames();
-				sources.add(new ListSource(relativizedNames));
-			}
-		}
-		return sources.stream();
 	}
 }

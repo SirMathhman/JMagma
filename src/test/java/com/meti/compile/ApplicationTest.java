@@ -34,7 +34,7 @@ class ApplicationTest {
 	@AfterEach
 	void tearDown() throws IOException_ {
 		Source.delete();
-		var optional = Intermediate.existing();
+		var optional = Intermediate.existingAsFile();
 		if (optional.isPresent()) optional.get().delete();
 	}
 }

@@ -10,7 +10,7 @@ public interface Path {
 
 	File ensureAsFile() throws IOException_;
 
-	Optional<File> existing();
+	Optional<File> existingAsFile();
 
 	boolean exists();
 
