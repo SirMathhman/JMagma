@@ -21,8 +21,9 @@ public interface Token {
 		Body,
 		Group,
 		Identity,
-		Name,
+		Lines,
 		Members,
+		Name,
 		Parameters,
 		Returns,
 		Value
