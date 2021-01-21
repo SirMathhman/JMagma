@@ -1,0 +1,7 @@
+import com.meti.api.standard.io.StandardFileSystem.Root;
+
+const Source = Root("Main.mgs");
+const Intermediate = Root("Main.c");
+
+const content = Source.ensureAsFile().readAsString();
+Intermediate.ensureAsFile().writeAsString(content);
