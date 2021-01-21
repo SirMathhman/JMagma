@@ -2,6 +2,7 @@ package com.meti.api.java.io;
 
 import com.meti.api.java.collect.JavaList;
 import com.meti.api.magma.collect.IndexException;
+import com.meti.api.magma.collect.Lists;
 import com.meti.api.magma.io.Directory;
 import com.meti.api.magma.io.IOException_;
 
@@ -44,7 +45,7 @@ public final class NIODirectory extends NIOPath implements Directory {
 
 	@Override
 	public com.meti.api.magma.io.Path relativize(com.meti.api.magma.io.Path other) throws IOException_ {
-		var otherNames = other.listNames();
+		var otherNames = Lists.fromJava(other.listNames());
 
 		var thisSize = value.getNameCount();
 		var otherSize = otherNames.size();

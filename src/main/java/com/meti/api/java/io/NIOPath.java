@@ -1,5 +1,7 @@
 package com.meti.api.java.io;
 
+import com.meti.api.java.collect.JavaList;
+import com.meti.api.magma.collect.Lists;
 import com.meti.api.magma.io.Directory;
 import com.meti.api.magma.io.File;
 import com.meti.api.magma.io.IOException_;
@@ -56,7 +58,11 @@ public class NIOPath implements Path {
 	}
 
 	@Override
-	public List<String> listNames() {
+	public com.meti.api.magma.collect.List<String> listNames() {
+		return new JavaList<>(listNames1());
+	}
+
+	private List<String> listNames1() {
 		var names = new ArrayList<String>();
 		var count = value.getNameCount();
 		for (int i = 0; i < count; i++) {
@@ -80,7 +86,7 @@ public class NIOPath implements Path {
 
 	@Override
 	public String toString() {
-		return listNames()
+		return Lists.fromJava(listNames())
 				.stream()
 				.map("\"%s\""::formatted)
 				.collect(Collectors.joining(",", "[", "]"));

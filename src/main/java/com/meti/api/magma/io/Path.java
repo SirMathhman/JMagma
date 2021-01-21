@@ -1,6 +1,7 @@
 package com.meti.api.magma.io;
 
-import java.util.List;
+import com.meti.api.magma.collect.List;
+
 import java.util.Optional;
 
 public interface Path {
