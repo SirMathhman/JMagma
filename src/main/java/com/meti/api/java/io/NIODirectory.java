@@ -1,5 +1,6 @@
 package com.meti.api.java.io;
 
+import com.meti.api.java.collect.JavaList;
 import com.meti.api.magma.collect.IndexException;
 import com.meti.api.magma.io.Directory;
 import com.meti.api.magma.io.IOException_;
@@ -33,7 +34,11 @@ public final class NIODirectory extends NIOPath implements Directory {
 	}
 
 	@Override
-	public List<com.meti.api.magma.io.Path> listTree1() throws IOException_ {
+	public com.meti.api.magma.collect.List<com.meti.api.magma.io.Path> listTree() throws IOException_ {
+		return new JavaList<>(listTree1());
+	}
+
+	private List<com.meti.api.magma.io.Path> listTree1() throws IOException_ {
 		return streamTree().collect(Collectors.toList());
 	}
 
