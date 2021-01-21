@@ -6,15 +6,15 @@ public class Lists {
 	public Lists() {
 	}
 
-	public static java.util.List<String> fromJava(List<String> names) {
-		var list = new ArrayList<String>();
-		for (int i = 0; i < names.size(); i++) {
+	public static <T> java.util.List<T> fromJava(List<T> list) {
+		var copy = new ArrayList<T>();
+		for (int i = 0; i < list.size(); i++) {
 			try {
-				list.add(names.apply(i));
+				copy.add(list.apply(i));
 			} catch (IndexException e) {
 				throw new UnsupportedOperationException();
 			}
 		}
-		return list;
+		return copy;
 	}
 }

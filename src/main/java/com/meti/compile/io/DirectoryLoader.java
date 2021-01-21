@@ -1,5 +1,6 @@
 package com.meti.compile.io;
 
+import com.meti.api.java.collect.JavaList;
 import com.meti.api.magma.collect.IndexException;
 import com.meti.api.magma.collect.Lists;
 import com.meti.api.magma.io.Directory;
@@ -16,7 +17,11 @@ public record DirectoryLoader(Directory root) implements Loader {
 	private static final String AsScript = "%s.mgs";
 
 	@Override
-	public List<Source> listSources() throws IOException_ {
+	public com.meti.api.magma.collect.List<Source> listSources() throws IOException_ {
+		return new JavaList<>(listSources1());
+	}
+
+	private List<Source> listSources1() throws IOException_ {
 		var tree = root.listTree();
 		var sources = new ArrayList<Source>();
 		for (int i = 0; i < tree.size(); i++) {

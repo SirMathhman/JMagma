@@ -1,5 +1,6 @@
 package com.meti.compile.io;
 
+import com.meti.api.magma.collect.Lists;
 import com.meti.api.magma.io.Directory;
 import com.meti.api.magma.io.File;
 import com.meti.api.magma.io.IOException_;
@@ -22,7 +23,7 @@ class DirectoryLoaderTest {
 		var loader = new DirectoryLoader(directory);
 		var source = new ListSource(singletonList("Main"));
 		var expected = singletonList(source);
-		var actual = loader.listSources();
+		var actual = Lists.fromJava(loader.listSources());
 		assertIterableEquals(expected, actual);
 	}
 

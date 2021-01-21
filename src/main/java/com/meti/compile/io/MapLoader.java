@@ -1,5 +1,6 @@
 package com.meti.compile.io;
 
+import com.meti.api.java.collect.JavaList;
 import com.meti.api.magma.io.IOException_;
 
 import java.util.ArrayList;
@@ -14,7 +15,11 @@ public class MapLoader implements Loader{
 	}
 
 	@Override
-	public List<Source> listSources() throws IOException_ {
+	public com.meti.api.magma.collect.List<Source> listSources() throws IOException_ {
+		return new JavaList<>(listSources1());
+	}
+
+	private List<Source> listSources1() throws IOException_ {
 		return new ArrayList<>(content.keySet());
 	}
 
