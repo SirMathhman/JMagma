@@ -25,7 +25,7 @@ public class MagmaLexerStage implements SingleStage<String, Token> {
 	private Token fold(Token token, Attribute.Type group, F1E1<Attribute, Attribute, CompileException> mapping) throws CompileException {
 		var list = token.list(group);
 		var current = token;
-		for (Token.Query query : list) {
+		for (AbstractToken.Query query : list) {
 			var attribute = token.apply(query);
 			var tokenAttribute = mapping.apply(attribute);
 			current = current.copy(query, tokenAttribute);
@@ -34,8 +34,8 @@ public class MagmaLexerStage implements SingleStage<String, Token> {
 	}
 
 	private Token lexContent(Token node, F1E1<String, Token, CompileException> mapper) throws CompileException {
-		if (node.apply(Token.Query.Group) == GroupAttribute.Content) {
-			var attribute = node.apply(Token.Query.Value);
+		if (node.apply(AbstractToken.Query.Group) == GroupAttribute.Content) {
+			var attribute = node.apply(AbstractToken.Query.Value);
 			var value = attribute.asString();
 			return mapper.apply(value);
 		} else {
@@ -46,11 +46,14 @@ public class MagmaLexerStage implements SingleStage<String, Token> {
 	private com.meti.compile.token.Field lexField(com.meti.compile.token.Field field) throws CompileException {
 		var type = field.findType();
 		var newType = lexTypeContent(type);
-		return field.withType(newType);
+		var newTypeWithChildren = lexRoot(newType);
+		return field.withType(newTypeWithChildren);
 	}
 
 	private FieldAttribute lexFieldAttribute(Attribute attribute) throws CompileException {
-		return new FieldAttribute(lexField(attribute.asField()));
+		var oldField = attribute.asField();
+		var newField = lexField(oldField);
+		return new FieldAttribute(newField);
 	}
 
 	private FieldListAttribute lexFieldListAttribute(Attribute attribute) throws CompileException {
@@ -70,22 +73,33 @@ public class MagmaLexerStage implements SingleStage<String, Token> {
 		return lexString(value, NodeLexer_::lex);
 	}
 
+	private Token lexRoot(Token token) throws CompileException {
+		try {
+			var withNodes = fold(token, Node, attribute -> lexTokenAttribute(attribute, this::lexNodeContent));
+			var withNodeLists = fold(withNodes, NodeList, attribute -> lexTokenListAttribute(attribute, this::lexNodeContent));
+			var withTypes = fold(withNodeLists, Type, attribute -> lexTokenAttribute(attribute, this::lexTypeContent));
+			var withTypeList = fold(withTypes, TypeList, attribute -> lexTokenListAttribute(attribute, this::lexTypeContent));
+			var withField = fold(withTypeList, Field_, this::lexFieldAttribute);
+			return fold(withField, FieldList, this::lexFieldListAttribute);
+		} catch (CompileException e) {
+			throw new CompileException("Failed to lex token: " + token, e);
+		}
+	}
+
 	private Token lexString(String content, F1E1<String, Optional<Token>, CompileException> mapper) throws CompileException {
 		var optional = mapper.apply(content);
 		var token = optional.orElseThrow(() -> new CompileException("Bad token: " + content));
-
-		var withNodes = fold(token, Node, attribute -> lexTokenAttribute(attribute, this::lexNodeContent));
-		var withNodeLists = fold(withNodes, NodeList, attribute -> lexTokenListAttribute(attribute, this::lexNodeContent));
-		var withTypes = fold(withNodeLists, Type, attribute -> lexTokenAttribute(attribute, this::lexTypeContent));
-		var withTypeList = fold(withTypes, TypeList, attribute -> lexTokenListAttribute(attribute, this::lexTypeContent));
-		var withField = fold(withTypeList, Field_, this::lexFieldAttribute);
-		return fold(withField, FieldList, this::lexFieldListAttribute);
+		return lexRoot(token);
 	}
 
 	private Attribute lexTokenAttribute(Attribute attribute, F1E1<Token, Token, CompileException> mapper) throws CompileException {
-		var node = attribute.asToken();
-		var newNode = mapper.apply(node);
-		return new TokenAttribute(newNode);
+		try {
+			Token node = attribute.asToken();
+			var newNode = mapper.apply(node);
+			return new TokenAttribute(newNode);
+		} catch (Exception e) {
+			throw new CompileException("Failed to lex attribute: " + attribute, e);
+		}
 	}
 
 	private Attribute lexTokenListAttribute(Attribute attribute, F1E1<Token, Token, CompileException> mapper) throws CompileException {

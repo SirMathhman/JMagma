@@ -1,6 +1,7 @@
 package com.meti.compile.token;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public record TokenListAttribute(List<Token> list) implements Attribute {
 	@Override
@@ -26,5 +27,12 @@ public record TokenListAttribute(List<Token> list) implements Attribute {
 	@Override
 	public List<Token> asTokenList() {
 		return list;
+	}
+
+	@Override
+	public String toString() {
+		return list.stream()
+				.map(Token::toString)
+				.collect(Collectors.joining(",", "[", "]"));
 	}
 }

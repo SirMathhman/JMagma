@@ -2,6 +2,7 @@ package com.meti.compile.feature.block;
 
 import com.meti.compile.CompileException;
 import com.meti.compile.stage.Lexer;
+import com.meti.compile.token.AbstractToken;
 import com.meti.compile.token.Content;
 import com.meti.compile.token.Token;
 

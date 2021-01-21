@@ -1,9 +1,6 @@
 package com.meti.compile.feature.primitive;
 
-import com.meti.compile.token.Attribute;
-import com.meti.compile.token.GroupAttribute;
-import com.meti.compile.token.StringAttribute;
-import com.meti.compile.token.Token;
+import com.meti.compile.token.*;
 
 public enum Primitives implements Token {
 	U8("unsigned char"),

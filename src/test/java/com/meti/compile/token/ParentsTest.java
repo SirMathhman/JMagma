@@ -13,7 +13,7 @@ class ParentsTest {
 		var actual = Parents.format("return %t;")
 				.format(value)
 				.complete()
-				.apply(Token.Query.Value)
+				.apply(AbstractToken.Query.Value)
 				.asString();
 		assertEquals("return 0;", actual);
 	}
@@ -24,7 +24,7 @@ class ParentsTest {
 		var actual = new Parents.Formatter("return %t;", Collections.emptyList())
 				.format(value)
 				.complete()
-				.apply(Token.Query.Value)
+				.apply(AbstractToken.Query.Value)
 				.asString();
 		assertEquals("return 0;", actual);
 	}

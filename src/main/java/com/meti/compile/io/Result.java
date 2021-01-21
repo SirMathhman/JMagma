@@ -6,6 +6,10 @@ import java.util.Optional;
 public interface Result {
 	Optional<Mapping> apply(Source source);
 
+	default int count() {
+		return listSources().size();
+	}
+
 	List<Source> listSources();
 
 	interface Mapping {

@@ -1,0 +1,20 @@
+[
+  {
+    "format": "Header",
+    "children": [
+      {
+        "Group": Content,
+        "Value": ""
+      }
+    ]
+  },
+  {
+    "format": "Source",
+    "children": [
+      {
+        "Group": Content,
+        "Value": "int main(){return 0;}"
+      }
+    ]
+  }
+]

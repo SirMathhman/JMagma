@@ -6,6 +6,6 @@ public class Tokens {
 	}
 
 	public static boolean is(Token token, GroupAttribute group) {
-		return token.apply(Token.Query.Group) == group;
+		return token.apply(AbstractToken.Query.Group) == group;
 	}
 }

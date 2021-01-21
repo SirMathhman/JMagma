@@ -14,7 +14,7 @@ public class BlockRenderer implements Renderer<Token> {
 	@Override
 	public Optional<Token> render(Token token) {
 		if (Tokens.is(token, GroupAttribute.Block)) {
-			var lines = token.apply(Token.Query.Lines).asTokenList();
+			var lines = token.apply(AbstractToken.Query.Lines).asTokenList();
 			var lineAccumulator = new Parent(lines);
 			var complete = Parents.format("{%t}")
 					.format(lineAccumulator)

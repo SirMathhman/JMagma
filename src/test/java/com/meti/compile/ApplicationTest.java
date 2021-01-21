@@ -15,6 +15,7 @@ class ApplicationTest {
 	private Path Root;
 	private File Source;
 	private Path Intermediate;
+	private Path Header;
 
 	@Test
 	void run() {
@@ -29,10 +30,13 @@ class ApplicationTest {
 				.ensureAsDirectory()
 				.resolve("test")
 				.ensureAsDirectory();
+
 		var rootAsDirectory = Root.ensureAsDirectory();
 		Source = rootAsDirectory.resolve("Main.mg").ensureAsFile();
 		Source.writeAsString("def main() : I16 => {return 0;}");
+
 		Intermediate = rootAsDirectory.resolve("Main.c");
+		Header = rootAsDirectory.resolve("Main.h");
 	}
 
 	@AfterEach
@@ -40,5 +44,7 @@ class ApplicationTest {
 		Source.delete();
 		var optional = Intermediate.existingAsFile();
 		if (optional.isPresent()) optional.get().delete();
+		var optional1 = Header.existingAsFile();
+		if (optional1.isPresent()) optional1.get().delete();
 	}
 }

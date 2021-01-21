@@ -4,8 +4,17 @@ import com.meti.compile.token.*;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
-public record FunctionType(Token returns, List<Token> parameters) implements Token {
+public final class FunctionType extends AbstractToken {
+	private final Token returns;
+	private final List<Token> parameters;
+
+	public FunctionType(Token returns, List<Token> parameters) {
+		this.returns = returns;
+		this.parameters = parameters;
+	}
+
 	@Override
 	public Attribute apply(Query query) {
 		return switch (query) {
@@ -27,8 +36,32 @@ public record FunctionType(Token returns, List<Token> parameters) implements Tok
 
 	@Override
 	public List<Query> list(Attribute.Type type) {
-		return type == Attribute.Type.Type ?
-				List.of(Query.Returns, Query.Parameters) :
-				Collections.emptyList();
+		return switch (type) {
+			case Type -> List.of(Query.Returns);
+			case TypeList -> List.of(Query.Parameters);
+			default -> super.list(null);
+		};
 	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == this) return true;
+		if (obj == null || obj.getClass() != this.getClass()) return false;
+		var that = (FunctionType) obj;
+		return Objects.equals(this.returns, that.returns) &&
+		       Objects.equals(this.parameters, that.parameters);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(returns, parameters);
+	}
+
+	@Override
+	public String toString() {
+		return "FunctionType[" +
+		       "returns=" + returns + ", " +
+		       "parameters=" + parameters + ']';
+	}
+
 }

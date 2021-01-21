@@ -1,7 +1,7 @@
 package com.meti.compile.feature.function;
 
+import com.meti.compile.token.AbstractToken;
 import com.meti.compile.token.Content;
-import com.meti.compile.token.Token;
 import org.junit.jupiter.api.Test;
 
 import static com.meti.compile.feature.function.ReturnRenderer.*;
@@ -15,7 +15,7 @@ class ReturnRendererTest {
 		var node = new Return(value);
 		assertEquals("return 0;", ReturnRenderer_.render(node)
 				.orElseThrow()
-				.apply(Token.Query.Value)
+				.apply(AbstractToken.Query.Value)
 				.asString());
 	}
 }

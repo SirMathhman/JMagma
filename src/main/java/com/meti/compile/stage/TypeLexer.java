@@ -3,10 +3,8 @@ package com.meti.compile.stage;
 import com.meti.compile.token.Token;
 
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
-import static java.util.Collections.emptyList;
+import static com.meti.compile.feature.primitive.PrimitiveLexer.PrimitiveLexer_;
 
 public class TypeLexer extends CompoundLexer<Token> {
 	public static final Lexer<Token> TypeLexer_ = new TypeLexer();
@@ -16,6 +14,6 @@ public class TypeLexer extends CompoundLexer<Token> {
 
 	@Override
 	protected List<Lexer<Token>> listLexers() {
-		return emptyList();
+		return List.of(PrimitiveLexer_);
 	}
 }

@@ -1,14 +1,18 @@
 package com.meti.compile.feature.function;
 
-import com.meti.compile.token.Attribute;
-import com.meti.compile.token.GroupAttribute;
-import com.meti.compile.token.Token;
-import com.meti.compile.token.TokenAttribute;
+import com.meti.compile.token.*;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
-public record Return(Token value) implements Token {
+public final class Return extends AbstractToken {
+	private final Token value;
+
+	public Return(Token value) {
+		this.value = value;
+	}
+
 	@Override
 	public Attribute apply(Query query) {
 		return switch (query) {
@@ -25,6 +29,30 @@ public record Return(Token value) implements Token {
 
 	@Override
 	public List<Query> list(Attribute.Type type) {
-		return type == Attribute.Type.Node ? Collections.singletonList(Query.Value) : Collections.emptyList();
+		return type == Attribute.Type.Node ? Collections.singletonList(Query.Value) : super.list(null);
 	}
+
+	public Token value() {
+		return value;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == this) return true;
+		if (obj == null || obj.getClass() != this.getClass()) return false;
+		var that = (Return) obj;
+		return Objects.equals(this.value, that.value);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(value);
+	}
+
+	@Override
+	public String toString() {
+		return "Return[" +
+		       "value=" + value + ']';
+	}
+
 }

@@ -1,14 +1,18 @@
 package com.meti.compile.feature.block;
 
-import com.meti.compile.token.Attribute;
-import com.meti.compile.token.GroupAttribute;
-import com.meti.compile.token.Token;
-import com.meti.compile.token.TokenListAttribute;
+import com.meti.compile.token.*;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
-public record Block(List<Token> lines) implements Token {
+public final class Block extends AbstractToken {
+	private final List<Token> lines;
+
+	public Block(List<Token> lines) {
+		this.lines = lines;
+	}
+
 	@Override
 	public Attribute apply(Query query) {
 		return switch (query) {
@@ -27,6 +31,30 @@ public record Block(List<Token> lines) implements Token {
 	public List<Query> list(Attribute.Type type) {
 		return type == Attribute.Type.NodeList ?
 				Collections.singletonList(Query.Lines) :
-				Collections.emptyList();
+				super.list(null);
 	}
+
+	public List<Token> lines() {
+		return lines;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == this) return true;
+		if (obj == null || obj.getClass() != this.getClass()) return false;
+		var that = (Block) obj;
+		return Objects.equals(this.lines, that.lines);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(lines);
+	}
+
+	@Override
+	public String toString() {
+		return "Block[" +
+		       "lines=" + lines + ']';
+	}
+
 }

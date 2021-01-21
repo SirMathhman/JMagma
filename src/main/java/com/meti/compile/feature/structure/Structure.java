@@ -4,8 +4,17 @@ import com.meti.compile.token.*;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
-public record Structure(String name, List<Field> members) implements Token {
+public final class Structure extends AbstractToken {
+	private final String name;
+	private final List<Field> members;
+
+	public Structure(String name, List<Field> members) {
+		this.name = name;
+		this.members = members;
+	}
+
 	@Override
 	public Attribute apply(Query query) {
 		return switch (query) {
@@ -25,6 +34,6 @@ public record Structure(String name, List<Field> members) implements Token {
 	public List<Query> list(Attribute.Type type) {
 		return type == Attribute.Type.FieldList ?
 				Collections.singletonList(Query.Members) :
-				Collections.emptyList();
+				super.list(null);
 	}
 }

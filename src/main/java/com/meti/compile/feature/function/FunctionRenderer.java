@@ -17,12 +17,12 @@ public class FunctionRenderer implements Renderer<Token> {
 	@Override
 	public Optional<Token> render(Token token) {
 		if (Tokens.is(token, GroupAttribute.Implementation)) {
-			var identity = token.apply(Token.Query.Identity).asField();
+			var identity = token.apply(AbstractToken.Query.Identity).asField();
 
 			var name = identity.findName();
-			var returns = identity.findType().apply(Token.Query.Returns).asToken();
-			var parameters = token.apply(Token.Query.Parameters).asFieldList();
-			var body = token.apply(Token.Query.Body).asToken();
+			Token returns = identity.findType().apply(AbstractToken.Query.Returns).asToken();
+			var parameters = token.apply(AbstractToken.Query.Parameters).asFieldList();
+			Token body = token.apply(AbstractToken.Query.Body).asToken();
 			var renderedParams = parameters
 					.stream()
 					.map(CFieldRenderer_::render)

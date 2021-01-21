@@ -1,39 +1,38 @@
 package com.meti.compile.io;
 
 import com.meti.api.magma.io.Directory;
+import com.meti.api.magma.io.File;
 import com.meti.api.magma.io.IOException_;
 import com.meti.api.magma.io.Path;
 import com.meti.compile.CompileException;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
-public record DirectoryStorer(Directory root) implements Storer<List<Path>> {
+public record DirectoryStorer(Directory root) implements Storer<List<File>> {
 	@Override
-	public List<Path> write(Result result) throws IOException_, CompileException {
-		var sources = result.listSources();
-		var results = new ArrayList<Path>();
-		for (int i = 0; i < sources.size(); i++) {
-			var source = sources.get(i);
+	public List<File> write(Result result) throws IOException_, CompileException {
+		var results = new ArrayList<File>();
+		for (int i = 0; i < result.count(); i++) {
 			var parent = root;
-			var sourceSize = source.size();
+			var sourceSize = result.listSources().get(i).size();
 			for (int j = 0; j < sourceSize - 1; j++) {
-				var path = parent.resolve(source.apply(i));
+				var path = parent.resolve(result.listSources().get(i).apply(i));
 				parent = path.ensureAsDirectory();
 			}
-			var name = source.apply(sourceSize - 1);
-			var option = result.apply(source);
-			var mapping = option.orElseThrow(() -> new CompileException("No result was found for: " + source));
+			var name = result.listSources().get(i).apply(sourceSize - 1);
+			var option = result.apply(result.listSources().get(i));
+			int finalI = i;
+			var mapping = option.orElseThrow(() -> new CompileException("No result was found for: " + result.listSources().get(finalI)));
 			var formats = mapping.listFormats();
 			var size = formats.size();
 			for (int j = 0; j < size; j++) {
-				var format = formats.get(i);
+				var format = formats.get(j);
 				var value = mapping.apply(format);
 				var formattedName = format.format(name);
 				var path = parent.resolve(formattedName)
 						.ensureAsFile()
-						.writeAsString1(value);
+						.writeAsString(value);
 				results.add(path);
 			}
 		}

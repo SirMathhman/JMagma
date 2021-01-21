@@ -4,6 +4,12 @@ import java.util.List;
 
 public record StringAttribute(String value) implements Attribute {
 	@Override
+	public String toString() {
+		var withEscapes = value.replace("\"", "\\\"");
+		return "\"%s\"".formatted(withEscapes);
+	}
+
+	@Override
 	public Field asField() {
 		throw new UnsupportedOperationException("Not a field.");
 	}

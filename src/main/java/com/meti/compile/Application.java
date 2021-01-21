@@ -15,6 +15,7 @@ record Application(Path root) {
 		var rootAsDirectory = this.root.ensureAsDirectory();
 		var loader = new DirectoryLoader(rootAsDirectory);
 		var result = MagmaCCompiler_.compile(loader);
-		new DirectoryStorer(rootAsDirectory).write(result);
+		var storer = new DirectoryStorer(rootAsDirectory);
+		storer.write(result);
 	}
 }

@@ -27,8 +27,13 @@ class MagmaCCompilerTest {
 				CLang.Formats.Header, Collections.singletonList(new Content("")),
 				CLang.Formats.Source, Collections.singletonList(new Content("int main(){return 0;}"))
 		);
-		var expected = new MapMapping(map);
 		var actual = mappingOptional.orElseThrow();
-		assertEquals(expected, actual);
+		assertEquals("""
+				#ifndef Main
+				#define Main
+				#endif""", actual.apply(CLang.Formats.Header));
+		assertEquals("""
+				#include "Main.h"
+				int main(){return 0;}""", actual.apply(CLang.Formats.Source));
 	}
 }

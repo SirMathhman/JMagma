@@ -1,5 +1,6 @@
 package com.meti.compile.io;
 
+import com.meti.compile.token.AbstractToken;
 import com.meti.compile.token.Attribute;
 import com.meti.compile.token.Token;
 
@@ -14,7 +15,7 @@ public record MapMapping(Map<Result.Format, List<Token>> map) implements Result.
 	public String apply(Result.Format name) {
 		return map.get(name)
 				.stream()
-				.map(token -> token.apply(Token.Query.Value))
+				.map(token -> token.apply(AbstractToken.Query.Value))
 				.map(Attribute::asString)
 				.collect(Collectors.joining());
 	}
@@ -22,6 +23,20 @@ public record MapMapping(Map<Result.Format, List<Token>> map) implements Result.
 	@Override
 	public List<Result.Format> listFormats() {
 		return new ArrayList<>(map.keySet());
+	}
+
+	@Override
+	public String toString() {
+		return map.keySet()
+				.stream()
+				.map(value -> {
+					var tokens = map.get(value)
+							.stream()
+							.map(Object::toString)
+							.collect(Collectors.joining(",", "[", "]"));
+					return "{\"format\":\"%s\",\"children\":%s}".formatted(value, tokens);
+				})
+				.collect(Collectors.joining(",", "[", "]"));
 	}
 
 	public MapMapping with(Result.Format format, Token rendered) {

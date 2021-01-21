@@ -21,7 +21,7 @@ class CRenderStageTest {
 	@Test
 	void renderPair() throws CompileException {
 		var pair = new Pair(Primitives.I16, new Content("main()"));
-		var value = CRenderStage_.render(pair).apply(Token.Query.Value).asString();
+		var value = CRenderStage_.render(pair).apply(AbstractToken.Query.Value).asString();
 		assertEquals("int main()", value);
 	}
 
@@ -29,7 +29,7 @@ class CRenderStageTest {
 	void render() throws CompileException {
 		var node = createFunction();
 		assertEquals("int main(){return 0;}", CRenderStage_.render(node)
-				.apply(Token.Query.Value)
+				.apply(AbstractToken.Query.Value)
 				.asString());
 	}
 
@@ -46,7 +46,7 @@ class CRenderStageTest {
 		var line = new Return(value);
 		var node = new Block(List.of(line));
 		assertEquals("{return 0;}", CRenderStage_.render(node)
-				.apply(Token.Query.Value)
+				.apply(AbstractToken.Query.Value)
 				.asString());
 	}
 
@@ -58,7 +58,7 @@ class CRenderStageTest {
 		var optional = CNodeRenderer_.render(node);
 		var rendered = optional.orElseThrow();
 		assertEquals("{return 0;}", CRenderStage_.renderParent(rendered)
-				.apply(Token.Query.Value)
+				.apply(AbstractToken.Query.Value)
 				.asString());
 	}
 
@@ -68,7 +68,7 @@ class CRenderStageTest {
 		var line = new Return(value);
 		var node = new Block(List.of(line));
 		assertEquals("{return 0;}", CRenderStage_.renderRoot(node)
-				.apply(Token.Query.Value)
+				.apply(AbstractToken.Query.Value)
 				.asString());
 	}
 
@@ -78,7 +78,7 @@ class CRenderStageTest {
 		var optional = CNodeRenderer_.render(input);
 		var output = optional.orElseThrow();
 		var actual = CRenderStage_.renderParent(output);
-		assertEquals("int main(){return 0;}", actual.apply(Token.Query.Value).asString());
+		assertEquals("int main(){return 0;}", actual.apply(AbstractToken.Query.Value).asString());
 	}
 
 	@Test
@@ -86,7 +86,7 @@ class CRenderStageTest {
 		var value = new Integer("0");
 		var line = new Return(value);
 		assertEquals("return 0;", CRenderStage_.render(line)
-				.apply(Token.Query.Value)
+				.apply(AbstractToken.Query.Value)
 				.asString());
 	}
 
@@ -94,7 +94,7 @@ class CRenderStageTest {
 	void renderRoot() throws CompileException {
 		var node = createFunction();
 		assertEquals("int main(){return 0;}", CRenderStage_.renderRoot(node)
-				.apply(Token.Query.Value)
+				.apply(AbstractToken.Query.Value)
 				.asString());
 	}
 }

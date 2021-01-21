@@ -2,8 +2,15 @@ package com.meti.compile.token;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
-public record Parent(List<Token> lines) implements Token {
+public final class Parent extends AbstractToken {
+	private final List<Token> lines;
+
+	public Parent(List<Token> lines) {
+		this.lines = lines;
+	}
+
 	@Override
 	public Attribute apply(Query query) {
 		return switch (query) {
@@ -20,12 +27,12 @@ public record Parent(List<Token> lines) implements Token {
 			var isContent = Tokens.is(line, GroupAttribute.Content);
 			var isParent = Tokens.is(line, GroupAttribute.Parent);
 			if (isContent || isParent) {
-				var attribute = line.apply(Query.Value);
+				var attribute = line.copy(null, null).apply(Query.Value);
 				var string = attribute.asString();
 				builder.append(string);
 			} else {
 				var format = "Cannot render a node of type '%s'.";
-				var message = format.formatted(line.apply(Query.Group));
+				var message = format.formatted(line.copy(null, null).apply(Query.Group));
 				throw new UnsupportedOperationException(message);
 			}
 		}
@@ -41,6 +48,19 @@ public record Parent(List<Token> lines) implements Token {
 	public List<Query> list(Attribute.Type type) {
 		return type == Attribute.Type.NodeList ?
 				Collections.singletonList(Query.Lines) :
-				Collections.emptyList();
+				super.list(null);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(lines);
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		Parent parent = (Parent) o;
+		return Objects.equals(lines, parent.lines);
 	}
 }

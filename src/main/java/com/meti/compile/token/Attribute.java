@@ -19,6 +19,6 @@ public interface Attribute {
 		Node,
 		NodeList,
 		Type,
-		TypeList,
+		TypeList, Other,
 	}
 }
