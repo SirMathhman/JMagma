@@ -1,8 +1,7 @@
 package com.meti.api.magma.io;
 
 import com.meti.api.magma.collect.List;
-
-import java.util.Optional;
+import com.meti.api.magma.core.Option;
 
 public interface Path {
 	Path apply(String name);
@@ -11,7 +10,7 @@ public interface Path {
 
 	File ensureAsFile() throws IOException_;
 
-	Optional<File> existingAsFile();
+	Option<File> existingAsFile();
 
 	boolean exists();
 

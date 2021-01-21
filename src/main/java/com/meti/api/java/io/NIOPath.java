@@ -1,7 +1,9 @@
 package com.meti.api.java.io;
 
 import com.meti.api.java.collect.JavaList;
+import com.meti.api.java.core.JavaOption;
 import com.meti.api.magma.collect.Lists;
+import com.meti.api.magma.core.Option;
 import com.meti.api.magma.io.Directory;
 import com.meti.api.magma.io.File;
 import com.meti.api.magma.io.IOException_;
@@ -48,7 +50,11 @@ public class NIOPath implements Path {
 	}
 
 	@Override
-	public Optional<File> existingAsFile() {
+	public Option<File> existingAsFile() {
+		return new JavaOption<File>(existingAsFile1());
+	}
+
+	private Optional<File> existingAsFile1() {
 		return exists() ? Optional.of(new NIOFile(value)) : Optional.empty();
 	}
 

@@ -42,9 +42,7 @@ class ApplicationTest {
 	@AfterEach
 	void tearDown() throws IOException_ {
 		Source.delete();
-		var optional = Intermediate.existingAsFile();
-		if (optional.isPresent()) optional.get().delete();
-		var optional1 = Header.existingAsFile();
-		if (optional1.isPresent()) optional1.get().delete();
+		Intermediate.existingAsFile().ifPresent(File::delete);
+		Header.existingAsFile().ifPresent(File::delete);
 	}
 }
