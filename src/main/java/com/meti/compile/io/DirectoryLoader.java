@@ -40,7 +40,9 @@ public record DirectoryLoader(Directory root) implements Loader {
 				return asScript.ensureAsFile().readAsString();
 			}
 		}
-		throw new IOException_("Source '%s' doesn't exist in directory '%s'".formatted(source, root));
+		var format = "Even though the source '%s' is listed, neither '%s' or '%s' exist.";
+		var message = format.formatted(source, asFile, asScript);
+		throw new IOException_(message);
 	}
 
 	private Stream<Source> streamScripts() throws IOException_ {

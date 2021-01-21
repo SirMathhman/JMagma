@@ -6,9 +6,8 @@ import com.meti.api.magma.io.IOException_;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.Collections;
-
 import static com.meti.api.java.io.NIOFileSystem.NIOFileSystem_;
+import static java.util.Collections.singletonList;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class DirectoryLoaderTest {
@@ -19,7 +18,8 @@ class DirectoryLoaderTest {
 	@Test
 	void read() throws IOException_ {
 		var loader = new DirectoryLoader(directory);
-		var actual = loader.load(new ListSource(Collections.singletonList("Main.mg")));
+		var source = new ListSource(singletonList("Main"));
+		var actual = loader.load(source);
 		assertEquals(Expected, actual);
 	}
 
