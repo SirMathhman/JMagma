@@ -6,7 +6,4 @@ public interface File {
 	String readAsString() throws IOException_;
 
 	File writeAsString(String content) throws IOException_;
-
-	@Deprecated
-	Path writeAsString1(String content) throws IOException_;
 }

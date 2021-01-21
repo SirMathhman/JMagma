@@ -37,13 +37,4 @@ public record NIOFile(Path path) implements File {
 		}
 	}
 
-	@Override
-	public com.meti.api.magma.io.Path writeAsString1(String content) throws IOException_ {
-		try {
-			Files.writeString(path, content);
-			return new NIOPath(path);
-		} catch (IOException e) {
-			throw new IOException_(e);
-		}
-	}
 }
