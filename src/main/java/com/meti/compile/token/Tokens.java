@@ -6,6 +6,6 @@ public class Tokens {
 	}
 
 	public static boolean is(Token token, GroupAttribute group) {
-		throw new UnsupportedOperationException();
+		return token.apply(Token.Query.Group) == group;
 	}
 }
