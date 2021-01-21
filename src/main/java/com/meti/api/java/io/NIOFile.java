@@ -29,7 +29,12 @@ public record NIOFile(Path path) implements File {
 
 	@Override
 	public File writeAsString(String content) throws IOException_ {
-		throw new UnsupportedOperationException();
+		try {
+			Files.writeString(path, content);
+			return this;
+		} catch (IOException e) {
+			throw new IOException_(e);
+		}
 	}
 
 	@Override
