@@ -10,7 +10,9 @@ import java.nio.file.FileVisitor;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.attribute.BasicFileAttributes;
+import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static com.meti.api.java.io.NIOFileSystem.NIOFileSystem_;
@@ -28,6 +30,11 @@ public final class NIODirectory extends NIOPath implements Directory {
 		} catch (IOException e) {
 			throw new IOException_(e);
 		}
+	}
+
+	@Override
+	public List<com.meti.api.magma.io.Path> listTree1() throws IOException_ {
+		return streamTree().collect(Collectors.toList());
 	}
 
 	@Override
@@ -59,8 +66,7 @@ public final class NIODirectory extends NIOPath implements Directory {
 		return new NIOPath(value.resolve(name));
 	}
 
-	@Override
-	public Stream<com.meti.api.magma.io.Path> streamTree() throws IOException_ {
+	private Stream<com.meti.api.magma.io.Path> streamTree() throws IOException_ {
 		try {
 			return Files.walk(value).map(NIOPath::new);
 		} catch (IOException e) {

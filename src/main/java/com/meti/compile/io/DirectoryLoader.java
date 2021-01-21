@@ -1,24 +1,31 @@
 package com.meti.compile.io;
 
+import com.meti.api.magma.collect.IndexException;
 import com.meti.api.magma.io.Directory;
 import com.meti.api.magma.io.IOException_;
+import com.meti.api.magma.io.Path;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public record DirectoryLoader(Directory root) implements Loader {
-	public static final String FileExtension = ".mg";
-	public static final String ScriptExtension = ".mgs";
+	private static final String FileExtension = ".mg";
+	private static final String ScriptExtension = ".mgs";
 	private static final String AsFile = "%s.mg";
 	private static final String AsScript = "%s.mgs";
 
 	@Override
 	public List<Source> listSources() throws IOException_ {
-		var paths = root.streamTree().collect(Collectors.toList());
+		var tree = root.listTree();
 		var sources = new ArrayList<Source>();
-		for (int i = 0; i < paths.size(); i++) {
-			var path = paths.get(i);
+		for (int i = 0; i < tree.size(); i++) {
+			Path result;
+			try {
+				result = tree.apply(i);
+			} catch (IndexException e) {
+				throw new UnsupportedOperationException(e);
+			}
+			var path = result;
 			var names = path.listNames();
 			var lastName = names.get(names.size() - 1);
 			var isFile = lastName.endsWith(FileExtension);
