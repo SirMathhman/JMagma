@@ -35,28 +35,4 @@ public final class Block extends AbstractToken {
 				Collections.singletonList(Query.Lines) :
 				Collections.emptyList());
 	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(lines);
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (obj == this) return true;
-		if (obj == null || obj.getClass() != this.getClass()) return false;
-		var that = (Block) obj;
-		return Objects.equals(this.lines, that.lines);
-	}
-
-	public List<Token> lines() {
-		return lines;
-	}
-
-	@Override
-	public String toString() {
-		return "Block[" +
-		       "lines=" + lines + ']';
-	}
-
 }
