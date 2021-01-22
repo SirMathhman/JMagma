@@ -14,11 +14,11 @@ public final record Some<T>(T value) implements Option<T> {
 
 	@Override
 	public <R> Option<R> map(F1<T, R> mapper) {
-		throw new UnsupportedOperationException();
+		return new Some<>(mapper.apply(value));
 	}
 
 	@Override
 	public T orElseGet(Supplier<T> supplier) {
-		throw new UnsupportedOperationException();
+		return value;
 	}
 }
