@@ -92,7 +92,7 @@ public class NIOPath implements Path {
 
 	@Override
 	public String toString() {
-		return Lists.fromJava(listNames())
+		return Lists.toJava(listNames())
 				.stream()
 				.map("\"%s\""::formatted)
 				.collect(Collectors.joining(",", "[", "]"));

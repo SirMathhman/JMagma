@@ -32,13 +32,13 @@ public record DirectoryLoader(Directory root) implements Loader {
 				throw new UnsupportedOperationException(e);
 			}
 			var path = result;
-			var names = Lists.fromJava(path.listNames());
+			var names = Lists.toJava(path.listNames());
 			var lastName = names.get(names.size() - 1);
 			var isFile = lastName.endsWith(FileExtension);
 			var isScript = lastName.endsWith(ScriptExtension);
 			if (isFile || isScript) {
 				var relativized = root.relativize(path);
-				var relativizedNames = Lists.fromJava(relativized.listNames());
+				var relativizedNames = Lists.toJava(relativized.listNames());
 				var parent = relativizedNames.subList(0, relativizedNames.size() - 1);
 				var name = relativizedNames.get(relativizedNames.size() - 1);
 				var extension = isFile ? FileExtension : ScriptExtension;

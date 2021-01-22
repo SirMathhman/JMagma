@@ -23,7 +23,7 @@ class DirectoryLoaderTest {
 		var loader = new DirectoryLoader(directory);
 		var source = new ListSource(singletonList("Main"));
 		var expected = singletonList(source);
-		var actual = Lists.fromJava(loader.listSources());
+		var actual = Lists.toJava(loader.listSources());
 		assertIterableEquals(expected, actual);
 	}
 

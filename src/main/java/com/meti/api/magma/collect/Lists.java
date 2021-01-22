@@ -6,7 +6,7 @@ public class Lists {
 	public Lists() {
 	}
 
-	public static <T> java.util.List<T> fromJava(List<T> list) {
+	public static <T> java.util.List<T> toJava(List<T> list) {
 		var copy = new ArrayList<T>();
 		for (int i = 0; i < list.size(); i++) {
 			try {

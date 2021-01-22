@@ -26,7 +26,7 @@ public class MagmaCCompiler implements Compiler {
 	@Override
 	public Result compile(Loader loader) throws CompileException {
 		try {
-			var scripts = Lists.fromJava(loader.listSources());
+			var scripts = Lists.toJava(loader.listSources());
 			var scriptSize = scripts.size();
 			var map = new HashMap<Source, Result.Mapping>();
 			var stack = new MapStack();

@@ -45,7 +45,7 @@ public final class NIODirectory extends NIOPath implements Directory {
 
 	@Override
 	public com.meti.api.magma.io.Path relativize(com.meti.api.magma.io.Path other) throws IOException_ {
-		var otherNames = Lists.fromJava(other.listNames());
+		var otherNames = Lists.toJava(other.listNames());
 
 		var thisSize = value.getNameCount();
 		var otherSize = otherNames.size();

@@ -1,14 +1,12 @@
 package com.meti.compile.io;
 
-import java.util.List;
-import java.util.Optional;
+import com.meti.api.magma.collect.List;
+import com.meti.api.magma.core.Option;
 
 public interface Result {
-	Optional<Mapping> apply(Source source);
+	Option<Mapping> apply(Source source);
 
-	default int count() {
-		return listSources().size();
-	}
+	int count();
 
 	List<Source> listSources();
 
