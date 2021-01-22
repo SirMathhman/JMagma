@@ -1,5 +1,7 @@
 package com.meti.compile.token;
 
+import com.meti.api.java.collect.JavaList;
+
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
@@ -21,7 +23,11 @@ public final class Content extends AbstractToken {
 	}
 
 	@Override
-	public List<Query> list(Attribute.Type type) {
+	public com.meti.api.magma.collect.List<Query> list(Attribute.Type type) {
+		return new JavaList<>(list1(type));
+	}
+
+	private List<Query> list1(Attribute.Type type) {
 		return type == Attribute.Type.Other ?
 				List.of(Query.Group, Query.Value) :
 				Collections.emptyList();

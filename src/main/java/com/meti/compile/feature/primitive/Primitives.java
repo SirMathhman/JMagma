@@ -1,6 +1,9 @@
 package com.meti.compile.feature.primitive;
 
+import com.meti.api.java.collect.JavaList;
 import com.meti.compile.token.*;
+
+import java.util.List;
 
 public enum Primitives implements Token {
 	U8("unsigned char"),

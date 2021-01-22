@@ -1,9 +1,9 @@
 package com.meti.compile.feature.function;
 
+import com.meti.api.java.collect.JavaList;
 import com.meti.compile.token.*;
 
 import java.util.Collections;
-import java.util.List;
 import java.util.Objects;
 
 public final class Return extends AbstractToken {
@@ -28,12 +28,8 @@ public final class Return extends AbstractToken {
 	}
 
 	@Override
-	public List<Query> list(Attribute.Type type) {
-		return type == Attribute.Type.Node ? Collections.singletonList(Query.Value) : super.list(null);
-	}
-
-	public Token value() {
-		return value;
+	public com.meti.api.magma.collect.List<Query> list(Attribute.Type type) {
+		return new JavaList<>(type == Attribute.Type.Node ? Collections.singletonList(Query.Value) : Collections.emptyList());
 	}
 
 	@Override

@@ -1,7 +1,9 @@
 package com.meti.compile.feature.primitive;
 
+import com.meti.api.java.collect.JavaList;
 import com.meti.compile.token.*;
 
+import java.util.List;
 import java.util.Objects;
 
 public final class Integer extends AbstractToken {
@@ -18,10 +20,6 @@ public final class Integer extends AbstractToken {
 			case Value -> new StringAttribute(value);
 			default -> throw new UnsupportedOperationException();
 		};
-	}
-
-	public String value() {
-		return value;
 	}
 
 	@Override

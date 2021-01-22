@@ -1,5 +1,6 @@
 package com.meti.compile.feature.structure;
 
+import com.meti.api.java.collect.JavaList;
 import com.meti.api.java.collect.JavaLists;
 import com.meti.compile.token.*;
 
@@ -31,9 +32,13 @@ public final class Structure extends AbstractToken {
 	}
 
 	@Override
-	public List<Query> list(Attribute.Type type) {
+	public com.meti.api.magma.collect.List<Query> list(Attribute.Type type) {
+		return new JavaList<>(list1(type));
+	}
+
+	private List<Query> list1(Attribute.Type type) {
 		return type == Attribute.Type.FieldList ?
 				Collections.singletonList(Query.Members) :
-				super.list(null);
+				JavaLists.toJava(list(null));
 	}
 }

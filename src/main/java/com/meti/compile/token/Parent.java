@@ -1,5 +1,6 @@
 package com.meti.compile.token;
 
+import com.meti.api.java.collect.JavaList;
 import com.meti.api.java.collect.JavaLists;
 
 import java.util.Collections;
@@ -47,10 +48,14 @@ public final class Parent extends AbstractToken {
 	}
 
 	@Override
-	public List<Query> list(Attribute.Type type) {
+	public com.meti.api.magma.collect.List<Query> list(Attribute.Type type) {
+		return new JavaList<>(list1(type));
+	}
+
+	private List<Query> list1(Attribute.Type type) {
 		return type == Attribute.Type.NodeList ?
 				Collections.singletonList(Query.Lines) :
-				super.list(null);
+				JavaLists.toJava(list(null));
 	}
 
 	@Override

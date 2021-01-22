@@ -1,8 +1,10 @@
 package com.meti.compile.feature.function;
 
+import com.meti.api.java.collect.JavaList;
 import com.meti.api.java.collect.JavaLists;
 import com.meti.compile.token.*;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -35,12 +37,8 @@ public final class FunctionType extends AbstractToken {
 	}
 
 	@Override
-	public List<Query> list(Attribute.Type type) {
-		return switch (type) {
-			case Type -> List.of(Query.Returns);
-			case TypeList -> List.of(Query.Parameters);
-			default -> super.list(null);
-		};
+	public com.meti.api.magma.collect.List<Query> list(Attribute.Type type) {
+		return new JavaList<>(list1(type));
 	}
 
 	@Override

@@ -1,5 +1,6 @@
 package com.meti.compile.feature.block;
 
+import com.meti.api.java.collect.JavaList;
 import com.meti.api.java.collect.JavaLists;
 import com.meti.compile.token.*;
 
@@ -29,14 +30,15 @@ public final class Block extends AbstractToken {
 	}
 
 	@Override
-	public List<Query> list(Attribute.Type type) {
-		return type == Attribute.Type.NodeList ?
+	public com.meti.api.magma.collect.List<Query> list(Attribute.Type type) {
+		return new JavaList<>(type == Attribute.Type.NodeList ?
 				Collections.singletonList(Query.Lines) :
-				super.list(null);
+				Collections.emptyList());
 	}
 
-	public List<Token> lines() {
-		return lines;
+	@Override
+	public int hashCode() {
+		return Objects.hash(lines);
 	}
 
 	@Override
@@ -47,9 +49,8 @@ public final class Block extends AbstractToken {
 		return Objects.equals(this.lines, that.lines);
 	}
 
-	@Override
-	public int hashCode() {
-		return Objects.hash(lines);
+	public List<Token> lines() {
+		return lines;
 	}
 
 	@Override

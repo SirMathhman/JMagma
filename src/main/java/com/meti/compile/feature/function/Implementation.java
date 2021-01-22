@@ -1,5 +1,6 @@
 package com.meti.compile.feature.function;
 
+import com.meti.api.java.collect.JavaList;
 import com.meti.api.java.collect.JavaLists;
 import com.meti.compile.token.*;
 
@@ -38,16 +39,6 @@ public final class Implementation extends AbstractToken {
 			case Parameters -> new Implementation(identity, JavaLists.toJava(attribute.asFieldList()), body);
 			case Body -> new Implementation(identity, parameters, attribute.asToken());
 			default -> this;
-		};
-	}
-
-	@Override
-	public List<Query> list(Attribute.Type type) {
-		return switch (type) {
-			case Field_ -> singletonList(Query.Identity);
-			case FieldList -> singletonList(Query.Parameters);
-			case Node -> singletonList(Query.Body);
-			default -> emptyList();
 		};
 	}
 

@@ -1,5 +1,8 @@
 package com.meti.compile.token;
 
+import com.meti.api.java.collect.JavaList;
+import com.meti.api.java.collect.JavaLists;
+
 import java.util.List;
 import java.util.Objects;
 
@@ -28,8 +31,12 @@ public final class Pair extends AbstractToken {
 	}
 
 	@Override
-	public List<Query> list(Attribute.Type type) {
-		return super.list(null);
+	public com.meti.api.magma.collect.List<Query> list(Attribute.Type type) {
+		return new JavaList<>(list1(type));
+	}
+
+	private List<Query> list1(Attribute.Type type) {
+		return JavaLists.toJava(list(null));
 	}
 
 	public Token type() {

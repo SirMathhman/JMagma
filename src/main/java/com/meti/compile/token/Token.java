@@ -14,8 +14,8 @@ public interface Token {
 		return this;
 	}
 
-	default List<Query> list(Attribute.Type type) {
-		//TODO: replace with better default implementation
+	default com.meti.api.magma.collect.List<Query> list(Attribute.Type type) {
+		//TODO: replace stub
 		return new JavaList<>(Collections.emptyList());
 	}
 
