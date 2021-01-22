@@ -4,9 +4,14 @@ import com.meti.api.magma.collect.IndexException;
 import com.meti.api.magma.collect.List;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class JavaLists {
 	public JavaLists() {
+	}
+
+	public static <T> List<T> empty() {
+		return new JavaList<>(Collections.emptyList());
 	}
 
 	public static <T> java.util.List<T> toJava(List<T> list) {

@@ -1,19 +1,24 @@
 package com.meti.compile;
 
-import com.meti.api.java.collect.JavaList;
 import com.meti.api.java.collect.JavaLists;
-import com.meti.api.magma.collect.IndexException;
+import com.meti.api.magma.collect.List;
+import com.meti.api.magma.collect.Lists;
+import com.meti.api.magma.collect.StreamException;
+import com.meti.api.magma.core.F2E1;
 import com.meti.api.magma.io.IOException_;
 import com.meti.compile.io.*;
 import com.meti.compile.stack.MapStack;
-import com.meti.compile.stage.StageState;
+import com.meti.compile.token.Attribute;
 import com.meti.compile.token.GroupAttribute;
 import com.meti.compile.token.Token;
 import com.meti.compile.token.Tokens;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.stream.Collectors;
 
+import static com.meti.compile.content.BracketSplitter.BracketSplitter_;
+import static com.meti.compile.io.MapResults.MapResult;
 import static com.meti.compile.stage.CRenderStage.CRenderStage_;
 import static com.meti.compile.stage.MagmaFlatteningStage.MagmaFlatteningStage_;
 import static com.meti.compile.stage.MagmaLexerStage.MagmaLexerStage_;
@@ -28,89 +33,63 @@ public class MagmaCCompiler implements Compiler {
 	@Override
 	public Result compile(Loader loader) throws CompileException {
 		try {
-			var map = new HashMap<Source, Result.Mapping>();
-			var stack = new MapStack();
-			for (int i = 0; i < loader.listSources().size(); i++) {
+			var folder = (F2E1<State, Source, State, CompileException>) (state, source) -> {
 				try {
-					var source = loader.listSources().apply(i);
-					try {
-						var content = loader.load(source);
-						var mapping = compile(source, stack, content);
-						map.put(source, mapping);
-					} catch (CompileException e) {
-						throw new CompileException("Failed to compile %s.".formatted(source), e);
-					}
-				} catch (IndexException e) {
-					throw new CompileException(e);
+					return compile(state, source, loader.load(source));
+				} catch (IOException_ ioException_) {
+					throw new CompileException(ioException_);
 				}
-			}
-			return new MapResult(map);
-		} catch (IOException_ e) {
+			};
+			return Lists.stream(loader.listSources())
+					.fold(new State(MapResult(), new MapStack()), folder)
+					.complete();
+		} catch (StreamException | IOException_ e) {
 			throw new CompileException(e);
 		}
 	}
 
-	private Result.Mapping compile(Source source, MapStack stack, String content) throws CompileException {
+	private State compile(State state, Source source, String content) throws CompileException {
 		var tokens = lex(content);
-		var imports = new ArrayList<Source>();
-		for (Token token : tokens) {
-			if (Tokens.is(token, GroupAttribute.Import)) {
-				imports.add(createImport(Tokens.createContent(token)));
-			}
-		}
-		var resetStack = stack.reset(new JavaList<>(imports));
-		var state = new StageState(resetStack, tokens);
-		var parsed = MagmaParsingStage_.apply(state);
+		var imports = findImports(tokens);
+
+		var context = state.reset(imports).attach(tokens);
+		var parsed = MagmaParsingStage_.apply(context);
 		var flattened = MagmaFlatteningStage_.apply(parsed);
-		var nodes = flattened.nodes();
-		return CRenderStage_.apply(source, nodes);
+		var mapping = CRenderStage_.apply(source, flattened);
+		return state.with(source, mapping);
+	}
+
+	private List<Source> findImports(List<Token> tokens) throws CompileException {
+		try {
+			return Lists.stream(tokens)
+					.filter(token -> Tokens.is(token, GroupAttribute.Import))
+					.map(token -> token.apply(Token.Query.Value))
+					.map(Attribute::asString)
+					.map(this::createImport)
+					.fold(JavaLists.empty(), List::add);
+		} catch (StreamException e) {
+			throw new CompileException(e);
+		}
 	}
 
 	private Source createImport(String content) {
-		Source import_;
 		if (content.contains(".")) {
-			import_ = new ListSource(Arrays.stream(content.split("\\."))
+			return new ListSource(Arrays.stream(content.split("\\."))
 					.filter(s -> !s.isBlank())
 					.map(String::trim)
 					.collect(Collectors.toList()));
 		} else {
-			import_ = new ListSource(Collections.singletonList(content));
+			return new ListSource(Collections.singletonList(content));
 		}
-		return import_;
 	}
 
 	private List<Token> lex(String content) throws CompileException {
-		var lines = split(content);
-		var tokens = new ArrayList<Token>();
-		for (String line : lines) {
-			var token = MagmaLexerStage_.apply(line);
-			tokens.add(token);
+		try {
+			return BracketSplitter_.stream(content)
+					.map(MagmaLexerStage_::apply)
+					.fold(JavaLists.empty(), List::add);
+		} catch (StreamException e) {
+			throw new CompileException(e);
 		}
-		return tokens;
-	}
-
-	private List<String> split(String content) {
-		var lines = new ArrayList<String>();
-		var buffer = new StringBuilder();
-		var depth = 0;
-		for (int j = 0; j < content.length(); j++) {
-			var c = content.charAt(j);
-			if (c == '}' && depth == 1) {
-				depth = 0;
-				buffer.append('}');
-				lines.add(buffer.toString());
-				buffer = new StringBuilder();
-			} else if (c == ';' && depth == 0) {
-				lines.add(buffer.toString());
-				buffer = new StringBuilder();
-			} else {
-				if (c == '{') depth++;
-				if (c == '}') depth--;
-				buffer.append(c);
-			}
-		}
-		lines.add(buffer.toString());
-		lines.removeIf(String::isBlank);
-		return lines;
 	}
 }

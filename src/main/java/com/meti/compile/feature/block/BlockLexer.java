@@ -1,61 +1,53 @@
 package com.meti.compile.feature.block;
 
-import com.meti.api.magma.core.None;
+import com.meti.api.magma.collect.StreamException;
 import com.meti.api.magma.core.Option;
-import com.meti.api.magma.core.Some;
 import com.meti.compile.CompileException;
 import com.meti.compile.stage.Lexer;
 import com.meti.compile.token.Content;
 import com.meti.compile.token.Token;
 
-import java.util.ArrayList;
-import java.util.Optional;
-import java.util.stream.Collectors;
+import static com.meti.api.magma.core.Some.Some;
+import static com.meti.compile.content.BracketSplitter.BracketSplitter_;
 
 public class BlockLexer implements Lexer<Token> {
 	public static final Lexer<Token> BlockLexer_ = new BlockLexer();
 
-	public BlockLexer() {
+	private BlockLexer() {
 	}
 
 	@Override
 	public Option<Token> lex(String content) throws CompileException {
-		return lex1(content).map(Some::Some).orElseGet(None::None);
+		return Some(content)
+				.filter(this::isBlock)
+				.mapE1(this::prepareContent);
 	}
 
-	private Optional<Token> lex1(String content) throws CompileException {
-		if (content.startsWith("{") && content.endsWith("}")) {
-			var linesSlice = content.substring(1, content.length() - 1);
-			var linesString = linesSlice.trim();
+	private boolean isBlock(String content) {
+		return content.startsWith("{") && content.endsWith("}");
+	}
 
-			var lines = new ArrayList<String>();
-			var buffer = new StringBuilder();
-			var depth = 0;
-			for (int j = 0; j < linesString.length(); j++) {
-				var c = linesString.charAt(j);
-				if (c == '}' && depth == 1) {
-					depth = 0;
-					buffer.append('}');
-					lines.add(buffer.toString());
-					buffer = new StringBuilder();
-				} else if (c == ';' && depth == 0) {
-					lines.add(buffer.toString());
-					buffer = new StringBuilder();
-				} else {
-					if (c == '{') depth++;
-					if (c == '}') depth--;
-					buffer.append(c);
-				}
-			}
-			lines.add(buffer.toString());
-			lines.removeIf(String::isBlank);
-			var children = lines.stream()
-					.filter(s -> !s.isBlank())
-					.map(String::trim)
-					.map(Content::new)
-					.collect(Collectors.<Token>toList());
-			return Optional.of(new Block(children));
+	private Token prepareContent(String content) throws CompileException {
+		var length = content.length();
+		var linesSlice = content.substring(1, length - 1);
+		var linesString = linesSlice.trim();
+		return formatLines(linesString);
+	}
+
+	private Token formatLines(String lines) throws CompileException {
+		try {
+			return formatLinesExceptionally(lines);
+		} catch (StreamException e) {
+			throw new CompileException(e);
 		}
-		return Optional.empty();
+	}
+
+	private Token formatLinesExceptionally(String lines) throws StreamException {
+		return BracketSplitter_.stream(lines)
+				.filter(s -> !s.isBlank())
+				.map(String::trim)
+				.map(Content::new)
+				.fold(Blocks.Empty, Blocks.Builder::add)
+				.complete();
 	}
 }

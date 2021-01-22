@@ -61,6 +61,10 @@ public class CRenderStage {
 		return mapping.with(Header, EndIf.apply());
 	}
 
+	public Result.Mapping apply(Source source, Context flattened) throws CompileException {
+		return apply(source, flattened.nodes());
+	}
+
 	Token render(Token token) throws CompileException {
 		var isContent = Tokens.is(token, Content);
 		var isParent = Tokens.is(token, Parent);

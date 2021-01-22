@@ -1,11 +1,18 @@
 package com.meti.api.java.collect;
 
 import com.meti.api.magma.collect.IndexException;
-import com.meti.api.magma.io.Path;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public record JavaList<T>(List<T> value) implements com.meti.api.magma.collect.List<T> {
+	@Override
+	public com.meti.api.magma.collect.List<T> add(T element) {
+		var copy = new ArrayList<>(value);
+		copy.add(element);
+		return new JavaList<>(copy);
+	}
+
 	@Override
 	public T apply(int index) throws IndexException {
 		if (index < 0) {

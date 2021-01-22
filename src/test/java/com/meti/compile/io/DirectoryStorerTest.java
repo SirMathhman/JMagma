@@ -1,10 +1,10 @@
 package com.meti.compile.io;
 
+import com.meti.api.java.collect.JavaMap;
 import com.meti.api.magma.io.Directory;
 import com.meti.api.magma.io.IOException_;
 import com.meti.compile.CLang;
 import com.meti.compile.CompileException;
-import com.meti.compile.token.AbstractToken;
 import com.meti.compile.token.Content;
 import com.meti.compile.token.Token;
 import org.junit.jupiter.api.AfterEach;
@@ -37,7 +37,8 @@ class DirectoryStorerTest {
 		var storer = new DirectoryStorer(directory);
 		var tokens = Collections.<Token>singletonList(new Content("int main(){return 0;}"));
 		var source = Map.<Result.Format, List<Token>>of(CLang.Formats.Source, tokens);
-		var result = new MapResult(Map.of(new ListSource(List.of("Main")), new MapMapping(source)));
+		final Map<Source, Result.Mapping> main = Map.of(new ListSource(List.of("Main")), new MapMapping(source));
+		var result = MapResults.of(new JavaMap(main));
 		storer.write(result);
 		assertTrue(directory.resolve("Main.c").exists());
 	}
