@@ -18,7 +18,7 @@ public enum GroupAttribute implements Attribute {
 	}
 
 	private List<Field> asFieldList1() {
-		throw new UnsupportedOperationException("Not a list1 of fields.");
+		throw new UnsupportedOperationException("Not a list of fields.");
 	}
 
 	@Override
@@ -37,6 +37,6 @@ public enum GroupAttribute implements Attribute {
 	}
 
 	private List<Token> asTokenList1() {
-		throw new UnsupportedOperationException("Not a list1 of tokens.");
+		throw new UnsupportedOperationException("Not a list of tokens.");
 	}
 }

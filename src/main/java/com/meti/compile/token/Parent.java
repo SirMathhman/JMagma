@@ -2,6 +2,7 @@ package com.meti.compile.token;
 
 import com.meti.api.java.collect.JavaLists;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -43,6 +44,13 @@ public final class Parent extends AbstractToken {
 	@Override
 	public Token copy(Query query, Attribute attribute) {
 		return query == Query.Lines ? new Parent(JavaLists.toJava(attribute.asTokenList())) : this;
+	}
+
+	@Override
+	public List<Query> list(Attribute.Type type) {
+		return type == Attribute.Type.NodeList ?
+				Collections.singletonList(Query.Lines) :
+				super.list(null);
 	}
 
 	@Override

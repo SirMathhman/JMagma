@@ -3,6 +3,7 @@ package com.meti.compile.feature.structure;
 import com.meti.api.java.collect.JavaLists;
 import com.meti.compile.token.*;
 
+import java.util.Collections;
 import java.util.List;
 
 public final class Structure extends AbstractToken {
@@ -29,4 +30,10 @@ public final class Structure extends AbstractToken {
 		return query == Query.Members ? new Structure(name, JavaLists.toJava(attribute.asFieldList())) : this;
 	}
 
+	@Override
+	public List<Query> list(Attribute.Type type) {
+		return type == Attribute.Type.FieldList ?
+				Collections.singletonList(Query.Members) :
+				super.list(null);
+	}
 }

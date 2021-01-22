@@ -35,6 +35,6 @@ public record FieldListAttribute(List<Field> fields) implements Attribute {
 	}
 
 	private List<Token> asTokenList1() {
-		throw new UnsupportedOperationException("Not a list1 of tokens.");
+		throw new UnsupportedOperationException("Not a list of tokens.");
 	}
 }

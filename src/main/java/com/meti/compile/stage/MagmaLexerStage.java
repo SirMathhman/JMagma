@@ -24,7 +24,7 @@ public class MagmaLexerStage implements SingleStage<String, Token> {
 	}
 
 	private Token fold(Token token, Attribute.Type group, F1E1<Attribute, Attribute, CompileException> mapping) throws CompileException {
-		var list = JavaLists.toJava(token.list(group));
+		var list = token.list(group);
 		var current = token;
 		for (AbstractToken.Query query : list) {
 			var attribute = token.apply(query);
