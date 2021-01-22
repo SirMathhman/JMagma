@@ -1,12 +1,11 @@
 package com.meti.compile.token;
 
-import java.util.Arrays;
+import com.meti.api.java.collect.JavaList;
+import com.meti.api.magma.collect.List;
+
 import java.util.Collections;
-import java.util.List;
-import java.util.stream.Collectors;
 
 public interface Token {
-
 	default Attribute apply(Query query) {
 		throw new IllegalArgumentException();
 	}
@@ -16,7 +15,8 @@ public interface Token {
 	}
 
 	default List<Query> list(Attribute.Type type) {
-		return Collections.emptyList();
+		//TODO: replace with better default implementation
+		return new JavaList<>(Collections.emptyList());
 	}
 
 	enum Query {

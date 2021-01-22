@@ -1,6 +1,5 @@
 package com.meti.compile.token;
 
-import java.util.List;
 import java.util.Objects;
 
 public final class Pair extends AbstractToken {
@@ -25,11 +24,6 @@ public final class Pair extends AbstractToken {
 	@Override
 	public Token copy(Query query, Attribute attribute) {
 		return this;
-	}
-
-	@Override
-	public List<Query> list(Attribute.Type type) {
-		return super.list(null);
 	}
 
 	public Token type() {

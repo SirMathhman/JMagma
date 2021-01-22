@@ -1,7 +1,5 @@
 package com.meti.compile.token;
 
-import java.util.Collections;
-import java.util.List;
 import java.util.Objects;
 
 public final class Content extends AbstractToken {
@@ -18,13 +16,6 @@ public final class Content extends AbstractToken {
 			case Value -> new StringAttribute(value);
 			default -> throw new UnsupportedOperationException();
 		};
-	}
-
-	@Override
-	public List<Query> list(Attribute.Type type) {
-		return type == Attribute.Type.Other ?
-				List.of(Query.Group, Query.Value) :
-				Collections.emptyList();
 	}
 
 	@Override

@@ -28,4 +28,10 @@ public enum Primitives implements Token {
 			default -> throw new UnsupportedOperationException();
 		};
 	}
+
+	@Override
+	public com.meti.api.magma.collect.List<Query> list(Attribute.Type type) {
+		return list(type);
+	}
+
 }

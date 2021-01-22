@@ -35,15 +35,6 @@ public final class FunctionType extends AbstractToken {
 	}
 
 	@Override
-	public List<Query> list(Attribute.Type type) {
-		return switch (type) {
-			case Type -> List.of(Query.Returns);
-			case TypeList -> List.of(Query.Parameters);
-			default -> super.list(null);
-		};
-	}
-
-	@Override
 	public int hashCode() {
 		return Objects.hash(returns, parameters);
 	}
