@@ -1,17 +1,17 @@
 package com.meti.compile.token;
 
-import com.meti.api.magma.collect.List;
+import com.meti.api.magma.collect.Sequence;
 
 public interface Attribute {
 	Field asField();
 
-	List<Field> asFieldList();
+	Sequence<Field> asFieldList();
 
 	String asString();
 
 	Token asToken();
 
-	List<Token> asTokenList();
+	Sequence<Token> asTokenList();
 
 	enum Type {
 		Field_,

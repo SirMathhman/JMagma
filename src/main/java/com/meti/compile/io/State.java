@@ -1,6 +1,6 @@
 package com.meti.compile.io;
 
-import com.meti.api.magma.collect.List;
+import com.meti.api.magma.collect.Sequence;
 import com.meti.compile.stack.Stack;
 import com.meti.compile.stage.Context;
 import com.meti.compile.token.Token;
@@ -14,7 +14,7 @@ public class State {
 		this.stack = stack;
 	}
 
-	public Context attach(List<Token> tokens) {
+	public Context attach(Sequence<Token> tokens) {
 		return new Context(stack, tokens);
 	}
 
@@ -22,8 +22,8 @@ public class State {
 		return result.complete();
 	}
 
-	public State reset(List<Source> list) {
-		return withStack(stack.reset(list));
+	public State reset(Sequence<Source> sequence) {
+		return withStack(stack.reset(sequence));
 	}
 
 	public State withStack(Stack stack) {

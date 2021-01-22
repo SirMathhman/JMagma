@@ -1,7 +1,7 @@
 package com.meti.compile.token;
 
 import com.meti.api.java.collect.JavaList;
-import com.meti.api.magma.collect.List;
+import com.meti.api.magma.collect.Sequence;
 
 import java.util.Collections;
 
@@ -14,7 +14,7 @@ public interface Token {
 		return this;
 	}
 
-	default List<Query> list(Attribute.Type type) {
+	default Sequence<Query> list(Attribute.Type type) {
 		//TODO: replace stub
 		return new JavaList<>(Collections.emptyList());
 	}

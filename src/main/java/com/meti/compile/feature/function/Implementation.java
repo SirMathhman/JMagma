@@ -2,6 +2,7 @@ package com.meti.compile.feature.function;
 
 import com.meti.api.java.collect.JavaList;
 import com.meti.api.java.collect.JavaLists;
+import com.meti.api.magma.collect.Sequence;
 import com.meti.compile.token.*;
 
 import java.util.List;
@@ -43,7 +44,7 @@ public final class Implementation extends AbstractToken {
 	}
 
 	@Override
-	public com.meti.api.magma.collect.List<Query> list(Attribute.Type type) {
+	public Sequence<Query> list(Attribute.Type type) {
 		return new JavaList<>(list1(type));
 	}
 
@@ -66,9 +67,10 @@ public final class Implementation extends AbstractToken {
 		if (obj == this) return true;
 		if (obj == null || obj.getClass() != this.getClass()) return false;
 		var that = (Implementation) obj;
-		return Objects.equals(this.identity, that.identity) &&
-		       Objects.equals(this.parameters, that.parameters) &&
-		       Objects.equals(this.body, that.body);
+		var sameIdentity = Objects.equals(this.identity, that.identity);
+		var sameParameters = Objects.equals(this.parameters, that.parameters);
+		var sameBody = Objects.equals(this.body, that.body);
+		return sameIdentity && sameParameters && sameBody;
 	}
 
 	@Override

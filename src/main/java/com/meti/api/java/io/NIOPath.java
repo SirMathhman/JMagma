@@ -3,6 +3,7 @@ package com.meti.api.java.io;
 import com.meti.api.java.collect.JavaList;
 import com.meti.api.java.core.JavaOption;
 import com.meti.api.java.collect.JavaLists;
+import com.meti.api.magma.collect.Sequence;
 import com.meti.api.magma.core.Option;
 import com.meti.api.magma.io.Directory;
 import com.meti.api.magma.io.File;
@@ -64,7 +65,7 @@ public class NIOPath implements Path {
 	}
 
 	@Override
-	public com.meti.api.magma.collect.List<String> listNames() {
+	public Sequence<String> listNames() {
 		return new JavaList<>(listNames1());
 	}
 

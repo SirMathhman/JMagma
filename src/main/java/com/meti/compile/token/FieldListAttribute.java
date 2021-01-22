@@ -1,6 +1,7 @@
 package com.meti.compile.token;
 
 import com.meti.api.java.collect.JavaList;
+import com.meti.api.magma.collect.Sequence;
 
 import java.util.List;
 
@@ -11,7 +12,7 @@ public record FieldListAttribute(List<Field> fields) implements Attribute {
 	}
 
 	@Override
-	public com.meti.api.magma.collect.List<Field> asFieldList() {
+	public Sequence<Field> asFieldList() {
 		return new JavaList<>(asFieldList1());
 	}
 
@@ -30,7 +31,7 @@ public record FieldListAttribute(List<Field> fields) implements Attribute {
 	}
 
 	@Override
-	public com.meti.api.magma.collect.List<Token> asTokenList() {
+	public Sequence<Token> asTokenList() {
 		return new JavaList<>(asTokenList1());
 	}
 

@@ -41,6 +41,8 @@ public abstract class AbstractStream<T> implements Stream<T> {
 			public R head() throws StreamException {
 				try {
 					return mapper.apply(AbstractStream.this.head());
+				} catch (EndOfStreamException e) {
+					throw e;
 				} catch (Exception e) {
 					throw new StreamException(e);
 				}

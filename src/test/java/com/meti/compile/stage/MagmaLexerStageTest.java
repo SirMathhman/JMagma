@@ -10,6 +10,7 @@ import com.meti.compile.feature.primitive.Integer;
 import com.meti.compile.feature.primitive.Primitives;
 import com.meti.compile.token.EmptyField;
 import com.meti.compile.token.Field;
+import com.meti.compile.token.Token;
 import org.junit.jupiter.api.Test;
 
 import java.util.Collections;
@@ -24,7 +25,7 @@ class MagmaLexerStageTest {
 	void apply() throws CompileException {
 		var value = new Integer("0");
 		var returns = new Return(value);
-		var body = Blocks.of(new JavaList<>(Collections.singletonList(returns)));
+		Token body = Blocks.of(new JavaList<>(Collections.singletonList(returns)));
 		var identityType = new FunctionType(Primitives.I16, emptyList());
 		var identity = new EmptyField(Collections.singletonList(Field.Flag.DEF), "main", identityType);
 		var expected = new Implementation(identity, emptyList(), body);

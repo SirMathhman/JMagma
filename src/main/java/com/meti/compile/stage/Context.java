@@ -1,6 +1,7 @@
 package com.meti.compile.stage;
 
 import com.meti.api.java.collect.JavaLists;
+import com.meti.api.magma.collect.Sequence;
 import com.meti.compile.stack.Stack;
 import com.meti.compile.token.Token;
 
@@ -9,9 +10,9 @@ import java.util.Objects;
 
 public final class Context {
 	private final Stack stack;
-	private final com.meti.api.magma.collect.List<Token> nodes;
+	private final Sequence<Token> nodes;
 
-	public Context(Stack stack, com.meti.api.magma.collect.List<Token> nodes) {
+	public Context(Stack stack, Sequence<Token> nodes) {
 		this.stack = stack;
 		this.nodes = nodes;
 	}

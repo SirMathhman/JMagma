@@ -3,6 +3,7 @@ package com.meti.compile;
 import com.meti.api.java.collect.JavaLists;
 import com.meti.api.magma.collect.List;
 import com.meti.api.magma.collect.Lists;
+import com.meti.api.magma.collect.Sequence;
 import com.meti.api.magma.collect.StreamException;
 import com.meti.api.magma.core.F2E1;
 import com.meti.api.magma.io.IOException_;
@@ -59,7 +60,7 @@ public class MagmaCCompiler implements Compiler {
 		return state.with(source, mapping);
 	}
 
-	private List<Source> findImports(List<Token> tokens) throws CompileException {
+	private Sequence<Source> findImports(Sequence<Token> tokens) throws CompileException {
 		try {
 			return Lists.stream(tokens)
 					.filter(token -> Tokens.is(token, GroupAttribute.Import))
@@ -83,7 +84,7 @@ public class MagmaCCompiler implements Compiler {
 		}
 	}
 
-	private List<Token> lex(String content) throws CompileException {
+	private Sequence<Token> lex(String content) throws CompileException {
 		try {
 			return BracketSplitter_.stream(content)
 					.map(MagmaLexerStage_::apply)

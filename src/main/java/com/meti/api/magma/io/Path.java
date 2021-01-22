@@ -1,6 +1,6 @@
 package com.meti.api.magma.io;
 
-import com.meti.api.magma.collect.List;
+import com.meti.api.magma.collect.Sequence;
 import com.meti.api.magma.core.Option;
 
 public interface Path {
@@ -14,5 +14,5 @@ public interface Path {
 
 	boolean exists();
 
-	List<String> listNames();
+	Sequence<String> listNames();
 }

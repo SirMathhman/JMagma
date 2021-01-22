@@ -1,8 +1,8 @@
 package com.meti.compile.stack;
 
-import com.meti.api.magma.collect.List;
+import com.meti.api.magma.collect.Sequence;
 import com.meti.compile.io.Source;
 
 public interface Stack {
-	Stack reset(List<Source> imports);
+	Stack reset(Sequence<Source> imports);
 }

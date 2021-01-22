@@ -2,14 +2,16 @@ package com.meti.api.magma.core;
 
 import com.meti.api.magma.except.Exception;
 
-public final record Some<T>(T value) implements Option<T> {
-	public static <T> Option<T> Some(T value) {
-		return new Some<T>(value);
-	}
+import static com.meti.api.magma.core.None.None;
 
+public final record Some<T>(T value) implements Option<T> {
 	@Override
 	public Option<T> filter(F1<T, Boolean> predicate) {
-		throw new UnsupportedOperationException();
+		return predicate.apply(value) ? Some(value) : None();
+	}
+
+	public static <T> Option<T> Some(T value) {
+		return new Some<>(value);
 	}
 
 	@Override
@@ -24,7 +26,7 @@ public final record Some<T>(T value) implements Option<T> {
 
 	@Override
 	public <R, E extends Exception> Option<R> mapE1(F1E1<T, R, E> mapper) throws E {
-		throw new UnsupportedOperationException();
+		return new Some<>(mapper.apply(value));
 	}
 
 	@Override

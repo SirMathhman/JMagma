@@ -3,6 +3,7 @@ package com.meti.compile.io;
 import com.meti.api.java.collect.JavaList;
 import com.meti.api.magma.collect.IndexException;
 import com.meti.api.java.collect.JavaLists;
+import com.meti.api.magma.collect.Sequence;
 import com.meti.api.magma.io.Directory;
 import com.meti.api.magma.io.IOException_;
 import com.meti.api.magma.io.Path;
@@ -17,7 +18,7 @@ public record DirectoryLoader(Directory root) implements Loader {
 	private static final String AsScript = "%s.mgs";
 
 	@Override
-	public com.meti.api.magma.collect.List<Source> listSources() throws IOException_ {
+	public Sequence<Source> listSources() throws IOException_ {
 		return new JavaList<>(listSources1());
 	}
 

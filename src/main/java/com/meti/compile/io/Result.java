@@ -1,6 +1,6 @@
 package com.meti.compile.io;
 
-import com.meti.api.magma.collect.List;
+import com.meti.api.magma.collect.Sequence;
 import com.meti.api.magma.core.Option;
 
 public interface Result {
@@ -8,12 +8,12 @@ public interface Result {
 
 	int count();
 
-	List<Source> listSources();
+	Sequence<Source> listSources();
 
 	interface Mapping {
 		String apply(Format name);
 
-		List<Format> listFormats();
+		Sequence<Format> listFormats();
 	}
 
 	interface Format {

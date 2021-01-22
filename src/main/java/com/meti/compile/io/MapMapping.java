@@ -1,6 +1,7 @@
 package com.meti.compile.io;
 
 import com.meti.api.java.collect.JavaList;
+import com.meti.api.magma.collect.Sequence;
 import com.meti.compile.token.AbstractToken;
 import com.meti.compile.token.Attribute;
 import com.meti.compile.token.Token;
@@ -22,7 +23,7 @@ public record MapMapping(Map<Result.Format, List<Token>> map) implements Result.
 	}
 
 	@Override
-	public com.meti.api.magma.collect.List<Result.Format> listFormats() {
+	public Sequence<Result.Format> listFormats() {
 		return new JavaList<>(listFormats1());
 	}
 

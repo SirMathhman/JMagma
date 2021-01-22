@@ -1,11 +1,11 @@
 package com.meti.api.magma.io;
 
-import com.meti.api.magma.collect.List;
+import com.meti.api.magma.collect.Sequence;
 
 public interface Directory extends Path {
 	Path delete() throws IOException_;
 
-	List<Path> listTree() throws IOException_;
+	Sequence<Path> listTree() throws IOException_;
 
 	Path relativize(Path other) throws IOException_;
 

@@ -1,6 +1,6 @@
 package com.meti.api.java.collect;
 
-import com.meti.api.magma.collect.List;
+import com.meti.api.magma.collect.Sequence;
 import com.meti.api.magma.core.Option;
 import com.meti.compile.io.Result;
 import com.meti.compile.io.Source;
@@ -29,7 +29,7 @@ public final class JavaMap {
 				.map(mappings::get);
 	}
 
-	public List<Source> listKeys() {
+	public Sequence<Source> listKeys() {
 		return new JavaList<>(new ArrayList<>(mappings.keySet()));
 	}
 

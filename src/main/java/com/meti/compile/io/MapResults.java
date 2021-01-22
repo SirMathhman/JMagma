@@ -1,7 +1,7 @@
 package com.meti.compile.io;
 
 import com.meti.api.java.collect.JavaMap;
-import com.meti.api.magma.collect.List;
+import com.meti.api.magma.collect.Sequence;
 import com.meti.api.magma.core.Option;
 
 public class MapResults {
@@ -35,7 +35,7 @@ public class MapResults {
 		}
 
 		@Override
-		public List<Source> listSources() {
+		public Sequence<Source> listSources() {
 			return map.listKeys();
 		}
 	}
