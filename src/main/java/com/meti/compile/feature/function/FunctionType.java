@@ -29,9 +29,7 @@ public final class FunctionType extends AbstractToken {
 	public Token copy(Query query, Attribute attribute) {
 		return switch (query) {
 			case Returns -> new FunctionType(attribute.asToken(), parameters);
-			case Parameters -> List<Token> result;Attribute attribute1 = attribute;
-					result = JavaLists.toJava(attribute1.asTokenList());
-					new FunctionType(returns, result);
+			case Parameters -> new FunctionType(returns, JavaLists.toJava(attribute.asTokenList()));
 			default -> this;
 		};
 	}
@@ -46,17 +44,17 @@ public final class FunctionType extends AbstractToken {
 	}
 
 	@Override
+	public int hashCode() {
+		return Objects.hash(returns, parameters);
+	}
+
+	@Override
 	public boolean equals(Object obj) {
 		if (obj == this) return true;
 		if (obj == null || obj.getClass() != this.getClass()) return false;
 		var that = (FunctionType) obj;
 		return Objects.equals(this.returns, that.returns) &&
 		       Objects.equals(this.parameters, that.parameters);
-	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(returns, parameters);
 	}
 
 	@Override
