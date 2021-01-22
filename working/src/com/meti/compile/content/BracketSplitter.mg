@@ -3,13 +3,15 @@ object BracketSplitter {
 		if(c == '}' && state.isShallow()) state.reset().append('}').advance();
 		elif(c == ';' && state.isLevel()) state.advance();
 		elif(c == '{') state.sink().append(c);
-		elif(c == '}') state.surfance1.append(c);
+		elif(c == '}') state.surface().append(c);
 		else state.append(c);
 
 	const stream = (content : String) =>
 		Streams.ofIntRange(0, content.length())
-			.map(_)
+			.map(content(_))
 			.fold(SplitterStates.empty, process)
 			.advance()
 			.stream();
+
+	out const Splitter = () => Splitter();
 }

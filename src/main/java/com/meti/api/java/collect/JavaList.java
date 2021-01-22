@@ -14,6 +14,13 @@ public record JavaList<T>(List<T> value) implements com.meti.api.magma.collect.L
 	}
 
 	@Override
+	public com.meti.api.magma.collect.List<T> set(int index, T element) throws IndexException {
+		var copy = new ArrayList<>(value);
+		copy.set(index, element);
+		return new JavaList<>(copy);
+	}
+
+	@Override
 	public T apply(int index) throws IndexException {
 		if (index < 0) {
 			var format = "Index of '%d' is negative.";

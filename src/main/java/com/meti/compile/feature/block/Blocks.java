@@ -1,10 +1,7 @@
 package com.meti.compile.feature.block;
 
 import com.meti.api.java.collect.JavaLists;
-import com.meti.api.magma.collect.EmptySequence;
-import com.meti.api.magma.collect.List;
-import com.meti.api.magma.collect.Sequence;
-import com.meti.api.magma.collect.SingletonSequence;
+import com.meti.api.magma.collect.*;
 import com.meti.compile.token.*;
 
 import java.util.Objects;
@@ -20,7 +17,7 @@ public class Blocks {
 	}
 
 	public static record Builder(List<Token> lines) {
-		public Builder add(Token line) {
+		public Builder add(Token line) throws CollectionException {
 			return new Builder(lines.add(line));
 		}
 
