@@ -19,7 +19,7 @@ class CompoundRendererTest {
 		var value = new Integer("0");
 		var node = new Return(value);
 		var expected = Parents.format("return %t;").format(value).complete();
-		var actual = ((Renderer<T>) new Impl()).render((T) node)
+		var actual = ((Renderer<Token>) new Impl()).render(node)
 				.map(Optional::of)
 				.orElseGet(Optional::empty).orElseThrow();
 		assertEquals(expected, actual);
