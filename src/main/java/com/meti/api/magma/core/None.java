@@ -16,11 +16,11 @@ public class None<T> implements Option<T> {
 
 	@Override
 	public <R> Option<R> map(F1<T, R> mapper) {
-		throw new UnsupportedOperationException();
+		return new None<>();
 	}
 
 	@Override
 	public T orElseGet(Supplier<T> supplier) {
-		throw new UnsupportedOperationException();
+		return supplier.get();
 	}
 }

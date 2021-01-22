@@ -1,5 +1,8 @@
 package com.meti.compile.feature.function;
 
+import com.meti.api.magma.core.None;
+import com.meti.api.magma.core.Option;
+import com.meti.api.magma.core.Some;
 import com.meti.compile.CompileException;
 import com.meti.compile.stage.Lexer;
 import com.meti.compile.token.Content;
@@ -21,7 +24,11 @@ public class FunctionNodeLexer_ implements Lexer<Token> {
 	}
 
 	@Override
-	public Optional<Token> lex(String content) throws CompileException {
+	public Option<Token> lex(String content) throws CompileException {
+		return lex1(content).map(Some::Some).orElseGet(None::None);
+	}
+
+	private Optional<Token> lex1(String content) throws CompileException {
 		if (content.contains("(") &&
 		    content.contains(")") &&
 		    content.contains(":") &&
@@ -67,7 +74,7 @@ public class FunctionNodeLexer_ implements Lexer<Token> {
 
 			var parameters = new ArrayList<Field>();
 			for (String string : paramStrings) {
-				var option = FieldLexer_.lex(string);
+				var option = FieldLexer_.lex(string).map(Optional::of).orElseGet(Optional::empty);
 				var field = option.orElseThrow(() -> new CompileException("Invalid field: " + string));
 				parameters.add(field);
 			}

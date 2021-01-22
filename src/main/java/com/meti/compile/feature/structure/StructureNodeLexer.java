@@ -1,5 +1,8 @@
 package com.meti.compile.feature.structure;
 
+import com.meti.api.magma.core.None;
+import com.meti.api.magma.core.Option;
+import com.meti.api.magma.core.Some;
 import com.meti.compile.CompileException;
 import com.meti.compile.stage.Lexer;
 import com.meti.compile.token.Field;
@@ -17,7 +20,11 @@ public class StructureNodeLexer implements Lexer<Token> {
 	}
 
 	@Override
-	public Optional<Token> lex(String content) throws CompileException {
+	public Option<Token> lex(String content) throws CompileException {
+		return lex1(content).map(Some::Some).orElseGet(None::None);
+	}
+
+	private Optional<Token> lex1(String content) throws CompileException {
 		if (content.startsWith("struct ") &&
 		    content.contains("{") &&
 		    content.endsWith("}")) {
@@ -49,7 +56,7 @@ public class StructureNodeLexer implements Lexer<Token> {
 			var members = new ArrayList<Field>();
 			for (String memberString : memberStrings) {
 				if (!memberString.isBlank()) {
-					var option = FieldLexer_.lex(memberString.trim());
+					var option = FieldLexer_.lex(memberString.trim()).map(Optional::of).orElseGet(Optional::empty);
 					option.ifPresent(members::add);
 				}
 			}

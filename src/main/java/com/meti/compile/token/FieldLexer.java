@@ -1,5 +1,9 @@
 package com.meti.compile.token;
 
+import com.meti.api.magma.core.None;
+import com.meti.api.magma.core.Option;
+import com.meti.api.magma.core.Some;
+import com.meti.compile.CompileException;
 import com.meti.compile.stage.Lexer;
 
 import java.util.Arrays;
@@ -13,7 +17,11 @@ public class FieldLexer implements Lexer<Field> {
 	}
 
 	@Override
-	public Optional<Field> lex(String content) {
+	public Option<Field> lex(String content) throws CompileException {
+		return lex1(content).map(Some::Some).orElseGet(None::None);
+	}
+
+	private Optional<Field> lex1(String content) {
 		if (content.contains(":") && content.contains("=")) {
 			var typeSeparator = content.indexOf(':');
 			var valueSeparator = content.indexOf('=');

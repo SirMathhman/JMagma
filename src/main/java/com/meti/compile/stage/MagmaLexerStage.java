@@ -70,7 +70,7 @@ public class MagmaLexerStage implements SingleStage<String, Token> {
 	}
 
 	private Token lexNodeString(String value) throws CompileException {
-		return lexString(value, NodeLexer_::lex);
+		return lexString(value, content -> NodeLexer_.lex(content).map(Optional::of).orElseGet(Optional::empty));
 	}
 
 	private Token lexRoot(Token token) throws CompileException {
@@ -82,7 +82,7 @@ public class MagmaLexerStage implements SingleStage<String, Token> {
 			var withField = fold(withTypeList, Field_, this::lexFieldAttribute);
 			return fold(withField, FieldList, this::lexFieldListAttribute);
 		} catch (CompileException e) {
-			throw new CompileException("Failed to lex token: " + token, e);
+			throw new CompileException("Failed to lex1 token: " + token, e);
 		}
 	}
 
@@ -98,7 +98,7 @@ public class MagmaLexerStage implements SingleStage<String, Token> {
 			var newNode = mapper.apply(node);
 			return new TokenAttribute(newNode);
 		} catch (Exception e) {
-			throw new CompileException("Failed to lex attribute: " + attribute, e);
+			throw new CompileException("Failed to lex1 attribute: " + attribute, e);
 		}
 	}
 
@@ -114,6 +114,6 @@ public class MagmaLexerStage implements SingleStage<String, Token> {
 	}
 
 	private Token lexTypeString(String value) throws CompileException {
-		return lexString(value, TypeLexer_::lex);
+		return lexString(value, content -> TypeLexer_.lex(content).map(Optional::of).orElseGet(Optional::empty));
 	}
 }
