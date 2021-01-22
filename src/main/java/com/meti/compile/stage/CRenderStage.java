@@ -13,6 +13,7 @@ import com.meti.compile.token.Tokens;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 import static com.meti.compile.CLang.Formats.Header;
 import static com.meti.compile.feature.directive.Directive.*;
@@ -78,7 +79,9 @@ public class CRenderStage {
 	}
 
 	private Token renderPair(Token token) throws CompileException {
-		var optional = CTypeRenderer_.render(token);
+		var optional = CTypeRenderer_.render(token)
+				.map(Optional::of)
+				.orElseGet(Optional::empty);
 		return optional.orElseThrow(() -> new CompileException("Pair has invalid type: " + token));
 	}
 
@@ -91,8 +94,10 @@ public class CRenderStage {
 	}
 
 	Token renderRoot(Token token) throws CompileException {
-		var optional = CNodeRenderer_.render(token);
-		var rendered = optional.orElseThrow(() -> new CompileException("Cannot render: " + token));
+		var optional = CNodeRenderer_.render(token)
+				.map(Optional::of)
+				.orElseGet(Optional::empty);
+		var rendered = optional.orElseThrow(() -> new CompileException("Cannot render1: " + token));
 		if (Tokens.is(rendered, Parent)) {
 			return renderParent(rendered);
 		} else if (Tokens.is(rendered, Content)) {

@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 import static com.meti.compile.stage.CNodeRenderer.CNodeRenderer_;
 import static com.meti.compile.stage.CRenderStage.CRenderStage_;
@@ -55,7 +56,9 @@ class CRenderStageTest {
 		var value = new Integer("0");
 		var line = new Return(value);
 		var node = new Block(List.of(line));
-		var optional = CNodeRenderer_.render(node);
+		var optional = CNodeRenderer_.render(node)
+				.map(Optional::of)
+				.orElseGet(Optional::empty);
 		var rendered = optional.orElseThrow();
 		assertEquals("{return 0;}", CRenderStage_.renderParent(rendered)
 				.apply(AbstractToken.Query.Value)
@@ -75,7 +78,9 @@ class CRenderStageTest {
 	@Test
 	void renderParent() throws CompileException {
 		var input = createFunction();
-		var optional = CNodeRenderer_.render(input);
+		var optional = CNodeRenderer_.render(input)
+				.map(Optional::of)
+				.orElseGet(Optional::empty);
 		var output = optional.orElseThrow();
 		var actual = CRenderStage_.renderParent(output);
 		assertEquals("int main(){return 0;}", actual.apply(AbstractToken.Query.Value).asString());

@@ -31,7 +31,7 @@ public final class Parent extends AbstractToken {
 				var string = attribute.asString();
 				builder.append(string);
 			} else {
-				var format = "Cannot render a node of type '%s'.";
+				var format = "Cannot render1 a node of type '%s'.";
 				var message = format.formatted(line.copy(null, null).apply(Query.Group));
 				throw new UnsupportedOperationException(message);
 			}

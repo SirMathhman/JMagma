@@ -1,9 +1,8 @@
 package com.meti.compile.stage;
 
+import com.meti.api.magma.core.Option;
 import com.meti.compile.token.Token;
 
-import java.util.Optional;
-
 public interface Renderer<T> {
-	Optional<Token> render(T token);
+	Option<Token> render(T token);
 }

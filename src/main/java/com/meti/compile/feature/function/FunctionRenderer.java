@@ -1,5 +1,8 @@
 package com.meti.compile.feature.function;
 
+import com.meti.api.magma.core.None;
+import com.meti.api.magma.core.Option;
+import com.meti.api.magma.core.Some;
 import com.meti.compile.stage.Renderer;
 import com.meti.compile.token.*;
 
@@ -15,7 +18,13 @@ public class FunctionRenderer implements Renderer<Token> {
 	}
 
 	@Override
-	public Optional<Token> render(Token token) {
+	public Option<Token> render(Token token) {
+		return render1(token)
+				.map(Some::Some)
+				.orElseGet(None::None);
+	}
+
+	private Optional<Token> render1(Token token) {
 		if (Tokens.is(token, GroupAttribute.Implementation)) {
 			var identity = token.apply(AbstractToken.Query.Identity).asField();
 
@@ -25,7 +34,9 @@ public class FunctionRenderer implements Renderer<Token> {
 			Token body = token.apply(AbstractToken.Query.Body).asToken();
 			var renderedParams = parameters
 					.stream()
-					.map(CFieldRenderer_::render)
+					.map(token1 -> CFieldRenderer_.render(token1)
+							.map(Optional::of)
+							.orElseGet(Optional::empty))
 					.flatMap(Optional::stream)
 					.collect(Collectors.toList());
 			var joinedParameters = Parents.join(",", renderedParams);
