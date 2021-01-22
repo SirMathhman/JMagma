@@ -2,6 +2,7 @@ package com.meti.compile;
 
 import com.meti.api.java.collect.JavaList;
 import com.meti.api.java.collect.JavaLists;
+import com.meti.api.magma.collect.IndexException;
 import com.meti.api.magma.io.IOException_;
 import com.meti.compile.io.*;
 import com.meti.compile.stack.MapStack;
@@ -27,18 +28,20 @@ public class MagmaCCompiler implements Compiler {
 	@Override
 	public Result compile(Loader loader) throws CompileException {
 		try {
-			var scripts = JavaLists.toJava(loader.listSources());
-			var scriptSize = scripts.size();
 			var map = new HashMap<Source, Result.Mapping>();
 			var stack = new MapStack();
-			for (int i = 0; i < scriptSize; i++) {
-				var source = scripts.get(i);
-				var content = loader.load(source);
+			for (int i = 0; i < loader.listSources().size(); i++) {
 				try {
-					var mapping = compile(source, stack, content);
-					map.put(source, mapping);
-				} catch (CompileException e) {
-					throw new CompileException("Failed to compile %s.".formatted(source), e);
+					var source = loader.listSources().apply(i);
+					try {
+						var content = loader.load(source);
+						var mapping = compile(source, stack, content);
+						map.put(source, mapping);
+					} catch (CompileException e) {
+						throw new CompileException("Failed to compile %s.".formatted(source), e);
+					}
+				} catch (IndexException e) {
+					throw new CompileException(e);
 				}
 			}
 			return new MapResult(map);
