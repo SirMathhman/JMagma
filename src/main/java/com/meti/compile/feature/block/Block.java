@@ -1,5 +1,6 @@
 package com.meti.compile.feature.block;
 
+import com.meti.api.java.collect.JavaLists;
 import com.meti.compile.token.*;
 
 import java.util.Collections;
@@ -24,7 +25,7 @@ public final class Block extends AbstractToken {
 
 	@Override
 	public Token copy(Query query, Attribute attribute) {
-		return query == Query.Lines ? new Block(attribute.asTokenList()) : this;
+		return query == Query.Lines ? new Block(JavaLists.toJava(attribute.asTokenList())) : this;
 	}
 
 	@Override

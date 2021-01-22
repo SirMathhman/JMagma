@@ -1,5 +1,6 @@
 package com.meti.compile.feature.block;
 
+import com.meti.api.java.collect.JavaLists;
 import com.meti.api.magma.core.None;
 import com.meti.api.magma.core.Option;
 import com.meti.api.magma.core.Some;
@@ -23,7 +24,7 @@ public class BlockRenderer implements Renderer<Token> {
 
 	private Optional<Token> render1(Token token) {
 		if (Tokens.is(token, GroupAttribute.Block)) {
-			var lines = token.apply(AbstractToken.Query.Lines).asTokenList();
+			var lines = JavaLists.toJava(token.apply(AbstractToken.Query.Lines).asTokenList());
 			var lineAccumulator = new Parent(lines);
 			var complete = Parents.format("{%t}")
 					.format(lineAccumulator)

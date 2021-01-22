@@ -1,8 +1,8 @@
 package com.meti.compile.feature.function;
 
+import com.meti.api.java.collect.JavaLists;
 import com.meti.compile.token.*;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -29,7 +29,9 @@ public final class FunctionType extends AbstractToken {
 	public Token copy(Query query, Attribute attribute) {
 		return switch (query) {
 			case Returns -> new FunctionType(attribute.asToken(), parameters);
-			case Parameters -> new FunctionType(returns, attribute.asTokenList());
+			case Parameters -> List<Token> result;Attribute attribute1 = attribute;
+					result = JavaLists.toJava(attribute1.asTokenList());
+					new FunctionType(returns, result);
 			default -> this;
 		};
 	}

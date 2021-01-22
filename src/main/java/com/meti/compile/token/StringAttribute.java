@@ -1,8 +1,20 @@
 package com.meti.compile.token;
 
+import com.meti.api.java.collect.JavaList;
+
 import java.util.List;
 
 public record StringAttribute(String value) implements Attribute {
+	@Override
+	public com.meti.api.magma.collect.List<Field> asFieldList() {
+		return new JavaList<>(asFieldList1());
+	}
+
+	@Override
+	public com.meti.api.magma.collect.List<Token> asTokenList() {
+		return new JavaList<>(asTokenList1());
+	}
+
 	@Override
 	public String toString() {
 		var withEscapes = value.replace("\"", "\\\"");
@@ -14,8 +26,7 @@ public record StringAttribute(String value) implements Attribute {
 		throw new UnsupportedOperationException("Not a field.");
 	}
 
-	@Override
-	public List<Field> asFieldList() {
+	private List<Field> asFieldList1() {
 		throw new UnsupportedOperationException("Not a list of fields.");
 	}
 
@@ -29,8 +40,7 @@ public record StringAttribute(String value) implements Attribute {
 		throw new UnsupportedOperationException("Not a token.");
 	}
 
-	@Override
-	public List<Token> asTokenList() {
+	private List<Token> asTokenList1() {
 		throw new UnsupportedOperationException("Not a list of tokens.");
 	}
 }

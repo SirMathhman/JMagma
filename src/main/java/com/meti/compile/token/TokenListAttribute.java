@@ -1,5 +1,7 @@
 package com.meti.compile.token;
 
+import com.meti.api.java.collect.JavaList;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -10,7 +12,11 @@ public record TokenListAttribute(List<Token> list) implements Attribute {
 	}
 
 	@Override
-	public List<Field> asFieldList() {
+	public com.meti.api.magma.collect.List<Field> asFieldList() {
+		return new JavaList<>(asFieldList1());
+	}
+
+	private List<Field> asFieldList1() {
 		throw new UnsupportedOperationException("Not a list of fields.");
 	}
 
@@ -25,7 +31,11 @@ public record TokenListAttribute(List<Token> list) implements Attribute {
 	}
 
 	@Override
-	public List<Token> asTokenList() {
+	public com.meti.api.magma.collect.List<Token> asTokenList() {
+		return new JavaList<>(asTokenList1());
+	}
+
+	private List<Token> asTokenList1() {
 		return list;
 	}
 

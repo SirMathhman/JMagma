@@ -1,10 +1,10 @@
 package com.meti.compile.feature.structure;
 
+import com.meti.api.java.collect.JavaLists;
 import com.meti.compile.token.*;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 
 public final class Structure extends AbstractToken {
 	private final String name;
@@ -27,7 +27,7 @@ public final class Structure extends AbstractToken {
 
 	@Override
 	public Token copy(Query query, Attribute attribute) {
-		return query == Query.Members ? new Structure(name, attribute.asFieldList()) : this;
+		return query == Query.Members ? new Structure(name, JavaLists.toJava(attribute.asFieldList())) : this;
 	}
 
 	@Override

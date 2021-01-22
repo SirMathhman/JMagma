@@ -1,6 +1,6 @@
 package com.meti.compile.token;
 
-import java.util.List;
+import com.meti.api.magma.collect.List;
 
 public interface Attribute {
 	Field asField();

@@ -1,5 +1,6 @@
 package com.meti.compile.feature.function;
 
+import com.meti.api.java.collect.JavaLists;
 import com.meti.api.magma.core.None;
 import com.meti.api.magma.core.Option;
 import com.meti.api.magma.core.Some;
@@ -30,7 +31,7 @@ public class FunctionRenderer implements Renderer<Token> {
 
 			var name = identity.findName();
 			Token returns = identity.findType().apply(AbstractToken.Query.Returns).asToken();
-			var parameters = token.apply(AbstractToken.Query.Parameters).asFieldList();
+			var parameters = JavaLists.toJava(token.apply(AbstractToken.Query.Parameters).asFieldList());
 			Token body = token.apply(AbstractToken.Query.Body).asToken();
 			var renderedParams = parameters
 					.stream()

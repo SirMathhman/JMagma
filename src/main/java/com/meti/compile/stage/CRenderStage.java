@@ -1,14 +1,12 @@
 package com.meti.compile.stage;
 
+import com.meti.api.java.collect.JavaLists;
 import com.meti.compile.CLang.Formats;
 import com.meti.compile.CompileException;
 import com.meti.compile.io.MapMapping;
 import com.meti.compile.io.Result;
 import com.meti.compile.io.Source;
-import com.meti.compile.token.AbstractToken;
-import com.meti.compile.token.Parent;
-import com.meti.compile.token.Token;
-import com.meti.compile.token.Tokens;
+import com.meti.compile.token.*;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -87,7 +85,7 @@ public class CRenderStage {
 
 	com.meti.compile.token.Parent renderParent(Token rendered) throws CompileException {
 		var attribute = rendered.apply(AbstractToken.Query.Lines);
-		var lines = attribute.asTokenList();
+		var lines = JavaLists.toJava(attribute.asTokenList());
 		var newLines = new ArrayList<Token>();
 		for (Token line : lines) newLines.add(render(line));
 		return new Parent(newLines);

@@ -1,5 +1,6 @@
 package com.meti.compile.stage;
 
+import com.meti.api.java.collect.JavaLists;
 import com.meti.api.magma.core.F1E1;
 import com.meti.compile.CompileException;
 import com.meti.compile.token.*;
@@ -57,7 +58,7 @@ public class MagmaLexerStage implements SingleStage<String, Token> {
 	}
 
 	private FieldListAttribute lexFieldListAttribute(Attribute attribute) throws CompileException {
-		var oldList = attribute.asFieldList();
+		var oldList = JavaLists.toJava(attribute.asFieldList());
 		var newList = new ArrayList<Field>();
 		for (Field field : oldList) {
 			newList.add(lexField(field));
@@ -103,7 +104,7 @@ public class MagmaLexerStage implements SingleStage<String, Token> {
 	}
 
 	private Attribute lexTokenListAttribute(Attribute attribute, F1E1<Token, Token, CompileException> mapper) throws CompileException {
-		var nodes = attribute.asTokenList();
+		var nodes = JavaLists.toJava(attribute.asTokenList());
 		var newNodes = new ArrayList<Token>();
 		for (Token node : nodes) newNodes.add(mapper.apply(node));
 		return new TokenListAttribute(newNodes);
