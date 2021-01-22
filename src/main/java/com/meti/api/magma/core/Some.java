@@ -33,4 +33,9 @@ public final record Some<T>(T value) implements Option<T> {
 	public T orElseGet(Supplier<T> supplier) {
 		return value;
 	}
+
+	@Override
+	public <E extends Exception> T orElseThrow(Supplier<E> supplier) throws E {
+		throw new UnsupportedOperationException();
+	}
 }

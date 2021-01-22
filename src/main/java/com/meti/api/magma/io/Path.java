@@ -1,5 +1,6 @@
 package com.meti.api.magma.io;
 
+import com.meti.api.magma.collect.CollectionException;
 import com.meti.api.magma.collect.Sequence;
 import com.meti.api.magma.core.Option;
 
@@ -14,5 +15,5 @@ public interface Path {
 
 	boolean exists();
 
-	Sequence<String> listNames();
+	Sequence<String> listNames() throws CollectionException;
 }

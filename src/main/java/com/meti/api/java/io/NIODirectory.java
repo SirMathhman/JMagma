@@ -1,8 +1,8 @@
 package com.meti.api.java.io;
 
-import com.meti.api.java.collect.JavaList;
-import com.meti.api.magma.collect.IndexException;
 import com.meti.api.java.collect.JavaLists;
+import com.meti.api.magma.collect.CollectionException;
+import com.meti.api.magma.collect.IndexException;
 import com.meti.api.magma.collect.Sequence;
 import com.meti.api.magma.io.Directory;
 import com.meti.api.magma.io.IOException_;
@@ -37,40 +37,11 @@ public final class NIODirectory extends NIOPath implements Directory {
 
 	@Override
 	public Sequence<com.meti.api.magma.io.Path> listTree() throws IOException_ {
-		return new JavaList<>(listTree1());
+		return JavaLists.fromJava(listTree1());
 	}
 
 	private List<com.meti.api.magma.io.Path> listTree1() throws IOException_ {
 		return streamTree().collect(Collectors.toList());
-	}
-
-	@Override
-	public com.meti.api.magma.io.Path relativize(com.meti.api.magma.io.Path other) throws IOException_ {
-		var otherNames = JavaLists.toJava(other.listNames());
-
-		var thisSize = value.getNameCount();
-		var otherSize = otherNames.size();
-		var length = otherSize - thisSize;
-		if (length == 0) {
-			var format = "The path to relativize '%s', and this directory '%s', are equivalent.";
-			var message = format.formatted(other, this);
-			throw new IOException_(message);
-		}
-
-		var newNames = new String[length];
-		for (int i = 0; i < length; i++) {
-			newNames[i] = otherNames.get(thisSize + i);
-		}
-		try {
-			return NIOFileSystem_.absolute(newNames);
-		} catch (IndexException e) {
-			throw new IOException_("Failed to relativize %s on top of %s".formatted(other, value), e);
-		}
-	}
-
-	@Override
-	public com.meti.api.magma.io.Path resolve(String name) {
-		return new NIOPath(value.resolve(name));
 	}
 
 	private Stream<com.meti.api.magma.io.Path> streamTree() throws IOException_ {
@@ -82,16 +53,49 @@ public final class NIODirectory extends NIOPath implements Directory {
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (obj == this) return true;
-		if (obj == null || obj.getClass() != this.getClass()) return false;
-		var that = (NIODirectory) obj;
-		return Objects.equals(this.value, that.value);
+	public com.meti.api.magma.io.Path relativize(com.meti.api.magma.io.Path other) throws IOException_ {
+		try {
+			var otherNames = other.listNames();
+
+			var thisSize = value.getNameCount();
+			var otherSize = otherNames.size();
+			var length = otherSize - thisSize;
+			if (length == 0) {
+				var format = "The path to relativize '%s', and this directory '%s', are equivalent.";
+				var message = format.formatted(other, this);
+				throw new IOException_(message);
+			}
+
+			var newNames = new String[length];
+			for (int i = 0; i < length; i++) {
+				newNames[i] = otherNames.apply(thisSize + i);
+			}
+			try {
+				return NIOFileSystem_.absolute(newNames);
+			} catch (IndexException e) {
+				throw new IOException_("Failed to relativize %s on top of %s".formatted(other, value), e);
+			}
+		} catch (CollectionException e) {
+			throw new IOException_(e);
+		}
+	}
+
+	@Override
+	public com.meti.api.magma.io.Path resolve(String name) {
+		return new NIOPath(value.resolve(name));
 	}
 
 	@Override
 	public int hashCode() {
 		return Objects.hash(value);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == this) return true;
+		if (obj == null || obj.getClass() != this.getClass()) return false;
+		var that = (NIODirectory) obj;
+		return Objects.equals(this.value, that.value);
 	}
 
 	private static class DeletingVisitor implements FileVisitor<Path> {

@@ -1,6 +1,6 @@
 package com.meti.compile.token;
 
-import com.meti.api.java.collect.JavaList;
+import com.meti.api.java.collect.JavaLists;
 import com.meti.api.magma.collect.Sequence;
 
 import java.util.List;
@@ -8,12 +8,12 @@ import java.util.List;
 public record StringAttribute(String value) implements Attribute {
 	@Override
 	public Sequence<Field> asFieldList() {
-		return new JavaList<>(asFieldList1());
+		return JavaLists.fromJava(asFieldList1());
 	}
 
 	@Override
 	public Sequence<Token> asTokenList() {
-		return new JavaList<>(asTokenList1());
+		return JavaLists.fromJava(asTokenList1());
 	}
 
 	@Override

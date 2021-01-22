@@ -14,7 +14,7 @@ class NIOFileTest {
 
 	@Test
 	void writeAsString() throws IOException_, IOException {
-		NIOFileSystem_.Root()
+		NIOFileSystem_.root()
 				.ensureAsDirectory()
 				.resolve("Main.mg")
 				.ensureAsFile()

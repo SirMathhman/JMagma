@@ -30,7 +30,7 @@ public final class JavaMap {
 	}
 
 	public Sequence<Source> listKeys() {
-		return new JavaList<>(new ArrayList<>(mappings.keySet()));
+		return JavaLists.fromJava(new ArrayList<>(mappings.keySet()));
 	}
 
 	public JavaMap put(Source key, Result.Mapping value) {

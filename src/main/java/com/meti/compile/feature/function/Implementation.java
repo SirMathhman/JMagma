@@ -1,6 +1,5 @@
 package com.meti.compile.feature.function;
 
-import com.meti.api.java.collect.JavaList;
 import com.meti.api.java.collect.JavaLists;
 import com.meti.api.magma.collect.Sequence;
 import com.meti.compile.token.*;
@@ -45,7 +44,7 @@ public final class Implementation extends AbstractToken {
 
 	@Override
 	public Sequence<Query> list(Attribute.Type type) {
-		return new JavaList<>(list1(type));
+		return JavaLists.fromJava(list1(type));
 	}
 
 	private List<Query> list1(Attribute.Type type) {

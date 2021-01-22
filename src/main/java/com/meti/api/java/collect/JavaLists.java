@@ -1,8 +1,6 @@
 package com.meti.api.java.collect;
 
-import com.meti.api.magma.collect.IndexException;
-import com.meti.api.magma.collect.List;
-import com.meti.api.magma.collect.Sequence;
+import com.meti.api.magma.collect.*;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -12,7 +10,19 @@ public class JavaLists {
 	}
 
 	public static <T> List<T> empty() {
-		return new JavaList<>(Collections.emptyList());
+		return fromJava(Collections.emptyList());
+	}
+
+	public static <T> List<T> fromJava(java.util.List<T> value) {
+		var copy = ArrayLists.<T>empty();
+		try {
+			for (int i = 0; i < value.size(); i++) {
+				copy.add(value.get(i));
+			}
+			return copy;
+		} catch (CollectionException e) {
+			return copy;
+		}
 	}
 
 	public static <T> java.util.List<T> toJava(Sequence<T> sequence) {

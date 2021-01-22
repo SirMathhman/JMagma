@@ -1,9 +1,8 @@
 package com.meti.api.java.io;
 
-import com.meti.api.java.collect.JavaList;
-import com.meti.api.java.core.JavaOption;
 import com.meti.api.java.collect.JavaLists;
-import com.meti.api.magma.collect.Sequence;
+import com.meti.api.java.core.JavaOption;
+import com.meti.api.magma.collect.*;
 import com.meti.api.magma.core.Option;
 import com.meti.api.magma.io.Directory;
 import com.meti.api.magma.io.File;
@@ -12,8 +11,6 @@ import com.meti.api.magma.io.Path;
 
 import java.io.IOException;
 import java.nio.file.Files;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -65,17 +62,11 @@ public class NIOPath implements Path {
 	}
 
 	@Override
-	public Sequence<String> listNames() {
-		return new JavaList<>(listNames1());
-	}
-
-	private List<String> listNames1() {
-		var names = new ArrayList<String>();
-		var count = value.getNameCount();
-		for (int i = 0; i < count; i++) {
-			names.add(value.getName(i).toString());
-		}
-		return names;
+	public Sequence<String> listNames() throws CollectionException {
+		return Streams.ofIntRange(0, value.getNameCount())
+				.map(value::getName)
+				.map(java.nio.file.Path::toString)
+				.fold(ArrayLists.empty(), List::add);
 	}
 
 	@Override
@@ -93,10 +84,14 @@ public class NIOPath implements Path {
 
 	@Override
 	public String toString() {
-		return JavaLists.toJava(listNames())
-				.stream()
-				.map("\"%s\""::formatted)
-				.collect(Collectors.joining(",", "[", "]"));
+		try {
+			return JavaLists.toJava(listNames())
+					.stream()
+					.map("\"%s\""::formatted)
+					.collect(Collectors.joining(",", "[", "]"));
+		} catch (CollectionException e) {
+			return "";
+		}
 	}
 
 	public java.nio.file.Path value() {

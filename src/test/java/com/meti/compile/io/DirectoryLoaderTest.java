@@ -1,6 +1,7 @@
 package com.meti.compile.io;
 
 import com.meti.api.java.collect.JavaLists;
+import com.meti.api.magma.collect.Sequence;
 import com.meti.api.magma.io.Directory;
 import com.meti.api.magma.io.File;
 import com.meti.api.magma.io.IOException_;
@@ -23,7 +24,8 @@ class DirectoryLoaderTest {
 		var loader = new DirectoryLoader(directory);
 		var source = new ListSource(singletonList("Main"));
 		var expected = singletonList(source);
-		var actual = JavaLists.toJava(loader.listSources());
+		var sources = loader.listSources();
+		var actual = JavaLists.toJava(sources);
 		assertIterableEquals(expected, actual);
 	}
 
@@ -37,7 +39,7 @@ class DirectoryLoaderTest {
 
 	@BeforeEach
 	void setUp() throws IOException_ {
-		directory = NIOFileSystem_.Root().ensureAsDirectory()
+		directory = NIOFileSystem_.root().ensureAsDirectory()
 				.resolve("test")
 				.ensureAsDirectory();
 		file = directory.resolve("Main.mg")

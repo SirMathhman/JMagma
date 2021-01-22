@@ -1,15 +1,14 @@
 package com.meti.compile.io;
 
-import com.meti.api.java.collect.JavaList;
-import com.meti.api.magma.collect.IndexException;
 import com.meti.api.java.collect.JavaLists;
+import com.meti.api.magma.collect.CollectionException;
+import com.meti.api.magma.collect.IndexException;
 import com.meti.api.magma.collect.Sequence;
 import com.meti.api.magma.io.Directory;
 import com.meti.api.magma.io.IOException_;
 import com.meti.api.magma.io.Path;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public record DirectoryLoader(Directory root) implements Loader {
 	private static final String FileExtension = ".mg";
@@ -19,37 +18,37 @@ public record DirectoryLoader(Directory root) implements Loader {
 
 	@Override
 	public Sequence<Source> listSources() throws IOException_ {
-		return new JavaList<>(listSources1());
-	}
-
-	private List<Source> listSources1() throws IOException_ {
-		var tree = root.listTree();
-		var sources = new ArrayList<Source>();
-		for (int i = 0; i < tree.size(); i++) {
-			Path result;
-			try {
-				result = tree.apply(i);
-			} catch (IndexException e) {
-				throw new UnsupportedOperationException(e);
+		try {
+			var tree = root.listTree();
+			var sources = new ArrayList<Source>();
+			for (int i = 0; i < tree.size(); i++) {
+				Path result;
+				try {
+					result = tree.apply(i);
+				} catch (IndexException e) {
+					throw new UnsupportedOperationException(e);
+				}
+				var path = result;
+				var names = JavaLists.toJava(path.listNames());
+				var lastName = names.get(names.size() - 1);
+				var isFile = lastName.endsWith(FileExtension);
+				var isScript = lastName.endsWith(ScriptExtension);
+				if (isFile || isScript) {
+					var relativized = root.relativize(path);
+					var relativizedNames = JavaLists.toJava(relativized.listNames());
+					var parent = relativizedNames.subList(0, relativizedNames.size() - 1);
+					var name = relativizedNames.get(relativizedNames.size() - 1);
+					var extension = isFile ? FileExtension : ScriptExtension;
+					var newName = name.substring(0, name.length() - extension.length());
+					var newList = new ArrayList<>(parent);
+					newList.add(newName);
+					sources.add(new ListSource(newList));
+				}
 			}
-			var path = result;
-			var names = JavaLists.toJava(path.listNames());
-			var lastName = names.get(names.size() - 1);
-			var isFile = lastName.endsWith(FileExtension);
-			var isScript = lastName.endsWith(ScriptExtension);
-			if (isFile || isScript) {
-				var relativized = root.relativize(path);
-				var relativizedNames = JavaLists.toJava(relativized.listNames());
-				var parent = relativizedNames.subList(0, relativizedNames.size() - 1);
-				var name = relativizedNames.get(relativizedNames.size() - 1);
-				var extension = isFile ? FileExtension : ScriptExtension;
-				var newName = name.substring(0, name.length() - extension.length());
-				var newList = new ArrayList<>(parent);
-				newList.add(newName);
-				sources.add(new ListSource(newList));
-			}
+			return JavaLists.fromJava(sources);
+		} catch (CollectionException e) {
+			throw new IOException_(e);
 		}
-		return sources;
 	}
 
 	@Override

@@ -1,6 +1,6 @@
 package com.meti.compile.feature.function;
 
-import com.meti.api.java.collect.JavaList;
+import com.meti.api.java.collect.JavaLists;
 import com.meti.api.magma.collect.Sequence;
 import com.meti.compile.token.*;
 
@@ -30,7 +30,7 @@ public final class Return extends AbstractToken {
 
 	@Override
 	public Sequence<Query> list(Attribute.Type type) {
-		return new JavaList<>(type == Attribute.Type.Node ? Collections.singletonList(Query.Value) : Collections.emptyList());
+		return JavaLists.fromJava(type == Attribute.Type.Node ? Collections.singletonList(Query.Value) : Collections.emptyList());
 	}
 
 	@Override

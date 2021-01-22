@@ -1,6 +1,6 @@
 package com.meti.compile.content;
 
-import com.meti.api.java.collect.JavaList;
+import com.meti.api.java.collect.JavaLists;
 import com.meti.api.magma.collect.Lists;
 import com.meti.api.magma.collect.Stream;
 
@@ -58,7 +58,7 @@ public class JavaSplitterState implements SplitterState {
 
 	@Override
 	public Stream<String> stream() {
-		return Lists.stream(new JavaList<>(lines));
+		return Lists.stream(JavaLists.fromJava(lines));
 	}
 
 	@Override

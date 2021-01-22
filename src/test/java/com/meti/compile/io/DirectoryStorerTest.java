@@ -24,7 +24,7 @@ class DirectoryStorerTest {
 
 	@BeforeEach
 	void setUp() throws IOException_ {
-		directory = NIOFileSystem_.Root().ensureAsDirectory().resolve("test").ensureAsDirectory();
+		directory = NIOFileSystem_.root().ensureAsDirectory().resolve("test").ensureAsDirectory();
 	}
 
 	@AfterEach

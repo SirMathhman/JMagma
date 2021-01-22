@@ -9,7 +9,7 @@ import static com.meti.api.java.io.NIOFileSystem.NIOFileSystem_;
 import static com.meti.compile.MagmaCCompiler.MagmaCCompiler_;
 
 record Application(Path root) {
-	static final Application Application_ = new Application(NIOFileSystem_.Root());
+	static final Application Application_ = new Application(NIOFileSystem_.root());
 
 	void run() throws IOException_, CompileException {
 		var rootAsDirectory = this.root.ensureAsDirectory();

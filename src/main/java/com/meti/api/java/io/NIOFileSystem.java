@@ -13,7 +13,7 @@ public class NIOFileSystem implements FileSystem {
 	}
 
 	@Override
-	public Path Root() {
+	public Path root() {
 		return new NIOPath(Paths.get("."));
 	}
 

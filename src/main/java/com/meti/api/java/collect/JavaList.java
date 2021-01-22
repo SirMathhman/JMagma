@@ -4,20 +4,27 @@ import com.meti.api.magma.collect.IndexException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
-public record JavaList<T>(List<T> value) implements com.meti.api.magma.collect.List<T> {
+public final class JavaList<T> implements com.meti.api.magma.collect.List<T> {
+	private final List<T> value;
+
+	public JavaList(List<T> value) {
+		this.value = value;
+	}
+
 	@Override
 	public com.meti.api.magma.collect.List<T> add(T element) {
 		var copy = new ArrayList<>(value);
 		copy.add(element);
-		return new JavaList<>(copy);
+		return JavaLists.fromJava(copy);
 	}
 
 	@Override
 	public com.meti.api.magma.collect.List<T> set(int index, T element) throws IndexException {
 		var copy = new ArrayList<>(value);
 		copy.set(index, element);
-		return new JavaList<>(copy);
+		return JavaLists.fromJava(copy);
 	}
 
 	@Override
@@ -39,4 +46,28 @@ public record JavaList<T>(List<T> value) implements com.meti.api.magma.collect.L
 	public int size() {
 		return value.size();
 	}
+
+	public List<T> value() {
+		return value;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == this) return true;
+		if (obj == null || obj.getClass() != this.getClass()) return false;
+		var that = (JavaList) obj;
+		return Objects.equals(this.value, that.value);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(value);
+	}
+
+	@Override
+	public String toString() {
+		return "JavaList[" +
+		       "value=" + value + ']';
+	}
+
 }

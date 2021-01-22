@@ -1,6 +1,6 @@
 package com.meti.compile.stage;
 
-import com.meti.api.java.collect.JavaList;
+import com.meti.api.java.collect.JavaLists;
 import com.meti.compile.CompileException;
 import com.meti.compile.feature.block.Blocks;
 import com.meti.compile.feature.function.FunctionType;
@@ -39,7 +39,7 @@ class CRenderStageTest {
 		var functionType = new FunctionType(Primitives.I16, Collections.emptyList());
 		var identity = new EmptyField(Collections.singletonList(Field.Flag.DEF), "main", functionType);
 		final List<Token> lines = Collections.singletonList(new Return(new Integer("0")));
-		Token body = Blocks.of(new JavaList<>(lines));
+		Token body = Blocks.of(JavaLists.fromJava(lines));
 		return new Implementation(identity, Collections.emptyList(), body);
 	}
 
@@ -47,7 +47,7 @@ class CRenderStageTest {
 	void renderBlock() throws CompileException {
 		var value = new Integer("0");
 		var line = new Return(value);
-		Token node = Blocks.of(new JavaList<>(List.of(line)));
+		Token node = Blocks.of(JavaLists.fromJava(List.of(line)));
 		assertEquals("{return 0;}", CRenderStage_.render(node)
 				.apply(AbstractToken.Query.Value)
 				.asString());
@@ -57,7 +57,7 @@ class CRenderStageTest {
 	void renderBlockAsParent() throws CompileException {
 		var value = new Integer("0");
 		var line = new Return(value);
-		Token node = Blocks.of(new JavaList<>(List.of(line)));
+		Token node = Blocks.of(JavaLists.fromJava(List.of(line)));
 		var optional = CNodeRenderer_.render(node)
 				.map(Optional::of)
 				.orElseGet(Optional::empty);
@@ -71,7 +71,7 @@ class CRenderStageTest {
 	void renderBlockAsRoot() throws CompileException {
 		var value = new Integer("0");
 		var line = new Return(value);
-		Token node = Blocks.of(new JavaList<>(List.of(line)));
+		Token node = Blocks.of(JavaLists.fromJava(List.of(line)));
 		assertEquals("{return 0;}", CRenderStage_.renderRoot(node)
 				.apply(AbstractToken.Query.Value)
 				.asString());

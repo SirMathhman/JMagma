@@ -4,6 +4,14 @@ public class Lists {
 	public Lists() {
 	}
 
+	public static <T> List<T> addAll(List<T> self, List<T> other) {
+		try {
+			return stream(other).fold(self, List::add);
+		} catch (StreamException e) {
+			return self;
+		}
+	}
+
 	public static <T> Stream<T> stream(Sequence<T> sequence) {
 		return new StreamImpl<>(sequence);
 	}
