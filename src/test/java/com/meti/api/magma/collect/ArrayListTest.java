@@ -6,7 +6,7 @@ import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class ArrayListTest {A
+class ArrayListTest {
 
 	@Test
 	void apply() throws IndexException {
