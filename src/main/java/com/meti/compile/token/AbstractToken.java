@@ -11,7 +11,7 @@ public abstract class AbstractToken implements Token {
 	@Override
 	public String toString() {
 		return Arrays.stream(Attribute.Type.values())
-				.map(this::list)
+				.map(type -> JavaLists.toJava(list(type)))
 				.flatMap(List::stream)
 				.map(this::queryToString)
 				.collect(Collectors.joining(",", "{", "}"));

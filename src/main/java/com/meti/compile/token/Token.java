@@ -1,7 +1,6 @@
 package com.meti.compile.token;
 
 import com.meti.api.java.collect.JavaList;
-import com.meti.api.magma.collect.List;
 
 import java.util.Collections;
 

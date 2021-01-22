@@ -41,6 +41,14 @@ public final class FunctionType extends AbstractToken {
 		return new JavaList<>(list1(type));
 	}
 
+	private List<Query> list1(Attribute.Type type) {
+		return switch (type) {
+			case Type -> List.of(Query.Returns);
+			case TypeList -> List.of(Query.Parameters);
+			default -> Collections.emptyList();
+		};
+	}
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(returns, parameters);

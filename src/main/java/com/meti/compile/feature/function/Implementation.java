@@ -43,6 +43,20 @@ public final class Implementation extends AbstractToken {
 	}
 
 	@Override
+	public com.meti.api.magma.collect.List<Query> list(Attribute.Type type) {
+		return new JavaList<>(list1(type));
+	}
+
+	private List<Query> list1(Attribute.Type type) {
+		return switch (type) {
+			case Field_ -> singletonList(Query.Identity);
+			case FieldList -> singletonList(Query.Parameters);
+			case Node -> singletonList(Query.Body);
+			default -> emptyList();
+		};
+	}
+
+	@Override
 	public int hashCode() {
 		return Objects.hash(identity, parameters, body);
 	}
