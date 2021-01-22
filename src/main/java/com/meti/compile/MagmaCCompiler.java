@@ -1,6 +1,7 @@
 package com.meti.compile;
 
-import com.meti.api.magma.collect.Lists;
+import com.meti.api.java.collect.JavaList;
+import com.meti.api.java.collect.JavaLists;
 import com.meti.api.magma.io.IOException_;
 import com.meti.compile.io.*;
 import com.meti.compile.stack.MapStack;
@@ -26,7 +27,7 @@ public class MagmaCCompiler implements Compiler {
 	@Override
 	public Result compile(Loader loader) throws CompileException {
 		try {
-			var scripts = Lists.toJava(loader.listSources());
+			var scripts = JavaLists.toJava(loader.listSources());
 			var scriptSize = scripts.size();
 			var map = new HashMap<Source, Result.Mapping>();
 			var stack = new MapStack();
@@ -54,7 +55,7 @@ public class MagmaCCompiler implements Compiler {
 				imports.add(createImport(Tokens.createContent(token)));
 			}
 		}
-		var resetStack = stack.reset2(imports);
+		var resetStack = stack.reset(new JavaList<>(imports));
 		var state = new StageState(resetStack, tokens);
 		var parsed = MagmaParsingStage_.apply(state);
 		var flattened = MagmaFlatteningStage_.apply(parsed);

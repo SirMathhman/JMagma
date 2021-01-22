@@ -1,7 +1,7 @@
 package com.meti.compile.io;
 
 import com.meti.api.java.collect.JavaList;
-import com.meti.api.magma.collect.Lists;
+import com.meti.api.java.collect.JavaLists;
 import com.meti.api.magma.core.None;
 import com.meti.api.magma.core.Option;
 import com.meti.api.magma.core.Some;
@@ -29,7 +29,7 @@ public record MapResult(Map<Source, Mapping> mappings) implements Result {
 
 	@Override
 	public int count() {
-		return Lists.toJava(listSources()).size();
+		return JavaLists.toJava(listSources()).size();
 	}
 
 	@Override

@@ -1,9 +1,12 @@
-package com.meti.api.magma.collect;
+package com.meti.api.java.collect;
+
+import com.meti.api.magma.collect.IndexException;
+import com.meti.api.magma.collect.List;
 
 import java.util.ArrayList;
 
-public class Lists {
-	public Lists() {
+public class JavaLists {
+	public JavaLists() {
 	}
 
 	public static <T> java.util.List<T> toJava(List<T> list) {

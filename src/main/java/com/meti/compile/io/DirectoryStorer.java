@@ -1,6 +1,6 @@
 package com.meti.compile.io;
 
-import com.meti.api.magma.collect.Lists;
+import com.meti.api.java.collect.JavaLists;
 import com.meti.api.magma.io.Directory;
 import com.meti.api.magma.io.File;
 import com.meti.api.magma.io.IOException_;
@@ -16,18 +16,18 @@ public record DirectoryStorer(Directory root) implements Storer<List<File>> {
 		var results = new ArrayList<File>();
 		for (int i = 0; i < result.count(); i++) {
 			var parent = root;
-			var sourceSize = Lists.toJava(result.listSources()).get(i).size();
+			var sourceSize = JavaLists.toJava(result.listSources()).get(i).size();
 			for (int j = 0; j < sourceSize - 1; j++) {
-				var path = parent.resolve(Lists.toJava(result.listSources()).get(i).apply(i));
+				var path = parent.resolve(JavaLists.toJava(result.listSources()).get(i).apply(i));
 				parent = path.ensureAsDirectory();
 			}
-			var name = Lists.toJava(result.listSources()).get(i).apply(sourceSize - 1);
-			var option = result.apply(Lists.toJava(result.listSources()).get(i))
+			var name = JavaLists.toJava(result.listSources()).get(i).apply(sourceSize - 1);
+			var option = result.apply(JavaLists.toJava(result.listSources()).get(i))
 					.map(Optional::of)
 					.orElseGet(Optional::empty);
 			int finalI = i;
-			var mapping = option.orElseThrow(() -> new CompileException("No result was found for: " + Lists.toJava(result.listSources()).get(finalI)));
-			var formats = Lists.toJava(mapping.listFormats());
+			var mapping = option.orElseThrow(() -> new CompileException("No result was found for: " + JavaLists.toJava(result.listSources()).get(finalI)));
+			var formats = JavaLists.toJava(mapping.listFormats());
 			var size = formats.size();
 			for (int j = 0; j < size; j++) {
 				var format = formats.get(j);

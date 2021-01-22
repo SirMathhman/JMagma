@@ -2,7 +2,7 @@ package com.meti.api.java.io;
 
 import com.meti.api.java.collect.JavaList;
 import com.meti.api.java.core.JavaOption;
-import com.meti.api.magma.collect.Lists;
+import com.meti.api.java.collect.JavaLists;
 import com.meti.api.magma.core.Option;
 import com.meti.api.magma.io.Directory;
 import com.meti.api.magma.io.File;
@@ -92,7 +92,7 @@ public class NIOPath implements Path {
 
 	@Override
 	public String toString() {
-		return Lists.toJava(listNames())
+		return JavaLists.toJava(listNames())
 				.stream()
 				.map("\"%s\""::formatted)
 				.collect(Collectors.joining(",", "[", "]"));
