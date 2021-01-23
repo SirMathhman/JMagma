@@ -11,11 +11,23 @@ public enum Directive {
 	Include,
 	EndIf;
 
+	public static final String EmptyFormat = "#%s";
+	public static final String ContentFormat = "#%s %s\n";
+
 	public Token apply() {
-		return new Content("#%s".formatted(name().toLowerCase(Locale.ROOT)));
+		var asLowerCase = lowerCaseName();
+		var message = EmptyFormat.formatted(asLowerCase);
+		return new Content(message);
 	}
 
-	public Token apply(String value) {
-		return new Content("#%s %s\n".formatted(name().toLowerCase(Locale.ROOT), value));
+	private String lowerCaseName() {
+		var name = name();
+		return name.toLowerCase(Locale.ROOT);
+	}
+
+	public Token apply(String content) {
+		var lowerCaseName = lowerCaseName();
+		var message = ContentFormat.formatted(lowerCaseName, content);
+		return new Content(message);
 	}
 }
