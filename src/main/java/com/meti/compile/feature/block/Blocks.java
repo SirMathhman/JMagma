@@ -64,7 +64,7 @@ public class Blocks {
 			if (this == o) return true;
 			if (o == null || getClass() != o.getClass()) return false;
 			Impl impl = (Impl) o;
-			return Objects.equals(lines, impl.lines);
+			return Sequences.equals(lines, impl.lines);
 		}
 	}
 }

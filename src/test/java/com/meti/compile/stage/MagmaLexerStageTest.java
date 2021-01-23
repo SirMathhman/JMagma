@@ -17,19 +17,23 @@ import java.util.Collections;
 
 import static com.meti.compile.stage.MagmaLexerStage.MagmaLexerStage_;
 import static java.util.Collections.emptyList;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class MagmaLexerStageTest {
 
 	@Test
 	void apply() throws CompileException {
-		var value = new Integer("0");
-		var returns = new Return(value);
-		Token body = Blocks.of(JavaLists.fromJava(Collections.singletonList(returns)));
-		var identityType = new FunctionType(Primitives.I16, emptyList());
-		var identity = new EmptyField(Collections.singletonList(Field.Flag.DEF), "main", identityType);
-		var expected = new Implementation(identity, emptyList(), body);
+		var expected = createImplementation();
 		var actual = MagmaLexerStage_.apply("def main() : I16 => {return 0;}");
 		assertEquals(expected, actual);
+	}
+
+	private Token createImplementation() {
+		var value = new Integer("0");
+		var returns = new Return(value);
+		var body = Blocks.of(JavaLists.fromJava(Collections.singletonList(returns)));
+		var identityType = new FunctionType(Primitives.I16, emptyList());
+		var identity = new EmptyField(Collections.singletonList(Field.Flag.DEF), "main", identityType);
+		return new Implementation(identity, emptyList(), body);
 	}
 }

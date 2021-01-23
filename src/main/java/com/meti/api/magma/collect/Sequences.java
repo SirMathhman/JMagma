@@ -4,6 +4,24 @@ public class Sequences {
 	public Sequences() {
 	}
 
+	public static <T> boolean equals(Sequence<T> self, Sequence<T> other) {
+		var selfSize = self.size();
+		var otherSize = other.size();
+		if (selfSize == otherSize) {
+			for (int i = 0; i < selfSize; i++) {
+				try {
+					var selfElement = self.apply(i);
+					var otherElement = other.apply(i);
+					if (!selfElement.equals(otherElement)) return false;
+				} catch (IndexException e) {
+					return false;
+				}
+			}
+			return true;
+		}
+		return false;
+	}
+
 	public static <T> Sequence<T> of(T... elements) {
 		return new Impl<>(elements);
 	}
