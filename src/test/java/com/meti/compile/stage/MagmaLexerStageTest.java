@@ -32,7 +32,7 @@ class MagmaLexerStageTest {
 		var value = new Integer("0");
 		var returns = new Return(value);
 		var body = Blocks.of(JavaLists.fromJava(Collections.singletonList(returns)));
-		var identityType = new FunctionType(Primitives.I16, emptyList());
+		Token identityType = new FunctionType((Token) Primitives.I16, JavaLists.fromJava(emptyList()));
 		var identity = new EmptyField(Collections.singletonList(Field.Flag.DEF), "main", identityType);
 		return new Implementation(identity, emptyList(), body);
 	}

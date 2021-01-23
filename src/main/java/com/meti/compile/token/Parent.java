@@ -1,6 +1,7 @@
 package com.meti.compile.token;
 
 import com.meti.api.java.collect.JavaLists;
+import com.meti.api.magma.collect.ArrayLists;
 import com.meti.api.magma.collect.Sequence;
 import com.meti.api.magma.collect.Sequences;
 import com.meti.api.magma.collect.StreamException;
@@ -70,6 +71,6 @@ public final class Parent extends AbstractToken {
 	private List<Query> list1(Attribute.Type type) {
 		return type == Attribute.Type.NodeList ?
 				Collections.singletonList(Query.Lines) :
-				JavaLists.toJava(list(null));
+				Collections.emptyList();
 	}
 }

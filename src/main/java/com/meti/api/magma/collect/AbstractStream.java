@@ -36,7 +36,17 @@ public abstract class AbstractStream<T> implements Stream<T> {
 
 	@Override
 	public T fold(F2E1<T, T, T, ?> folder) throws StreamException {
-		throw new UnsupportedOperationException();
+		T current = head();
+		while (true) {
+			try {
+				current = folder.apply(current, head());
+			} catch (EndOfStreamException e) {
+				break;
+			} catch (Exception e) {
+				throw new StreamException(e);
+			}
+		}
+		return current;
 	}
 
 	@Override

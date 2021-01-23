@@ -1,5 +1,6 @@
 package com.meti.compile.feature.function;
 
+import com.meti.api.java.collect.JavaLists;
 import com.meti.api.magma.core.Option;
 import com.meti.compile.CompileException;
 import com.meti.compile.stage.Lexer;
@@ -38,15 +39,15 @@ public class FunctionNodeLexer_ implements Lexer<Token> {
 		var parameters = lexParameters(content);
 		var returnType = lexReturn(content);
 		var value = lexValue(content);
-		var type = createFunctionType(parameters, returnType);
+		Token type = createFunctionType(parameters, returnType);
 		var identity = new EmptyField(flags, name, type);
 		return new Implementation(identity, parameters, value);
 	}
 
-	private FunctionType createFunctionType(ArrayList<Field> parameters, Content returnType) {
-		return new FunctionType(returnType, parameters.stream()
+	private Token createFunctionType(ArrayList<Field> parameters, Content returnType) {
+		return new FunctionType(returnType, JavaLists.fromJava(parameters.stream()
 				.map(Field::findType)
-				.collect(Collectors.toList()));
+				.collect(Collectors.toList())));
 	}
 
 	private Content lexValue(String content) {

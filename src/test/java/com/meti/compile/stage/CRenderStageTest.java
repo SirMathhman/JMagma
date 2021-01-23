@@ -36,7 +36,7 @@ class CRenderStageTest {
 	}
 
 	private Token createFunction() {
-		var functionType = new FunctionType(Primitives.I16, Collections.emptyList());
+		Token functionType = new FunctionType(Primitives.I16, JavaLists.fromJava(Collections.emptyList()));
 		var identity = new EmptyField(Collections.singletonList(Field.Flag.DEF), "main", functionType);
 		final List<Token> lines = Collections.singletonList(new Return(new Integer("0")));
 		Token body = Blocks.of(JavaLists.fromJava(lines));
