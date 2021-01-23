@@ -42,7 +42,7 @@ public class FunctionType {
 							.complete();
 					case Parameters -> attribute.streamTokens()
 							.fold(Empty, WithoutReturn::withParameter)
-							.withReturn(attribute.asToken())
+							.withReturn(returns)
 							.complete();
 					default -> this;
 				};
