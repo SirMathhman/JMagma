@@ -1,8 +1,6 @@
 package com.meti.compile.feature.block;
 
 import com.meti.api.magma.collect.CollectionException;
-import com.meti.api.magma.collect.Stream;
-import com.meti.api.magma.collect.StreamException;
 import com.meti.api.magma.core.Option;
 import com.meti.compile.CompileException;
 import com.meti.compile.stage.Lexer;
@@ -39,19 +37,13 @@ public class BlockLexer implements Lexer<Token> {
 	private Token formatLines(String lines) throws CompileException {
 		try {
 			return formatLinesExceptionally(lines);
-		} catch (StreamException e) {
+		} catch (CollectionException e) {
 			throw new CompileException(e);
 		}
 	}
 
-	private Token formatLinesExceptionally(String lines) throws StreamException {
-		Stream<String> result;
-		try {
-			result = BracketSplitter_.stream(lines);
-		} catch (CollectionException e) {
-			throw new StreamException(e);
-		}
-		return result
+	private Token formatLinesExceptionally(String lines) throws CollectionException {
+		return BracketSplitter_.stream(lines)
 				.filter(s -> !s.isBlank())
 				.map(String::trim)
 				.map(Content::new)
