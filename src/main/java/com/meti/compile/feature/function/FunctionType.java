@@ -19,14 +19,16 @@ public final class FunctionType extends AbstractToken {
 
 	@Override
 	public Attribute apply(Query query) {
-		return switch (query) {
-			case Group -> GroupAttribute.Function;
-			case Returns -> new TokenAttribute(returns);
-			case Parameters -> Attribute result;List<Token> list = parameters;
-					result = new TokenSequenceAttribute(JavaLists.fromJava(list));
-					result;
-			default -> throw new UnsupportedOperationException();
-		};
+		switch (query) {
+			case Group:
+				return GroupAttribute.Function;
+			case Returns:
+				return new TokenAttribute(returns);
+			case Parameters:
+				return new TokenSequenceAttribute(JavaLists.fromJava(parameters));
+			default:
+				throw new UnsupportedOperationException();
+		}
 	}
 
 	@Override

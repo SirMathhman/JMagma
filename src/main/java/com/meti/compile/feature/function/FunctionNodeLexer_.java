@@ -20,7 +20,7 @@ import static com.meti.compile.token.FieldLexer.FieldLexer_;
 public class FunctionNodeLexer_ implements Lexer<Token> {
 	public static final Lexer<Token> FunctionNodeLexer_ = new FunctionNodeLexer_();
 
-	public FunctionNodeLexer_() {
+	private FunctionNodeLexer_() {
 	}
 
 	@Override
