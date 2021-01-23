@@ -2,11 +2,14 @@ package com.meti.compile.feature.function;
 
 import com.meti.api.java.collect.JavaLists;
 import com.meti.api.magma.collect.Sequence;
+import com.meti.api.magma.collect.Sequences;
+import com.meti.api.magma.collect.StreamException;
 import com.meti.compile.token.*;
 
 import java.util.List;
 import java.util.Objects;
 
+import static com.meti.compile.token.Attributes.EmptyFields;
 import static java.util.Collections.emptyList;
 import static java.util.Collections.singletonList;
 
@@ -26,10 +29,20 @@ public final class Implementation extends AbstractToken {
 		return switch (query) {
 			case Group -> GroupAttribute.Implementation;
 			case Identity -> new FieldAttribute(identity);
-			case Parameters -> new FieldListAttribute(JavaLists.fromJava(parameters));
+			case Parameters -> createParameters();
 			case Body -> new TokenAttribute(body);
 			default -> throw new UnsupportedOperationException("Unknown query: " + query);
 		};
+	}
+
+	private Attribute createParameters() {
+		try {
+			return Sequences.stream(JavaLists.fromJava(parameters))
+					.fold(EmptyFields, Attribute.Builder::add)
+					.complete();
+		} catch (StreamException e) {
+			throw new UnsupportedOperationException(e);
+		}
 	}
 
 	@Override

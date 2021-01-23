@@ -1,17 +1,28 @@
 package com.meti.compile.token;
 
+import com.meti.api.magma.collect.CollectionException;
 import com.meti.api.magma.collect.Sequence;
 
 public interface Attribute {
-	Field asField();
+	default Field asField() {
+		throw new UnsupportedOperationException("Not a field.");
+	}
 
-	Sequence<Field> asFieldList();
+	default Sequence<Field> asFieldList() {
+		throw new UnsupportedOperationException("Not a list of list.");
+	}
 
-	String asString();
+	default String asString() {
+		throw new UnsupportedOperationException("Not a string.");
+	}
 
-	Token asToken();
+	default Token asToken() {
+		throw new UnsupportedOperationException("Not a token.");
+	}
 
-	Sequence<Token> asTokenSequence();
+	default Sequence<Token> asTokenSequence() {
+		throw new UnsupportedOperationException("Not a sequence of tokens.");
+	}
 
 	enum Type {
 		Field_,
@@ -20,5 +31,11 @@ public interface Attribute {
 		NodeList,
 		Type,
 		TypeList, Other,
+	}
+
+	interface Builder<T> {
+		Builder<T> add(T field) throws CollectionException;
+
+		Attribute complete();
 	}
 }

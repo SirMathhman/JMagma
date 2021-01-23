@@ -10,7 +10,7 @@ public record TokenSequenceAttribute(Sequence<Token> list) implements Attribute 
 
 	@Override
 	public Sequence<Field> asFieldList() {
-		throw new UnsupportedOperationException("Not a list1 of fields.");
+		throw new UnsupportedOperationException("Not a list1 of list.");
 	}
 
 	@Override

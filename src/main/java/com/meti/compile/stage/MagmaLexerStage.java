@@ -1,6 +1,8 @@
 package com.meti.compile.stage;
 
 import com.meti.api.java.collect.JavaLists;
+import com.meti.api.magma.collect.Sequences;
+import com.meti.api.magma.collect.StreamException;
 import com.meti.api.magma.core.F1E1;
 import com.meti.compile.CompileException;
 import com.meti.compile.token.*;
@@ -62,7 +64,13 @@ public class MagmaLexerStage {
 		for (Field field : oldList) {
 			newList.add(lexField(field));
 		}
-		return new FieldListAttribute(JavaLists.fromJava(newList));
+		try {
+			return Sequences.stream(JavaLists.fromJava(newList))
+					.fold(Attributes.EmptyFields, Attribute.Builder::add)
+					.complete();
+		} catch (StreamException e) {
+			throw new UnsupportedOperationException(e);
+		}
 	}
 
 	private Token lexNodeContent(Token node) throws CompileException {

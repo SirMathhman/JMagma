@@ -17,7 +17,7 @@ public record FieldAttribute(Field field) implements Attribute {
 	}
 
 	private List<Field> asFieldList1() {
-		throw new UnsupportedOperationException("Not a list1 of fields.");
+		throw new UnsupportedOperationException("Not a list1 of list.");
 	}
 
 	@Override

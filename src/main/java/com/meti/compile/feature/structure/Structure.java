@@ -2,6 +2,8 @@ package com.meti.compile.feature.structure;
 
 import com.meti.api.java.collect.JavaLists;
 import com.meti.api.magma.collect.Sequence;
+import com.meti.api.magma.collect.Sequences;
+import com.meti.api.magma.collect.StreamException;
 import com.meti.compile.token.*;
 
 import java.util.Collections;
@@ -21,9 +23,19 @@ public final class Structure extends AbstractToken {
 		return switch (query) {
 			case Group -> GroupAttribute.Structure;
 			case Name -> new StringAttribute(name);
-			case Members -> new FieldListAttribute(JavaLists.fromJava(members));
+			case Members -> createMembers();
 			default -> throw new UnsupportedOperationException();
 		};
+	}
+
+	private Attribute createMembers() {
+		try {
+			return Sequences.stream(JavaLists.fromJava(members))
+					.fold(Attributes.EmptyFields, Attribute.Builder::add)
+					.complete();
+		} catch (StreamException e) {
+			throw new UnsupportedOperationException(e);
+		}
 	}
 
 	@Override
