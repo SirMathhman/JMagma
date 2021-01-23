@@ -38,7 +38,7 @@ public class MagmaCCompiler implements Compiler {
 					throw new CompileException(ioException_);
 				}
 			};
-			return Lists.stream(loader.listSources())
+			return Sequences.stream(loader.listSources())
 					.fold(new State(MapResult(), new MapStack()), folder)
 					.complete();
 		} catch (StreamException | IOException_ e) {
@@ -59,7 +59,7 @@ public class MagmaCCompiler implements Compiler {
 
 	private Sequence<Source> findImports(Sequence<Token> tokens) throws CompileException {
 		try {
-			return Lists.stream(tokens)
+			return Sequences.stream(tokens)
 					.filter(token -> Tokens.is(token, GroupAttribute.Import))
 					.map(token -> token.apply(Token.Query.Value))
 					.map(Attribute::asString)

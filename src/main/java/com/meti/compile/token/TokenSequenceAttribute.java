@@ -1,12 +1,8 @@
 package com.meti.compile.token;
 
-import com.meti.api.java.collect.JavaLists;
-import com.meti.api.magma.collect.Sequence;
+import com.meti.api.magma.collect.*;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
-public record TokenListAttribute(List<Token> list) implements Attribute {
+public record TokenSequenceAttribute(Sequence<Token> list) implements Attribute {
 	@Override
 	public Field asField() {
 		throw new UnsupportedOperationException("Not a field.");
@@ -14,10 +10,6 @@ public record TokenListAttribute(List<Token> list) implements Attribute {
 
 	@Override
 	public Sequence<Field> asFieldList() {
-		return JavaLists.fromJava(asFieldList1());
-	}
-
-	private List<Field> asFieldList1() {
 		throw new UnsupportedOperationException("Not a list1 of fields.");
 	}
 
@@ -32,18 +24,18 @@ public record TokenListAttribute(List<Token> list) implements Attribute {
 	}
 
 	@Override
-	public Sequence<Token> asTokenList() {
-		return JavaLists.fromJava(asTokenList1());
-	}
-
-	private List<Token> asTokenList1() {
+	public Sequence<Token> asTokenSequence() {
 		return list;
 	}
 
 	@Override
 	public String toString() {
-		return list.stream()
-				.map(Token::toString)
-				.collect(Collectors.joining(",", "[", "]"));
+		try {
+			return Sequences.stream(list)
+					.map(Token::toString)
+					.fold((first, second) -> first + "," + second);
+		} catch (StreamException e) {
+			return "";
+		}
 	}
 }

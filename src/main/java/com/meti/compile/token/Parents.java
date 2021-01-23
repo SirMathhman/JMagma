@@ -1,5 +1,7 @@
 package com.meti.compile.token;
 
+import com.meti.api.java.collect.JavaLists;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -13,7 +15,7 @@ public class Parents {
 	}
 
 	public static Token join(String delimiter, List<Token> tokens) {
-		if (tokens.isEmpty()) return new Parent(Collections.emptyList());
+		if (tokens.isEmpty()) return new Parent(JavaLists.fromJava(Collections.emptyList()));
 		var lines = new ArrayList<Token>();
 		var first = tokens.get(0);
 		lines.add(first);
@@ -21,18 +23,18 @@ public class Parents {
 			lines.add(new Content(delimiter));
 			lines.add(tokens.get(i));
 		}
-		return new Parent(lines);
+		return new Parent(JavaLists.fromJava(lines));
 	}
 
 	public static Token of(Token... tokens) {
-		return new Parent(List.of(tokens));
+		return new Parent(JavaLists.fromJava(List.of(tokens)));
 	}
 
 	public static record Formatter(String format, List<Token> lines) {
 		public Token complete() {
 			var copy = new ArrayList<>(lines);
 			copy.add(new Content(format));
-			return new Parent(copy);
+			return new Parent(JavaLists.fromJava(copy));
 		}
 
 		public Formatter format(Token token) {

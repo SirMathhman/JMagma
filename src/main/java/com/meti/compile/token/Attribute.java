@@ -11,7 +11,7 @@ public interface Attribute {
 
 	Token asToken();
 
-	Sequence<Token> asTokenList();
+	Sequence<Token> asTokenSequence();
 
 	enum Type {
 		Field_,

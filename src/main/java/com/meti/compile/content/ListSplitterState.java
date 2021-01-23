@@ -49,7 +49,7 @@ public class ListSplitterState implements SplitterState {
 
 	@Override
 	public Stream<String> stream() {
-		return Lists.stream(lines);
+		return Sequences.stream(lines);
 	}
 
 	@Override

@@ -31,7 +31,7 @@ public record FieldListAttribute(List<Field> fields) implements Attribute {
 	}
 
 	@Override
-	public Sequence<Token> asTokenList() {
+	public Sequence<Token> asTokenSequence() {
 		return JavaLists.fromJava(asTokenList1());
 	}
 

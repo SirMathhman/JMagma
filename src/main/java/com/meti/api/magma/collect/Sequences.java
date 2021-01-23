@@ -26,6 +26,10 @@ public class Sequences {
 		return new Impl<>(elements);
 	}
 
+	public static <T> Stream<T> stream(Sequence<T> sequence) {
+		return new StreamImpl<>(sequence);
+	}
+
 	private static class Impl<T> implements Sequence<T> {
 		private final int length;
 		private final T[] elements;
@@ -54,6 +58,29 @@ public class Sequences {
 		@Override
 		public int size() {
 			return length;
+		}
+	}
+
+	private static class StreamImpl<T> extends AbstractStream<T> {
+		private final Sequence<T> sequence;
+		private int counter;
+
+		public StreamImpl(Sequence<T> sequence) {
+			this.sequence = sequence;
+			this.counter = 0;
+		}
+
+		@Override
+		public T head() throws StreamException {
+			if (counter < sequence.size()) {
+				try {
+					return sequence.apply(counter++);
+				} catch (IndexException e) {
+					throw new StreamException(e);
+				}
+			} else {
+				throw new EndOfStreamException("No more elements left.");
+			}
 		}
 	}
 }

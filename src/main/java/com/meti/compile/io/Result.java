@@ -1,7 +1,7 @@
 package com.meti.compile.io;
 
-import com.meti.api.magma.collect.Lists;
 import com.meti.api.magma.collect.Sequence;
+import com.meti.api.magma.collect.Sequences;
 import com.meti.api.magma.collect.Stream;
 import com.meti.api.magma.core.Option;
 
@@ -14,7 +14,7 @@ public interface Result {
 
 	default Stream<Source> streamSources() {
 		var sources = listSources();
-		var stream = Lists.stream(sources);
+		var stream = Sequences.stream(sources);
 		return stream;
 	}
 
@@ -24,7 +24,7 @@ public interface Result {
 		Sequence<Format> listFormats();
 
 		default Stream<Format> streamFormats() {
-			return Lists.stream(listFormats());
+			return Sequences.stream(listFormats());
 		}
 	}
 

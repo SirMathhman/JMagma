@@ -7,6 +7,8 @@ import com.meti.api.magma.core.F2E1;
 public interface Stream<T> {
 	Stream<T> filter(F1<T, Boolean> predicate);
 
+	T fold(F2E1<T, T, T, ?> folder) throws StreamException;
+
 	<R> R fold(R identity, F2E1<R, T, R, ?> folder) throws StreamException;
 
 	T head() throws StreamException;

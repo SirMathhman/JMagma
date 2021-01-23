@@ -87,12 +87,12 @@ public class CRenderStage {
 		return optional.orElseThrow(() -> new CompileException("Pair has invalid type: " + token));
 	}
 
-	com.meti.compile.token.Parent renderParent(Token rendered) throws CompileException {
+	Token renderParent(Token rendered) throws CompileException {
 		var attribute = rendered.apply(AbstractToken.Query.Lines);
-		var lines = JavaLists.toJava(attribute.asTokenList());
+		var lines = JavaLists.toJava(attribute.asTokenSequence());
 		var newLines = new ArrayList<Token>();
 		for (Token line : lines) newLines.add(render(line));
-		return new Parent(newLines);
+		return new Parent(JavaLists.fromJava(newLines));
 	}
 
 	Token renderRoot(Token token) throws CompileException {

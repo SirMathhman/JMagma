@@ -35,6 +35,11 @@ public abstract class AbstractStream<T> implements Stream<T> {
 	}
 
 	@Override
+	public T fold(F2E1<T, T, T, ?> folder) throws StreamException {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
 	public <R> Stream<R> map(F1E1<T, R, ?> mapper) throws StreamException {
 		return new AbstractStream<>() {
 			@Override

@@ -12,7 +12,7 @@ public record StringAttribute(String value) implements Attribute {
 	}
 
 	@Override
-	public Sequence<Token> asTokenList() {
+	public Sequence<Token> asTokenSequence() {
 		return JavaLists.fromJava(asTokenList1());
 	}
 

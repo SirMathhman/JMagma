@@ -103,10 +103,10 @@ public class MagmaLexerStage {
 	}
 
 	private Attribute lexTokenListAttribute(Attribute attribute, F1E1<Token, Token, CompileException> mapper) throws CompileException {
-		var nodes = JavaLists.toJava(attribute.asTokenList());
+		var nodes = JavaLists.toJava(attribute.asTokenSequence());
 		var newNodes = new ArrayList<Token>();
 		for (Token node : nodes) newNodes.add(mapper.apply(node));
-		return new TokenListAttribute(newNodes);
+		return new TokenSequenceAttribute(JavaLists.fromJava(newNodes));
 	}
 
 	private Token lexTypeContent(Token type) throws CompileException {

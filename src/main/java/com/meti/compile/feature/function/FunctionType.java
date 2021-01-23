@@ -22,7 +22,9 @@ public final class FunctionType extends AbstractToken {
 		return switch (query) {
 			case Group -> GroupAttribute.Function;
 			case Returns -> new TokenAttribute(returns);
-			case Parameters -> new TokenListAttribute(parameters);
+			case Parameters -> Attribute result;List<Token> list = parameters;
+					result = new TokenSequenceAttribute(JavaLists.fromJava(list));
+					result;
 			default -> throw new UnsupportedOperationException();
 		};
 	}
@@ -31,7 +33,7 @@ public final class FunctionType extends AbstractToken {
 	public Token copy(Query query, Attribute attribute) {
 		return switch (query) {
 			case Returns -> new FunctionType(attribute.asToken(), parameters);
-			case Parameters -> new FunctionType(returns, JavaLists.toJava(attribute.asTokenList()));
+			case Parameters -> new FunctionType(returns, JavaLists.toJava(attribute.asTokenSequence()));
 			default -> this;
 		};
 	}

@@ -84,7 +84,7 @@ class CRenderStageTest {
 				.map(Optional::of)
 				.orElseGet(Optional::empty);
 		var output = optional.orElseThrow();
-		var actual = CRenderStage_.renderParent(output);
+		Token actual = CRenderStage_.renderParent(output);
 		assertEquals("int main(){return 0;}", actual.apply(AbstractToken.Query.Value).asString());
 	}
 

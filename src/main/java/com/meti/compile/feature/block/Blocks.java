@@ -37,14 +37,16 @@ public class Blocks {
 		public Attribute apply(Query query) {
 			return switch (query) {
 				case Group -> GroupAttribute.Block;
-				case Lines -> new TokenListAttribute(JavaLists.toJava(lines));
+				case Lines -> Attribute result;java.util.List<Token> list = JavaLists.toJava(lines);
+						result = new TokenSequenceAttribute(JavaLists.fromJava(list));
+						result;
 				default -> throw new UnsupportedOperationException();
 			};
 		}
 
 		@Override
 		public Token copy(Query query, Attribute attribute) {
-			return query == Query.Lines ? of(attribute.asTokenList()) : this;
+			return query == Query.Lines ? of(attribute.asTokenSequence()) : this;
 		}
 
 		@Override
