@@ -1,11 +1,13 @@
 package com.meti.compile.stage;
 
 import com.meti.api.java.collect.JavaLists;
+import com.meti.api.magma.collect.Sequences;
+import com.meti.api.magma.collect.StreamException;
 import com.meti.compile.CompileException;
 import com.meti.compile.feature.block.Blocks;
-import com.meti.compile.feature.function.FunctionType;
 import com.meti.compile.feature.function.Implementation;
 import com.meti.compile.feature.function.Return;
+import com.meti.compile.feature.function.FunctionType;
 import com.meti.compile.feature.primitive.Integer;
 import com.meti.compile.feature.primitive.Primitives;
 import com.meti.compile.token.*;
@@ -21,13 +23,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class CRenderStageTest {
 	@Test
-	void renderPair() throws CompileException {
-		var pair = new Pair(Primitives.I16, new Content("main()"));
-		var value = CRenderStage_.render(pair).apply(AbstractToken.Query.Value).asString();
-		assertEquals("int main()", value);
-	}
-
-	@Test
 	void render() throws CompileException {
 		var node = createFunction();
 		assertEquals("int main(){return 0;}", CRenderStage_.render(node)
@@ -36,7 +31,15 @@ class CRenderStageTest {
 	}
 
 	private Token createFunction() {
-		Token functionType = new FunctionType(Primitives.I16, JavaLists.fromJava(Collections.emptyList()));
+		Token functionType;
+		try {
+			functionType = Sequences.stream(JavaLists.fromJava(Collections.<Token>emptyList()))
+					.fold(FunctionType.Empty, FunctionType.WithoutReturn::withParameter)
+					.withReturn(Primitives.I16).complete();
+		} catch (StreamException e) {
+			functionType = FunctionType.Empty.withReturn(Primitives.I16)
+					.complete();
+		}
 		var identity = new EmptyField(Collections.singletonList(Field.Flag.DEF), "main", functionType);
 		final List<Token> lines = Collections.singletonList(new Return(new Integer("0")));
 		Token body = Blocks.of(JavaLists.fromJava(lines));
@@ -75,6 +78,13 @@ class CRenderStageTest {
 		assertEquals("{return 0;}", CRenderStage_.renderRoot(node)
 				.apply(AbstractToken.Query.Value)
 				.asString());
+	}
+
+	@Test
+	void renderPair() throws CompileException {
+		var pair = new Pair(Primitives.I16, new Content("main()"));
+		var value = CRenderStage_.render(pair).apply(AbstractToken.Query.Value).asString();
+		assertEquals("int main()", value);
 	}
 
 	@Test

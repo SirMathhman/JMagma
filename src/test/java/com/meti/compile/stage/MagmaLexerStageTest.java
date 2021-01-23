@@ -1,11 +1,13 @@
 package com.meti.compile.stage;
 
 import com.meti.api.java.collect.JavaLists;
+import com.meti.api.magma.collect.Sequences;
+import com.meti.api.magma.collect.StreamException;
 import com.meti.compile.CompileException;
 import com.meti.compile.feature.block.Blocks;
-import com.meti.compile.feature.function.FunctionType;
 import com.meti.compile.feature.function.Implementation;
 import com.meti.compile.feature.function.Return;
+import com.meti.compile.feature.function.FunctionType;
 import com.meti.compile.feature.primitive.Integer;
 import com.meti.compile.feature.primitive.Primitives;
 import com.meti.compile.token.EmptyField;
@@ -32,7 +34,15 @@ class MagmaLexerStageTest {
 		var value = new Integer("0");
 		var returns = new Return(value);
 		var body = Blocks.of(JavaLists.fromJava(Collections.singletonList(returns)));
-		Token identityType = new FunctionType((Token) Primitives.I16, JavaLists.fromJava(emptyList()));
+		Token identityType;
+		try {
+			identityType = Sequences.stream(JavaLists.<Token>fromJava(emptyList()))
+					.fold(FunctionType.Empty, FunctionType.WithoutReturn::withParameter)
+					.withReturn(Primitives.I16).complete();
+		} catch (StreamException e) {
+			identityType = FunctionType.Empty.withReturn((Token) Primitives.I16)
+					.complete();
+		}
 		var identity = new EmptyField(Collections.singletonList(Field.Flag.DEF), "main", identityType);
 		return new Implementation(identity, emptyList(), body);
 	}
