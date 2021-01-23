@@ -48,18 +48,22 @@ public final class Implementation extends AbstractToken {
 
 	@Override
 	public Token copy(Query query, Attribute attribute) {
-		return switch (query) {
-			case Identity -> new Implementation(attribute.asField(), parameters, body);
-			case Parameters -> Sequence<Field> result;Attribute attribute1 = attribute;
-					try {
-						result = attribute1.streamFields().fold(ArrayLists.empty(), com.meti.api.magma.collect.List::add);
-					} catch (StreamException e) {
-						result = ArrayLists.empty();
-					}
-					new Implementation(identity, JavaLists.toJava(result), body);
-			case Body -> new Implementation(identity, parameters, attribute.asToken());
-			default -> this;
-		};
+		switch (query) {
+			case Identity:
+				return new Implementation(attribute.asField(), parameters, body);
+			case Parameters:
+				Sequence<Field> result;
+				try {
+					result = attribute.streamFields().fold(ArrayLists.empty(), com.meti.api.magma.collect.List::add);
+				} catch (StreamException e) {
+					result = ArrayLists.empty();
+				}
+				return new Implementation(identity, JavaLists.toJava(result), body);
+			case Body:
+				return new Implementation(identity, parameters, attribute.asToken());
+			default:
+				return this;
+		}
 	}
 
 	@Override

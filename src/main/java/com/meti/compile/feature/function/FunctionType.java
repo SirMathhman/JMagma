@@ -29,17 +29,21 @@ public final class FunctionType extends AbstractToken {
 
 	@Override
 	public Token copy(Query query, Attribute attribute) {
-		return switch (query) {
-			case Returns -> new FunctionType(attribute.asToken(), parameters);
-			case Parameters -> Sequence<Token> result;Attribute attribute1 = attribute;
-					try {
-						result = attribute1.streamTokens().fold(ArrayLists.empty(), List::add);
-					} catch (StreamException e) {
-						result = ArrayLists.empty();
-					}
-					new FunctionType(returns, result);
-			default -> this;
-		};
+		switch (query) {
+			case Returns:
+				return new FunctionType(attribute.asToken(), parameters);
+			case Parameters:
+				Sequence<Token> result;
+				Attribute attribute1 = attribute;
+				try {
+					result = attribute1.streamTokens().fold(ArrayLists.empty(), List::add);
+				} catch (StreamException e) {
+					result = ArrayLists.empty();
+				}
+				return new FunctionType(returns, result);
+			default:
+				return this;
+		}
 	}
 
 	@Override
