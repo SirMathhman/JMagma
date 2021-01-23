@@ -17,6 +17,11 @@ public record JavaOption<T>(Optional<T> value) implements com.meti.api.magma.cor
 	}
 
 	@Override
+	public <E extends Exception> void ifPresentOrElse(C1E1<T, E> ifPresent, RE1<E> ifEmpty) throws E {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
 	public <R> Option<R> map(F1<T, R> mapper) {
 		throw new UnsupportedOperationException();
 	}

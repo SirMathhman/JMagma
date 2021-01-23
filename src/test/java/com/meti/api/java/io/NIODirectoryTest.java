@@ -1,6 +1,7 @@
 package com.meti.api.java.io;
 
 import com.meti.api.magma.collect.IndexException;
+import com.meti.api.magma.io.Directory;
 import com.meti.api.magma.io.IOException_;
 import org.junit.jupiter.api.Test;
 
@@ -11,9 +12,8 @@ class NIODirectoryTest {
 
 	@Test
 	void relativize() throws IOException_, IndexException {
-		var temp = NIOFileSystem_.root().ensureAsDirectory()
-				.resolve("test")
-				.ensureAsDirectory();
+		var root = NIOFileSystem_.root().ensureAsDirectory();
+		var temp = root.resolve("test").ensureAsDirectory();
 		var expected = NIOFileSystem_.absolute("Main.mg");
 		var actual = temp.relativize(temp.resolve("Main.mg"));
 		assertEquals(expected, actual);

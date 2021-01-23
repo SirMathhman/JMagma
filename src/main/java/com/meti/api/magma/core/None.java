@@ -20,6 +20,11 @@ public class None<T> implements Option<T> {
 	}
 
 	@Override
+	public <E extends Exception> void ifPresentOrElse(C1E1<T, E> ifPresent, RE1<E> ifEmpty) throws E {
+		ifEmpty.run();
+	}
+
+	@Override
 	public <R> Option<R> map(F1<T, R> mapper) {
 		return None();
 	}
