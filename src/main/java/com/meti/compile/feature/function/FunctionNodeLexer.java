@@ -156,7 +156,7 @@ public class FunctionNodeLexer implements Lexer<Token> {
 		return attachParameters(paramString);
 	}
 
-	private Content lexReturn(String content) {
+	private Token lexReturn(String content) {
 		var returns = findReturn(content);
 		var body = findBody(content);
 		var returnSlice = content.substring(returns + 1, body);
