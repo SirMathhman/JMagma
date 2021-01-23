@@ -4,6 +4,15 @@ public class Streams {
 	public Streams() {
 	}
 
+	public static <T> Stream<T> empty() {
+		return new AbstractStream<T>() {
+			@Override
+			public T head() throws StreamException {
+				throw new EndOfStreamException("Stream is empty.");
+			}
+		};
+	}
+
 	public static <T> Stream<T> ofArray(T... elements) {
 		return new AbstractStream<>() {
 			private int counter = 0;

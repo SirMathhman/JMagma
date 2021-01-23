@@ -1,6 +1,7 @@
 package com.meti.compile.feature.function;
 
 import com.meti.api.java.collect.JavaLists;
+import com.meti.api.magma.collect.ArrayLists;
 import com.meti.api.magma.collect.Sequence;
 import com.meti.api.magma.collect.Sequences;
 import com.meti.api.magma.collect.StreamException;
@@ -49,7 +50,13 @@ public final class Implementation extends AbstractToken {
 	public Token copy(Query query, Attribute attribute) {
 		return switch (query) {
 			case Identity -> new Implementation(attribute.asField(), parameters, body);
-			case Parameters -> new Implementation(identity, JavaLists.toJava(attribute.asFieldList()), body);
+			case Parameters -> Sequence<Field> result;Attribute attribute1 = attribute;
+					try {
+						result = attribute1.streamFields().fold(ArrayLists.empty(), com.meti.api.magma.collect.List::add);
+					} catch (StreamException e) {
+						result = ArrayLists.empty();
+					}
+					new Implementation(identity, JavaLists.toJava(result), body);
 			case Body -> new Implementation(identity, parameters, attribute.asToken());
 			default -> this;
 		};

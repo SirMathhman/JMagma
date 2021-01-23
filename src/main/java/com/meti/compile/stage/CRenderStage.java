@@ -1,6 +1,9 @@
 package com.meti.compile.stage;
 
 import com.meti.api.java.collect.JavaLists;
+import com.meti.api.magma.collect.ArrayLists;
+import com.meti.api.magma.collect.Sequence;
+import com.meti.api.magma.collect.StreamException;
 import com.meti.compile.CLang.Formats;
 import com.meti.compile.CompileException;
 import com.meti.compile.io.MapMapping;
@@ -89,7 +92,13 @@ public class CRenderStage {
 
 	Token renderParent(Token rendered) throws CompileException {
 		var attribute = rendered.apply(AbstractToken.Query.Lines);
-		var lines = JavaLists.toJava(attribute.asTokenSequence());
+		Sequence<Token> result;
+		try {
+			result = attribute.streamTokens().fold(ArrayLists.empty(), com.meti.api.magma.collect.List::add);
+		} catch (StreamException e) {
+			result = ArrayLists.empty();
+		}
+		var lines = JavaLists.toJava(result);
 		var newLines = new ArrayList<Token>();
 		for (Token line : lines) newLines.add(render(line));
 		return new Parent(JavaLists.fromJava(newLines));

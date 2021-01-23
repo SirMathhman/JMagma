@@ -1,8 +1,7 @@
 package com.meti.compile.stage;
 
 import com.meti.api.java.collect.JavaLists;
-import com.meti.api.magma.collect.Sequences;
-import com.meti.api.magma.collect.StreamException;
+import com.meti.api.magma.collect.*;
 import com.meti.api.magma.core.F1E1;
 import com.meti.compile.CompileException;
 import com.meti.compile.token.*;
@@ -59,7 +58,13 @@ public class MagmaLexerStage {
 	}
 
 	private Attribute lexFieldListAttribute(Attribute attribute) throws CompileException {
-		var oldList = JavaLists.toJava(attribute.asFieldList());
+		Sequence<Field> result;
+		try {
+			result = attribute.streamFields().fold(ArrayLists.empty(), List::add);
+		} catch (StreamException e1) {
+			result = ArrayLists.empty();
+		}
+		var oldList = JavaLists.toJava(result);
 		var newList = new ArrayList<Field>();
 		for (Field field : oldList) {
 			newList.add(lexField(field));
@@ -111,7 +116,13 @@ public class MagmaLexerStage {
 	}
 
 	private Attribute lexTokenListAttribute(Attribute attribute, F1E1<Token, Token, CompileException> mapper) throws CompileException {
-		var nodes = JavaLists.toJava(attribute.asTokenSequence());
+		Sequence<Token> result;
+		try {
+			result = attribute.streamTokens().fold(ArrayLists.empty(), List::add);
+		} catch (StreamException e) {
+			result = ArrayLists.empty();
+		}
+		var nodes = JavaLists.toJava(result);
 		var newNodes = new ArrayList<Token>();
 		for (Token node : nodes) newNodes.add(mapper.apply(node));
 		return new TokenSequenceAttribute(JavaLists.fromJava(newNodes));

@@ -1,6 +1,7 @@
 package com.meti.compile.feature.structure;
 
 import com.meti.api.java.collect.JavaLists;
+import com.meti.api.magma.collect.ArrayLists;
 import com.meti.api.magma.collect.Sequence;
 import com.meti.api.magma.collect.Sequences;
 import com.meti.api.magma.collect.StreamException;
@@ -40,7 +41,13 @@ public final class Structure extends AbstractToken {
 
 	@Override
 	public Token copy(Query query, Attribute attribute) {
-		return query == Query.Members ? new Structure(name, JavaLists.toJava(attribute.asFieldList())) : this;
+		Sequence<Field> result;
+		try {
+			result = attribute.streamFields().fold(ArrayLists.empty(), com.meti.api.magma.collect.List::add);
+		} catch (StreamException e) {
+			result = ArrayLists.empty();
+		}
+		return query == Query.Members ? new Structure(name, JavaLists.toJava(result)) : this;
 	}
 
 	@Override

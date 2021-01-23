@@ -1,5 +1,9 @@
 package com.meti.compile.feature.block;
 
+import com.meti.api.magma.collect.ArrayLists;
+import com.meti.api.magma.collect.List;
+import com.meti.api.magma.collect.Sequence;
+import com.meti.api.magma.collect.StreamException;
 import com.meti.api.magma.core.Option;
 import com.meti.compile.stage.Renderer;
 import com.meti.compile.token.*;
@@ -25,7 +29,12 @@ public class BlockRenderer implements Renderer<Token> {
 
 	private Token renderImpl(Token token) {
 		var attribute = token.apply(AbstractToken.Query.Lines);
-		var sequence = attribute.asTokenSequence();
+		Sequence<Token> sequence;
+		try {
+			sequence = attribute.streamTokens().fold(ArrayLists.empty(), List::add);
+		} catch (StreamException e) {
+			sequence = ArrayLists.empty();
+		}
 		var parent = new Parent(sequence);
 		return Parents.format("{%t}")
 				.format(parent)

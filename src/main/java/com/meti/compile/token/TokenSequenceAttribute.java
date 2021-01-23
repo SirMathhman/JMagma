@@ -8,8 +8,7 @@ public record TokenSequenceAttribute(Sequence<Token> list) implements Attribute 
 		throw new UnsupportedOperationException("Not a field.");
 	}
 
-	@Override
-	public Sequence<Field> asFieldList() {
+	private Sequence<Field> asFieldSequence() {
 		throw new UnsupportedOperationException("Not a list1 of list.");
 	}
 
@@ -23,9 +22,18 @@ public record TokenSequenceAttribute(Sequence<Token> list) implements Attribute 
 		throw new UnsupportedOperationException("Not a token.");
 	}
 
-	@Override
-	public Sequence<Token> asTokenSequence() {
+	private Sequence<Token> asTokenSequence() {
 		return list;
+	}
+
+	@Override
+	public Stream<Field> streamFields() {
+		return Sequences.stream(asFieldSequence());
+	}
+
+	@Override
+	public Stream<Token> streamTokens(){
+		return Sequences.stream(asTokenSequence());
 	}
 
 	@Override

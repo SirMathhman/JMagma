@@ -1,15 +1,12 @@
 package com.meti.compile.token;
 
 import com.meti.api.magma.collect.CollectionException;
-import com.meti.api.magma.collect.Sequence;
+import com.meti.api.magma.collect.Stream;
+import com.meti.api.magma.collect.Streams;
 
 public interface Attribute {
 	default Field asField() {
 		throw new UnsupportedOperationException("Not a field.");
-	}
-
-	default Sequence<Field> asFieldList() {
-		throw new UnsupportedOperationException("Not a list of list.");
 	}
 
 	default String asString() {
@@ -20,8 +17,12 @@ public interface Attribute {
 		throw new UnsupportedOperationException("Not a token.");
 	}
 
-	default Sequence<Token> asTokenSequence() {
-		throw new UnsupportedOperationException("Not a sequence of tokens.");
+	default Stream<Field> streamFields() {
+		return Streams.empty();
+	}
+
+	default Stream<Token> streamTokens() {
+		return Streams.empty();
 	}
 
 	enum Type {

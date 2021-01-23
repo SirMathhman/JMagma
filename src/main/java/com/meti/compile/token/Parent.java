@@ -47,7 +47,13 @@ public final class Parent extends AbstractToken {
 
 	@Override
 	public Token copy(Query query, Attribute attribute) {
-		return query == Query.Lines ? new Parent(attribute.asTokenSequence()) : this;
+		Sequence<Token> result;
+		try {
+			result = attribute.streamTokens().fold(ArrayLists.empty(), com.meti.api.magma.collect.List::add);
+		} catch (StreamException e) {
+			result = ArrayLists.empty();
+		}
+		return query == Query.Lines ? new Parent(result) : this;
 	}
 
 	@Override

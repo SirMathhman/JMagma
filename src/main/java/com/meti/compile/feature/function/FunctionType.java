@@ -1,7 +1,9 @@
 package com.meti.compile.feature.function;
 
 import com.meti.api.magma.collect.ArrayLists;
+import com.meti.api.magma.collect.List;
 import com.meti.api.magma.collect.Sequence;
+import com.meti.api.magma.collect.StreamException;
 import com.meti.compile.token.*;
 
 import java.util.Objects;
@@ -29,7 +31,13 @@ public final class FunctionType extends AbstractToken {
 	public Token copy(Query query, Attribute attribute) {
 		return switch (query) {
 			case Returns -> new FunctionType(attribute.asToken(), parameters);
-			case Parameters -> new FunctionType(returns, attribute.asTokenSequence());
+			case Parameters -> Sequence<Token> result;Attribute attribute1 = attribute;
+					try {
+						result = attribute1.streamTokens().fold(ArrayLists.empty(), List::add);
+					} catch (StreamException e) {
+						result = ArrayLists.empty();
+					}
+					new FunctionType(returns, result);
 			default -> this;
 		};
 	}

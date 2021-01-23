@@ -44,7 +44,13 @@ public class Blocks {
 
 		@Override
 		public Token copy(Query query, Attribute attribute) {
-			return query == Query.Lines ? of(attribute.asTokenSequence()) : this;
+			Sequence<Token> result;
+			try {
+				result = attribute.streamTokens().fold(ArrayLists.empty(), List::add);
+			} catch (StreamException e) {
+				result = ArrayLists.empty();
+			}
+			return query == Query.Lines ? of(result) : this;
 		}
 
 		@Override
