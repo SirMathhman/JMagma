@@ -7,7 +7,7 @@ import com.meti.compile.token.*;
 import java.util.Objects;
 
 public class Blocks {
-	public static final Builder Empty = new Builder(JavaLists.empty());
+	static final Builder Empty = new Builder(JavaLists.empty());
 
 	public Blocks() {
 	}
@@ -37,9 +37,7 @@ public class Blocks {
 		public Attribute apply(Query query) {
 			return switch (query) {
 				case Group -> GroupAttribute.Block;
-				case Lines -> Attribute result;java.util.List<Token> list = JavaLists.toJava(lines);
-						result = new TokenSequenceAttribute(JavaLists.fromJava(list));
-						result;
+				case Lines -> new TokenSequenceAttribute(lines);
 				default -> throw new UnsupportedOperationException();
 			};
 		}
