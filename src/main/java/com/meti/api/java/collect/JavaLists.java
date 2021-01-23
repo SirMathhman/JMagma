@@ -16,8 +16,9 @@ public class JavaLists {
 	public static <T> List<T> fromJava(java.util.List<T> value) {
 		var copy = ArrayLists.<T>empty();
 		try {
-			for (int i = 0; i < value.size(); i++) {
-				copy.add(value.get(i));
+			var size = value.size();
+			for (int i = 0; i < size; i++) {
+				copy = copy.add(value.get(i));
 			}
 			return copy;
 		} catch (CollectionException e) {
