@@ -1,10 +1,7 @@
 package com.meti.compile;
 
 import com.meti.api.java.collect.JavaLists;
-import com.meti.api.magma.collect.List;
-import com.meti.api.magma.collect.Lists;
-import com.meti.api.magma.collect.Sequence;
-import com.meti.api.magma.collect.StreamException;
+import com.meti.api.magma.collect.*;
 import com.meti.api.magma.core.F2E1;
 import com.meti.api.magma.io.IOException_;
 import com.meti.compile.io.*;
@@ -86,7 +83,13 @@ public class MagmaCCompiler implements Compiler {
 
 	private Sequence<Token> lex(String content) throws CompileException {
 		try {
-			return BracketSplitter_.stream(content)
+			Stream<String> result;
+			try {
+				result = BracketSplitter_.stream(content);
+			} catch (CollectionException e) {
+				throw new StreamException(e);
+			}
+			return result
 					.map(MagmaLexerStage_::apply)
 					.fold(JavaLists.empty(), List::add);
 		} catch (StreamException e) {

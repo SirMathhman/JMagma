@@ -1,9 +1,10 @@
 package com.meti.compile.content;
 
+import com.meti.api.magma.collect.CollectionException;
 import com.meti.api.magma.collect.Stream;
 
 public interface SplitterState {
-	SplitterState advance();
+	SplitterState advance() throws CollectionException;
 
 	SplitterState append(char c);
 
