@@ -21,7 +21,7 @@ public final record Some<T>(T value) implements Option<T> {
 
 	@Override
 	public <E extends Exception> void ifPresentOrElse(C1E1<T, E> ifPresent, RE1<E> ifEmpty) throws E {
-		throw new UnsupportedOperationException();
+		ifPresent.accept(value);
 	}
 
 	@Override
@@ -41,6 +41,6 @@ public final record Some<T>(T value) implements Option<T> {
 
 	@Override
 	public <E extends Exception> T orElseThrow(Supplier<E> supplier) throws E {
-		throw new UnsupportedOperationException();
+		return value;
 	}
 }
