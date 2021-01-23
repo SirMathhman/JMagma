@@ -17,6 +17,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
+import static com.meti.compile.feature.function.Implementation.Empty;
 import static com.meti.compile.stage.CNodeRenderer.CNodeRenderer_;
 import static com.meti.compile.stage.CRenderStage.CRenderStage_;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -40,10 +41,31 @@ class CRenderStageTest {
 			functionType = FunctionType.Empty.withReturn(Primitives.I16)
 					.complete();
 		}
-		var identity = new EmptyField(Collections.singletonList(Field.Flag.DEF), "main", functionType);
+		Field identity;
+		try {
+			identity = Sequences.stream(JavaLists.fromJava(Collections.singletonList(Field.Flag.DEF)))
+					.fold(Fields.Empty, Fields.Neither::withFlag)
+					.withName("main")
+					.withType(functionType)
+					.complete();
+		} catch (StreamException e1) {
+			identity = Fields.Empty.withName("main")
+					.withType(functionType)
+					.complete();
+		}
 		final List<Token> lines = Collections.singletonList(new Return(new Integer("0")));
 		Token body = Blocks.of(JavaLists.fromJava(lines));
-		return new Implementation(identity, Collections.emptyList(), body);
+		try {
+			return Sequences.stream(JavaLists.<Field>fromJava(Collections.emptyList()))
+					.fold(Empty, Implementation.Neither::withParameter)
+					.withIdentity(identity)
+					.withBody(body)
+					.complete();
+		} catch (StreamException e) {
+			return Empty.withIdentity(identity)
+					.withBody(body)
+					.complete();
+		}
 	}
 
 	@Test

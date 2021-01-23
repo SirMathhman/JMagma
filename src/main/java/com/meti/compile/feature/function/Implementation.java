@@ -2,24 +2,26 @@ package com.meti.compile.feature.function;
 
 import com.meti.api.java.collect.JavaLists;
 import com.meti.api.magma.collect.ArrayLists;
+import com.meti.api.magma.collect.CollectionException;
 import com.meti.api.magma.collect.Sequence;
-import com.meti.api.magma.collect.Sequences;
 import com.meti.api.magma.collect.StreamException;
 import com.meti.compile.token.*;
 
 import java.util.List;
 import java.util.Objects;
 
+import static com.meti.api.magma.collect.Sequences.stream;
 import static com.meti.compile.token.Attributes.EmptyFields;
 import static java.util.Collections.emptyList;
 import static java.util.Collections.singletonList;
 
 public final class Implementation extends AbstractToken {
+	public static final Neither Empty = new Neither(ArrayLists.empty());
 	private final Field identity;
-	private final List<Field> parameters;
+	private final Sequence<Field> parameters;
 	private final Token body;
 
-	public Implementation(Field identity, List<Field> parameters, Token body) {
+	public Implementation(Field identity, Sequence<Field> parameters, Token body) {
 		this.identity = identity;
 		this.parameters = parameters;
 		this.body = body;
@@ -38,7 +40,7 @@ public final class Implementation extends AbstractToken {
 
 	private Attribute createParameters() {
 		try {
-			return Sequences.stream(JavaLists.fromJava(parameters))
+			return stream(parameters)
 					.fold(EmptyFields, Attribute.Builder::add)
 					.complete();
 		} catch (StreamException e) {
@@ -48,22 +50,40 @@ public final class Implementation extends AbstractToken {
 
 	@Override
 	public Token copy(Query query, Attribute attribute) {
-		switch (query) {
-			case Identity:
-				return new Implementation(attribute.asField(), parameters, body);
-			case Parameters:
-				Sequence<Field> result;
-				try {
-					result = attribute.streamFields().fold(ArrayLists.empty(), com.meti.api.magma.collect.List::add);
-				} catch (StreamException e) {
-					result = ArrayLists.empty();
-				}
-				return new Implementation(identity, JavaLists.toJava(result), body);
-			case Body:
-				return new Implementation(identity, parameters, attribute.asToken());
-			default:
-				return this;
+		try {
+			return switch (query) {
+				case Identity -> copyIdentity(attribute);
+				case Parameters -> copyParameters(attribute);
+				case Body -> copyBody(attribute);
+				default -> this;
+			};
+		} catch (StreamException e) {
+			return this;
 		}
+	}
+
+	private Token copyBody(Attribute attribute) throws StreamException {
+		return stream(parameters)
+				.fold(Empty, Neither::withParameter)
+				.withIdentity(identity)
+				.withBody(attribute.asToken())
+				.complete();
+	}
+
+	private Token copyParameters(Attribute attribute) throws StreamException {
+		return attribute.streamFields()
+				.fold(Empty, Neither::withParameter)
+				.withIdentity(identity)
+				.withBody(body)
+				.complete();
+	}
+
+	private Token copyIdentity(Attribute attribute) throws StreamException {
+		return stream(parameters)
+				.fold(Empty, Neither::withParameter)
+				.withIdentity(attribute.asField())
+				.withBody(body)
+				.complete();
 	}
 
 	@Override
@@ -104,4 +124,25 @@ public final class Implementation extends AbstractToken {
 		       "body=" + body + ']';
 	}
 
+	public static record Neither(com.meti.api.magma.collect.List<Field> parameters) {
+		public Implementation.WithIdentity withIdentity(Field identity) {
+			return new Implementation.WithIdentity(identity, parameters);
+		}
+
+		public Neither withParameter(Field field) throws CollectionException {
+			return new Neither(parameters.add(field));
+		}
+	}
+
+	public record WithIdentity(Field identity, com.meti.api.magma.collect.List<Field> parameters) {
+		public Implementation.Both withBody(Token body) {
+			return new Implementation.Both(identity, parameters, body);
+		}
+	}
+
+	public record Both(Field identity, com.meti.api.magma.collect.List<Field> parameters, Token body) {
+		public Token complete() {
+			return new Implementation(identity, parameters, body);
+		}
+	}
 }
