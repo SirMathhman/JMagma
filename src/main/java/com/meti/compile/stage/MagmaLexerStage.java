@@ -12,13 +12,12 @@ import static com.meti.compile.stage.NodeLexer.NodeLexer_;
 import static com.meti.compile.stage.TypeLexer.TypeLexer_;
 import static com.meti.compile.token.Attribute.Type.*;
 
-public class MagmaLexerStage implements SingleStage<String, Token> {
-	public static final SingleStage<String, Token> MagmaLexerStage_ = new MagmaLexerStage();
+public class MagmaLexerStage {
+	public static final MagmaLexerStage MagmaLexerStage_ = new MagmaLexerStage();
 
 	public MagmaLexerStage() {
 	}
 
-	@Override
 	public Token apply(String s) throws CompileException {
 		return lexNodeString(s);
 	}
