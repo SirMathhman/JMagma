@@ -26,7 +26,7 @@ public final class Implementation extends AbstractToken {
 		return switch (query) {
 			case Group -> GroupAttribute.Implementation;
 			case Identity -> new FieldAttribute(identity);
-			case Parameters -> new FieldListAttribute(parameters);
+			case Parameters -> new FieldListAttribute(JavaLists.fromJava(parameters));
 			case Body -> new TokenAttribute(body);
 			default -> throw new UnsupportedOperationException("Unknown query: " + query);
 		};

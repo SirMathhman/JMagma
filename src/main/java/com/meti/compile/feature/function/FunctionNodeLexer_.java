@@ -1,8 +1,6 @@
 package com.meti.compile.feature.function;
 
-import com.meti.api.magma.core.None;
 import com.meti.api.magma.core.Option;
-import com.meti.api.magma.core.Some;
 import com.meti.compile.CompileException;
 import com.meti.compile.stage.Lexer;
 import com.meti.compile.token.Content;
@@ -12,9 +10,10 @@ import com.meti.compile.token.Token;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Optional;
+import java.util.List;
 import java.util.stream.Collectors;
 
+import static com.meti.api.magma.core.Some.Some;
 import static com.meti.compile.token.FieldLexer.FieldLexer_;
 
 public class FunctionNodeLexer_ implements Lexer<Token> {
@@ -25,75 +24,94 @@ public class FunctionNodeLexer_ implements Lexer<Token> {
 
 	@Override
 	public Option<Token> lex(String content) throws CompileException {
-		return lex1(content).map(Some::Some).orElseGet(None::None);
+		return Some(content)
+				.filter(this::isValid)
+				.mapE1(this::lexValid);
 	}
 
-	private Optional<Token> lex1(String content) throws CompileException {
-		if (content.contains("(") &&
-		    content.contains(")") &&
-		    content.contains(":") &&
-		    content.contains("=>")) {
-			var paramStart = content.indexOf('(');
-			var paramEnd = content.indexOf(')');
-			var typeSeparator = content.indexOf(':');
-			var valueSeparator = content.indexOf("=>");
+	private Implementation lexValid(String content) throws CompileException {
+		var keySlice = content.substring(0, content.indexOf('('));
+		var keyString = keySlice.trim();
+		var space = keyString.lastIndexOf(' ');
+		var flags = lexFlags(keyString, space);
+		var name = lexName(keyString, space);
+		var parameters = lexParameters(content);
+		var returnType = lexReturn(content);
+		var value = lexValue(content);
+		var type = createFunctionType(parameters, returnType);
+		var identity = new EmptyField(flags, name, type);
+		return new Implementation(identity, parameters, value);
+	}
 
-			var keySlice = content.substring(0, paramStart);
-			var keyString = keySlice.trim();
-			var space = keyString.lastIndexOf(' ');
-			var flagSlice = keyString.substring(0, space);
-			var flagString = flagSlice.trim();
-			var flags = Arrays.stream(flagString.split(" "))
-					.filter(s -> !s.isBlank())
-					.map(String::trim)
-					.map(String::toUpperCase)
-					.map(Field.Flag::valueOf)
-					.collect(Collectors.toList());
-			var nameSlice = keyString.substring(space + 1);
-			var name = nameSlice.trim();
+	private FunctionType createFunctionType(ArrayList<Field> parameters, Content returnType) {
+		return new FunctionType(returnType, parameters.stream()
+				.map(Field::findType)
+				.collect(Collectors.toList()));
+	}
 
-			var paramSlice = content.substring(paramStart + 1, paramEnd);
-			var paramString = paramSlice.trim();
-			var paramStrings = new ArrayList<String>();
-			var buffer = new StringBuilder();
-			var depth = 0;
-			var paramLength = paramString.length();
-			for (int i = 0; i < paramLength; i++) {
-				var c = paramString.charAt(i);
-				if (c == ',' && depth == 0) {
-					paramStrings.add(buffer.toString());
-					buffer = new StringBuilder();
-				} else {
-					if (c == '(') depth++;
-					if (c == ')') depth--;
-					buffer.append(c);
-				}
+	private Content lexValue(String content) {
+		var valueSlice = content.substring(content.indexOf("=>") + 2);
+		var valueString = valueSlice.trim();
+		var value = new Content(valueString);
+		return value;
+	}
+
+	private Content lexReturn(String content) {
+		var returnSlice = content.substring(content.indexOf(':') + 1, content.indexOf("=>"));
+		var returnString = returnSlice.trim();
+		var returnType = new Content(returnString);
+		return returnType;
+	}
+
+	private ArrayList<Field> lexParameters(String content) throws CompileException {
+		var paramSlice = content.substring(content.indexOf('(') + 1, content.indexOf(')'));
+		var paramString = paramSlice.trim();
+		var paramStrings = new ArrayList<String>();
+		var buffer = new StringBuilder();
+		var depth = 0;
+		var paramLength = paramString.length();
+		for (int i = 0; i < paramLength; i++) {
+			var c = paramString.charAt(i);
+			if (c == ',' && depth == 0) {
+				paramStrings.add(buffer.toString());
+				buffer = new StringBuilder();
+			} else {
+				if (c == '(') depth++;
+				if (c == ')') depth--;
+				buffer.append(c);
 			}
-			paramStrings.add(buffer.toString());
-			paramStrings.removeIf(String::isBlank);
-
-			var parameters = new ArrayList<Field>();
-			for (String string : paramStrings) {
-				var option = FieldLexer_.lex(string).map(Optional::of).orElseGet(Optional::empty);
-				var field = option.orElseThrow(() -> new CompileException("Invalid field: " + string));
-				parameters.add(field);
-			}
-
-			var returnSlice = content.substring(typeSeparator + 1, valueSeparator);
-			var returnString = returnSlice.trim();
-			var returnType = new Content(returnString);
-
-			var valueSlice = content.substring(valueSeparator + 2);
-			var valueString = valueSlice.trim();
-			var value = new Content(valueString);
-
-			var parameterTypes = parameters.stream()
-					.map(Field::findType)
-					.collect(Collectors.toList());
-			var type = new FunctionType(returnType, parameterTypes);
-			var identity = new EmptyField(flags, name, type);
-			return Optional.of(new Implementation(identity, parameters, value));
 		}
-		return Optional.empty();
+		paramStrings.add(buffer.toString());
+		paramStrings.removeIf(String::isBlank);
+
+		var parameters = new ArrayList<Field>();
+		for (String string : paramStrings) {
+			parameters.add(FieldLexer_.lex(string).orElseThrow(() -> new CompileException("Invalid field: " + string)));
+		}
+		return parameters;
+	}
+
+	private List<Field.Flag> lexFlags(String keyString, int space) {
+		var flagSlice = keyString.substring(0, space);
+		var flagString = flagSlice.trim();
+		var flags = Arrays.stream(flagString.split(" "))
+				.filter(s -> !s.isBlank())
+				.map(String::trim)
+				.map(String::toUpperCase)
+				.map(Field.Flag::valueOf)
+				.collect(Collectors.toList());
+		return flags;
+	}
+
+	private String lexName(String keyString, int space) {
+		var nameSlice = keyString.substring(space + 1);
+		return nameSlice.trim();
+	}
+
+	private boolean isValid(String content) {
+		return content.contains("(") &&
+		       content.contains(")") &&
+		       content.contains(":") &&
+		       content.contains("=>");
 	}
 }

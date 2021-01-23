@@ -56,13 +56,13 @@ public class MagmaLexerStage {
 		return new FieldAttribute(newField);
 	}
 
-	private FieldListAttribute lexFieldListAttribute(Attribute attribute) throws CompileException {
+	private Attribute lexFieldListAttribute(Attribute attribute) throws CompileException {
 		var oldList = JavaLists.toJava(attribute.asFieldList());
 		var newList = new ArrayList<Field>();
 		for (Field field : oldList) {
 			newList.add(lexField(field));
 		}
-		return new FieldListAttribute(newList);
+		return new FieldListAttribute(JavaLists.fromJava(newList));
 	}
 
 	private Token lexNodeContent(Token node) throws CompileException {

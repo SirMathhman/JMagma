@@ -21,7 +21,7 @@ public final class Structure extends AbstractToken {
 		return switch (query) {
 			case Group -> GroupAttribute.Structure;
 			case Name -> new StringAttribute(name);
-			case Members -> new FieldListAttribute(members);
+			case Members -> new FieldListAttribute(JavaLists.fromJava(members));
 			default -> throw new UnsupportedOperationException();
 		};
 	}
