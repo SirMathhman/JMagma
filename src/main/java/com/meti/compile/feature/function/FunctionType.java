@@ -10,7 +10,7 @@ import static com.meti.api.magma.collect.Sequences.stream;
 public class FunctionType {
 	public static final WithoutReturn Empty = new WithoutReturn(ArrayLists.empty());
 
-	public FunctionType() {
+	private FunctionType() {
 	}
 
 	private static final class Impl extends AbstractToken {
