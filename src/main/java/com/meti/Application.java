@@ -11,6 +11,9 @@ class Application {
 	}
 
 	void run() throws IOException {
-		Files.writeString(Paths.get(".", "Main.c"), "int main(){return 0;}");
+		var parent = Paths.get(".", "test1");
+		if (!Files.exists(parent)) Files.createDirectories(parent);
+		var target = parent.resolve("Main.c");
+		Files.writeString(target, "int main(){return 0;}");
 	}
 }

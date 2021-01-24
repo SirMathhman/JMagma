@@ -14,7 +14,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class ApplicationTest {
-	private static final Path Target = Paths.get(".", "Main.c");
+	private static final Path TargetDirectory = Paths.get(".", "test1");
+	private static final Path Target = Paths.get(".", "test1", "Main.c");
 	private static final Path Build = Paths.get(".", "build");
 	private static final Path SourceDirectory = Paths.get(".", "test0");
 	private static final Path SourceFile = Paths.get(".", "test0", "Main.mg");
@@ -32,6 +33,7 @@ class ApplicationTest {
 	@AfterEach
 	void tearDown() throws IOException {
 		Files.deleteIfExists(Target);
+		Files.deleteIfExists(TargetDirectory);
 		Files.deleteIfExists(SourceFile);
 		Files.deleteIfExists(SourceDirectory);
 		Files.deleteIfExists(Build);
