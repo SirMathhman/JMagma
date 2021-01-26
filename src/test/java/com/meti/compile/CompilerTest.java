@@ -2,33 +2,33 @@ package com.meti.compile;
 
 import org.junit.jupiter.api.Test;
 
-import static com.meti.compile.Compiler.compile;
+import static com.meti.compile.Compiler.compileLines;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class CompilerTest {
 	@Test
 	void assign() {
-		assertEquals("x=y;", compile("x=y;"));
+		assertEquals("x=y;", compileLines("x=y;"));
 	}
 
 	@Test
 	void assignment() {
-		assertEquals("x=4;", compile("x=4;"));
+		assertEquals("x=4;", compileLines("x=4;"));
 	}
 
 	@Test
 	void block() {
-		assertEquals("{}", compile("{}"));
+		assertEquals("{}", compileLines("{}"));
 	}
 
 	@Test
 	void blockWithChild() {
-		assertEquals("{int x=0;}", compile("{const x : I16 = 0;}"));
+		assertEquals("{int x=0;}", compileLines("{const x : I16 = 0;}"));
 	}
 
 	@Test
 	void blockWithChildren() {
-		assertEquals("{int x=0;int y=420;}", compile("""
+		assertEquals("{int x=0;int y=420;}", compileLines("""
 				{
 					const x : I16 = 0;
 					const y : I16 = 420;
@@ -38,27 +38,27 @@ class CompilerTest {
 
 	@Test
 	void construction() {
-		assertEquals("{3,4}", compile("[Point]{3, 4}"));
+		assertEquals("{3,4}", compileLines("[Point]{3, 4}"));
 	}
 
 	@Test
 	void declare() {
-		assertEquals("int x=10;", compile("const x : I16 = 10;"));
+		assertEquals("int x=10;", compileLines("const x : I16 = 10;"));
 	}
 
 	@Test
 	void dereference() {
-		assertEquals("*value", compile("*value"));
+		assertEquals("*value", compileLines("*value"));
 	}
 
 	@Test
 	void doubling() {
-		assertEquals("10.0d", compile("10.0d"));
+		assertEquals("10.0d", compileLines("10.0d"));
 	}
 
 	@Test
 	void elif() {
-		assertEquals("if(1){}else if(1){}else{}", compile("""
+		assertEquals("if(1){}else if(1){}else{}", compileLines("""
 				if(true){
 				} elif(true){
 				} else {
@@ -68,86 +68,86 @@ class CompilerTest {
 
 	@Test
 	void else_if() {
-		assertEquals("if(1){}else{}", compile("if(true){}else{}"));
+		assertEquals("if(1){}else{}", compileLines("if(true){}else{}"));
 	}
 
 	@Test
 	void else_test() {
-		assertEquals("else{}", compile("else {}"));
+		assertEquals("else{}", compileLines("else {}"));
 	}
 
 	@Test
 	void floating() {
-		assertEquals("10.0", compile("10.0"));
+		assertEquals("10.0", compileLines("10.0"));
 	}
 
 	@Test
 	void function() {
-		assertEquals("int main(){return 0;}", compile("def main() : I16 => {return 0;}"));
+		assertEquals("int main(){return 0;}", compileLines("def main() : I16 => {return 0;}"));
 	}
 
 	@Test
 	void invoke() {
-		assertEquals("main(test)", compile("main(test)"));
+		assertEquals("main(test)", compileLines("main(test)"));
 	}
 
 	@Test
 	void member() {
-		assertEquals("myPoint.x", compile("myPoint => x"));
+		assertEquals("myPoint.x", compileLines("myPoint => x"));
 	}
 
 	@Test
 	void negativeInt() {
-		assertEquals("-10", compile("-10"));
+		assertEquals("-10", compileLines("-10"));
 	}
 
 	@Test
 	void positiveInt() {
-		assertEquals("10", compile("10"));
+		assertEquals("10", compileLines("10"));
 	}
 
 	@Test
 	void quantity() {
-		assertEquals("(4)", compile("(4)"));
+		assertEquals("(4)", compileLines("(4)"));
 	}
 
 	@Test
 	void reference() {
-		assertEquals("&value", compile("&value"));
+		assertEquals("&value", compileLines("&value"));
 	}
 
 	@Test
 	void returns() {
-		assertEquals("return 420;", compile("return 420;"));
+		assertEquals("return 420;", compileLines("return 420;"));
 	}
 
 	@Test
 	void structure() {
-		assertEquals("struct Wrapper{int value;};", compile("struct Wrapper{const value : I16}"));
+		assertEquals("struct Wrapper{int value;};", compileLines("struct Wrapper{const value : I16}"));
 	}
 
 	@Test
 	void test_false() {
-		assertEquals("0", compile("false"));
+		assertEquals("0", compileLines("false"));
 	}
 
 	@Test
 	void test_true() {
-		assertEquals("1", compile("true"));
+		assertEquals("1", compileLines("true"));
 	}
 
 	@Test
 	void variable() {
-		assertEquals("test", compile("test"));
+		assertEquals("test", compileLines("test"));
 	}
 
 	@Test
 	void while_test() {
-		assertEquals("while(1){}", compile("while(true){}"));
+		assertEquals("while(1){}", compileLines("while(true){}"));
 	}
 
 	@Test
 	void zero() {
-		assertEquals("0", compile("0"));
+		assertEquals("0", compileLines("0"));
 	}
 }

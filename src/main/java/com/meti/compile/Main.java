@@ -9,7 +9,7 @@ public class Main {
 		try {
 			var path = Paths.get(".", "Main.mg");
 			var content = Files.readString(path);
-			String joinedOutput = Compiler.compile(content);
+			String joinedOutput = Compiler.compileLines(content);
 			var target = Paths.get(".", "Main.c");
 			Files.writeString(target, joinedOutput);
 		} catch (IOException e) {
