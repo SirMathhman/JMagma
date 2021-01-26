@@ -94,7 +94,7 @@ There exists an any type 'Any', used for variables representing any type of data
 	let x = myFunction(10);
 
 	//referring to functions by reference
-	const myFunctionRef : I16 => I16 = myFunction;
+	const myFunctionRef : (I16) => I16 = myFunction;
 	const myFunctionRef1 = myFunction;
 }
 
@@ -117,8 +117,8 @@ There exists an any type 'Any', used for variables representing any type of data
 {
 	//methods
 	struct Sum {
-        const first : I16;
-        const second : I16;
+        const x : I16;
+        const y : I16;
     }
 
 	def sum0(self : Ref[Any]) => {
@@ -137,7 +137,7 @@ There exists an any type 'Any', used for variables representing any type of data
 	// here, sum1 acts as an extension method to the struct
 	// both lines are equivalent and the latter compiles to the former
 	const asMethod = sum1(&mySum);
-	const asMethodWithCaller = mySum.sum1();
+	const asMethodWithCaller = mySum.sum1(&mySum);
 	// but this doesn't work because Sum doesn't have sum1 -> mySum => sum1
 
 	/*
@@ -155,7 +155,7 @@ There exists an any type 'Any', used for variables representing any type of data
             return this.x + this.y;
         }
         //remove the braces
-        const sum1 = method(this : Ref[Sum) => this.x + this.y;
+        const sum1 = method(this : Ref[Sum]) => this.x + this.y;
 
         /*
         remove the "this" keyword, this is implicit b/c the function is default inside of a struct
@@ -179,7 +179,7 @@ There exists an any type 'Any', used for variables representing any type of data
         //let this = [AnotherSum]{first, second, null};
         const firstSum = () => x + y;
         //compiles to this.firstSum = () => x + y;, invokes method binding
-        def secondSum = () => x + y;
+        def secondSum() => x + y;
         return this;
     }
 
@@ -263,16 +263,17 @@ There exists an any type 'Any', used for variables representing any type of data
 	// also we don't need the 'let' or 'const' keywords in parameters
 	// it's assumed to be constant
 	class def Vehicle[T](
-		in this : T,
-		in move : (T = this) => Void,
+		in super : T,
+		in move : (T = super) => Void,
 	);
 
 	class def Car() => {
-		out const Vehicle = () => Vehicle();
+		out const Vehicle = () => Vehicle(this);
 	}
 
 	const myCar = Car();
 	const myVehicle : Vehicle = myCar;
+	myVehicle.move();
 }
 
 // API
