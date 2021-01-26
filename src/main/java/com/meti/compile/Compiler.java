@@ -1,27 +1,12 @@
-package com.meti.compile.com.meti;
+package com.meti.compile;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class Main {
-	public static void main(String[] args) {
-		try {
-			var path = Paths.get(".", "Main.mg");
-			var content = Files.readString(path);
-			String joinedOutput = compile(content);
-			var target = Paths.get(".", "Main.c");
-			Files.writeString(target, joinedOutput);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-
-	private static String compile(String content) {
+public class Compiler {
+	static String compile(String content) {
 		var lines = split(content);
 		var output = new ArrayList<String>();
 		for (String line : lines) {
@@ -30,7 +15,7 @@ public class Main {
 		return String.join("", output);
 	}
 
-	private static String compileNode(String line) {
+	static String compileNode(String line) {
 		String outputLine;
 		if (line.contains(":") && line.contains("=")) {
 			outputLine = compileField(line) + ";";
@@ -68,7 +53,7 @@ public class Main {
 			var parameters = splitSequence(paramString)
 					.filter(s -> !s.isBlank())
 					.map(String::trim)
-					.map(Main::compileField)
+					.map(Compiler::compileField)
 					.collect(Collectors.toList());
 			var typeSlice = line.substring(returnsSeparator + 1, bodySeparator);
 			var typeString = typeSlice.trim();
@@ -93,7 +78,7 @@ public class Main {
 			var arguments = splitSequence(argumentsString)
 					.filter(s -> !s.isBlank())
 					.map(String::trim)
-					.map(Main::compileNode)
+					.map(Compiler::compileNode)
 					.collect(Collectors.toList());
 			return caller + arguments.stream().collect(Collectors.joining(",", "(", ")"));
 		} else if (line.startsWith("struct ") && line.contains("{") && line.endsWith("}")) {
@@ -105,7 +90,7 @@ public class Main {
 			var members = splitSequence(membersString)
 					.filter(s -> !s.isBlank())
 					.map(String::trim)
-					.map(Main::compileField)
+					.map(Compiler::compileField)
 					.collect(Collectors.toList());
 			var renderedMembers = members.stream()
 					.map(value -> value + ";")
@@ -122,7 +107,7 @@ public class Main {
 			var arguments = splitSequence(bodyString)
 					.filter(s -> !s.isBlank())
 					.map(String::trim)
-					.map(Main::compileNode)
+					.map(Compiler::compileNode)
 					.collect(Collectors.toList());
 			return arguments.stream().collect(Collectors.joining(",", "(", ")"));
 		} else if (line.contains("=>")) {
@@ -148,17 +133,26 @@ public class Main {
 			var string = slice.trim();
 			var node = compileNode(string);
 			return "(%s)".formatted(node);
+		} else if (line.contains("=")) {
+			var separator = line.indexOf('=');
+			var beforeSlice = line.substring(0, separator);
+			var beforeString = beforeSlice.trim();
+			var before = compileNode(beforeString);
+			var afterSlice = line.substring(separator + 1);
+			var afterString = afterSlice.trim();
+			var after = compileNode(afterString);
+			return "%s=%s;".formatted(before, after);
 		} else {
 			outputLine = line;
 		}
 		return outputLine;
 	}
 
-	private static Stream<String> splitSequence(String sequence) {
+	static Stream<String> splitSequence(String sequence) {
 		return Arrays.stream(sequence.split(","));
 	}
 
-	private static String compileField(String line) {
+	static String compileField(String line) {
 		var typeSeparator = line.indexOf(':');
 		var valueSeparator = line.indexOf('=');
 		var keysSlice = line.substring(0, typeSeparator);
@@ -174,7 +168,7 @@ public class Main {
 		return "%s %s=%s".formatted(typeString, name, value);
 	}
 
-	private static String compileCondition(String line, final String type) {
+	static String compileCondition(String line, final String type) {
 		var condStart = line.indexOf('(');
 		var condEnd = line.indexOf(')');
 		var conditionSlice = line.substring(condStart + 1, condEnd);
@@ -186,12 +180,12 @@ public class Main {
 		return "%s(%s)%s".formatted(type, condition, body);
 	}
 
-	private static boolean isCondition(String line, String condition) {
+	static boolean isCondition(String line, String condition) {
 		return line.startsWith(condition);
 	}
 
-	private static ArrayList<String> split(String content) {
-		ArrayList<String> lines = new ArrayList<>();
+	static ArrayList<String> split(String content) {
+		ArrayList<String> lines = new ArrayList<String>();
 		var buffer = new StringBuilder();
 		var depth = 0;
 		for (int i = 0; i < content.length(); i++) {
@@ -213,10 +207,5 @@ public class Main {
 		lines.add(buffer.toString());
 		lines.removeIf(String::isBlank);
 		return lines;
-	}
-
-	enum Flag {
-		LET,
-		CONST
 	}
 }
