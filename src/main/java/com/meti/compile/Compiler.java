@@ -21,9 +21,9 @@ public class Compiler {
 			outputLine = compileField(line) + ";";
 		} else if (line.startsWith("{") && line.endsWith("}")) {
 			var bodySlice = line.substring(1, line.length() - 1);
-			var body = bodySlice.trim();
-			var compiledBody = compile(body);
-			outputLine = "{%s}".formatted(compiledBody);
+			var bodyString = bodySlice.trim();
+			var body = compile(bodyString);
+			outputLine = "{%s}".formatted(body);
 		} else if (isCondition(line, "if")) {
 			return compileCondition(line, "if");
 		} else if (isCondition(line, "while")) {
@@ -57,12 +57,14 @@ public class Compiler {
 					.collect(Collectors.toList());
 			var typeSlice = line.substring(returnsSeparator + 1, bodySeparator);
 			var typeString = typeSlice.trim();
+			var type = compileType(typeString);
+
 			var bodySlice = line.substring(bodySeparator + 2);
 			var bodyString = bodySlice.trim();
 			var body = compileNode(bodyString);
 
 			var renderedParameters = parameters.stream().collect(Collectors.joining(",", "(", ")"));
-			return "%s %s%s%s".formatted(typeString, name, renderedParameters, body);
+			return "%s %s%s%s".formatted(type, name, renderedParameters, body);
 		} else if (line.startsWith("return ")) {
 			var valueSlice = line.substring(7);
 			var valueString = valueSlice.trim();
@@ -165,7 +167,12 @@ public class Compiler {
 		var valueSlice = line.substring(valueSeparator + 1);
 		var valueString = valueSlice.trim();
 		var value = compile(valueString);
-		return "%s %s=%s".formatted(typeString, name, value);
+		return "%s %s=%s".formatted(compileType(typeString), name, value);
+	}
+
+	private static String compileType(String content) {
+		if (content.equals("I16")) return "int";
+		return content;
 	}
 
 	static String compileCondition(String line, final String type) {

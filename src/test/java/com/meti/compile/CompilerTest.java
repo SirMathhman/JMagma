@@ -38,12 +38,12 @@ class CompilerTest {
 
 	@Test
 	void construction() {
-		assertEquals("{3, 4}", compile("[Point]{3, 4}"));
+		assertEquals("{3,4}", compile("[Point]{3, 4}"));
 	}
 
 	@Test
 	void declare() {
-		assertEquals("int x=0;", compile("const x : I16 = 10;"));
+		assertEquals("int x=10;", compile("const x : I16 = 10;"));
 	}
 
 	@Test
@@ -58,7 +58,7 @@ class CompilerTest {
 
 	@Test
 	void elif() {
-		assertEquals("if(true){}else if(true){}else{}", compile("""
+		assertEquals("if(1){}else if(1){}else{}", compile("""
 				if(true){
 				} elif(true){
 				} else {
@@ -68,7 +68,7 @@ class CompilerTest {
 
 	@Test
 	void else_if() {
-		assertEquals("if(true){}else{}", compile("if(true){}else{}"));
+		assertEquals("if(1){}else{}", compile("if(true){}else{}"));
 	}
 
 	@Test
@@ -143,7 +143,7 @@ class CompilerTest {
 
 	@Test
 	void while_test() {
-		assertEquals("while(true){}", compile("while(true){}"));
+		assertEquals("while(1){}", compile("while(true){}"));
 	}
 
 	@Test
