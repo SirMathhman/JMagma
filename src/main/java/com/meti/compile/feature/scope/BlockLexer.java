@@ -1,16 +1,24 @@
 package com.meti.compile.feature.scope;
 
-import com.meti.compile.MagmaCompiler;
+import com.meti.compile.Compiler;
 
-public class BlockLexer {
-	public static String compileBlock(String line, MagmaCompiler compiler) {
-		var bodySlice = line.substring(1, line.length() - 1);
-		var bodyString = bodySlice.trim();
-		var body = compiler.compileLines(bodyString);
-		return "{%s}".formatted(body);
+public class BlockLexer implements Lexer {
+	public static final Lexer BlockLexer_ = new BlockLexer();
+
+	private BlockLexer() {
 	}
 
-	public static boolean isBlock(String line) {
+	@Override
+	public boolean canLex(String line) {
 		return line.startsWith("{") && line.endsWith("}");
+	}
+
+	@Override
+	public String lex(String content, Compiler compiler) {
+		var length = content.length();
+		var slice = content.substring(1, length - 1);
+		var string = slice.trim();
+		var body = compiler.compileAll(string);
+		return "{%s}".formatted(body);
 	}
 }

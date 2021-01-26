@@ -77,7 +77,7 @@ public class MagmaCompiler implements Compiler {
 	}
 
 	@Override
-	public String compileLines(String content) {
+	public String compileAll(String content) {
 		return split(content).stream()
 				.filter(s -> !s.isBlank())
 				.map(String::trim)
@@ -87,8 +87,8 @@ public class MagmaCompiler implements Compiler {
 
 	@Override
 	public String compileNode(String line) {
-		if (BlockLexer.isBlock(line)) {
-			return BlockLexer.compileBlock(line, this);
+		if (BlockLexer.BlockLexer_.canLex(line)) {
+			return BlockLexer.BlockLexer_.lex(line, this);
 		} else if (FunctionLexer.isFunction(line)) {
 			return FunctionLexer.compileFunction(line, this);
 		} else if (DeclarationLexer.isDeclaration(line)) {

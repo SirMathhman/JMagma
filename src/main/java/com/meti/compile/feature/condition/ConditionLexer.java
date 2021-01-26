@@ -26,7 +26,7 @@ public class ConditionLexer {
 	public static String compileElse(String line, MagmaCompiler compiler) {
 		var bodySlice = line.substring(4);
 		var bodyString = bodySlice.trim();
-		return "else%s".formatted(compiler.compileLines(bodyString));
+		return "else%s".formatted(compiler.compileAll(bodyString));
 	}
 
 	public static boolean isElse(String line) {
