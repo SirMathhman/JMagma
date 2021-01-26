@@ -1,6 +1,9 @@
 package com.meti.compile;
 
-import com.meti.compile.feature.condition.ConditionLexer;
+import com.meti.compile.feature.condition.ElifLexer;
+import com.meti.compile.feature.condition.ElseLexer;
+import com.meti.compile.feature.condition.IfLexer;
+import com.meti.compile.feature.condition.WhileLexer;
 import com.meti.compile.feature.function.FunctionLexer;
 import com.meti.compile.feature.function.InvocationLexer;
 import com.meti.compile.feature.function.ReturnLexer;
@@ -93,14 +96,14 @@ public class MagmaCompiler implements Compiler {
 			return FunctionLexer.compileFunction(line, this);
 		} else if (DeclarationLexer.isDeclaration(line)) {
 			return DeclarationLexer.compileDeclaration(line, this);
-		} else if (ConditionLexer.isIf(line)) {
-			return ConditionLexer.compileIf(line, this);
-		} else if (ConditionLexer.isWhile(line)) {
-			return ConditionLexer.compileWhile(line, this);
-		} else if (ConditionLexer.isElse(line)) {
-			return ConditionLexer.compileElse(line, this);
-		} else if (ConditionLexer.isElif(line)) {
-			return ConditionLexer.compileElif(line, this);
+		} else if (IfLexer.IfLexer_.canLex(line)) {
+			return IfLexer.IfLexer_.lex(line, this);
+		} else if (WhileLexer.WhileLexer_.canLex(line)) {
+			return WhileLexer.WhileLexer_.lex(line, this);
+		} else if (ElseLexer.ElseLexer_.canLex(line)) {
+			return ElseLexer.ElseLexer_.lex(line, this);
+		} else if (ElifLexer.ElifLexer_.canLex(line)) {
+			return ElifLexer.ElifLexer_.lex(line, this);
 		} else if (line.equals("true")) {
 			return "1";
 		} else if (line.equals("false")) {
