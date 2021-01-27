@@ -2,35 +2,85 @@ package com.meti.compile.content;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Stream;
 
-public class BracketSplitter {
-	public static final BracketSplitter BracketSplitter_ = new BracketSplitter();
+public class BracketSplitter implements Splitter {
+	public static final Splitter BracketSplitter_ = new BracketSplitter();
 
 	private BracketSplitter() {
 	}
 
-	public List<String> split(String content) {
-		var lines = new ArrayList<String>();
-		var buffer = new StringBuilder();
-		var depth = 0;
+	@Override
+	public Stream<String> stream(String content) {
+		return processAll(content)
+				.advance()
+				.stream()
+				.filter(s -> !s.isBlank())
+				.map(String::trim);
+	}
+
+	private State processAll(String content) {
+		var state = new State();
+		var current = state;
 		for (int i = 0; i < content.length(); i++) {
-			var c = content.charAt(i);
-			if (c == '}' && depth == 1) {
-				depth = 0;
-				buffer.append('}');
-				lines.add(buffer.toString());
-				buffer = new StringBuilder();
-			} else if (c == ';' && depth == 0) {
-				lines.add(buffer.toString());
-				buffer = new StringBuilder();
-			} else {
-				if (c == '{') depth++;
-				if (c == '}') depth--;
-				buffer.append(c);
-			}
+			current = process(state, content.charAt(i));
 		}
-		lines.add(buffer.toString());
-		lines.removeIf(String::isBlank);
-		return lines;
+		return current;
+	}
+
+	private State process(State state, char c) {
+		if (c == '}' && state.depth == 1) {
+			return state.reset().append('}').advance();
+		} else if (c == ';' && state.depth == 0) {
+			return state.advance();
+		} else if (c == '{') {
+			return state.sink().append(c);
+		} else if (c == '}') {
+			return state.surface().append(c);
+		} else {
+			return state.append(c);
+		}
+	}
+
+	private static class State {
+		private final List<String> lines;
+		private final StringBuilder buffer;
+		private final int depth;
+
+		private State() {
+			this(new ArrayList<>(), new StringBuilder(), 0);
+		}
+
+		private State(List<String> lines, StringBuilder buffer, int depth) {
+			this.lines = lines;
+			this.buffer = buffer;
+			this.depth = depth;
+		}
+
+		private State advance() {
+			var copy = new ArrayList<>(lines);
+			copy.add(buffer.toString());
+			return new State(copy, new StringBuilder(), depth);
+		}
+
+		private State append(char c) {
+			return new State(lines, buffer.append(c), depth);
+		}
+
+		private State reset() {
+			return new State(lines, buffer, 0);
+		}
+
+		private State sink() {
+			return new State(lines, buffer, depth + 1);
+		}
+
+		private Stream<String> stream() {
+			return lines.stream();
+		}
+
+		private State surface() {
+			return new State(lines, buffer, depth - 1);
+		}
 	}
 }

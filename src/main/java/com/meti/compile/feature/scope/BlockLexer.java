@@ -23,17 +23,10 @@ public class BlockLexer implements Lexer {
 	public Token lex(String content) {
 		var length = content.length();
 		var slice = content.substring(1, length - 1);
-		var lines = BracketSplitter_.split(slice);
-		var nodes = lexLines(lines);
-		return new Block(nodes);
-	}
-
-	private List<Token> lexLines(List<String> lines) {
-		return lines.stream()
-				.filter(s -> !s.isBlank())
-				.map(String::trim)
+		var nodes = BracketSplitter_.stream(slice)
 				.map(MagmaLexingStage_::lexNode)
 				.collect(Collectors.toList());
+		return new Block(nodes);
 	}
 
 	private static record Block(List<Token> nodes) implements Token {
