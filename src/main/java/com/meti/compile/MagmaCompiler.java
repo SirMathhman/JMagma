@@ -2,6 +2,7 @@ package com.meti.compile;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -12,6 +13,7 @@ import static com.meti.compile.feature.condition.WhileLexer.WhileLexer_;
 import static com.meti.compile.feature.function.FunctionLexer.FunctionLexer_;
 import static com.meti.compile.feature.function.InvocationLexer.InvocationLexer_;
 import static com.meti.compile.feature.function.ReturnLexer.ReturnLexer_;
+import static com.meti.compile.feature.primitive.BooleanLexer.BooleanLexer_;
 import static com.meti.compile.feature.primitive.QuantityLexer.QuantityLexer_;
 import static com.meti.compile.feature.reference.DereferenceLexer.DereferenceLexer_;
 import static com.meti.compile.feature.reference.ReferenceLexer.ReferenceLexer_;
@@ -23,7 +25,7 @@ import static com.meti.compile.feature.structure.ConstructionLexer.ConstructionL
 import static com.meti.compile.feature.structure.StructureLexer.StructureLexer_;
 
 public class MagmaCompiler implements Compiler {
-	public static final MagmaCompiler MagmaCompiler_ = new MagmaCompiler();
+	static final MagmaCompiler MagmaCompiler_ = new MagmaCompiler();
 
 	private MagmaCompiler() {
 	}
@@ -63,7 +65,7 @@ public class MagmaCompiler implements Compiler {
 				.collect(Collectors.joining());
 	}
 
-	public static ArrayList<String> split(String content) {
+	private static List<String> split(String content) {
 		var lines = new ArrayList<String>();
 		var buffer = new StringBuilder();
 		var depth = 0;
@@ -90,10 +92,8 @@ public class MagmaCompiler implements Compiler {
 
 	@Override
 	public String compileNode(String line) {
-		if (line.equals("true")) {
-			return "1";
-		} else if (line.equals("false")) {
-			return "0";
+		if (BooleanLexer_.canLex(line)) {
+			return BooleanLexer_.lex(line, this);
 		} else if (BlockLexer_.canLex(line)) {
 			return BlockLexer_.lex(line, this);
 		} else if (FunctionLexer_.canLex(line)) {
