@@ -1,6 +1,7 @@
 package com.meti.compile.feature.scope;
 
 import com.meti.compile.Compiler;
+import com.meti.compile.token.Content;
 
 public class BlockLexer implements Lexer {
 	public static final Lexer BlockLexer_ = new BlockLexer();
@@ -14,11 +15,11 @@ public class BlockLexer implements Lexer {
 	}
 
 	@Override
-	public String lex(String content, Compiler compiler) {
+	public Content lex(String content, Compiler compiler) {
 		var length = content.length();
 		var slice = content.substring(1, length - 1);
 		var string = slice.trim();
-		var body = compiler.compileAll(string);
-		return "{%s}".formatted(body);
+		var body = compiler.compile(string);
+		return new Content("{%s}".formatted(body));
 	}
 }

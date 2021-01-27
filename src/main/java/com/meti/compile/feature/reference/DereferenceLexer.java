@@ -2,6 +2,9 @@ package com.meti.compile.feature.reference;
 
 import com.meti.compile.Compiler;
 import com.meti.compile.feature.scope.Lexer;
+import com.meti.compile.token.Content;
+
+import static com.meti.compile.MagmaLexingStage.MagmaLexingStage_;
 
 public class DereferenceLexer implements Lexer {
 	public static final DereferenceLexer DereferenceLexer_ = new DereferenceLexer();
@@ -15,10 +18,10 @@ public class DereferenceLexer implements Lexer {
 	}
 
 	@Override
-	public String lex(String line, Compiler compiler) {
+	public Content lex(String line, Compiler compiler) {
 		var slice = line.substring(1);
 		var string = slice.trim();
-		var node = compiler.compileNode(string);
-		return "*%s".formatted(node);
+		var node = MagmaLexingStage_.lexNode(string, null).getValue();
+		return new Content("*%s".formatted(node));
 	}
 }

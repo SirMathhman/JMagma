@@ -2,6 +2,7 @@ package com.meti.compile.feature.condition;
 
 import com.meti.compile.Compiler;
 import com.meti.compile.feature.scope.Lexer;
+import com.meti.compile.token.Content;
 
 public class ElifLexer extends ConditionLexer {
 	public static final Lexer ElifLexer_ = new ElifLexer();
@@ -15,7 +16,7 @@ public class ElifLexer extends ConditionLexer {
 	}
 
 	@Override
-	public String lex(String line, Compiler compiler) {
-		return compileCondition(line, "else if", compiler);
+	public Content lex(String line, Compiler compiler) {
+		return new Content(lex(line, "else if", compiler));
 	}
 }

@@ -2,6 +2,9 @@ package com.meti.compile.feature.function;
 
 import com.meti.compile.Compiler;
 import com.meti.compile.feature.scope.Lexer;
+import com.meti.compile.token.Content;
+
+import static com.meti.compile.MagmaLexingStage.MagmaLexingStage_;
 
 public class ReturnLexer implements Lexer {
 	public static final ReturnLexer ReturnLexer_ = new ReturnLexer();
@@ -15,10 +18,10 @@ public class ReturnLexer implements Lexer {
 	}
 
 	@Override
-	public String lex(String line, Compiler compiler) {
+	public Content lex(String line, Compiler compiler) {
 		var valueSlice = line.substring(7);
 		var valueString = valueSlice.trim();
-		var value = compiler.compileNode(valueString);
-		return "return %s;".formatted(value);
+		var value = MagmaLexingStage_.lexNode(valueString, null).getValue();
+		return new Content("return %s;".formatted(value));
 	}
 }

@@ -2,6 +2,7 @@ package com.meti.compile.feature.primitive;
 
 import com.meti.compile.Compiler;
 import com.meti.compile.feature.scope.Lexer;
+import com.meti.compile.token.Content;
 
 public class BooleanLexer implements Lexer {
 	public static final BooleanLexer BooleanLexer_ = new BooleanLexer();
@@ -15,7 +16,7 @@ public class BooleanLexer implements Lexer {
 	}
 
 	@Override
-	public String lex(String line, Compiler compiler) {
-		return line.equals("true") ? "1" : "0";
+	public Content lex(String line, Compiler compiler) {
+		return new Content(line.equals("true") ? "1" : "0");
 	}
 }

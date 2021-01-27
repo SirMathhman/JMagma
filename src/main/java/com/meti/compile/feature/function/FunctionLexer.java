@@ -3,8 +3,11 @@ package com.meti.compile.feature.function;
 import com.meti.compile.Compiler;
 import com.meti.compile.MagmaCompiler;
 import com.meti.compile.feature.scope.Lexer;
+import com.meti.compile.token.Content;
 
 import java.util.stream.Collectors;
+
+import static com.meti.compile.MagmaLexingStage.MagmaLexingStage_;
 
 public class FunctionLexer implements Lexer {
 	public static final Lexer FunctionLexer_ = new FunctionLexer();
@@ -18,7 +21,7 @@ public class FunctionLexer implements Lexer {
 	}
 
 	@Override
-	public String lex(String line, Compiler compiler) {
+	public Content lex(String line, Compiler compiler) {
 		var paramStart = line.indexOf('(');
 		var paramEnd = line.indexOf(')');
 		var returnsSeparator = line.indexOf(":");
@@ -33,17 +36,17 @@ public class FunctionLexer implements Lexer {
 		var parameters = MagmaCompiler.splitSequence(paramString)
 				.filter(s -> !s.isBlank())
 				.map(String::trim)
-				.map(compiler::compileField)
+				.map(line1 -> MagmaLexingStage_.lexField(line1))
 				.collect(Collectors.toList());
 		var typeSlice = line.substring(returnsSeparator + 1, bodySeparator);
 		var typeString = typeSlice.trim();
-		var type = compiler.compileType(typeString);
+		var type = MagmaLexingStage_.lexType(typeString);
 
 		var bodySlice = line.substring(bodySeparator + 2);
 		var bodyString = bodySlice.trim();
-		var body = compiler.compileNode(bodyString);
+		var body = MagmaLexingStage_.lexNode(bodyString, compiler).getValue();
 
 		var renderedParameters = parameters.stream().collect(Collectors.joining(",", "(", ")"));
-		return "%s %s%s%s".formatted(type, name, renderedParameters, body);
+		return new Content("%s %s%s%s".formatted(type, name, renderedParameters, body));
 	}
 }
