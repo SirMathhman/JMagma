@@ -10,6 +10,7 @@ record Implementation(List<String> parameters, String name,
 	@Override
 	public String render() {
 		var renderedParameters = parameters.stream().collect(Collectors.joining(",", "(", ")"));
-		return "%s %s%s%s".formatted(type, name, renderedParameters, body);
+		var renderedType = type.render();
+		return "%s %s%s%s".formatted(renderedType, name, renderedParameters, body);
 	}
 }
