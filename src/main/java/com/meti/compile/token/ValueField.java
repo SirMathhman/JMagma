@@ -1,6 +1,6 @@
 package com.meti.compile.token;
 
-public record ValueField(Content type, String name, Token token) implements Field {
+public record ValueField(Token type, String name, Token token) implements Field {
 	@Override
 	public String render() {
 		var renderedType = type.render();
