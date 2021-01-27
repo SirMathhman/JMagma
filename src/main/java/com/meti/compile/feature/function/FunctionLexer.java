@@ -4,6 +4,7 @@ import com.meti.compile.Compiler;
 import com.meti.compile.MagmaCompiler;
 import com.meti.compile.feature.scope.Lexer;
 import com.meti.compile.token.Content;
+import com.meti.compile.token.Token;
 
 import java.util.stream.Collectors;
 
@@ -21,7 +22,7 @@ public class FunctionLexer implements Lexer {
 	}
 
 	@Override
-	public Content lex(String line, Compiler compiler) {
+	public Token lex(String line) {
 		var paramStart = line.indexOf('(');
 		var paramEnd = line.indexOf(')');
 		var returnsSeparator = line.indexOf(":");
@@ -44,7 +45,7 @@ public class FunctionLexer implements Lexer {
 
 		var bodySlice = line.substring(bodySeparator + 2);
 		var bodyString = bodySlice.trim();
-		var body = MagmaLexingStage_.lexNode(bodyString, compiler).getValue();
+		var body = MagmaLexingStage_.lexNode(bodyString).render();
 
 		var renderedParameters = parameters.stream().collect(Collectors.joining(",", "(", ")"));
 		return new Content("%s %s%s%s".formatted(type, name, renderedParameters, body));

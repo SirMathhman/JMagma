@@ -4,6 +4,7 @@ import com.meti.compile.Compiler;
 import com.meti.compile.MagmaCompiler;
 import com.meti.compile.feature.scope.Lexer;
 import com.meti.compile.token.Content;
+import com.meti.compile.token.Token;
 
 import java.util.stream.Collectors;
 
@@ -21,7 +22,7 @@ public class StructureLexer implements Lexer {
 	}
 
 	@Override
-	public Content lex(String line, Compiler compiler) {
+	public Token lex(String line) {
 		var separator = line.indexOf('{');
 		var nameSlice = line.substring(7, separator);
 		var name = nameSlice.trim();

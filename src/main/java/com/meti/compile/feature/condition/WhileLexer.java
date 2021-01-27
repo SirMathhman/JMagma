@@ -3,6 +3,7 @@ package com.meti.compile.feature.condition;
 import com.meti.compile.Compiler;
 import com.meti.compile.feature.scope.Lexer;
 import com.meti.compile.token.Content;
+import com.meti.compile.token.Token;
 
 public class WhileLexer extends ConditionLexer {
 	public static final Lexer WhileLexer_ = new WhileLexer();
@@ -16,7 +17,7 @@ public class WhileLexer extends ConditionLexer {
 	}
 
 	@Override
-	public Content lex(String line, Compiler compiler) {
-		return new Content(lex(line, "while", compiler));
+	public Token lex(String line) {
+		return new Content(lex(line, "while"));
 	}
 }

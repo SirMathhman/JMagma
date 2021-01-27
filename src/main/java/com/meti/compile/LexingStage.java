@@ -1,11 +1,11 @@
 package com.meti.compile;
 
-import com.meti.compile.token.Content;
+import com.meti.compile.token.Token;
 
 public interface LexingStage {
 	String lexField(String line);
 
-	Content lexNode(String line, Compiler compiler);
+	Token lexNode(String line);
 
 	String lexType(String content);
 }

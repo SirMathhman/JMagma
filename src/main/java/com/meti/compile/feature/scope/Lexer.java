@@ -1,10 +1,10 @@
 package com.meti.compile.feature.scope;
 
 import com.meti.compile.Compiler;
-import com.meti.compile.token.Content;
+import com.meti.compile.token.Token;
 
 public interface Lexer {
 	boolean canLex(String line);
 
-	Content lex(String content, Compiler compiler);
+	Token lex(String content);
 }

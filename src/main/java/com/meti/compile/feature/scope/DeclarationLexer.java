@@ -2,6 +2,7 @@ package com.meti.compile.feature.scope;
 
 import com.meti.compile.Compiler;
 import com.meti.compile.token.Content;
+import com.meti.compile.token.Token;
 
 import static com.meti.compile.MagmaLexingStage.MagmaLexingStage_;
 
@@ -17,7 +18,7 @@ public class DeclarationLexer implements Lexer {
 	}
 
 	@Override
-	public Content lex(String line, Compiler compiler) {
+	public Token lex(String line) {
 		return new Content("%s;".formatted(MagmaLexingStage_.lexField(line)));
 	}
 }

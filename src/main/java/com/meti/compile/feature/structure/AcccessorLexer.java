@@ -3,6 +3,7 @@ package com.meti.compile.feature.structure;
 import com.meti.compile.Compiler;
 import com.meti.compile.feature.scope.Lexer;
 import com.meti.compile.token.Content;
+import com.meti.compile.token.Token;
 
 import static com.meti.compile.MagmaLexingStage.MagmaLexingStage_;
 
@@ -18,11 +19,11 @@ public class AcccessorLexer implements Lexer {
 	}
 
 	@Override
-	public Content lex(String line, Compiler compiler) {
+	public Token lex(String line) {
 		var separator = line.indexOf("=>");
 		var firstSlice = line.substring(0, separator);
 		var first = firstSlice.trim();
-		var structure = MagmaLexingStage_.lexNode(first, null).getValue();
+		var structure = MagmaLexingStage_.lexNode(first).render();
 		var memberSlice = line.substring(separator + 2);
 		var memberString = memberSlice.trim();
 		return new Content("%s.%s".formatted(structure, memberString));

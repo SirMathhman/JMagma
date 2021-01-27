@@ -18,6 +18,7 @@ import com.meti.compile.feature.structure.AcccessorLexer;
 import com.meti.compile.feature.structure.ConstructionLexer;
 import com.meti.compile.feature.structure.StructureLexer;
 import com.meti.compile.token.Content;
+import com.meti.compile.token.Token;
 
 import java.util.stream.Stream;
 
@@ -44,16 +45,16 @@ public class MagmaLexingStage implements LexingStage {
 		} else {
 			var valueSlice = line.substring(valueSeparator + 1);
 			var valueString = valueSlice.trim();
-			var value = lexNode(valueString, null).getValue();
+			var value = lexNode(valueString).render();
 			return "%s %s=%s".formatted(lexType(typeString), name, value);
 		}
 	}
 
 	@Override
-	public Content lexNode(String line, Compiler compiler) {
+	public Token lexNode(String line) {
 		return streamLexers()
 				.filter(lexer -> lexer.canLex(line))
-				.map(lexer -> lexer.lex(line, compiler))
+				.map(lexer -> lexer.lex(line))
 				.findFirst()
 				.orElse(new Content(line));
 	}

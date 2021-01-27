@@ -3,6 +3,7 @@ package com.meti.compile.feature.condition;
 import com.meti.compile.Compiler;
 import com.meti.compile.feature.scope.Lexer;
 import com.meti.compile.token.Content;
+import com.meti.compile.token.Token;
 
 import static com.meti.compile.MagmaLexingStage.MagmaLexingStage_;
 
@@ -18,9 +19,9 @@ public class ElseLexer implements Lexer {
 	}
 
 	@Override
-	public Content lex(String line, Compiler compiler) {
+	public Token lex(String line) {
 		var bodySlice = line.substring(4);
 		var bodyString = bodySlice.trim();
-		return new Content("else%s".formatted(MagmaLexingStage_.lexNode(bodyString, compiler).getValue()));
+		return new Content("else%s".formatted(MagmaLexingStage_.lexNode(bodyString).render()));
 	}
 }

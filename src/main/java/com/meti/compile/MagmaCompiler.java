@@ -1,8 +1,8 @@
 package com.meti.compile;
 
-import java.util.ArrayList;
+import com.meti.compile.content.BracketSplitter;
+
 import java.util.Arrays;
-import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -20,36 +20,10 @@ public class MagmaCompiler implements Compiler {
 
 	@Override
 	public String compile(String content) {
-		return split(content).stream()
+		return BracketSplitter.BracketSplitter_.split(content).stream()
 				.filter(s -> !s.isBlank())
 				.map(String::trim)
-				.map(line -> MagmaLexingStage_.lexNode(line, this).getValue())
+				.map(line -> MagmaLexingStage_.lexNode(line).render())
 				.collect(Collectors.joining());
 	}
-
-	private static List<String> split(String content) {
-		var lines = new ArrayList<String>();
-		var buffer = new StringBuilder();
-		var depth = 0;
-		for (int i = 0; i < content.length(); i++) {
-			var c = content.charAt(i);
-			if (c == '}' && depth == 1) {
-				depth = 0;
-				buffer.append('}');
-				lines.add(buffer.toString());
-				buffer = new StringBuilder();
-			} else if (c == ';' && depth == 0) {
-				lines.add(buffer.toString());
-				buffer = new StringBuilder();
-			} else {
-				if (c == '{') depth++;
-				if (c == '}') depth--;
-				buffer.append(c);
-			}
-		}
-		lines.add(buffer.toString());
-		lines.removeIf(String::isBlank);
-		return lines;
-	}
-
 }
