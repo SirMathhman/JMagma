@@ -1,6 +1,5 @@
 package com.meti.compile.feature.scope;
 
-import com.meti.compile.Compiler;
 import com.meti.compile.token.Content;
 import com.meti.compile.token.Token;
 
@@ -19,6 +18,6 @@ public class DeclarationLexer implements Lexer {
 
 	@Override
 	public Token lex(String line) {
-		return new Content("%s;".formatted(MagmaLexingStage_.lexField(line)));
+		return new Content("%s;".formatted(MagmaLexingStage_.lexField(line).render()));
 	}
 }

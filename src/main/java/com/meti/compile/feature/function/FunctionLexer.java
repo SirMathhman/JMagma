@@ -1,9 +1,7 @@
 package com.meti.compile.feature.function;
 
-import com.meti.compile.Compiler;
 import com.meti.compile.MagmaCompiler;
 import com.meti.compile.feature.scope.Lexer;
-import com.meti.compile.token.Content;
 import com.meti.compile.token.Token;
 
 import java.util.stream.Collectors;
@@ -37,17 +35,15 @@ public class FunctionLexer implements Lexer {
 		var parameters = MagmaCompiler.splitSequence(paramString)
 				.filter(s -> !s.isBlank())
 				.map(String::trim)
-				.map(line1 -> MagmaLexingStage_.lexField(line1))
+				.map(line1 -> MagmaLexingStage_.lexField(line1).render())
 				.collect(Collectors.toList());
 		var typeSlice = line.substring(returnsSeparator + 1, bodySeparator);
 		var typeString = typeSlice.trim();
-		var type = MagmaLexingStage_.lexType(typeString);
+		Token type = MagmaLexingStage_.lexType(typeString);
 
 		var bodySlice = line.substring(bodySeparator + 2);
 		var bodyString = bodySlice.trim();
 		var body = MagmaLexingStage_.lexNode(bodyString).render();
-
-		var renderedParameters = parameters.stream().collect(Collectors.joining(",", "(", ")"));
-		return new Content("%s %s%s%s".formatted(type, name, renderedParameters, body));
+		return new Implementation(parameters, name, type, body);
 	}
 }

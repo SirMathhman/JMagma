@@ -17,8 +17,7 @@ import com.meti.compile.feature.scope.Lexer;
 import com.meti.compile.feature.structure.AcccessorLexer;
 import com.meti.compile.feature.structure.ConstructionLexer;
 import com.meti.compile.feature.structure.StructureLexer;
-import com.meti.compile.token.Content;
-import com.meti.compile.token.Token;
+import com.meti.compile.token.*;
 
 import java.util.stream.Stream;
 
@@ -29,7 +28,7 @@ public class MagmaLexingStage implements LexingStage {
 	}
 
 	@Override
-	public String lexField(String line) {
+	public Field lexField(String line) {
 		var typeSeparator = line.indexOf(':');
 		var valueSeparator = line.indexOf('=');
 		var keysSlice = line.substring(0, typeSeparator);
@@ -40,13 +39,14 @@ public class MagmaLexingStage implements LexingStage {
 		var extent = valueSeparator == -1 ? line.length() : valueSeparator;
 		var typeSlice = line.substring(typeSeparator + 1, extent);
 		var typeString = typeSlice.trim();
+		Token type = lexType(typeString);
 		if (valueSeparator == -1) {
-			return "%s %s".formatted(lexType(typeString), name);
+			return new EmptyField(type, name);
 		} else {
 			var valueSlice = line.substring(valueSeparator + 1);
 			var valueString = valueSlice.trim();
-			var value = lexNode(valueString).render();
-			return "%s %s=%s".formatted(lexType(typeString), name, value);
+			var token = lexNode(valueString);
+			return new ValueField(type, name, token);
 		}
 	}
 
@@ -82,8 +82,8 @@ public class MagmaLexingStage implements LexingStage {
 	}
 
 	@Override
-	public String lexType(String content) {
-		if (content.equals("I16")) return "int";
-		return content;
+	public Token lexType(String content) {
+		if (content.equals("I16")) return new Content("int");
+		return new Content(content);
 	}
 }

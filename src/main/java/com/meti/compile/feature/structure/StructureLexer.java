@@ -1,6 +1,5 @@
 package com.meti.compile.feature.structure;
 
-import com.meti.compile.Compiler;
 import com.meti.compile.MagmaCompiler;
 import com.meti.compile.feature.scope.Lexer;
 import com.meti.compile.token.Content;
@@ -31,7 +30,7 @@ public class StructureLexer implements Lexer {
 		var members = MagmaCompiler.splitSequence(membersString)
 				.filter(s -> !s.isBlank())
 				.map(String::trim)
-				.map(line1 -> MagmaLexingStage_.lexField(line1))
+				.map(line1 -> MagmaLexingStage_.lexField(line1).render())
 				.collect(Collectors.toList());
 		var renderedMembers = members.stream()
 				.map(value -> value + ";")
