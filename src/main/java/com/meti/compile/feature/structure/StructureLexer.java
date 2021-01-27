@@ -1,11 +1,24 @@
 package com.meti.compile.feature.structure;
 
+import com.meti.compile.Compiler;
 import com.meti.compile.MagmaCompiler;
+import com.meti.compile.feature.scope.Lexer;
 
 import java.util.stream.Collectors;
 
-public class StructureLexer {
-	public static String compileStructure(String line, MagmaCompiler compiler) {
+public class StructureLexer implements Lexer {
+	public static final StructureLexer StructureLexer_ = new StructureLexer();
+
+	private StructureLexer() {
+	}
+
+	@Override
+	public boolean canLex(String line) {
+		return line.startsWith("struct ") && line.contains("{") && line.endsWith("}");
+	}
+
+	@Override
+	public String lex(String line, Compiler compiler) {
 		var separator = line.indexOf('{');
 		var nameSlice = line.substring(7, separator);
 		var name = nameSlice.trim();
@@ -20,9 +33,5 @@ public class StructureLexer {
 				.map(value -> value + ";")
 				.collect(Collectors.joining("", "{", "}"));
 		return "struct " + name + renderedMembers + ";";
-	}
-
-	public static boolean isStructure(String line) {
-		return line.startsWith("struct ") && line.contains("{") && line.endsWith("}");
 	}
 }

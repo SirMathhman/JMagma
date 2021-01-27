@@ -1,11 +1,25 @@
 package com.meti.compile.feature.function;
 
+import com.meti.compile.Compiler;
 import com.meti.compile.MagmaCompiler;
+import com.meti.compile.feature.scope.Lexer;
 
 import java.util.stream.Collectors;
 
-public class InvocationLexer {
-	public static String compileInvocation(String line, MagmaCompiler compiler) {
+public class InvocationLexer implements Lexer {
+
+	public static final InvocationLexer InvocationLexer_ = new InvocationLexer();
+
+	private InvocationLexer() {
+	}
+
+	@Override
+	public boolean canLex(String line) {
+		return line.contains("(") && line.endsWith(")");
+	}
+
+	@Override
+	public String lex(String line, Compiler compiler) {
 		var separator = line.indexOf('(');
 		var callerSlice = line.substring(0, separator);
 		var callerString = callerSlice.trim();
@@ -18,9 +32,5 @@ public class InvocationLexer {
 				.map(compiler::compileNode)
 				.collect(Collectors.toList());
 		return caller + arguments.stream().collect(Collectors.joining(",", "(", ")"));
-	}
-
-	public static boolean isInvocation(String line) {
-		return line.contains("(") && line.endsWith(")");
 	}
 }

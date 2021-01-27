@@ -1,16 +1,24 @@
 package com.meti.compile.feature.reference;
 
-import com.meti.compile.MagmaCompiler;
+import com.meti.compile.Compiler;
+import com.meti.compile.feature.scope.Lexer;
 
-public class DereferenceLexer {
-	public static String compileDereference(String line, MagmaCompiler compiler) {
+public class DereferenceLexer implements Lexer {
+	public static final DereferenceLexer DereferenceLexer_ = new DereferenceLexer();
+
+	private DereferenceLexer() {
+	}
+
+	@Override
+	public boolean canLex(String line) {
+		return line.startsWith("*");
+	}
+
+	@Override
+	public String lex(String line, Compiler compiler) {
 		var slice = line.substring(1);
 		var string = slice.trim();
 		var node = compiler.compileNode(string);
 		return "*%s".formatted(node);
-	}
-
-	public static boolean isDereference(String line) {
-		return line.startsWith("*");
 	}
 }

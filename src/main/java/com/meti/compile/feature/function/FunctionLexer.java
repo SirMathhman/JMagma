@@ -1,11 +1,24 @@
 package com.meti.compile.feature.function;
 
+import com.meti.compile.Compiler;
 import com.meti.compile.MagmaCompiler;
+import com.meti.compile.feature.scope.Lexer;
 
 import java.util.stream.Collectors;
 
-public class FunctionLexer {
-	public static String compileFunction(String line, MagmaCompiler compiler) {
+public class FunctionLexer implements Lexer {
+	public static final Lexer FunctionLexer_ = new FunctionLexer();
+
+	private FunctionLexer() {
+	}
+
+	@Override
+	public boolean canLex(String line) {
+		return line.startsWith("def");
+	}
+
+	@Override
+	public String lex(String line, Compiler compiler) {
 		var paramStart = line.indexOf('(');
 		var paramEnd = line.indexOf(')');
 		var returnsSeparator = line.indexOf(":");
@@ -32,9 +45,5 @@ public class FunctionLexer {
 
 		var renderedParameters = parameters.stream().collect(Collectors.joining(",", "(", ")"));
 		return "%s %s%s%s".formatted(type, name, renderedParameters, body);
-	}
-
-	public static boolean isFunction(String line) {
-		return line.startsWith("def");
 	}
 }

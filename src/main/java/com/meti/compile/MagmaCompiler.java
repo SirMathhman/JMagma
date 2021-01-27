@@ -1,26 +1,26 @@
 package com.meti.compile;
 
-import com.meti.compile.feature.condition.ElifLexer;
-import com.meti.compile.feature.condition.ElseLexer;
-import com.meti.compile.feature.condition.IfLexer;
-import com.meti.compile.feature.condition.WhileLexer;
-import com.meti.compile.feature.function.FunctionLexer;
-import com.meti.compile.feature.function.InvocationLexer;
-import com.meti.compile.feature.function.ReturnLexer;
-import com.meti.compile.feature.primitive.QuantityLexer;
-import com.meti.compile.feature.reference.DereferenceLexer;
-import com.meti.compile.feature.reference.ReferenceLexer;
-import com.meti.compile.feature.scope.AssignmentLexer;
-import com.meti.compile.feature.scope.BlockLexer;
-import com.meti.compile.feature.scope.DeclarationLexer;
-import com.meti.compile.feature.structure.AcccessorLexer;
-import com.meti.compile.feature.structure.ConstructionLexer;
-import com.meti.compile.feature.structure.StructureLexer;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
+import static com.meti.compile.feature.condition.ElifLexer.ElifLexer_;
+import static com.meti.compile.feature.condition.ElseLexer.ElseLexer_;
+import static com.meti.compile.feature.condition.IfLexer.IfLexer_;
+import static com.meti.compile.feature.condition.WhileLexer.WhileLexer_;
+import static com.meti.compile.feature.function.FunctionLexer.FunctionLexer_;
+import static com.meti.compile.feature.function.InvocationLexer.InvocationLexer_;
+import static com.meti.compile.feature.function.ReturnLexer.ReturnLexer_;
+import static com.meti.compile.feature.primitive.QuantityLexer.QuantityLexer_;
+import static com.meti.compile.feature.reference.DereferenceLexer.DereferenceLexer_;
+import static com.meti.compile.feature.reference.ReferenceLexer.ReferenceLexer_;
+import static com.meti.compile.feature.scope.AssignmentLexer.AssignmentLexer_;
+import static com.meti.compile.feature.scope.BlockLexer.BlockLexer_;
+import static com.meti.compile.feature.scope.DeclarationLexer.DeclarationLexer_;
+import static com.meti.compile.feature.structure.AcccessorLexer.AccessorLexer_;
+import static com.meti.compile.feature.structure.ConstructionLexer.ConstructionLexer_;
+import static com.meti.compile.feature.structure.StructureLexer.StructureLexer_;
 
 public class MagmaCompiler implements Compiler {
 	public static final MagmaCompiler MagmaCompiler_ = new MagmaCompiler();
@@ -30,31 +30,6 @@ public class MagmaCompiler implements Compiler {
 
 	public static Stream<String> splitSequence(String sequence) {
 		return Arrays.stream(sequence.split(","));
-	}
-
-	public static ArrayList<String> split(String content) {
-		var lines = new ArrayList<String>();
-		var buffer = new StringBuilder();
-		var depth = 0;
-		for (int i = 0; i < content.length(); i++) {
-			var c = content.charAt(i);
-			if (c == '}' && depth == 1) {
-				depth = 0;
-				buffer.append('}');
-				lines.add(buffer.toString());
-				buffer = new StringBuilder();
-			} else if (c == ';' && depth == 0) {
-				lines.add(buffer.toString());
-				buffer = new StringBuilder();
-			} else {
-				if (c == '{') depth++;
-				if (c == '}') depth--;
-				buffer.append(c);
-			}
-		}
-		lines.add(buffer.toString());
-		lines.removeIf(String::isBlank);
-		return lines;
 	}
 
 	@Override
@@ -88,44 +63,69 @@ public class MagmaCompiler implements Compiler {
 				.collect(Collectors.joining());
 	}
 
+	public static ArrayList<String> split(String content) {
+		var lines = new ArrayList<String>();
+		var buffer = new StringBuilder();
+		var depth = 0;
+		for (int i = 0; i < content.length(); i++) {
+			var c = content.charAt(i);
+			if (c == '}' && depth == 1) {
+				depth = 0;
+				buffer.append('}');
+				lines.add(buffer.toString());
+				buffer = new StringBuilder();
+			} else if (c == ';' && depth == 0) {
+				lines.add(buffer.toString());
+				buffer = new StringBuilder();
+			} else {
+				if (c == '{') depth++;
+				if (c == '}') depth--;
+				buffer.append(c);
+			}
+		}
+		lines.add(buffer.toString());
+		lines.removeIf(String::isBlank);
+		return lines;
+	}
+
 	@Override
 	public String compileNode(String line) {
-		if (BlockLexer.BlockLexer_.canLex(line)) {
-			return BlockLexer.BlockLexer_.lex(line, this);
-		} else if (FunctionLexer.isFunction(line)) {
-			return FunctionLexer.compileFunction(line, this);
-		} else if (DeclarationLexer.isDeclaration(line)) {
-			return DeclarationLexer.compileDeclaration(line, this);
-		} else if (IfLexer.IfLexer_.canLex(line)) {
-			return IfLexer.IfLexer_.lex(line, this);
-		} else if (WhileLexer.WhileLexer_.canLex(line)) {
-			return WhileLexer.WhileLexer_.lex(line, this);
-		} else if (ElseLexer.ElseLexer_.canLex(line)) {
-			return ElseLexer.ElseLexer_.lex(line, this);
-		} else if (ElifLexer.ElifLexer_.canLex(line)) {
-			return ElifLexer.ElifLexer_.lex(line, this);
-		} else if (line.equals("true")) {
+		if (line.equals("true")) {
 			return "1";
 		} else if (line.equals("false")) {
 			return "0";
-		} else if (ReturnLexer.isReturn(line)) {
-			return ReturnLexer.compileReturn(line, this);
-		} else if (InvocationLexer.isInvocation(line)) {
-			return InvocationLexer.compileInvocation(line, this);
-		} else if (StructureLexer.isStructure(line)) {
-			return StructureLexer.compileStructure(line, this);
-		} else if (ConstructionLexer.isConstruction(line)) {
-			return ConstructionLexer.compileConstruction(line, this);
-		} else if (AcccessorLexer.isAccessor(line)) {
-			return AcccessorLexer.compileAccesor(line, this);
-		} else if (ReferenceLexer.isReference(line)) {
-			return ReferenceLexer.compileReference(line, this);
-		} else if (DereferenceLexer.isDereference(line)) {
-			return DereferenceLexer.compileDereference(line, this);
-		} else if (QuantityLexer.isQuantity(line)) {
-			return QuantityLexer.compileQuantity(line, this);
-		} else if (AssignmentLexer.isAssignment(line)) {
-			return AssignmentLexer.compileAssignment(line, this);
+		} else if (BlockLexer_.canLex(line)) {
+			return BlockLexer_.lex(line, this);
+		} else if (FunctionLexer_.canLex(line)) {
+			return FunctionLexer_.lex(line, this);
+		} else if (DeclarationLexer_.canLex(line)) {
+			return DeclarationLexer_.lex(line, this);
+		} else if (IfLexer_.canLex(line)) {
+			return IfLexer_.lex(line, this);
+		} else if (WhileLexer_.canLex(line)) {
+			return WhileLexer_.lex(line, this);
+		} else if (ElseLexer_.canLex(line)) {
+			return ElseLexer_.lex(line, this);
+		} else if (ElifLexer_.canLex(line)) {
+			return ElifLexer_.lex(line, this);
+		} else if (ReturnLexer_.canLex(line)) {
+			return ReturnLexer_.lex(line, this);
+		} else if (InvocationLexer_.canLex(line)) {
+			return InvocationLexer_.lex(line, this);
+		} else if (StructureLexer_.canLex(line)) {
+			return StructureLexer_.lex(line, this);
+		} else if (ConstructionLexer_.canLex(line)) {
+			return ConstructionLexer_.lex(line, this);
+		} else if (AccessorLexer_.canLex(line)) {
+			return AccessorLexer_.lex(line, this);
+		} else if (ReferenceLexer_.canLex(line)) {
+			return ReferenceLexer_.lex(line, this);
+		} else if (DereferenceLexer_.canLex(line)) {
+			return DereferenceLexer_.lex(line, this);
+		} else if (QuantityLexer_.canLex(line)) {
+			return QuantityLexer_.lex(line, this);
+		} else if (AssignmentLexer_.canLex(line)) {
+			return AssignmentLexer_.lex(line, this);
 		} else {
 			return line;
 		}

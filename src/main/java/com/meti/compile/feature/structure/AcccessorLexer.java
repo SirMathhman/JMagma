@@ -1,9 +1,21 @@
 package com.meti.compile.feature.structure;
 
-import com.meti.compile.MagmaCompiler;
+import com.meti.compile.Compiler;
+import com.meti.compile.feature.scope.Lexer;
 
-public class AcccessorLexer {
-	public static String compileAccesor(String line, MagmaCompiler compiler) {
+public class AcccessorLexer implements Lexer {
+	public static final AcccessorLexer AccessorLexer_ = new AcccessorLexer();
+
+	private AcccessorLexer() {
+	}
+
+	@Override
+	public boolean canLex(String line) {
+		return line.contains("=>");
+	}
+
+	@Override
+	public String lex(String line, Compiler compiler) {
 		var separator = line.indexOf("=>");
 		var firstSlice = line.substring(0, separator);
 		var first = firstSlice.trim();
@@ -11,9 +23,5 @@ public class AcccessorLexer {
 		var memberSlice = line.substring(separator + 2);
 		var memberString = memberSlice.trim();
 		return "%s.%s".formatted(structure, memberString);
-	}
-
-	public static boolean isAccessor(String line) {
-		return line.contains("=>");
 	}
 }
