@@ -2,6 +2,8 @@ package com.meti.compile.feature.scope;
 
 import com.meti.compile.token.Token;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -23,10 +25,22 @@ public class BlockLexer implements Lexer {
 	public Token lex(String content) {
 		var length = content.length();
 		var slice = content.substring(1, length - 1);
-		var nodes = BracketSplitter_.stream(slice)
+		return BracketSplitter_.stream(slice)
 				.map(MagmaLexingStage_::lexNode)
-				.collect(Collectors.toList());
-		return new Block(nodes);
+				.fold(new Builder(Collections.emptyList()), Builder::add)
+				.complete();
+	}
+
+	private static record Builder(List<Token> lines) {
+		Builder add(Token line) {
+			var copy = new ArrayList<>(lines);
+			copy.add(line);
+			return new Builder(copy);
+		}
+
+		Token complete() {
+			return new Block(lines);
+		}
 	}
 
 	private static record Block(List<Token> nodes) implements Token {

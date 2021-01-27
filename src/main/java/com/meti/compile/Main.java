@@ -9,7 +9,7 @@ public class Main {
 		try {
 			var path = Paths.get(".", "Main.mg");
 			var content = Files.readString(path);
-			String joinedOutput = MagmaCompiler.MagmaCompiler_.compile(content);
+			var joinedOutput = MagmaCompiler.MagmaCompiler_.compile(content);
 			var target = Paths.get(".", "Main.c");
 			Files.writeString(target, joinedOutput);
 		} catch (IOException e) {
