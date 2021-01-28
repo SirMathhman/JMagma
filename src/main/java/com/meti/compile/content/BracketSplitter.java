@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-public class BracketSplitter implements Splitter {
+public class BracketSplitter implements SpliWtter {
 	public static final Splitter BracketSplitter_ = new BracketSplitter();
 
 	BracketSplitter() {
@@ -23,7 +23,7 @@ public class BracketSplitter implements Splitter {
 				.map(String::trim);
 	}
 
-	public State processAll(String content) {
+	State processAll(String content) {
 		var current = new State();
 		for (int i = 0; i < content.length(); i++) {
 			current = process(current, content.charAt(i));
