@@ -3,11 +3,7 @@ import com.meti.{
 		collect.Stream,
 		string.[String, Strings]
 	},
-	content {
-		Splitter,
-		State,
-		ListState
-	}
+	content.[ListState, Splitter, State]
 }
 
 object BracketSplitter {
