@@ -1,5 +1,6 @@
 package com.meti.compile.feature.scope;
 
+import com.meti.api.magma.collect.stream.StreamException;
 import com.meti.compile.token.Token;
 
 import java.util.ArrayList;
@@ -25,10 +26,14 @@ public class BlockLexer implements Lexer {
 	public Token lex(String content) {
 		var length = content.length();
 		var slice = content.substring(1, length - 1);
-		return BracketSplitter_.stream(slice)
-				.map(MagmaLexingStage_::lexNode)
-				.fold(new Builder(Collections.emptyList()), Builder::add)
-				.complete();
+		try {
+			return BracketSplitter_.stream(slice)
+					.map(MagmaLexingStage_::lexNode)
+					.fold(new Builder(Collections.emptyList()), Builder::add)
+					.complete();
+		} catch (StreamException e) {
+			return new Block(Collections.emptyList());
+		}
 	}
 
 	private static record Builder(List<Token> lines) {

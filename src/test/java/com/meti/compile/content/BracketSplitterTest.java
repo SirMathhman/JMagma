@@ -1,5 +1,6 @@
 package com.meti.compile.content;
 
+import com.meti.api.magma.collect.stream.StreamException;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -57,7 +58,7 @@ class BracketSplitterTest {
 	}
 
 	@Test
-	void stream() {
+	void stream() throws StreamException {
 		var expected = singletonList("{;}");
 		var stream = BracketSplitter_.stream("{;}");
 		var actual = stream.fold(emptyList(), this::append);

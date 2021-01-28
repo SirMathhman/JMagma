@@ -1,7 +1,7 @@
 package com.meti.compile.content;
 
 import com.meti.api.java.collect.stream.JavaStream;
-import com.meti.api.java.collect.stream.Stream;
+import com.meti.api.magma.collect.stream.Stream;
 
 import java.util.ArrayList;
 import java.util.List;

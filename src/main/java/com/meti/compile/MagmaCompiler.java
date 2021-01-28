@@ -1,5 +1,7 @@
 package com.meti.compile;
 
+import com.meti.api.magma.collect.stream.StreamException;
+
 import java.util.Arrays;
 import java.util.stream.Stream;
 
@@ -18,9 +20,13 @@ public class MagmaCompiler implements Compiler {
 
 	@Override
 	public String compile(String content) {
-		return BracketSplitter_.stream(content)
-				.map(line -> MagmaLexingStage_.lexNode(line).render())
-				.fold((current, next) -> current + next)
-				.orElse("");
+		try {
+			return BracketSplitter_.stream(content)
+					.map(line -> MagmaLexingStage_.lexNode(line).render())
+					.fold((current, next) -> current + next)
+					.orElse("");
+		} catch (StreamException e) {
+			return "";
+		}
 	}
 }

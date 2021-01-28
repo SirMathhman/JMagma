@@ -19,8 +19,9 @@ object BracketSplitter {
 		else state.append(c)
 
 	def processAll(content : String) =>
-		Streams.ofIntRange(0, content.length())
-			.map(_).fold(ListState.empty, process);
+		try Streams.ofIntRange(0, content.length())
+			.map(_).fold(ListState.empty, process)
+		catch ListState.empty;
 
 	const stream = (content : String) =>
 		processAll(content)
