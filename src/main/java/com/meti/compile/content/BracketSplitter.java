@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-public class BracketSplitter implements SpliWtter {
+public class BracketSplitter implements Splitter {
 	public static final Splitter BracketSplitter_ = new BracketSplitter();
 
 	BracketSplitter() {
