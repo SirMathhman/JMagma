@@ -17,7 +17,7 @@ class BracketSplitterTest {
 	void process_all() {
 		var splitter = new BracketSplitter();
 		var list = singletonList("{;;}");
-		var expected = new BracketSplitter.State(list, "", 0);
+		var expected = new JavaState(list, "", 0);
 		var actual = splitter.processAll("{;;}");
 		assertEquals(expected, actual);
 	}
@@ -25,17 +25,17 @@ class BracketSplitterTest {
 	@Test
 	void process_both() {
 		var splitter = new BracketSplitter();
-		var state = new BracketSplitter.State();
+		var state = new JavaState();
 		var first = splitter.process(state, '{');
 		var actual = splitter.process(first, '}');
-		var expected = new BracketSplitter.State(singletonList("{}"), "", 0);
+		var expected = new JavaState(singletonList("{}"), "", 0);
 		assertEquals(expected, actual);
 	}
 
 	@Test
 	void process_open() {
 		var splitter = new BracketSplitter();
-		var expected = new BracketSplitter.State(emptyList(), "{", 1);
+		var expected = new JavaState(emptyList(), "{", 1);
 		var actual = splitter.processAll("{");
 		assertEquals(expected, actual);
 	}
@@ -43,16 +43,16 @@ class BracketSplitterTest {
 	@Test
 	void process_open_as_char() {
 		var splitter = new BracketSplitter();
-		var state = new BracketSplitter.State();
+		var state = new JavaState();
 		var actual = splitter.process(state, '{');
-		var expected = new BracketSplitter.State(emptyList(), "{", 1);
+		var expected = new JavaState(emptyList(), "{", 1);
 		assertEquals(expected, actual);
 	}
 
 	@Test
 	void state_equals() {
-		var expected = new BracketSplitter.State(singletonList("test"), "", 0);
-		var actual = new BracketSplitter.State(singletonList("test"), "", 0);
+		var expected = new JavaState(singletonList("test"), "", 0);
+		var actual = new JavaState(singletonList("test"), "", 0);
 		assertEquals(expected, actual);
 	}
 

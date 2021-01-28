@@ -1,10 +1,10 @@
 package com.meti.api.java.collect.stream;
 
+import com.meti.api.java.core.JavaOption;
 import com.meti.api.magma.core.F1E1;
 import com.meti.api.magma.core.F2E1;
+import com.meti.api.magma.core.Option;
 
-import java.util.Optional;
-import java.util.function.Predicate;
 import java.util.stream.Stream;
 
 public record JavaStream<T>(Stream<T> value) implements com.meti.api.java.collect.stream.Stream<T> {
@@ -31,14 +31,14 @@ public record JavaStream<T>(Stream<T> value) implements com.meti.api.java.collec
 	}
 
 	@Override
-	public Optional<T> fold(F2E1<T, T, T, ?> folder) {
-		return getValue().reduce((s, s2) -> {
+	public Option<T> fold(F2E1<T, T, T, ?> folder) {
+		return new JavaOption<>(getValue().reduce((s, s2) -> {
 			try {
 				return folder.apply(s, s2);
 			} catch (Exception e) {
 				throw new RuntimeException(e);
 			}
-		});
+		}));
 	}
 
 	@Override
