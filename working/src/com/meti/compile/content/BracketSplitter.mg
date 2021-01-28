@@ -22,12 +22,12 @@ object BracketSplitter {
 		Streams.ofIntRange(0, content.length())
 			.map(_).fold(ListState.empty, process);
 
-	const stream(content : String) =>
+	const stream = (content : String) =>
 		processAll(content)
 		.advance()
 		.stream()
 		.filter(!Strings.isBlank(_))
 		.map(String::trim);
 
-	out const Splitter = () => Splitter(this, stream);
+	out const Splitter = () => Splitter(this);
 }
