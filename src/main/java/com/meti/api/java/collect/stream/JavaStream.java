@@ -1,6 +1,7 @@
 package com.meti.api.java.collect.stream;
 
 import com.meti.api.java.core.JavaOption;
+import com.meti.api.magma.collect.stream.StreamException;
 import com.meti.api.magma.core.F1E1;
 import com.meti.api.magma.core.F2E1;
 import com.meti.api.magma.core.Option;
@@ -8,6 +9,17 @@ import com.meti.api.magma.core.Option;
 import java.util.stream.Stream;
 
 public record JavaStream<T>(Stream<T> value) implements com.meti.api.magma.collect.stream.Stream<T> {
+	@Override
+	public boolean allMatch(F1E1<T, Boolean, ?> predicate) throws StreamException {
+		return value.allMatch(t -> {
+			try {
+				return predicate.apply(t);
+			} catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		});
+	}
+
 	@Override
 	public com.meti.api.magma.collect.stream.Stream<T> filter(F1E1<T, Boolean, ?> predicate) {
 		return new JavaStream<>(value.filter(t -> {

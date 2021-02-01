@@ -4,6 +4,11 @@ import com.meti.api.magma.core.*;
 
 public abstract class AbstractStream<T> implements Stream<T> {
 	@Override
+	public boolean allMatch(F1E1<T, Boolean, ?> predicate) throws StreamException {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
 	public Stream<T> filter(F1E1<T, Boolean, ?> predicate) {
 		return new AbstractStream<>() {
 			@Override

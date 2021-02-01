@@ -9,8 +9,7 @@ import java.util.List;
 import static com.meti.compile.content.BracketSplitter.BracketSplitter_;
 import static java.util.Collections.emptyList;
 import static java.util.Collections.singletonList;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertIterableEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 class BracketSplitterTest {
 
@@ -20,7 +19,7 @@ class BracketSplitterTest {
 		var list = singletonList("{;;}");
 		var expected = new JavaState(list, "", 0);
 		var actual = splitter.processAll("{;;}");
-		assertEquals(expected, actual);
+		assertTrue(expected.equalsTo(actual));
 	}
 
 	@Test
@@ -30,7 +29,7 @@ class BracketSplitterTest {
 		var first = splitter.process(state, '{');
 		var actual = splitter.process(first, '}');
 		var expected = new JavaState(singletonList("{}"), "", 0);
-		assertEquals(expected, actual);
+		assertTrue(expected.equalsTo(actual));
 	}
 
 	@Test
@@ -38,7 +37,7 @@ class BracketSplitterTest {
 		var splitter = new BracketSplitter();
 		var expected = new JavaState(emptyList(), "{", 1);
 		var actual = splitter.processAll("{");
-		assertEquals(expected, actual);
+		assertTrue(expected.equalsTo(actual));
 	}
 
 	@Test
@@ -47,14 +46,14 @@ class BracketSplitterTest {
 		var state = new JavaState();
 		var actual = splitter.process(state, '{');
 		var expected = new JavaState(emptyList(), "{", 1);
-		assertEquals(expected, actual);
+		assertTrue(expected.equalsTo(actual));
 	}
 
 	@Test
 	void state_equals() {
 		var expected = new JavaState(singletonList("test"), "", 0);
 		var actual = new JavaState(singletonList("test"), "", 0);
-		assertEquals(expected, actual);
+		assertTrue(expected.equalsTo(actual));
 	}
 
 	@Test

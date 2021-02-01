@@ -5,6 +5,8 @@ import com.meti.api.magma.core.F2E1;
 import com.meti.api.magma.core.Option;
 
 public interface Stream<T> {
+	boolean allMatch(F1E1<T, Boolean, ?> predicate) throws StreamException;
+
 	Stream<T> filter(F1E1<T, Boolean, ?> predicate);
 
 	<R> R fold(R identity, F2E1<R, T, R, ?> folder) throws StreamException;

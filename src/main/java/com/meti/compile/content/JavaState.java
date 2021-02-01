@@ -2,11 +2,11 @@ package com.meti.compile.content;
 
 import com.meti.api.java.collect.stream.JavaStream;
 import com.meti.api.magma.collect.stream.Stream;
+import com.meti.api.magma.collect.stream.StreamException;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 class JavaState implements State {
 	private final List<String> lines;
@@ -36,6 +36,11 @@ class JavaState implements State {
 	}
 
 	@Override
+	public boolean isAt(int depth) {
+		return this.depth == depth;
+	}
+
+	@Override
 	public boolean isLevel() {
 		return depth == 0;
 	}
@@ -43,6 +48,11 @@ class JavaState implements State {
 	@Override
 	public boolean isShallow() {
 		return depth == 1;
+	}
+
+	@Override
+	public boolean isStoring(String buffer) {
+		return this.buffer.equals(buffer);
 	}
 
 	@Override
@@ -66,28 +76,14 @@ class JavaState implements State {
 	}
 
 	@Override
-	public int hashCode() {
-		return Objects.hash(lines, buffer, depth);
+	public boolean equalsTo(State state) {
+		try {
+			var sameDepth = state.isAt(depth);
+			var sameBuffer = state.isStoring(buffer);
+			var sameLines = state.stream().allMatch(lines::contains);
+			return sameDepth && sameBuffer && sameLines;
+		} catch (StreamException e) {
+			return false;
+		}
 	}
-
-	@Override
-	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
-		JavaState state = (JavaState) o;
-		var sameDepth = depth == state.depth;
-		var sameLines = Objects.equals(lines, state.lines);
-		var sameBuffer = Objects.equals(buffer, state.buffer);
-		return sameDepth && sameLines && sameBuffer;
-	}
-
-	@Override
-	public String toString() {
-		var linesToString = lines.stream()
-				.map("\"%s\""::formatted)
-				.collect(Collectors.joining(",", "[", "]"));
-		return """
-				{"lines" : %s, "buffer" : "%s", depth : %d}""".formatted(linesToString, buffer, depth);
-	}
-
 }
