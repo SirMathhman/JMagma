@@ -15,16 +15,16 @@ public class MagmaLexingStage implements LexingStage {
 
 	@Override
 	public Field lexField(String line) {
-		return FieldLexer_.lex(line);
+		return FieldLexer_.lex(line).orElse(null);
 	}
 
 	@Override
 	public Token lexNode(String line) {
-		return MagmaNodeLexer_.lex(line);
+		return MagmaNodeLexer_.lex(line).orElse(null);
 	}
 
 	@Override
 	public Token lexType(String content) {
-		return MagmaTypeLexer_.lex(content);
+		return MagmaTypeLexer_.lex(content).orElse(null);
 	}
 }

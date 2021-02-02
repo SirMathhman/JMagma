@@ -1,5 +1,8 @@
 package com.meti.compile.feature.structure;
 
+import com.meti.api.magma.core.None;
+import com.meti.api.magma.core.Option;
+import com.meti.api.magma.core.Some;
 import com.meti.compile.feature.scope.Lexer;
 import com.meti.compile.token.Content;
 import com.meti.compile.token.Token;
@@ -12,13 +15,16 @@ public class AcccessorLexer implements Lexer<Token> {
 	private AcccessorLexer() {
 	}
 
-	@Override
-	public boolean canLex(String line) {
-		return line.contains("=>");
+	private boolean canLex(String content) {
+		return content.contains("=>");
 	}
 
 	@Override
-	public Token lex(String line) {
+	public Option<Token> lex(String content) {
+		return canLex(content) ? new Some<>(lex2(content)) : new None<>();
+	}
+
+	private Token lex2(String line) {
 		var separator = line.indexOf("=>");
 		var firstSlice = line.substring(0, separator);
 		var first = firstSlice.trim();

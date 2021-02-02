@@ -2,6 +2,9 @@ package com.meti.compile.feature.function;
 
 import com.meti.api.java.collect.JavaLists;
 import com.meti.api.magma.collect.stream.StreamException;
+import com.meti.api.magma.core.None;
+import com.meti.api.magma.core.Option;
+import com.meti.api.magma.core.Some;
 import com.meti.compile.content.ParameterSplitter;
 import com.meti.compile.feature.scope.Lexer;
 import com.meti.compile.token.Token;
@@ -16,13 +19,16 @@ public class FunctionLexer implements Lexer<Token> {
 	private FunctionLexer() {
 	}
 
-	@Override
-	public boolean canLex(String line) {
-		return line.startsWith("def");
+	private boolean canLex(String content) {
+		return content.startsWith("def");
 	}
 
 	@Override
-	public Token lex(String line) {
+	public Option<Token> lex(String content) {
+		return canLex(content) ? new Some<>(lex2(content)) : new None<>();
+	}
+
+	private Token lex2(String line) {
 		var paramStart = line.indexOf('(');
 		var paramEnd = line.indexOf(')');
 		var returnsSeparator = line.indexOf(":");

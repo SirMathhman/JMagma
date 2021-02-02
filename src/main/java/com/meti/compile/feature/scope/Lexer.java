@@ -1,7 +1,7 @@
 package com.meti.compile.feature.scope;
 
-public interface Lexer<T> {
-	boolean canLex(String line);
+import com.meti.api.magma.core.Option;
 
-	T lex(String content);
+public interface Lexer<T> {
+	Option<T> lex(String content);
 }

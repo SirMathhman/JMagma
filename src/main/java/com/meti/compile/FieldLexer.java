@@ -1,5 +1,8 @@
 package com.meti.compile;
 
+import com.meti.api.magma.core.None;
+import com.meti.api.magma.core.Option;
+import com.meti.api.magma.core.Some;
 import com.meti.compile.feature.scope.Lexer;
 import com.meti.compile.token.EmptyField;
 import com.meti.compile.token.Field;
@@ -14,13 +17,16 @@ public class FieldLexer implements Lexer<Field> {
 	private FieldLexer() {
 	}
 
-	@Override
-	public boolean canLex(String line) {
+	private boolean canLex(String content) {
 		return true;
 	}
 
 	@Override
-	public Field lex(String line) {
+	public Option<Field> lex(String content) {
+		return canLex(content) ? new Some<>(lex2(content)) : new None<>();
+	}
+
+	private Field lex2(String line) {
 		var typeSeparator = line.indexOf(':');
 		var valueSeparator = line.indexOf('=');
 		var keysSlice = line.substring(0, typeSeparator);

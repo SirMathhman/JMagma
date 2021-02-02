@@ -1,5 +1,8 @@
 package com.meti.compile.feature.primitive;
 
+import com.meti.api.magma.core.None;
+import com.meti.api.magma.core.Option;
+import com.meti.api.magma.core.Some;
 import com.meti.compile.feature.scope.Lexer;
 import com.meti.compile.token.Content;
 import com.meti.compile.token.Token;
@@ -12,13 +15,16 @@ public class QuantityLexer implements Lexer<Token> {
 	private QuantityLexer() {
 	}
 
-	@Override
-	public boolean canLex(String line) {
-		return line.startsWith("(") && line.endsWith(")");
+	private boolean canLex(String content) {
+		return content.startsWith("(") && content.endsWith(")");
 	}
 
 	@Override
-	public Token lex(String line) {
+	public Option<Token> lex(String content) {
+		return canLex(content) ? new Some<>(lex2(content)) : new None<>();
+	}
+
+	private Token lex2(String line) {
 		var slice = line.substring(1, line.length() - 1);
 		var string = slice.trim();
 		var node = MagmaLexingStage_.lexNode(string).render();

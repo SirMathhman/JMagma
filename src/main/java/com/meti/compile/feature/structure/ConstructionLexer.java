@@ -2,6 +2,9 @@ package com.meti.compile.feature.structure;
 
 import com.meti.api.java.collect.JavaLists;
 import com.meti.api.magma.collect.stream.StreamException;
+import com.meti.api.magma.core.None;
+import com.meti.api.magma.core.Option;
+import com.meti.api.magma.core.Some;
 import com.meti.compile.content.ParameterSplitter;
 import com.meti.compile.feature.scope.Lexer;
 import com.meti.compile.token.Content;
@@ -18,14 +21,17 @@ public class ConstructionLexer implements Lexer<Token> {
 	private ConstructionLexer() {
 	}
 
-	@Override
-	public boolean canLex(String line) {
-		return line.startsWith("[") && line.contains("]") &&
-		       line.contains("{") && line.contains("}");
+	private boolean canLex(String content) {
+		return content.startsWith("[") && content.contains("]") &&
+		       content.contains("{") && content.contains("}");
 	}
 
 	@Override
-	public Token lex(String line) {
+	public Option<Token> lex(String content) {
+		return canLex(content) ? new Some<>(lex2(content)) : new None<>();
+	}
+
+	private Token lex2(String line) {
 		var bodyStart = line.indexOf('{');
 		var bodySlice = line.substring(bodyStart + 1, line.length() - 1);
 		var bodyString = bodySlice.trim();
