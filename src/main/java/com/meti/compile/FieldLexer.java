@@ -9,7 +9,7 @@ import com.meti.compile.token.ValueField;
 import static com.meti.compile.MagmaLexingStage.MagmaLexingStage_;
 
 public class FieldLexer implements Lexer<Field> {
-	static final Lexer<Field> FieldLexer = new FieldLexer();
+	static final Lexer<Field> FieldLexer_ = new FieldLexer();
 
 	private FieldLexer() {
 	}
