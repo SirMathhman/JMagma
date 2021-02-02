@@ -1,4 +1,4 @@
-package com.meti.compile.feature.scope;
+package com.meti.compile.lex;
 
 import com.meti.api.magma.core.Option;
 import com.meti.compile.token.Input;

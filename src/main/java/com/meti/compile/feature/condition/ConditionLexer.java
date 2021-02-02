@@ -1,10 +1,10 @@
 package com.meti.compile.feature.condition;
 
-import com.meti.compile.feature.scope.Lexer;
+import com.meti.compile.lex.Lexer;
 import com.meti.compile.token.Input;
 import com.meti.compile.token.Token;
 
-import static com.meti.compile.MagmaLexingStage.MagmaLexingStage_;
+import static com.meti.compile.lex.MagmaLexingStage.MagmaLexingStage_;
 
 public abstract class ConditionLexer implements Lexer<Token> {
 	protected boolean canLex(String content, String type) {

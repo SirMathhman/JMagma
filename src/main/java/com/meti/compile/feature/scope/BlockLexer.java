@@ -4,6 +4,7 @@ import com.meti.api.magma.collect.stream.StreamException;
 import com.meti.api.magma.core.None;
 import com.meti.api.magma.core.Option;
 import com.meti.api.magma.core.Some;
+import com.meti.compile.lex.Lexer;
 import com.meti.compile.token.Input;
 import com.meti.compile.token.Output;
 import com.meti.compile.token.Token;
@@ -13,7 +14,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.meti.compile.MagmaLexingStage.MagmaLexingStage_;
+import static com.meti.compile.lex.MagmaLexingStage.MagmaLexingStage_;
 import static com.meti.compile.content.BracketSplitter.BracketSplitter_;
 
 public class BlockLexer implements Lexer<Token> {

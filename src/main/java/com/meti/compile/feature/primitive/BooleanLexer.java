@@ -4,7 +4,7 @@ import com.meti.api.magma.core.None;
 import com.meti.api.magma.core.Option;
 import com.meti.api.magma.core.Some;
 import com.meti.compile.token.Input;
-import com.meti.compile.feature.scope.Lexer;
+import com.meti.compile.lex.Lexer;
 import com.meti.compile.token.Content;
 import com.meti.compile.token.Token;
 

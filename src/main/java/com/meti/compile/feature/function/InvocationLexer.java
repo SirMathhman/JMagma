@@ -7,7 +7,7 @@ import com.meti.api.magma.core.Option;
 import com.meti.api.magma.core.Some;
 import com.meti.compile.content.ParameterSplitter;
 import com.meti.compile.token.Input;
-import com.meti.compile.feature.scope.Lexer;
+import com.meti.compile.lex.Lexer;
 import com.meti.compile.token.Content;
 import com.meti.compile.token.Token;
 
@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.meti.compile.MagmaLexingStage.MagmaLexingStage_;
+import static com.meti.compile.lex.MagmaLexingStage.MagmaLexingStage_;
 
 public class InvocationLexer implements Lexer<Token> {
 

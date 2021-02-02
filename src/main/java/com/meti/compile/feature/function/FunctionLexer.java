@@ -7,12 +7,12 @@ import com.meti.api.magma.core.Option;
 import com.meti.api.magma.core.Some;
 import com.meti.compile.content.ParameterSplitter;
 import com.meti.compile.token.Input;
-import com.meti.compile.feature.scope.Lexer;
+import com.meti.compile.lex.Lexer;
 import com.meti.compile.token.Token;
 
 import java.util.ArrayList;
 
-import static com.meti.compile.MagmaLexingStage.MagmaLexingStage_;
+import static com.meti.compile.lex.MagmaLexingStage.MagmaLexingStage_;
 
 public class FunctionLexer implements Lexer<Token> {
 	public static final Lexer<Token> FunctionLexer_ = new FunctionLexer();

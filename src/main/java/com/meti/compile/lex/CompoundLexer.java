@@ -1,11 +1,10 @@
-package com.meti.compile;
+package com.meti.compile.lex;
 
 import com.meti.api.magma.collect.stream.Stream;
 import com.meti.api.magma.collect.stream.StreamException;
 import com.meti.api.magma.collect.stream.Streams;
 import com.meti.api.magma.core.None;
 import com.meti.api.magma.core.Option;
-import com.meti.compile.feature.scope.Lexer;
 import com.meti.compile.token.Input;
 import com.meti.compile.token.Token;
 

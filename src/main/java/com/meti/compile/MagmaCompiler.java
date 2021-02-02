@@ -5,7 +5,7 @@ import com.meti.compile.token.Input;
 import com.meti.compile.token.Output;
 import com.meti.compile.token.Token;
 
-import static com.meti.compile.MagmaLexingStage.MagmaLexingStage_;
+import static com.meti.compile.lex.MagmaLexingStage.MagmaLexingStage_;
 import static com.meti.compile.content.BracketSplitter.BracketSplitter_;
 
 public class MagmaCompiler implements Compiler {

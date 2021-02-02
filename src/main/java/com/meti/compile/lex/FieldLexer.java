@@ -1,12 +1,11 @@
-package com.meti.compile;
+package com.meti.compile.lex;
 
 import com.meti.api.magma.core.None;
 import com.meti.api.magma.core.Option;
-import com.meti.compile.feature.scope.Lexer;
 import com.meti.compile.token.*;
 
 import static com.meti.api.magma.core.Some.Some;
-import static com.meti.compile.MagmaLexingStage.MagmaLexingStage_;
+import static com.meti.compile.lex.MagmaLexingStage.MagmaLexingStage_;
 
 public class FieldLexer implements Lexer<Field> {
 	static final Lexer<Field> FieldLexer_ = new FieldLexer();

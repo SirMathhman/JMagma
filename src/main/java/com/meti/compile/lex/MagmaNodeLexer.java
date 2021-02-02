@@ -1,6 +1,5 @@
-package com.meti.compile;
+package com.meti.compile.lex;
 
-import com.meti.compile.feature.scope.Lexer;
 import com.meti.compile.token.Token;
 
 import static com.meti.api.magma.collect.stream.Streams.of;

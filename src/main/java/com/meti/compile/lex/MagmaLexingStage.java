@@ -1,13 +1,13 @@
-package com.meti.compile;
+package com.meti.compile.lex;
 
 import com.meti.compile.token.Content;
 import com.meti.compile.token.Field;
 import com.meti.compile.token.Input;
 import com.meti.compile.token.Token;
 
-import static com.meti.compile.FieldLexer.FieldLexer_;
-import static com.meti.compile.MagmaNodeLexer.MagmaNodeLexer_;
-import static com.meti.compile.MagmaTypeLexer.MagmaTypeLexer_;
+import static com.meti.compile.lex.FieldLexer.FieldLexer_;
+import static com.meti.compile.lex.MagmaNodeLexer.MagmaNodeLexer_;
+import static com.meti.compile.lex.MagmaTypeLexer.MagmaTypeLexer_;
 
 public class MagmaLexingStage implements LexingStage {
 	public static final MagmaLexingStage MagmaLexingStage_ = new MagmaLexingStage();

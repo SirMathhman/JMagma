@@ -1,9 +1,8 @@
-package com.meti.compile;
+package com.meti.compile.lex;
 
 import com.meti.api.magma.collect.stream.Stream;
 import com.meti.api.magma.collect.stream.Streams;
 import com.meti.compile.feature.primitive.PrimitiveLexer;
-import com.meti.compile.feature.scope.Lexer;
 import com.meti.compile.token.Token;
 
 public class MagmaTypeLexer extends CompoundLexer {
