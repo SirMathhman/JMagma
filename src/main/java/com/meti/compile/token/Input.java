@@ -1,4 +1,4 @@
-package com.meti.compile.feature.scope;
+package com.meti.compile.token;
 
 public class Input {
 	private final String content;

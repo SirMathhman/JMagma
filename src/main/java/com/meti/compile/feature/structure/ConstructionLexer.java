@@ -6,7 +6,7 @@ import com.meti.api.magma.core.None;
 import com.meti.api.magma.core.Option;
 import com.meti.api.magma.core.Some;
 import com.meti.compile.content.ParameterSplitter;
-import com.meti.compile.feature.scope.Input;
+import com.meti.compile.token.Input;
 import com.meti.compile.feature.scope.Lexer;
 import com.meti.compile.token.Content;
 import com.meti.compile.token.Token;
@@ -41,7 +41,7 @@ public class ConstructionLexer implements Lexer<Token> {
 			arguments = (ParameterSplitter.ParameterSplitter_.stream(bodyString)
 					.filter(s -> !s.isBlank())
 					.map(String::trim)
-					.map(line1 -> MagmaLexingStage_.lexNode(line1).render())
+					.map(line1 -> MagmaLexingStage_.lexNode(line1).render().getValue())
 					.fold(new ArrayList<String>(), JavaLists::add));
 		} catch (StreamException e) {
 			arguments = new ArrayList<>();

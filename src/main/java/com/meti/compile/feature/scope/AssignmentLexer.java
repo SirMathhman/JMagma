@@ -4,6 +4,7 @@ import com.meti.api.magma.core.None;
 import com.meti.api.magma.core.Option;
 import com.meti.api.magma.core.Some;
 import com.meti.compile.token.Content;
+import com.meti.compile.token.Input;
 import com.meti.compile.token.Token;
 
 import static com.meti.compile.MagmaLexingStage.MagmaLexingStage_;
@@ -27,10 +28,10 @@ public class AssignmentLexer implements Lexer<Token> {
 		var separator = line.indexOf('=');
 		var beforeSlice = line.substring(0, separator);
 		var beforeString = beforeSlice.trim();
-		var before = MagmaLexingStage_.lexNode(beforeString).render();
+		var before = MagmaLexingStage_.lexNode(beforeString).render().getValue();
 		var afterSlice = line.substring(separator + 1);
 		var afterString = afterSlice.trim();
-		var after = MagmaLexingStage_.lexNode(afterString).render();
+		var after = MagmaLexingStage_.lexNode(afterString).render().getValue();
 		return new Content("%s=%s;".formatted(before, after));
 	}
 }

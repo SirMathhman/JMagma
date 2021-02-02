@@ -15,10 +15,10 @@ public abstract class ConditionLexer implements Lexer<Token> {
 		var condEnd = content.indexOf(')');
 		var conditionSlice = content.substring(condStart + 1, condEnd);
 		var conditionString = conditionSlice.trim();
-		var condition = MagmaLexingStage_.lexNode(conditionString).render();
+		var condition = MagmaLexingStage_.lexNode(conditionString).render().getValue();
 		var bodySlice = content.substring(condEnd + 1);
 		var bodyString = bodySlice.trim();
-		var body = MagmaLexingStage_.lexNode(bodyString).render();
+		var body = MagmaLexingStage_.lexNode(bodyString).render().getValue();
 		return "%s(%s)%s".formatted(type, condition, body);
 	}
 }

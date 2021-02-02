@@ -4,6 +4,8 @@ import com.meti.api.magma.collect.stream.StreamException;
 import com.meti.api.magma.core.None;
 import com.meti.api.magma.core.Option;
 import com.meti.api.magma.core.Some;
+import com.meti.compile.token.Input;
+import com.meti.compile.token.Output;
 import com.meti.compile.token.Token;
 
 import java.util.ArrayList;
@@ -56,10 +58,10 @@ public class BlockLexer implements Lexer<Token> {
 
 	private static record Block(List<Token> nodes) implements Token {
 		@Override
-		public String render() {
-			return nodes.stream()
-					.map(Token::render)
-					.collect(Collectors.joining("", "{", "}"));
+		public Output render() {
+			return new Output(nodes.stream()
+					.map(token -> token.render().getValue())
+					.collect(Collectors.joining("", "{", "}")));
 		}
 	}
 }

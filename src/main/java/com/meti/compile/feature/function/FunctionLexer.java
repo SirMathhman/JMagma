@@ -6,7 +6,7 @@ import com.meti.api.magma.core.None;
 import com.meti.api.magma.core.Option;
 import com.meti.api.magma.core.Some;
 import com.meti.compile.content.ParameterSplitter;
-import com.meti.compile.feature.scope.Input;
+import com.meti.compile.token.Input;
 import com.meti.compile.feature.scope.Lexer;
 import com.meti.compile.token.Token;
 
@@ -57,7 +57,7 @@ public class FunctionLexer implements Lexer<Token> {
 
 		var bodySlice = line.substring(bodySeparator + 2);
 		var bodyString = bodySlice.trim();
-		var body = MagmaLexingStage_.lexNode(bodyString).render();
+		var body = MagmaLexingStage_.lexNode(bodyString).render().getValue();
 		return new Implementation(parameters, name, type, body);
 	}
 }

@@ -6,7 +6,7 @@ import com.meti.api.magma.core.None;
 import com.meti.api.magma.core.Option;
 import com.meti.api.magma.core.Some;
 import com.meti.compile.content.ParameterSplitter;
-import com.meti.compile.feature.scope.Input;
+import com.meti.compile.token.Input;
 import com.meti.compile.feature.scope.Lexer;
 import com.meti.compile.token.Content;
 import com.meti.compile.token.Token;
@@ -37,7 +37,7 @@ public class InvocationLexer implements Lexer<Token> {
 		var separator = line.indexOf('(');
 		var callerSlice = line.substring(0, separator);
 		var callerString = callerSlice.trim();
-		var caller = MagmaLexingStage_.lexNode(callerString).render();
+		var caller = MagmaLexingStage_.lexNode(callerString).render().getValue();
 		var argumentsSlice = line.substring(separator + 1, line.length() - 1);
 		var argumentsString = argumentsSlice.trim();
 		List<String> arguments = null;
@@ -45,7 +45,7 @@ public class InvocationLexer implements Lexer<Token> {
 			arguments = ParameterSplitter.ParameterSplitter_.stream(argumentsString)
 					.filter(s -> !s.isBlank())
 					.map(String::trim)
-					.map(line1 -> MagmaLexingStage_.lexNode(line1).render())
+					.map(line1 -> MagmaLexingStage_.lexNode(line1).render().getValue())
 					.fold(new ArrayList<>(), JavaLists::add);
 		} catch (StreamException e) {
 			arguments = new ArrayList<>();

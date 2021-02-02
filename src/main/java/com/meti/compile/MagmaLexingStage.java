@@ -1,6 +1,6 @@
 package com.meti.compile;
 
-import com.meti.compile.feature.scope.Input;
+import com.meti.compile.token.Input;
 import com.meti.compile.token.Field;
 import com.meti.compile.token.Token;
 
