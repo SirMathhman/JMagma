@@ -1,5 +1,6 @@
 package com.meti.compile;
 
+import com.meti.api.magma.collect.stream.Stream;
 import com.meti.api.magma.collect.stream.Streams;
 import com.meti.compile.feature.primitive.PrimitiveLexer;
 import com.meti.compile.feature.scope.Lexer;
@@ -12,7 +13,7 @@ public class MagmaTypeLexer extends CompoundLexer {
 	}
 
 	@Override
-	protected com.meti.api.magma.collect.stream.Stream<Lexer<Token>> streamLexers() {
+	protected Stream<Lexer<Token>> streamLexers() {
 		return Streams.of(PrimitiveLexer.PrimitiveLexer_);
 	}
 }
