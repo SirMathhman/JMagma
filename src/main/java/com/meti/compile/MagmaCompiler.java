@@ -14,10 +14,6 @@ public class MagmaCompiler implements Compiler {
 	private MagmaCompiler() {
 	}
 
-	public static Stream<String> splitSequence(String sequence) {
-		return Arrays.stream(sequence.split(","));
-	}
-
 	@Override
 	public String compile(String content) {
 		try {

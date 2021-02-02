@@ -1,10 +1,12 @@
 package com.meti.compile.feature.function;
 
-import com.meti.compile.MagmaCompiler;
+import com.meti.api.java.collect.JavaLists;
+import com.meti.api.magma.collect.stream.StreamException;
+import com.meti.compile.content.ParameterSplitter;
 import com.meti.compile.feature.scope.Lexer;
 import com.meti.compile.token.Token;
 
-import java.util.stream.Collectors;
+import java.util.ArrayList;
 
 import static com.meti.compile.MagmaLexingStage.MagmaLexingStage_;
 
@@ -32,11 +34,16 @@ public class FunctionLexer implements Lexer<Token> {
 		var name = nameSlice.trim();
 		var paramSlice = line.substring(paramStart + 1, paramEnd);
 		var paramString = paramSlice.trim();
-		var parameters = MagmaCompiler.splitSequence(paramString)
-				.filter(s -> !s.isBlank())
-				.map(String::trim)
-				.map(line1 -> MagmaLexingStage_.lexField(line1).render())
-				.collect(Collectors.toList());
+		ArrayList<String> parameters;
+		try {
+			parameters = ParameterSplitter.ParameterSplitter_.stream(paramString)
+					.filter(s -> !s.isBlank())
+					.map(String::trim)
+					.map(line1 -> MagmaLexingStage_.lexField(line1).render())
+					.fold(new ArrayList<>(), JavaLists::add);
+		} catch (StreamException e) {
+			parameters = new ArrayList<>();
+		}
 		var typeSlice = line.substring(returnsSeparator + 1, bodySeparator);
 		var typeString = typeSlice.trim();
 		Token type = MagmaLexingStage_.lexType(typeString);

@@ -44,7 +44,7 @@ public record JavaStream<T>(Stream<T> value) implements com.meti.api.magma.colle
 
 	@Override
 	public Option<T> fold(F2E1<T, T, T, ?> folder) {
-		return new JavaOption<>(getValue().reduce((s, s2) -> {
+		return new JavaOption<>(value.reduce((s, s2) -> {
 			try {
 				return folder.apply(s, s2);
 			} catch (Exception e) {
@@ -55,7 +55,7 @@ public record JavaStream<T>(Stream<T> value) implements com.meti.api.magma.colle
 
 	@Override
 	public <R> com.meti.api.magma.collect.stream.Stream<R> map(F1E1<T, R, ?> mapper) {
-		return new JavaStream<>(getValue().map(line -> {
+		return new JavaStream<>(value.map(line -> {
 			try {
 				return mapper.apply(line);
 			} catch (Exception e) {
@@ -64,7 +64,4 @@ public record JavaStream<T>(Stream<T> value) implements com.meti.api.magma.colle
 		}));
 	}
 
-	public Stream<T> getValue() {
-		return value;
-	}
 }
