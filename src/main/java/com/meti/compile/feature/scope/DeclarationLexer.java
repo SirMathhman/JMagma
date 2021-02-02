@@ -5,7 +5,7 @@ import com.meti.compile.token.Token;
 
 import static com.meti.compile.MagmaLexingStage.MagmaLexingStage_;
 
-public class DeclarationLexer implements Lexer {
+public class DeclarationLexer implements Lexer<Token> {
 	public static final DeclarationLexer DeclarationLexer_ = new DeclarationLexer();
 
 	private DeclarationLexer() {

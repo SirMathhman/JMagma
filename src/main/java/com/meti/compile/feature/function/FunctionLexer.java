@@ -8,8 +8,8 @@ import java.util.stream.Collectors;
 
 import static com.meti.compile.MagmaLexingStage.MagmaLexingStage_;
 
-public class FunctionLexer implements Lexer {
-	public static final Lexer FunctionLexer_ = new FunctionLexer();
+public class FunctionLexer implements Lexer<Token> {
+	public static final Lexer<Token> FunctionLexer_ = new FunctionLexer();
 
 	private FunctionLexer() {
 	}

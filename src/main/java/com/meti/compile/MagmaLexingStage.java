@@ -29,25 +29,7 @@ public class MagmaLexingStage implements LexingStage {
 
 	@Override
 	public Field lexField(String line) {
-		var typeSeparator = line.indexOf(':');
-		var valueSeparator = line.indexOf('=');
-		var keysSlice = line.substring(0, typeSeparator);
-		var keysString = keysSlice.trim();
-		var space = keysString.lastIndexOf(' ');
-		var nameSlice = keysString.substring(space + 1);
-		var name = nameSlice.trim();
-		var extent = valueSeparator == -1 ? line.length() : valueSeparator;
-		var typeSlice = line.substring(typeSeparator + 1, extent);
-		var typeString = typeSlice.trim();
-		Token type = lexType(typeString);
-		if (valueSeparator == -1) {
-			return new EmptyField(type, name);
-		} else {
-			var valueSlice = line.substring(valueSeparator + 1);
-			var valueString = valueSlice.trim();
-			var token = lexNode(valueString);
-			return new ValueField(type, name, token);
-		}
+		return FieldLexer.FieldLexer.lex(line);
 	}
 
 	@Override
@@ -59,7 +41,7 @@ public class MagmaLexingStage implements LexingStage {
 				.orElse(new Content(line));
 	}
 
-	private Stream<Lexer> streamLexers() {
+	private Stream<Lexer<Token>> streamLexers() {
 		return Stream.of(
 				BooleanLexer.BooleanLexer_,
 				BlockLexer.BlockLexer_,

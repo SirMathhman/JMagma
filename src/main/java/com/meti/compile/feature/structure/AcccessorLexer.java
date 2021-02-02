@@ -1,13 +1,12 @@
 package com.meti.compile.feature.structure;
 
-import com.meti.compile.Compiler;
 import com.meti.compile.feature.scope.Lexer;
 import com.meti.compile.token.Content;
 import com.meti.compile.token.Token;
 
 import static com.meti.compile.MagmaLexingStage.MagmaLexingStage_;
 
-public class AcccessorLexer implements Lexer {
+public class AcccessorLexer implements Lexer<Token> {
 	public static final AcccessorLexer AccessorLexer_ = new AcccessorLexer();
 
 	private AcccessorLexer() {

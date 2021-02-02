@@ -1,10 +1,11 @@
 package com.meti.compile.feature.condition;
 
 import com.meti.compile.feature.scope.Lexer;
+import com.meti.compile.token.Token;
 
 import static com.meti.compile.MagmaLexingStage.MagmaLexingStage_;
 
-public abstract class ConditionLexer implements Lexer {
+public abstract class ConditionLexer implements Lexer<Token> {
 	protected String lex(String line, final String type) {
 		var condStart = line.indexOf('(');
 		var condEnd = line.indexOf(')');

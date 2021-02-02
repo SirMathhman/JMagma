@@ -1,12 +1,11 @@
 package com.meti.compile.feature.scope;
 
-import com.meti.compile.Compiler;
 import com.meti.compile.token.Content;
 import com.meti.compile.token.Token;
 
 import static com.meti.compile.MagmaLexingStage.MagmaLexingStage_;
 
-public class AssignmentLexer implements Lexer {
+public class AssignmentLexer implements Lexer<Token> {
 	public static final AssignmentLexer AssignmentLexer_ = new AssignmentLexer();
 
 	private AssignmentLexer() {

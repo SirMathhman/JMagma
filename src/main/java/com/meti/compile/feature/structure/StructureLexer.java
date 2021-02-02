@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 
 import static com.meti.compile.MagmaLexingStage.MagmaLexingStage_;
 
-public class StructureLexer implements Lexer {
+public class StructureLexer implements Lexer<Token> {
 	public static final StructureLexer StructureLexer_ = new StructureLexer();
 
 	private StructureLexer() {

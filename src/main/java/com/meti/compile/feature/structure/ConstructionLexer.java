@@ -1,6 +1,5 @@
 package com.meti.compile.feature.structure;
 
-import com.meti.compile.Compiler;
 import com.meti.compile.MagmaCompiler;
 import com.meti.compile.feature.scope.Lexer;
 import com.meti.compile.token.Content;
@@ -10,7 +9,7 @@ import java.util.stream.Collectors;
 
 import static com.meti.compile.MagmaLexingStage.MagmaLexingStage_;
 
-public class ConstructionLexer implements Lexer {
+public class ConstructionLexer implements Lexer<Token> {
 	public static final ConstructionLexer ConstructionLexer_ = new ConstructionLexer();
 
 	private ConstructionLexer() {

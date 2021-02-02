@@ -1,13 +1,12 @@
 package com.meti.compile.feature.function;
 
-import com.meti.compile.Compiler;
 import com.meti.compile.feature.scope.Lexer;
 import com.meti.compile.token.Content;
 import com.meti.compile.token.Token;
 
 import static com.meti.compile.MagmaLexingStage.MagmaLexingStage_;
 
-public class ReturnLexer implements Lexer {
+public class ReturnLexer implements Lexer<Token> {
 	public static final ReturnLexer ReturnLexer_ = new ReturnLexer();
 
 	private ReturnLexer() {

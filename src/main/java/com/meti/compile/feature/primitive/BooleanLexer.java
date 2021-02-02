@@ -1,11 +1,10 @@
 package com.meti.compile.feature.primitive;
 
-import com.meti.compile.Compiler;
 import com.meti.compile.feature.scope.Lexer;
 import com.meti.compile.token.Content;
 import com.meti.compile.token.Token;
 
-public class BooleanLexer implements Lexer {
+public class BooleanLexer implements Lexer<Token> {
 	public static final BooleanLexer BooleanLexer_ = new BooleanLexer();
 
 	private BooleanLexer() {

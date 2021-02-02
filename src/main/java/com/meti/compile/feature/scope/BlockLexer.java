@@ -11,8 +11,8 @@ import java.util.stream.Collectors;
 import static com.meti.compile.MagmaLexingStage.MagmaLexingStage_;
 import static com.meti.compile.content.BracketSplitter.BracketSplitter_;
 
-public class BlockLexer implements Lexer {
-	public static final Lexer BlockLexer_ = new BlockLexer();
+public class BlockLexer implements Lexer<Token> {
+	public static final Lexer<Token> BlockLexer_ = new BlockLexer();
 
 	private BlockLexer() {
 	}
