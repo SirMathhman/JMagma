@@ -10,4 +10,12 @@ public class Input {
 	public String getContent() {
 		return content;
 	}
+
+	public boolean hasContent() {
+		return !getContent().isBlank();
+	}
+
+	public Input trim() {
+		return new Input(getContent().trim());
+	}
 }

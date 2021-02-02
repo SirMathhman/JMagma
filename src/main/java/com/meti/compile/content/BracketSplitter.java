@@ -13,14 +13,11 @@ public class BracketSplitter implements Splitter {
 
 	@Override
 	public Stream<Input> stream(Input input) {
-		return stream2(input).map(Input::new);
-	}
-
-	private Stream<String> stream2(Input input) {
 		return processAll(input.getContent())
-				.advance().stream().map(Input::getContent)
-				.filter(s -> !s.isBlank())
-				.map(String::trim);
+				.advance()
+				.stream()
+				.filter(Input::hasContent)
+				.map(Input::trim);
 	}
 
 	State processAll(String content) {
