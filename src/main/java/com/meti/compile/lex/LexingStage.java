@@ -5,7 +5,7 @@ import com.meti.compile.token.Input;
 import com.meti.compile.token.Token;
 
 public interface LexingStage {
-	Field lexField(Input input);
+	Field lexField(Input input) throws LexException;
 
 	Token lexNode(Input input);
 

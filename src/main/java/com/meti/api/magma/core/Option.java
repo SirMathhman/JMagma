@@ -8,4 +8,6 @@ public interface Option<T> {
 	T orElse(T other);
 
 	T orElseGet(Supplier<T> supplier);
+
+	<E extends Exception> T orElseThrow(Supplier<E> supplier);
 }

@@ -1,5 +1,6 @@
 package com.meti.compile.lex;
 
+import com.meti.api.magma.core.Supplier;
 import com.meti.compile.token.Content;
 import com.meti.compile.token.Field;
 import com.meti.compile.token.Input;
@@ -16,8 +17,13 @@ public class MagmaLexingStage implements LexingStage {
 	}
 
 	@Override
-	public Field lexField(Input input) {
-		return FieldLexer_.lex(new Input(input.getContent())).orElse(null);
+	public Field lexField(Input input) throws LexException {
+		Supplier<LexException> invalidate = () -> {
+			var format = "Input of %s is not a valid field.";
+			var message = format.formatted(input);
+			return new LexException(message);
+		};
+		return FieldLexer_.lex(input).orElseThrow(invalidate);
 	}
 
 	@Override

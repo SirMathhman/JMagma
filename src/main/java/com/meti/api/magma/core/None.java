@@ -20,4 +20,9 @@ public class None<T> implements Option<T> {
 	public T orElseGet(Supplier<T> supplier) {
 		return supplier.get();
 	}
+
+	@Override
+	public <E extends Exception> T orElseThrow(Supplier<E> supplier) {
+		throw new UnsupportedOperationException();
+	}
 }

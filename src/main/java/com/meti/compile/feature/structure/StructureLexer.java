@@ -6,6 +6,8 @@ import com.meti.api.magma.core.None;
 import com.meti.api.magma.core.Option;
 import com.meti.api.magma.core.Some;
 import com.meti.compile.content.ParameterSplitter;
+import com.meti.compile.lex.LexException;
+import com.meti.compile.token.Field;
 import com.meti.compile.token.Input;
 import com.meti.compile.lex.Lexer;
 import com.meti.compile.token.Content;
@@ -42,7 +44,16 @@ public class StructureLexer implements Lexer<Token> {
 			members = ParameterSplitter.ParameterSplitter_.stream(new Input(membersString)).map(Input::getContent)
 					.filter(s -> !s.isBlank())
 					.map(String::trim)
-					.map(line1 -> MagmaLexingStage_.lexField(new Input(line1)).render().asString())
+					.map(line1 -> {
+						Field result;
+						try {
+							result = MagmaLexingStage_.lexField(new Input(line1));
+						} catch (LexException e) {
+							e.printStackTrace();
+							result = null;
+						}
+						return result.render().asString();
+					})
 					.fold(new ArrayList<String>(), JavaLists::add);
 		} catch (StreamException e) {
 			members = new ArrayList<>();

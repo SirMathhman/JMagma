@@ -3,8 +3,10 @@ package com.meti.compile.feature.scope;
 import com.meti.api.magma.core.None;
 import com.meti.api.magma.core.Option;
 import com.meti.api.magma.core.Some;
+import com.meti.compile.lex.LexException;
 import com.meti.compile.lex.Lexer;
 import com.meti.compile.token.Content;
+import com.meti.compile.token.Field;
 import com.meti.compile.token.Input;
 import com.meti.compile.token.Token;
 
@@ -26,6 +28,13 @@ public class DeclarationLexer implements Lexer<Token> {
 	}
 
 	private Token lex2(String line) {
-		return new Content("%s;".formatted(MagmaLexingStage_.lexField(new Input(line)).render().asString()));
+		Field result;
+		try {
+			result = MagmaLexingStage_.lexField(new Input(line));
+		} catch (LexException e) {
+			e.printStackTrace();
+			result = null;
+		}
+		return new Content("%s;".formatted(result.render().asString()));
 	}
 }

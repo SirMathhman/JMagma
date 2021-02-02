@@ -1,9 +1,8 @@
 package com.meti.api.magma.core;
 
 public final record Some<T>(T value) implements Option<T> {
-
 	public static <T> Option<T> Some(T value) {
-		return new Some<T>(value);
+		return new Some<>(value);
 	}
 
 	@Override
@@ -23,6 +22,11 @@ public final record Some<T>(T value) implements Option<T> {
 
 	@Override
 	public T orElseGet(Supplier<T> supplier) {
+		return value;
+	}
+
+	@Override
+	public <E extends Exception> T orElseThrow(Supplier<E> supplier) {
 		return value;
 	}
 }

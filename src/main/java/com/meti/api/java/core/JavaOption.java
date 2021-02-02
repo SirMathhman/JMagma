@@ -26,4 +26,9 @@ public record JavaOption<T>(Optional<T> value) implements com.meti.api.magma.cor
 	public T orElseGet(Supplier<T> supplier) {
 		throw new UnsupportedOperationException();
 	}
+
+	@Override
+	public <E extends Exception> T orElseThrow(Supplier<E> supplier) {
+		throw new UnsupportedOperationException();
+	}
 }
