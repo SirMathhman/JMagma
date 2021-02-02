@@ -60,7 +60,8 @@ class BracketSplitterTest {
 	@Test
 	void stream() throws StreamException {
 		var expected = singletonList("{;}");
-		var stream = BracketSplitter_.stream(new Input("{;}")).map(Input::getContent);
+		var input = new Input("{;}");
+		var stream = BracketSplitter_.stream(input).map(Input::getContent);
 		var actual = stream.fold(emptyList(), this::append);
 		assertIterableEquals(expected, actual);
 	}

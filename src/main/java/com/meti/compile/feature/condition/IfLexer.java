@@ -17,7 +17,7 @@ public class IfLexer extends ConditionLexer {
 	@Override
 	public Option<Token> lex(Input input) {
 		return canLex(input.getContent(), "if") ?
-				new Some<>(new Content(lex(input.getContent(), "if"))) :
+				Some.Some(new Content(lex(input.getContent(), "if"))) :
 				new None<>();
 	}
 }

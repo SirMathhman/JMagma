@@ -30,14 +30,14 @@ public class InvocationLexer implements Lexer<Token> {
 
 	@Override
 	public Option<Token> lex(Input input) {
-		return canLex(input.getContent()) ? new Some<>(lex2(input.getContent())) : new None<>();
+		return canLex(input.getContent()) ? Some.Some(lex2(input.getContent())) : new None<>();
 	}
 
 	private Token lex2(String line) {
 		var separator = line.indexOf('(');
 		var callerSlice = line.substring(0, separator);
 		var callerString = callerSlice.trim();
-		var caller = MagmaLexingStage_.lexNode(new Input(callerString)).render().getValue();
+		var caller = MagmaLexingStage_.lexNode(new Input(callerString)).render().asString();
 		var argumentsSlice = line.substring(separator + 1, line.length() - 1);
 		var argumentsString = argumentsSlice.trim();
 		List<String> arguments = null;
@@ -45,7 +45,7 @@ public class InvocationLexer implements Lexer<Token> {
 			arguments = ParameterSplitter.ParameterSplitter_.stream(new Input(argumentsString)).map(Input::getContent)
 					.filter(s -> !s.isBlank())
 					.map(String::trim)
-					.map(line1 -> MagmaLexingStage_.lexNode(new Input(line1)).render().getValue())
+					.map(line1 -> MagmaLexingStage_.lexNode(new Input(line1)).render().asString())
 					.fold(new ArrayList<>(), JavaLists::add);
 		} catch (StreamException e) {
 			arguments = new ArrayList<>();

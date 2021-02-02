@@ -28,7 +28,7 @@ public class StructureLexer implements Lexer<Token> {
 
 	@Override
 	public Option<Token> lex(Input input) {
-		return canLex(input.getContent()) ? new Some<>(lex2(input.getContent())) : new None<>();
+		return canLex(input.getContent()) ? Some.Some(lex2(input.getContent())) : new None<>();
 	}
 
 	private Token lex2(String line) {
@@ -42,7 +42,7 @@ public class StructureLexer implements Lexer<Token> {
 			members = ParameterSplitter.ParameterSplitter_.stream(new Input(membersString)).map(Input::getContent)
 					.filter(s -> !s.isBlank())
 					.map(String::trim)
-					.map(line1 -> MagmaLexingStage_.lexField(new Input(line1)).render().getValue())
+					.map(line1 -> MagmaLexingStage_.lexField(new Input(line1)).render().asString())
 					.fold(new ArrayList<String>(), JavaLists::add);
 		} catch (StreamException e) {
 			members = new ArrayList<>();

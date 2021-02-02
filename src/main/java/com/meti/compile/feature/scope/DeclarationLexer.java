@@ -21,10 +21,10 @@ public class DeclarationLexer implements Lexer<Token> {
 
 	@Override
 	public Option<Token> lex(Input input) {
-		return canLex(input.getContent()) ? new Some<>(lex2(input.getContent())) : new None<>();
+		return canLex(input.getContent()) ? Some.Some(lex2(input.getContent())) : new None<>();
 	}
 
 	private Token lex2(String line) {
-		return new Content("%s;".formatted(MagmaLexingStage_.lexField(new Input(line)).render().getValue()));
+		return new Content("%s;".formatted(MagmaLexingStage_.lexField(new Input(line)).render().asString()));
 	}
 }

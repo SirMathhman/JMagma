@@ -21,17 +21,17 @@ public class AssignmentLexer implements Lexer<Token> {
 
 	@Override
 	public Option<Token> lex(Input input) {
-		return canLex(input.getContent()) ? new Some<>(lex2(input.getContent())) : new None<>();
+		return canLex(input.getContent()) ? Some.Some(lex2(input.getContent())) : new None<>();
 	}
 
 	private Token lex2(String line) {
 		var separator = line.indexOf('=');
 		var beforeSlice = line.substring(0, separator);
 		var beforeString = beforeSlice.trim();
-		var before = MagmaLexingStage_.lexNode(new Input(beforeString)).render().getValue();
+		var before = MagmaLexingStage_.lexNode(new Input(beforeString)).render().asString();
 		var afterSlice = line.substring(separator + 1);
 		var afterString = afterSlice.trim();
-		var after = MagmaLexingStage_.lexNode(new Input(afterString)).render().getValue();
+		var after = MagmaLexingStage_.lexNode(new Input(afterString)).render().asString();
 		return new Content("%s=%s;".formatted(before, after));
 	}
 }

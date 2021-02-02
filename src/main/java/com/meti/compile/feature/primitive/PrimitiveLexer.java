@@ -20,7 +20,7 @@ public class PrimitiveLexer implements Lexer<Token> {
 
 	@Override
 	public Option<Token> lex(Input input) {
-		return canLex(input.getContent()) ? new Some<>(lex2(input.getContent())) : new None<>();
+		return canLex(input.getContent()) ? Some.Some(lex2(input.getContent())) : new None<>();
 	}
 
 	private Token lex2(String content) {

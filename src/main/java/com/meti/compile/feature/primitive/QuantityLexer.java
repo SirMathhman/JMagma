@@ -22,13 +22,13 @@ public class QuantityLexer implements Lexer<Token> {
 
 	@Override
 	public Option<Token> lex(Input input) {
-		return canLex(input.getContent()) ? new Some<>(lex2(input.getContent())) : new None<>();
+		return canLex(input.getContent()) ? Some.Some(lex2(input.getContent())) : new None<>();
 	}
 
 	private Token lex2(String line) {
 		var slice = line.substring(1, line.length() - 1);
 		var string = slice.trim();
-		var node = MagmaLexingStage_.lexNode(new Input(string)).render().getValue();
+		var node = MagmaLexingStage_.lexNode(new Input(string)).render().asString();
 		return new Content("(%s)".formatted(node));
 	}
 }

@@ -17,7 +17,7 @@ public class ElifLexer extends ConditionLexer {
 	@Override
 	public Option<Token> lex(Input input) {
 		return canLex(input.getContent(), "elif") ?
-				new Some<>(new Content(lex(input.getContent(), "else if"))) :
+				Some.Some(new Content(lex(input.getContent(), "else if"))) :
 				new None<>();
 	}
 }

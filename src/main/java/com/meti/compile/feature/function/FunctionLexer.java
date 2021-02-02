@@ -26,7 +26,7 @@ public class FunctionLexer implements Lexer<Token> {
 
 	@Override
 	public Option<Token> lex(Input input) {
-		return canLex(input.getContent()) ? new Some<>(lex2(input.getContent())) : new None<>();
+		return canLex(input.getContent()) ? Some.Some(lex2(input.getContent())) : new None<>();
 	}
 
 	private Token lex2(String line) {
@@ -46,7 +46,7 @@ public class FunctionLexer implements Lexer<Token> {
 			parameters = ParameterSplitter.ParameterSplitter_.stream(new Input(paramString)).map(Input::getContent)
 					.filter(s -> !s.isBlank())
 					.map(String::trim)
-					.map(line1 -> MagmaLexingStage_.lexField(new Input(line1)).render().getValue())
+					.map(line1 -> MagmaLexingStage_.lexField(new Input(line1)).render().asString())
 					.fold(new ArrayList<>(), JavaLists::add);
 		} catch (StreamException e) {
 			parameters = new ArrayList<>();
@@ -57,7 +57,7 @@ public class FunctionLexer implements Lexer<Token> {
 
 		var bodySlice = line.substring(bodySeparator + 2);
 		var bodyString = bodySlice.trim();
-		var body = MagmaLexingStage_.lexNode(new Input(bodyString)).render().getValue();
+		var body = MagmaLexingStage_.lexNode(new Input(bodyString)).render().asString();
 		return new Implementation(parameters, name, type, body);
 	}
 }

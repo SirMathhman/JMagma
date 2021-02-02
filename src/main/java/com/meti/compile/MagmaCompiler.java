@@ -3,6 +3,7 @@ package com.meti.compile;
 import com.meti.api.magma.collect.stream.StreamException;
 import com.meti.compile.token.Input;
 import com.meti.compile.token.Output;
+import com.meti.compile.token.Token;
 
 import static com.meti.compile.MagmaLexingStage.MagmaLexingStage_;
 import static com.meti.compile.content.BracketSplitter.BracketSplitter_;
@@ -14,14 +15,20 @@ public class MagmaCompiler implements Compiler {
 	}
 
 	@Override
-	public Output compile(Input input) {
+	public Output compile(Input input) throws CompileException {
 		try {
-			return new Output(BracketSplitter_.stream(new Input(input.getContent())).map(Input::getContent)
-					.map(line -> MagmaLexingStage_.lexNode(new Input(line)).render().getValue())
-					.fold((current, next) -> current + next)
-					.orElse(""));
+			return new Output(compileImpl(input));
 		} catch (StreamException e) {
-			return new Output("");
+			throw new CompileException(e);
 		}
+	}
+
+	private String compileImpl(Input input) throws StreamException {
+		return BracketSplitter_.stream(input)
+				.map(MagmaLexingStage_::lexNode)
+				.map(Token::render)
+				.map(Output::asString)
+				.fold((current, next) -> current + next)
+				.orElse("");
 	}
 }

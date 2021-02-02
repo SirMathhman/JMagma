@@ -17,7 +17,7 @@ public class WhileLexer extends ConditionLexer {
 	@Override
 	public Option<Token> lex(Input input) {
 		return canLex(input.getContent(), "while") ?
-				new Some<>(new Content(lex(input.getContent(), "while"))) :
+				Some.Some(new Content(lex(input.getContent(), "while"))) :
 				new None<>();
 	}
 }

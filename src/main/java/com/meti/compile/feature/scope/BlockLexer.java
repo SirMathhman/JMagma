@@ -28,7 +28,7 @@ public class BlockLexer implements Lexer<Token> {
 
 	@Override
 	public Option<Token> lex(Input input) {
-		return canLex(input.getContent()) ? new Some<>(lex2(input.getContent())) : new None<>();
+		return canLex(input.getContent()) ? Some.Some(lex2(input.getContent())) : new None<>();
 	}
 
 	private Token lex2(String content) {
@@ -60,7 +60,7 @@ public class BlockLexer implements Lexer<Token> {
 		@Override
 		public Output render() {
 			return new Output(nodes.stream()
-					.map(token -> token.render().getValue())
+					.map(token -> token.render().asString())
 					.collect(Collectors.joining("", "{", "}")));
 		}
 	}

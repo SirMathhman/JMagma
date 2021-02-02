@@ -1,7 +1,8 @@
 package com.meti.compile;
 
-import com.meti.compile.token.Input;
+import com.meti.compile.token.Content;
 import com.meti.compile.token.Field;
+import com.meti.compile.token.Input;
 import com.meti.compile.token.Token;
 
 import static com.meti.compile.FieldLexer.FieldLexer_;
@@ -21,11 +22,11 @@ public class MagmaLexingStage implements LexingStage {
 
 	@Override
 	public Token lexNode(Input input) {
-		return MagmaNodeLexer_.lex(new Input(input.getContent())).orElse(null);
+		return MagmaNodeLexer_.lex(new Input(input.getContent())).orElse(new Content(input.getContent()));
 	}
 
 	@Override
 	public Token lexType(Input input) {
-		return MagmaTypeLexer_.lex(new Input(input.getContent())).orElse(null);
+		return MagmaTypeLexer_.lex(new Input(input.getContent())).orElse(new Content(input.getContent()));
 	}
 }

@@ -22,14 +22,14 @@ public class AcccessorLexer implements Lexer<Token> {
 
 	@Override
 	public Option<Token> lex(Input input) {
-		return canLex(input.getContent()) ? new Some<>(lex2(input.getContent())) : new None<>();
+		return canLex(input.getContent()) ? Some.Some(lex2(input.getContent())) : new None<>();
 	}
 
 	private Token lex2(String line) {
 		var separator = line.indexOf("=>");
 		var firstSlice = line.substring(0, separator);
 		var first = firstSlice.trim();
-		var structure = MagmaLexingStage_.lexNode(new Input(first)).render().getValue();
+		var structure = MagmaLexingStage_.lexNode(new Input(first)).render().asString();
 		var memberSlice = line.substring(separator + 2);
 		var memberString = memberSlice.trim();
 		return new Content("%s.%s".formatted(structure, memberString));

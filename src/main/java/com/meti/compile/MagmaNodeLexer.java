@@ -1,5 +1,6 @@
 package com.meti.compile;
 
+import com.meti.api.magma.collect.stream.Streams;
 import com.meti.compile.feature.condition.ElifLexer;
 import com.meti.compile.feature.condition.ElseLexer;
 import com.meti.compile.feature.condition.IfLexer;
@@ -19,8 +20,6 @@ import com.meti.compile.feature.structure.ConstructionLexer;
 import com.meti.compile.feature.structure.StructureLexer;
 import com.meti.compile.token.Token;
 
-import java.util.stream.Stream;
-
 public class MagmaNodeLexer extends CompoundLexer {
 	static final Lexer<Token> MagmaNodeLexer_ = new MagmaNodeLexer();
 
@@ -28,8 +27,8 @@ public class MagmaNodeLexer extends CompoundLexer {
 	}
 
 	@Override
-	protected Stream<Lexer<Token>> streamLexers() {
-		return Stream.of(
+	protected com.meti.api.magma.collect.stream.Stream<Lexer<Token>> streamLexers() {
+		return Streams.of(
 				BooleanLexer.BooleanLexer_,
 				BlockLexer.BlockLexer_,
 				FunctionLexer.FunctionLexer_,

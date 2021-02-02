@@ -22,12 +22,12 @@ public class ElseLexer implements Lexer<Token> {
 
 	@Override
 	public Option<Token> lex(Input input) {
-		return canLex(input.getContent()) ? new Some<>(lex2(input.getContent())) : new None<>();
+		return canLex(input.getContent()) ? Some.Some(lex2(input.getContent())) : new None<>();
 	}
 
 	private Token lex2(String line) {
 		var bodySlice = line.substring(4);
 		var bodyString = bodySlice.trim();
-		return new Content("else%s".formatted(MagmaLexingStage_.lexNode(new Input(bodyString)).render().getValue()));
+		return new Content("else%s".formatted(MagmaLexingStage_.lexNode(new Input(bodyString)).render().asString()));
 	}
 }

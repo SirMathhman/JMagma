@@ -11,7 +11,7 @@ record Implementation(List<String> parameters, String name,
 	@Override
 	public Output render() {
 		var renderedParameters = parameters.stream().collect(Collectors.joining(",", "(", ")"));
-		var renderedType = type.render().getValue();
+		var renderedType = type.render().asString();
 		return new Output("%s %s%s%s".formatted(renderedType, name, renderedParameters, body));
 	}
 }

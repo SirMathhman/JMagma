@@ -22,13 +22,13 @@ public class ReturnLexer implements Lexer<Token> {
 
 	@Override
 	public Option<Token> lex(Input input) {
-		return canLex(input.getContent()) ? new Some<>(lex2(input.getContent())) : new None<>();
+		return canLex(input.getContent()) ? Some.Some(lex2(input.getContent())) : new None<>();
 	}
 
 	private Token lex2(String line) {
 		var valueSlice = line.substring(7);
 		var valueString = valueSlice.trim();
-		var value = MagmaLexingStage_.lexNode(new Input(valueString)).render().getValue();
+		var value = MagmaLexingStage_.lexNode(new Input(valueString)).render().asString();
 		return new Content("return %s;".formatted(value));
 	}
 }

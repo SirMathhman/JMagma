@@ -1,6 +1,6 @@
 package com.meti.compile.content;
 
-import com.meti.api.java.collect.stream.JavaStream;
+import com.meti.api.java.collect.JavaLists;
 import com.meti.api.magma.collect.stream.Stream;
 import com.meti.api.magma.collect.stream.StreamException;
 import com.meti.compile.token.Input;
@@ -66,12 +66,12 @@ class JavaState implements State {
 	}
 
 	@Override
-	public Stream<Input> stream(){
+	public Stream<Input> stream() {
 		return stream2().map(Input::new);
 	}
 
 	private Stream<String> stream2() {
-		return new JavaStream<>(lines.stream());
+		return JavaLists.stream(lines);
 	}
 
 	@Override
