@@ -3,10 +3,10 @@ package com.meti.compile.content;
 import com.meti.api.java.collect.stream.JavaStream;
 import com.meti.api.magma.collect.stream.Stream;
 import com.meti.api.magma.collect.stream.StreamException;
+import com.meti.compile.token.Input;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 class JavaState implements State {
 	private final List<String> lines;
@@ -66,7 +66,11 @@ class JavaState implements State {
 	}
 
 	@Override
-	public Stream<String> stream() {
+	public Stream<Input> stream(){
+		return stream2().map(Input::new);
+	}
+
+	private Stream<String> stream2() {
 		return new JavaStream<>(lines.stream());
 	}
 
@@ -80,7 +84,7 @@ class JavaState implements State {
 		try {
 			var sameDepth = state.isAt(depth);
 			var sameBuffer = state.isStoring(buffer);
-			var sameLines = state.stream().allMatch(lines::contains);
+			var sameLines = state.stream().map(Input::getContent).allMatch(lines::contains);
 			return sameDepth && sameBuffer && sameLines;
 		} catch (StreamException e) {
 			return false;

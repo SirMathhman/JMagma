@@ -39,10 +39,10 @@ public class StructureLexer implements Lexer<Token> {
 		var membersString = membersSlice.trim();
 		ArrayList<String> members = null;
 		try {
-			members = ParameterSplitter.ParameterSplitter_.stream(membersString)
+			members = ParameterSplitter.ParameterSplitter_.stream(new Input(membersString)).map(Input::getContent)
 					.filter(s -> !s.isBlank())
 					.map(String::trim)
-					.map(line1 -> MagmaLexingStage_.lexField(line1).render())
+					.map(line1 -> MagmaLexingStage_.lexField(new Input(line1)).render().getValue())
 					.fold(new ArrayList<String>(), JavaLists::add);
 		} catch (StreamException e) {
 			members = new ArrayList<>();

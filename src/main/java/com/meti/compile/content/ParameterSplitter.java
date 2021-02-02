@@ -2,6 +2,7 @@ package com.meti.compile.content;
 
 import com.meti.api.java.collect.stream.JavaStream;
 import com.meti.api.magma.collect.stream.Stream;
+import com.meti.compile.token.Input;
 
 import java.util.Arrays;
 
@@ -12,7 +13,11 @@ public class ParameterSplitter implements Splitter {
 	}
 
 	@Override
-	public Stream<String> stream(String sequence) {
-		return new JavaStream<>(Arrays.stream(sequence.split(",")));
+	public Stream<Input> stream(Input input) {
+		return stream2(input).map(Input::new);
+	}
+
+	private Stream<String> stream2(Input input) {
+		return new JavaStream<>(Arrays.stream(input.getContent().split(",")));
 	}
 }

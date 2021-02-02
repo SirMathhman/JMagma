@@ -28,7 +28,7 @@ public class QuantityLexer implements Lexer<Token> {
 	private Token lex2(String line) {
 		var slice = line.substring(1, line.length() - 1);
 		var string = slice.trim();
-		var node = MagmaLexingStage_.lexNode(string).render().getValue();
+		var node = MagmaLexingStage_.lexNode(new Input(string)).render().getValue();
 		return new Content("(%s)".formatted(node));
 	}
 }

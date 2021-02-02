@@ -1,6 +1,8 @@
 package com.meti.compile;
 
 import com.meti.api.magma.collect.stream.StreamException;
+import com.meti.compile.token.Input;
+import com.meti.compile.token.Output;
 
 import static com.meti.compile.MagmaLexingStage.MagmaLexingStage_;
 import static com.meti.compile.content.BracketSplitter.BracketSplitter_;
@@ -12,14 +14,14 @@ public class MagmaCompiler implements Compiler {
 	}
 
 	@Override
-	public String compile(String content) {
+	public Output compile(Input input) {
 		try {
-			return BracketSplitter_.stream(content)
-					.map(line -> MagmaLexingStage_.lexNode(line).render().getValue())
+			return new Output(BracketSplitter_.stream(new Input(input.getContent())).map(Input::getContent)
+					.map(line -> MagmaLexingStage_.lexNode(new Input(line)).render().getValue())
 					.fold((current, next) -> current + next)
-					.orElse("");
+					.orElse(""));
 		} catch (StreamException e) {
-			return "";
+			return new Output("");
 		}
 	}
 }

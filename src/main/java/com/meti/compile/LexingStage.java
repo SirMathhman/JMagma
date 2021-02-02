@@ -1,12 +1,13 @@
 package com.meti.compile;
 
 import com.meti.compile.token.Field;
+import com.meti.compile.token.Input;
 import com.meti.compile.token.Token;
 
 public interface LexingStage {
-	Field lexField(String line);
+	Field lexField(Input input);
 
-	Token lexNode(String line);
+	Token lexNode(Input input);
 
-	Token lexType(String content);
+	Token lexType(Input input);
 }

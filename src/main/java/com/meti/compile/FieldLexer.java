@@ -38,13 +38,13 @@ public class FieldLexer implements Lexer<Field> {
 		var extent = valueSeparator == -1 ? line.length() : valueSeparator;
 		var typeSlice = line.substring(typeSeparator + 1, extent);
 		var typeString = typeSlice.trim();
-		Token type = MagmaLexingStage_.lexType(typeString);
+		Token type = MagmaLexingStage_.lexType(new Input(typeString));
 		if (valueSeparator == -1) {
 			return new EmptyField(type, name);
 		} else {
 			var valueSlice = line.substring(valueSeparator + 1);
 			var valueString = valueSlice.trim();
-			var token = MagmaLexingStage_.lexNode(valueString);
+			var token = MagmaLexingStage_.lexNode(new Input(valueString));
 			return new ValueField(type, name, token);
 		}
 	}

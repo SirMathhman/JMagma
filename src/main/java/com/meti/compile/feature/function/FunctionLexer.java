@@ -43,21 +43,21 @@ public class FunctionLexer implements Lexer<Token> {
 		var paramString = paramSlice.trim();
 		ArrayList<String> parameters;
 		try {
-			parameters = ParameterSplitter.ParameterSplitter_.stream(paramString)
+			parameters = ParameterSplitter.ParameterSplitter_.stream(new Input(paramString)).map(Input::getContent)
 					.filter(s -> !s.isBlank())
 					.map(String::trim)
-					.map(line1 -> MagmaLexingStage_.lexField(line1).render())
+					.map(line1 -> MagmaLexingStage_.lexField(new Input(line1)).render().getValue())
 					.fold(new ArrayList<>(), JavaLists::add);
 		} catch (StreamException e) {
 			parameters = new ArrayList<>();
 		}
 		var typeSlice = line.substring(returnsSeparator + 1, bodySeparator);
 		var typeString = typeSlice.trim();
-		Token type = MagmaLexingStage_.lexType(typeString);
+		Token type = MagmaLexingStage_.lexType(new Input(typeString));
 
 		var bodySlice = line.substring(bodySeparator + 2);
 		var bodyString = bodySlice.trim();
-		var body = MagmaLexingStage_.lexNode(bodyString).render().getValue();
+		var body = MagmaLexingStage_.lexNode(new Input(bodyString)).render().getValue();
 		return new Implementation(parameters, name, type, body);
 	}
 }

@@ -35,8 +35,8 @@ public class BlockLexer implements Lexer<Token> {
 		var length = content.length();
 		var slice = content.substring(1, length - 1);
 		try {
-			return BracketSplitter_.stream(slice)
-					.map(MagmaLexingStage_::lexNode)
+			return BracketSplitter_.stream(new Input(slice)).map(Input::getContent)
+					.map(line -> MagmaLexingStage_.lexNode(new Input(line)))
 					.fold(new Builder(Collections.emptyList()), Builder::add)
 					.complete();
 		} catch (StreamException e) {

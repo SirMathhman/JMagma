@@ -38,10 +38,10 @@ public class ConstructionLexer implements Lexer<Token> {
 		var bodyString = bodySlice.trim();
 		ArrayList<String> arguments = null;
 		try {
-			arguments = (ParameterSplitter.ParameterSplitter_.stream(bodyString)
+			arguments = (ParameterSplitter.ParameterSplitter_.stream(new Input(bodyString)).map(Input::getContent)
 					.filter(s -> !s.isBlank())
 					.map(String::trim)
-					.map(line1 -> MagmaLexingStage_.lexNode(line1).render().getValue())
+					.map(line1 -> MagmaLexingStage_.lexNode(new Input(line1)).render().getValue())
 					.fold(new ArrayList<String>(), JavaLists::add));
 		} catch (StreamException e) {
 			arguments = new ArrayList<>();

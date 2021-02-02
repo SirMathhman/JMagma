@@ -25,6 +25,6 @@ public class DeclarationLexer implements Lexer<Token> {
 	}
 
 	private Token lex2(String line) {
-		return new Content("%s;".formatted(MagmaLexingStage_.lexField(line).render()));
+		return new Content("%s;".formatted(MagmaLexingStage_.lexField(new Input(line)).render().getValue()));
 	}
 }
