@@ -3,6 +3,7 @@ package com.meti.compile;
 import com.meti.api.magma.core.None;
 import com.meti.api.magma.core.Option;
 import com.meti.api.magma.core.Some;
+import com.meti.compile.feature.scope.Input;
 import com.meti.compile.feature.scope.Lexer;
 import com.meti.compile.token.EmptyField;
 import com.meti.compile.token.Field;
@@ -22,8 +23,8 @@ public class FieldLexer implements Lexer<Field> {
 	}
 
 	@Override
-	public Option<Field> lex(String content) {
-		return canLex(content) ? new Some<>(lex2(content)) : new None<>();
+	public Option<Field> lex(Input input) {
+		return canLex(input.getContent()) ? new Some<>(lex2(input.getContent())) : new None<>();
 	}
 
 	private Field lex2(String line) {

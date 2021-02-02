@@ -1,5 +1,6 @@
 package com.meti.compile;
 
+import com.meti.compile.feature.scope.Input;
 import com.meti.compile.token.Field;
 import com.meti.compile.token.Token;
 
@@ -15,16 +16,16 @@ public class MagmaLexingStage implements LexingStage {
 
 	@Override
 	public Field lexField(String line) {
-		return FieldLexer_.lex(line).orElse(null);
+		return FieldLexer_.lex(new Input(line)).orElse(null);
 	}
 
 	@Override
 	public Token lexNode(String line) {
-		return MagmaNodeLexer_.lex(line).orElse(null);
+		return MagmaNodeLexer_.lex(new Input(line)).orElse(null);
 	}
 
 	@Override
 	public Token lexType(String content) {
-		return MagmaTypeLexer_.lex(content).orElse(null);
+		return MagmaTypeLexer_.lex(new Input(content)).orElse(null);
 	}
 }

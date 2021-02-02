@@ -19,8 +19,8 @@ public class DeclarationLexer implements Lexer<Token> {
 	}
 
 	@Override
-	public Option<Token> lex(String content) {
-		return canLex(content) ? new Some<>(lex2(content)) : new None<>();
+	public Option<Token> lex(Input input) {
+		return canLex(input.getContent()) ? new Some<>(lex2(input.getContent())) : new None<>();
 	}
 
 	private Token lex2(String line) {
