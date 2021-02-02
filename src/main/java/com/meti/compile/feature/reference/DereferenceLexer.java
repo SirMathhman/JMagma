@@ -28,7 +28,7 @@ public class DereferenceLexer implements Lexer<Token> {
 	private Token lex2(String line) {
 		var slice = line.substring(1);
 		var string = slice.trim();
-		var node = MagmaLexingStage_.lexNode(new Input(string)).render().asString();
+		var node = MagmaLexingStage_.lexNode(new Input(string)).render().getValue();
 		return new Content("*%s".formatted(node));
 	}
 }

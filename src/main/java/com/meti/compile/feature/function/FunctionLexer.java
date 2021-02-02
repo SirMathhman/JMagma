@@ -56,7 +56,7 @@ public class FunctionLexer implements Lexer<Token> {
 							e.printStackTrace();
 							result = null;
 						}
-						return result.render().asString();
+						return result.render().getValue();
 					})
 					.fold(new ArrayList<>(), JavaLists::add);
 		} catch (StreamException e) {
@@ -68,7 +68,7 @@ public class FunctionLexer implements Lexer<Token> {
 
 		var bodySlice = line.substring(bodySeparator + 2);
 		var bodyString = bodySlice.trim();
-		var body = MagmaLexingStage_.lexNode(new Input(bodyString)).render().asString();
+		var body = MagmaLexingStage_.lexNode(new Input(bodyString)).render().getValue();
 		return new Implementation(parameters, name, type, body);
 	}
 }

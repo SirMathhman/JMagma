@@ -52,7 +52,7 @@ public class StructureLexer implements Lexer<Token> {
 							e.printStackTrace();
 							result = null;
 						}
-						return result.render().asString();
+						return result.render().getValue();
 					})
 					.fold(new ArrayList<String>(), JavaLists::add);
 		} catch (StreamException e) {

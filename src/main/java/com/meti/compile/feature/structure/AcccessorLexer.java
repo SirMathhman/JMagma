@@ -29,7 +29,7 @@ public class AcccessorLexer implements Lexer<Token> {
 		var separator = line.indexOf("=>");
 		var firstSlice = line.substring(0, separator);
 		var first = firstSlice.trim();
-		var structure = MagmaLexingStage_.lexNode(new Input(first)).render().asString();
+		var structure = MagmaLexingStage_.lexNode(new Input(first)).render().getValue();
 		var memberSlice = line.substring(separator + 2);
 		var memberString = memberSlice.trim();
 		return new Content("%s.%s".formatted(structure, memberString));

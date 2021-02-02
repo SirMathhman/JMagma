@@ -29,10 +29,10 @@ public class AssignmentLexer implements Lexer<Token> {
 		var separator = line.indexOf('=');
 		var beforeSlice = line.substring(0, separator);
 		var beforeString = beforeSlice.trim();
-		var before = MagmaLexingStage_.lexNode(new Input(beforeString)).render().asString();
+		var before = MagmaLexingStage_.lexNode(new Input(beforeString)).render().getValue();
 		var afterSlice = line.substring(separator + 1);
 		var afterString = afterSlice.trim();
-		var after = MagmaLexingStage_.lexNode(new Input(afterString)).render().asString();
+		var after = MagmaLexingStage_.lexNode(new Input(afterString)).render().getValue();
 		return new Content("%s=%s;".formatted(before, after));
 	}
 }

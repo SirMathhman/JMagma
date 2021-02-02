@@ -7,7 +7,11 @@ public class Output {
 		this.value = value;
 	}
 
-	public String asString() {
+	public Output concat(Output next) {
+		return new Output(value + next.getValue());
+	}
+
+	public String getValue() {
 		return value;
 	}
 }

@@ -28,7 +28,7 @@ public class ReturnLexer implements Lexer<Token> {
 	private Token lex2(String line) {
 		var valueSlice = line.substring(7);
 		var valueString = valueSlice.trim();
-		var value = MagmaLexingStage_.lexNode(new Input(valueString)).render().asString();
+		var value = MagmaLexingStage_.lexNode(new Input(valueString)).render().getValue();
 		return new Content("return %s;".formatted(value));
 	}
 }

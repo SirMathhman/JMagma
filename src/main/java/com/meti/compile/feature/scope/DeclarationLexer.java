@@ -35,6 +35,6 @@ public class DeclarationLexer implements Lexer<Token> {
 			e.printStackTrace();
 			result = null;
 		}
-		return new Content("%s;".formatted(result.render().asString()));
+		return new Content("%s;".formatted(result.render().getValue()));
 	}
 }

@@ -146,7 +146,7 @@ class MagmaCompilerTest {
 			e.printStackTrace();
 			result = new Output("");
 		}
-		assertEquals(expected, result.asString());
+		assertEquals(expected, result.getValue());
 	}
 
 	@Test

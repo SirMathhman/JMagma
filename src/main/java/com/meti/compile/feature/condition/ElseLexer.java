@@ -28,6 +28,6 @@ public class ElseLexer implements Lexer<Token> {
 	private Token lex2(String line) {
 		var bodySlice = line.substring(4);
 		var bodyString = bodySlice.trim();
-		return new Content("else%s".formatted(MagmaLexingStage_.lexNode(new Input(bodyString)).render().asString()));
+		return new Content("else%s".formatted(MagmaLexingStage_.lexNode(new Input(bodyString)).render().getValue()));
 	}
 }

@@ -61,7 +61,7 @@ public class BlockLexer implements Lexer<Token> {
 		@Override
 		public Output render() {
 			return new Output(nodes.stream()
-					.map(token -> token.render().asString())
+					.map(token -> token.render().getValue())
 					.collect(Collectors.joining("", "{", "}")));
 		}
 	}
