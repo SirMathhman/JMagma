@@ -1,38 +1,36 @@
 package com.meti.compile.content;
 
-import com.meti.api.java.collect.JavaLists;
+import com.meti.api.java.collect.list.JavaList;
+import com.meti.api.java.collect.list.List;
 import com.meti.api.magma.collect.stream.Stream;
 import com.meti.api.magma.collect.stream.StreamException;
 import com.meti.compile.token.Input;
 
 import java.util.ArrayList;
-import java.util.List;
 
-class JavaState implements State {
-	private final List<String> lines;
+class ListState implements State {
+	private final List<String> list;
 	private final String buffer;
 	private final int depth;
 
-	JavaState() {
-		this(new ArrayList<>(), "", 0);
+	ListState() {
+		this(new JavaList<>(new ArrayList<>()), "", 0);
 	}
 
-	JavaState(List<String> lines, String buffer, int depth) {
-		this.lines = lines;
+	ListState(List<String> list, String buffer, int depth) {
+		this.list = list;
 		this.buffer = buffer;
 		this.depth = depth;
 	}
 
 	@Override
 	public State advance() {
-		var copy = new ArrayList<>(lines);
-		copy.add(buffer);
-		return new JavaState(copy, "", depth);
+		return new ListState(list.add(buffer), "", depth);
 	}
 
 	@Override
 	public State append(char c) {
-		return new JavaState(lines, buffer + c, depth);
+		return new ListState(list, buffer + c, depth);
 	}
 
 	@Override
@@ -57,26 +55,22 @@ class JavaState implements State {
 
 	@Override
 	public State reset() {
-		return new JavaState(lines, buffer, 0);
+		return new ListState(list, buffer, 0);
 	}
 
 	@Override
 	public State sink() {
-		return new JavaState(lines, buffer, depth + 1);
+		return new ListState(list, buffer, depth + 1);
 	}
 
 	@Override
 	public Stream<Input> stream() {
-		return stream2().map(Input::new);
-	}
-
-	private Stream<String> stream2() {
-		return JavaLists.stream(lines);
+		return list.stream().map(Input::new);
 	}
 
 	@Override
 	public State surface() {
-		return new JavaState(lines, buffer, depth - 1);
+		return new ListState(list, buffer, depth - 1);
 	}
 
 	@Override
@@ -84,7 +78,9 @@ class JavaState implements State {
 		try {
 			var sameDepth = state.isAt(depth);
 			var sameBuffer = state.isStoring(buffer);
-			var sameLines = state.stream().map(Input::getContent).allMatch(lines::contains);
+			var sameLines = state.stream()
+					.map(Input::getContent)
+					.allMatch(list::contains);
 			return sameDepth && sameBuffer && sameLines;
 		} catch (StreamException e) {
 			return false;

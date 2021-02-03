@@ -1,36 +1,13 @@
 package com.meti.compile.content;
 
-import com.meti.api.magma.collect.stream.Stream;
-import com.meti.api.magma.collect.stream.StreamException;
-import com.meti.api.magma.collect.stream.Streams;
-import com.meti.compile.token.Input;
-
-public class BracketSplitter implements Splitter {
+public class BracketSplitter extends ListSplitter {
 	public static final Splitter BracketSplitter_ = new BracketSplitter();
 
 	BracketSplitter() {
 	}
 
 	@Override
-	public Stream<Input> stream(Input input) {
-		return processAll(input.getContent())
-				.advance()
-				.stream()
-				.filter(Input::hasContent)
-				.map(Input::trim);
-	}
-
-	State processAll(String content) {
-		try {
-			return Streams.ofIntRange(0, content.length())
-					.map(content::charAt)
-					.fold(new JavaState(), this::process);
-		} catch (StreamException e) {
-			return new JavaState();
-		}
-	}
-
-	State process(State state, char c) {
+	protected State process(State state, char c) {
 		if (c == '}' && state.isShallow()) {
 			return state.reset().append('}').advance();
 		} else if (c == ';' && state.isLevel()) {

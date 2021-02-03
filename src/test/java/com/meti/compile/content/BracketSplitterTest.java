@@ -1,5 +1,6 @@
 package com.meti.compile.content;
 
+import com.meti.api.java.collect.list.JavaList;
 import com.meti.api.magma.collect.stream.StreamException;
 import com.meti.compile.token.Input;
 import org.junit.jupiter.api.Test;
@@ -18,7 +19,7 @@ class BracketSplitterTest {
 	void process_all() {
 		var splitter = new BracketSplitter();
 		var list = singletonList("{;;}");
-		var expected = new JavaState(list, "", 0);
+		var expected = new ListState(new JavaList<>(list), "", 0);
 		var actual = splitter.processAll("{;;}");
 		assertTrue(expected.equalsTo(actual));
 	}
@@ -26,17 +27,17 @@ class BracketSplitterTest {
 	@Test
 	void process_both() {
 		var splitter = new BracketSplitter();
-		var state = new JavaState();
+		var state = new ListState();
 		var first = splitter.process(state, '{');
 		var actual = splitter.process(first, '}');
-		var expected = new JavaState(singletonList("{}"), "", 0);
+		var expected = new ListState(new JavaList<>(singletonList("{}")), "", 0);
 		assertTrue(expected.equalsTo(actual));
 	}
 
 	@Test
 	void process_open() {
 		var splitter = new BracketSplitter();
-		var expected = new JavaState(emptyList(), "{", 1);
+		var expected = new ListState(new JavaList<>(emptyList()), "{", 1);
 		var actual = splitter.processAll("{");
 		assertTrue(expected.equalsTo(actual));
 	}
@@ -44,16 +45,16 @@ class BracketSplitterTest {
 	@Test
 	void process_open_as_char() {
 		var splitter = new BracketSplitter();
-		var state = new JavaState();
+		var state = new ListState();
 		var actual = splitter.process(state, '{');
-		var expected = new JavaState(emptyList(), "{", 1);
+		var expected = new ListState(new JavaList<>(emptyList()), "{", 1);
 		assertTrue(expected.equalsTo(actual));
 	}
 
 	@Test
 	void state_equals() {
-		var expected = new JavaState(singletonList("test"), "", 0);
-		var actual = new JavaState(singletonList("test"), "", 0);
+		var expected = new ListState(new JavaList<>(singletonList("test")), "", 0);
+		var actual = new ListState(new JavaList<>(singletonList("test")), "", 0);
 		assertTrue(expected.equalsTo(actual));
 	}
 
