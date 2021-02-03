@@ -1,6 +1,8 @@
 package com.meti.api.magma.collect.list;
 
 import com.meti.api.magma.collect.IndexException;
+import com.meti.api.magma.collect.stream.StreamException;
+import com.meti.api.magma.collect.string.Stringable;
 import com.meti.api.magma.core.F2;
 import com.meti.api.magma.core.None;
 import com.meti.api.magma.core.Option;
@@ -33,6 +35,18 @@ public class Lists {
 			return true;
 		} else {
 			return false;
+		}
+	}
+
+	public static <T extends Stringable> String asString(List<T> self) {
+		try {
+			return self.stream()
+					.map(Stringable::asString)
+					.fold((s, s2) -> s + s2)
+					.map("[%s]"::formatted)
+					.orElse("[]");
+		} catch (StreamException e) {
+			return "";
 		}
 	}
 

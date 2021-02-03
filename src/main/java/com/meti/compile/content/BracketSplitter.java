@@ -1,7 +1,7 @@
 package com.meti.compile.content;
 
 public class BracketSplitter extends ListSplitter {
-	public static final Splitter BracketSplitter_ = new BracketSplitter();
+	public static final BracketSplitter BracketSplitter_ = new BracketSplitter();
 
 	private BracketSplitter() {
 	}
@@ -9,7 +9,7 @@ public class BracketSplitter extends ListSplitter {
 	@Override
 	protected State process(State state, char c) {
 		if (c == '}' && state.isShallow()) {
-			return state.reset().advance().complete();
+			return state.surface().advance().complete();
 		} else if (c == ';' && state.isLevel()) {
 			return state.complete();
 		} else if (c == '{') {

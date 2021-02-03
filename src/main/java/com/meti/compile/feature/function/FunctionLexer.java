@@ -1,6 +1,5 @@
 package com.meti.compile.feature.function;
 
-import com.meti.api.java.collect.JavaLists;
 import com.meti.api.magma.collect.stream.StreamException;
 import com.meti.api.magma.core.None;
 import com.meti.api.magma.core.Option;
@@ -58,7 +57,10 @@ public class FunctionLexer implements Lexer<Token> {
 						}
 						return result.render().getValue();
 					})
-					.fold(new ArrayList<>(), JavaLists::add);
+					.fold(new ArrayList<>(), (self, element) -> {
+						self.add(element);
+						return self;
+					});
 		} catch (StreamException e) {
 			parameters = new ArrayList<>();
 		}

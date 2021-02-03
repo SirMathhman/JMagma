@@ -1,6 +1,5 @@
 package com.meti.compile.feature.structure;
 
-import com.meti.api.java.collect.JavaLists;
 import com.meti.api.magma.collect.stream.StreamException;
 import com.meti.api.magma.core.None;
 import com.meti.api.magma.core.Option;
@@ -54,7 +53,10 @@ public class StructureLexer implements Lexer<Token> {
 						}
 						return result.render().getValue();
 					})
-					.fold(new ArrayList<String>(), JavaLists::add);
+					.fold(new ArrayList<String>(), (self, element) -> {
+						self.add(element);
+						return self;
+					});
 		} catch (StreamException e) {
 			members = new ArrayList<>();
 		}
