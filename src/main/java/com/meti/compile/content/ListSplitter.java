@@ -2,26 +2,23 @@ package com.meti.compile.content;
 
 import com.meti.api.magma.collect.stream.Stream;
 import com.meti.api.magma.collect.stream.StreamException;
-import com.meti.api.magma.collect.stream.Streams;
 import com.meti.compile.token.Input;
 
 public abstract class ListSplitter implements Splitter {
 	@Override
 	public Stream<Input> stream(Input input) {
-		return processAll(input.getContent())
-				.advance()
+		return processAll(input)
+				.complete()
 				.stream()
 				.filter(Input::hasContent)
 				.map(Input::trim);
 	}
 
-	State processAll(String content) {
+	private State processAll(Input input) {
 		try {
-			return Streams.ofIntRange(0, content.length())
-					.map(content::charAt)
-					.fold(new ListState(), this::process);
+			return input.stream().fold(new ListState(input), this::process);
 		} catch (StreamException e) {
-			return new ListState();
+			return new ListState(input);
 		}
 	}
 

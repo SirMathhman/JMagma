@@ -9,13 +9,13 @@ public class ParameterSplitter extends ListSplitter {
 	@Override
 	protected State process(State state, char c) {
 		if (c == ',' && state.isLevel()) {
-			return state.advance();
+			return state.complete();
 		} else if (c == '(') {
-			return state.sink().append(c);
+			return state.sink().advance();
 		} else if (c == ')') {
-			return state.surface().append(c);
+			return state.surface().advance();
 		} else {
-			return state.append(c);
+			return state.advance();
 		}
 	}
 }

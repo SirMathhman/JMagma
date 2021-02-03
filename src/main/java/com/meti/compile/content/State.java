@@ -4,9 +4,9 @@ import com.meti.api.magma.collect.stream.Stream;
 import com.meti.compile.token.Input;
 
 public interface State extends Equatable<State> {
-	State advance();
+	State complete();
 
-	State append(char c);
+	State advance();
 
 	boolean isAt(int depth);
 
