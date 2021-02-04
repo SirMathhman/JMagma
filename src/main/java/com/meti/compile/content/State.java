@@ -1,21 +1,25 @@
 package com.meti.compile.content;
 
 import com.meti.api.magma.collect.stream.Stream;
+import com.meti.api.magma.collect.string.Stringable;
+import com.meti.compile.token.Input;
 
-public interface State {
+public interface State extends Equatable<State>, Stringable {
 	State advance();
 
-	State append(char c);
+	State complete();
+
+	boolean isAt(int depth);
 
 	boolean isLevel();
 
 	boolean isShallow();
 
-	State reset();
+	boolean isStoring(Input input);
 
 	State sink();
 
-	Stream<String> stream();
+	Stream<Input> stream();
 
 	State surface();
 }

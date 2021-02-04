@@ -1,45 +1,23 @@
 package com.meti.compile.content;
 
-import com.meti.api.magma.collect.stream.Stream;
-import com.meti.api.magma.collect.stream.StreamException;
-import com.meti.api.magma.collect.stream.Streams;
+public class BracketSplitter extends ListSplitter {
+	public static final BracketSplitter BracketSplitter_ = new BracketSplitter();
 
-public class BracketSplitter implements Splitter {
-	public static final Splitter BracketSplitter_ = new BracketSplitter();
-
-	BracketSplitter() {
+	private BracketSplitter() {
 	}
 
 	@Override
-	public Stream<String> stream(String content) {
-		return processAll(content)
-				.advance()
-				.stream()
-				.filter(s -> !s.isBlank())
-				.map(String::trim);
-	}
-
-	State processAll(String content) {
-		try {
-			return Streams.ofIntRange(0, content.length())
-					.map(content::charAt)
-					.fold(new JavaState(), this::process);
-		} catch (StreamException e) {
-			return new JavaState();
-		}
-	}
-
-	State process(State state, char c) {
+	protected State process(State state, char c) {
 		if (c == '}' && state.isShallow()) {
-			return state.reset().append('}').advance();
+			return state.surface().advance().complete();
 		} else if (c == ';' && state.isLevel()) {
-			return state.advance();
+			return state.complete();
 		} else if (c == '{') {
-			return state.sink().append(c);
+			return state.sink().advance();
 		} else if (c == '}') {
-			return state.surface().append(c);
+			return state.surface().advance();
 		} else {
-			return state.append(c);
+			return state.advance();
 		}
 	}
 }
