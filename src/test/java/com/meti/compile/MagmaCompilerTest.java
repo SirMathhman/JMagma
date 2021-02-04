@@ -1,7 +1,5 @@
 package com.meti.compile;
 
-import com.meti.compile.token.Input;
-import com.meti.compile.token.Output;
 import org.junit.jupiter.api.Test;
 
 import static com.meti.compile.MagmaCompiler.MagmaCompiler_;
@@ -10,157 +8,146 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class MagmaCompilerTest {
 	@Test
 	void assign() {
-		assertCompile("x=y;", "x=y;");
+		assertEquals("x=y;", MagmaCompiler_.compile("x=y;"));
 	}
 
 	@Test
 	void assignment() {
-		assertCompile("x=4;", "x=4;");
+		assertEquals("x=4;", MagmaCompiler_.compile("x=4;"));
 	}
 
 	@Test
 	void block() {
-		assertCompile("{}", "{}");
+		assertEquals("{}", MagmaCompiler_.compile("{}"));
 	}
 
 	@Test
 	void blockWithChild() {
-		assertCompile("{int x=0;}", "{const x : I16 = 0;}");
+		assertEquals("{int x=0;}", MagmaCompiler_.compile("{const x : I16 = 0;}"));
 	}
 
 	@Test
 	void blockWithChildren() {
-		assertCompile("{int x=0;int y=420;}", """
+		assertEquals("{int x=0;int y=420;}", MagmaCompiler_.compile("""
 				{
 					const x : I16 = 0;
 					const y : I16 = 420;
 				}
-				""");
+				"""));
 	}
 
 	@Test
 	void construction() {
-		assertCompile("{3,4}", "[Point]{3, 4}");
+		assertEquals("{3,4}", MagmaCompiler_.compile("[Point]{3, 4}"));
 	}
 
 	@Test
 	void declare() {
-		assertCompile("int x=10;", "const x : I16 = 10;");
+		assertEquals("int x=10;", MagmaCompiler_.compile("const x : I16 = 10;"));
 	}
 
 	@Test
 	void dereference() {
-		assertCompile("*value", "*value");
+		assertEquals("*value", MagmaCompiler_.compile("*value"));
 	}
 
 	@Test
 	void doubling() {
-		assertCompile("10.0d", "10.0d");
+		assertEquals("10.0d", MagmaCompiler_.compile("10.0d"));
 	}
 
 	@Test
 	void elif() {
-		assertCompile("if(1){}else if(1){}else{}", """
+		assertEquals("if(1){}else if(1){}else{}", MagmaCompiler_.compile("""
 				if(true){
 				} elif(true){
 				} else {
 				}
-				""");
+				"""));
 	}
 
 	@Test
 	void else_if() {
-		assertCompile("if(1){}else{}", "if(true){}else{}");
+		assertEquals("if(1){}else{}", MagmaCompiler_.compile("if(true){}else{}"));
 	}
 
 	@Test
 	void else_test() {
-		assertCompile("else{}", "else {}");
+		assertEquals("else{}", MagmaCompiler_.compile("else {}"));
 	}
 
 	@Test
 	void floating() {
-		assertCompile("10.0", "10.0");
+		assertEquals("10.0", MagmaCompiler_.compile("10.0"));
 	}
 
 	@Test
 	void function() {
-		assertCompile("int main(){return 0;}", "def main() : I16 => {return 0;}");
+		assertEquals("int main(){return 0;}", MagmaCompiler_.compile("def main() : I16 => {return 0;}"));
 	}
 
 	@Test
 	void invoke() {
-		assertCompile("main(test)", "main(test)");
+		assertEquals("main(test)", MagmaCompiler_.compile("main(test)"));
 	}
 
 	@Test
 	void member() {
-		assertCompile("myPoint.x", "myPoint => x");
+		assertEquals("myPoint.x", MagmaCompiler_.compile("myPoint => x"));
 	}
 
 	@Test
 	void negativeInt() {
-		assertCompile("-10", "-10");
+		assertEquals("-10", MagmaCompiler_.compile("-10"));
 	}
 
 	@Test
 	void positiveInt() {
-		assertCompile("10", "10");
+		assertEquals("10", MagmaCompiler_.compile("10"));
 	}
 
 	@Test
 	void quantity() {
-		assertCompile("(4)", "(4)");
+		assertEquals("(4)", MagmaCompiler_.compile("(4)"));
 	}
 
 	@Test
 	void reference() {
-		assertCompile("&value", "&value");
+		assertEquals("&value", MagmaCompiler_.compile("&value"));
 	}
 
 	@Test
 	void returns() {
-		assertCompile("return 420;", "return 420;");
+		assertEquals("return 420;", MagmaCompiler_.compile("return 420;"));
 	}
 
 	@Test
 	void structure() {
-		assertCompile("struct Wrapper{int value;};", "struct Wrapper{const value : I16}");
+		assertEquals("struct Wrapper{int value;};", MagmaCompiler_.compile("struct Wrapper{const value : I16}"));
 	}
 
 	@Test
 	void test_false() {
-		assertCompile("0", "false");
+		assertEquals("0", MagmaCompiler_.compile("false"));
 	}
 
 	@Test
 	void test_true() {
-		assertCompile("1", "true");
-	}
-
-	private void assertCompile(String expected, String source) {
-		Output result;
-		try {
-			result = MagmaCompiler_.compile(new Input(source));
-		} catch (CompileException e) {
-			e.printStackTrace();
-			result = new Output("");
-		}
-		assertEquals(expected, result.getValue());
+		assertEquals("1", MagmaCompiler_.compile("true"));
 	}
 
 	@Test
 	void variable() {
-		assertCompile("test", "test");
+		assertEquals("test", MagmaCompiler_.compile("test"));
 	}
 
 	@Test
 	void while_test() {
-		assertCompile("while(1){}", "while(true){}");
+		assertEquals("while(1){}", MagmaCompiler_.compile("while(true){}"));
 	}
 
 	@Test
 	void zero() {
-		assertCompile("0", "0");
+		assertEquals("0", MagmaCompiler_.compile("0"));
 	}
 }

@@ -1,32 +1,8 @@
 package com.meti.api.magma.core;
 
-public final record Some<T>(T value) implements Option<T> {
-	public static <T> Option<T> Some(T value) {
-		return new Some<>(value);
-	}
-
-	@Override
-	public boolean isPresent() {
-		return true;
-	}
-
-	@Override
-	public <R> Option<R> map(F1<T, R> mapper) {
-		return new Some<>(mapper.apply(value));
-	}
-
+public record Some<T>(T value) implements Option<T> {
 	@Override
 	public T orElse(T other) {
-		return value;
-	}
-
-	@Override
-	public T orElseGet(Supplier<T> supplier) {
-		return value;
-	}
-
-	@Override
-	public <E extends Exception> T orElseThrow(Supplier<E> supplier) {
 		return value;
 	}
 }

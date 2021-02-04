@@ -1,12 +1,12 @@
 package com.meti.compile;
 
 import com.meti.api.magma.collect.stream.StreamException;
-import com.meti.compile.token.Input;
-import com.meti.compile.token.Output;
-import com.meti.compile.token.Token;
 
+import java.util.Arrays;
+import java.util.stream.Stream;
+
+import static com.meti.compile.MagmaLexingStage.MagmaLexingStage_;
 import static com.meti.compile.content.BracketSplitter.BracketSplitter_;
-import static com.meti.compile.lex.MagmaLexingStage.MagmaLexingStage_;
 
 public class MagmaCompiler implements Compiler {
 	static final MagmaCompiler MagmaCompiler_ = new MagmaCompiler();
@@ -14,20 +14,19 @@ public class MagmaCompiler implements Compiler {
 	private MagmaCompiler() {
 	}
 
-	@Override
-	public Output compile(Input input) throws CompileException {
-		try {
-			return compileImpl(input);
-		} catch (StreamException e) {
-			throw new CompileException(e);
-		}
+	public static Stream<String> splitSequence(String sequence) {
+		return Arrays.stream(sequence.split(","));
 	}
 
-	private Output compileImpl(Input input) throws StreamException {
-		return BracketSplitter_.stream(input)
-				.map(MagmaLexingStage_::lexNode)
-				.map(Token::render)
-				.fold(Output::concat)
-				.orElse(new Output(""));
+	@Override
+	public String compile(String content) {
+		try {
+			return BracketSplitter_.stream(content)
+					.map(line -> MagmaLexingStage_.lexNode(line).render())
+					.fold((current, next) -> current + next)
+					.orElse("");
+		} catch (StreamException e) {
+			return "";
+		}
 	}
 }
