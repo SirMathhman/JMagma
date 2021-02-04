@@ -8,6 +8,7 @@ public class Streams {
 		return new AbstractStream<>() {
 			private int counter = from;
 
+
 			@Override
 			protected Integer head() throws StreamException {
 				if (counter < to) return counter++;
