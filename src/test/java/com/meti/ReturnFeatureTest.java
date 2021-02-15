@@ -7,6 +7,6 @@ import static com.meti.MagmaAssertions.assertCompile;
 class ReturnFeatureTest {
 	@Test
 	void test() throws CompileException {
-		assertCompile("return 420", "return 420");
+		assertCompile("return 420;", "return 420");
 	}
 }

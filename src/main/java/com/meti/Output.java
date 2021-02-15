@@ -8,6 +8,14 @@ public class Output {
 		this.value = value;
 	}
 
+	Output concat(String other) {
+		return new Output(getValue() + other);
+	}
+
+	Output concat(Output other) {
+		return new Output(getValue() + other.getValue());
+	}
+
 	public String getValue() {
 		return value;
 	}
