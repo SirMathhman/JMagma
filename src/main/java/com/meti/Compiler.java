@@ -6,23 +6,27 @@ public class Compiler {
 	private Compiler() {
 	}
 
-	String compile(Input input1) throws CompileException {
-		if (isEmpty(input1)) return "";
-		else if (input1.test()) {
-			var value = input1.slice(7);
-			var actual = compile(new Input(value));
-			return "return " + actual;
-		} else if (isInteger(input1)) {
-			return input1.getInput();
-		} else return "int main(){return 0;}";
+	Output compile(Input input) throws CompileException {
+		if (input.isEmpty()) return Output.EmptyOutput;
+		var root = lex(input);
+		return render(root);
 	}
 
-	private boolean isEmpty(Input input1) {
-		return input1.getInput().isBlank();
+	private Output render(Token root) {
+		return root.apply(Attribute.Name.Output).asOutput();
 	}
 
-	private boolean isInteger(Input input1) {
-		var input = input1.getInput();
-		return new Stream(input).allMatch(Character::isDigit);
+	private Token lex(Input input) throws CompileException {
+		if (input.test()) {
+			var node = compile(input.slice(7));
+			return new OutputToken(new Output("return " + node.getValue()));
+		} else if (isInteger(input)) {
+			return new OutputToken(input.asOutput());
+		} else return new OutputToken(new Output("int main(){return 0;}"));
 	}
+
+	private boolean isInteger(Input input) {
+		return input.stream().allMatch(Character::isDigit);
+	}
+
 }

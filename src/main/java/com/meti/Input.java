@@ -7,14 +7,26 @@ public class Input {
 		this.input = input;
 	}
 
+	Output asOutput() {
+		return new Output(getInput());
+	}
+
+	boolean isEmpty() {
+		return getInput().isBlank();
+	}
+
 	public String getInput() {
 		return input;
 	}
 
-	String slice(int from) {
-		var slice = getInput().substring(from, getInput().length());
+	Input slice(int extent) {
+		var slice = getInput().substring(extent);
 		var value = slice.trim();
-		return value;
+		return new Input(value);
+	}
+
+	Stream stream() {
+		return new Stream(getInput());
 	}
 
 	boolean test() {
