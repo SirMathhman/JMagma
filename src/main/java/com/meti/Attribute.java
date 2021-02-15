@@ -8,6 +8,7 @@ public interface Attribute {
 	}
 
 	enum Name {
+		Input,
 		Output
 	}
 }
