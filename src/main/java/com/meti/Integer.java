@@ -1,12 +1,6 @@
 package com.meti;
 
-class Integer implements Token {
-	private final Input input;
-
-	public Integer(Input input) {
-		this.input = input;
-	}
-
+record Integer(Input input) implements Token {
 	@Override
 	public Attribute apply(Attribute.Name name) throws AttributeException {
 		return switch (name) {
