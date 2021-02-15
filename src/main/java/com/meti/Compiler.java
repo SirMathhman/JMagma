@@ -7,8 +7,13 @@ public class Compiler {
 	}
 
 	String compile(String input) throws CompileException {
-		if (input.isBlank()) throw new CompileException("Input is blank.");
-		else if (isInteger(input)) {
+		if (input.isBlank()) return "";
+		else if (input.startsWith("return ")) {
+			var slice = input.substring(7);
+			var trim = slice.trim();
+			var actual = compile(trim);
+			return "return " + actual;
+		} else if (isInteger(input)) {
 			return input;
 		} else return "int main(){return 0;}";
 	}
