@@ -9,7 +9,7 @@ public class Compiler {
 	String compile(Input input1) throws CompileException {
 		if (isEmpty(input1)) return "";
 		else if (input1.test()) {
-			String value = input1.slice(7);
+			var value = input1.slice(7);
 			var actual = compile(new Input(value));
 			return "return " + actual;
 		} else if (isInteger(input1)) {
@@ -23,11 +23,6 @@ public class Compiler {
 
 	private boolean isInteger(Input input1) {
 		var input = input1.getInput();
-		for (int i = 0; i < input.length(); i++) {
-			if (!Character.isDigit(input.charAt(i))) {
-				return false;
-			}
-		}
-		return true;
+		return new Stream(input).allMatch(Character::isDigit);
 	}
 }
