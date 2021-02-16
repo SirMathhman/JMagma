@@ -3,12 +3,11 @@ package com.meti
 object ListOutput {
   def apply: Builder = new ListOutput.Builder()
 
-  final class Builder(val renderables: List[Renderable] = ArrayList.empty()) {
+  final class Builder(val renderables: List[Renderable] = ArrayList.empty) {
     def append(renderable: Renderable) = new Builder(renderables.add(renderable))
 
     def complete = new ListOutput(renderables)
   }
-
 }
 
 case class ListOutput(renderables: List[Renderable]) extends Output {

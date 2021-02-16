@@ -9,6 +9,8 @@ public interface Stream<T> {
 
 	T head() throws StreamException;
 
+	Option<T> headOptionally() throws StreamException;
+
 	<R> Stream<R> map(F1<T, R> mapper);
 
 	<R> Stream<R> mapE1(F1E1<T, R, ?> mapper);

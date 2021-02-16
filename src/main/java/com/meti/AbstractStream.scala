@@ -3,11 +3,36 @@ package com.meti
 import java.lang
 
 abstract class AbstractStream[T] extends Stream[T] {
-  override def fold[R](initial: R, folder: F2[R, T, R]): R = ???
+  override def fold(folder: F2[T, T, T]): Option[T] = headOptionally().map(fold(_, folder))
 
-  override def fold(folder: F2[T, T, T]): Option[T] = ???
+  override def fold[R](initial: R, folder: F2[R, T, R]): R = {
+    var current = initial
+    var continue = true
+    while (continue) {
+      try {
+        current = folder(current, head())
+      } catch {
+        case _: EndOfStreamException => continue = false
+        case e: Exception => throw e
+      }
+    }
+    current
+  }
 
-  override def map[R](mapper: F1[T, R]): Stream[R] = ???
+  override def headOptionally(): Option[T] = {
+    try Some(head()) catch {
+      case _: EndOfStreamException => new None[T]
+    }
+  }
+
+  override def map[R](mapper: F1[T, R]): Stream[R] = new AbstractStream[R] {
+    override def head(): R = try {
+      mapper(AbstractStream.this.head())
+    } catch {
+      case e: EndOfStreamException => throw e
+      case e: Exception => throw StreamException(cause = e)
+    }
+  }
 
   override def allMatch(predicate: F1[T, lang.Boolean]): Boolean = {
     var continue = true
@@ -25,7 +50,7 @@ abstract class AbstractStream[T] extends Stream[T] {
     override def head: R = try mapper.apply(AbstractStream.this.head())
     catch {
       case e: EndOfStreamException => throw e
-      case e: Exception => throw new StreamException(e)
+      case e: Exception => throw StreamException(cause = e)
     }
   }
 }
