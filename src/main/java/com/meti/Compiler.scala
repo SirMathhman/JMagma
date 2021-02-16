@@ -22,7 +22,7 @@ object Compiler {
 
   @throws[RenderException]
   private def render(root: Token): Output = {
-    try if (root.apply(Attribute.Name.Group) eq Token.Type.Return) {
+    try if (root.apply(Attribute.Name.Group) == Token.Group.Returns) {
       val root1 = root.apply(Attribute.Name.Value).computeToken
       return new StringOutput("return ").asInstanceOf[Output].concat(render(root1)).concat(";")
     }
