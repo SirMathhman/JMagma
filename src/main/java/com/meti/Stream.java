@@ -1,32 +1,21 @@
 package com.meti;
 
-class Stream {
-	private final String input;
-	private int counter = 0;
+public interface Stream<T> {
+	boolean allMatch(F1<T, Boolean> predicate) throws StreamException;
 
-	Stream(String input) {
-		this.input = input;
+	default <R> R fold(R initial, F2<R, T, R> folder) throws EndOfStreamException {
+		throw new UnsupportedOperationException();
 	}
 
-	boolean allMatch(F1<Character, Boolean> predicate) {
-		while (true) {
-			try {
-				char apply = head();
-				if (!predicate.apply(apply)) {
-					return false;
-				}
-			} catch (EndOfStreamException e) {
-				break;
-			}
-		}
-		return true;
+	default Option<T> fold(F2<T, T, T> folder) throws EndOfStreamException {
+		throw new UnsupportedOperationException();
 	}
 
-	private char head() throws EndOfStreamException {
-		if (counter < input.length()) {
-			return input.charAt(counter++);
-		} else {
-			throw new EndOfStreamException("No more characters left.");
-		}
+	T head() throws StreamException;
+
+	default <R> Stream<R> map(F1<T, R> mapper) {
+		throw new UnsupportedOperationException();
 	}
+
+	<R> Stream<R> mapE1(F1E1<T, R, ?> mapper);
 }

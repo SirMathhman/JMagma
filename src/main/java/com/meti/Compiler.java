@@ -6,29 +6,33 @@ public class Compiler {
 	private Compiler() {
 	}
 
-	Output compile(Input input) throws CompileException {
-		if (input.isEmpty()) return MutableOutput.EmptyOutput;
+	Renderable compile(Input input) throws CompileException {
+		if (input.isEmpty()) return new EmptyOutput();
 		var root = lex(input);
 		return render(root);
 	}
 
-	private boolean isInteger(Input input) {
+	private boolean isInteger(Input input) throws StreamException {
 		return input.stream().allMatch(Character::isDigit);
 	}
 
 	private Token lex(Input input) throws CompileException {
-		if (input.test()) {
-			return new Return(lex(input.slice(7)));
-		} else if (isInteger(input)) {
-			return new Integer(input);
-		} else return name -> new InputAttribute(new Input("int main(){return 0;}"));
+		try {
+			if (input.test()) {
+				return new Return(lex(input.slice(7)));
+			} else if (isInteger(input)) {
+				return new Integer(input);
+			} else return name -> new InputAttribute(new Input("int main(){return 0;}"));
+		} catch (StreamException e) {
+			throw new CompileException(e);
+		}
 	}
 
 	private Output render(Token root) throws RenderException {
 		try {
-			if (root.apply(Attribute.Name.Group) == Token.Group.Return) {
+			if (root.apply(Attribute.Name.Group) == Token.Type.Return) {
 				var root1 = root.apply(Attribute.Name.Value).computeToken();
-				return new MutableOutput("return ")
+				return ((Output) new StringOutput("return "))
 						.concat(render(root1))
 						.concat(";");
 			}

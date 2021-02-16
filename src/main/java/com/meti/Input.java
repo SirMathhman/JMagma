@@ -7,8 +7,8 @@ public class Input {
 		this.input = input;
 	}
 
-	MutableOutput asOutput() {
-		return new MutableOutput(getInput());
+	Output asOutput() {
+		return new StringOutput(getInput());
 	}
 
 	boolean isEmpty() {
@@ -25,8 +25,8 @@ public class Input {
 		return new Input(value);
 	}
 
-	Stream stream() {
-		return new Stream(getInput());
+	Stream<Character> stream() {
+		return Strings.stream(getInput());
 	}
 
 	boolean test() {
