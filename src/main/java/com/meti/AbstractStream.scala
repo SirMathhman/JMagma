@@ -24,9 +24,7 @@ abstract class AbstractStream[T] extends Stream[T] {
 	}
 
 	override def map[R](mapper: F1[T, R]): Stream[R] = new AbstractStream[R] {
-		override def head: R = try {
-			mapper(AbstractStream.this.head)
-		} catch {
+		override def head: R = try mapper(AbstractStream.this.head) catch {
 			case e: EndOfStreamException => throw e
 			case e: Exception => throw StreamException(cause = e)
 		}
@@ -45,7 +43,7 @@ abstract class AbstractStream[T] extends Stream[T] {
 
 	override def mapE1[R](mapper: F1E1[T, R, _]): AbstractStream[R] = new AbstractStream[R]() {
 		@throws[StreamException]
-		override def head: R = try mapper.apply(AbstractStream.this.head)
+		override def head: R = try mapper(AbstractStream.this.head)
 		catch {
 			case e: EndOfStreamException => throw e
 			case e: Exception => throw StreamException(cause = e)
