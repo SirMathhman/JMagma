@@ -10,7 +10,7 @@ class ArrayList[T](val elements: Array[Any], val elementsSize: Int) extends List
 
   @throws[CollectionException]
   override def set(index: Int, element: T): List[T] = {
-    if (index < 0) throw new IndexException("Index is negative.")
+    if (index < 0) throw IndexException("Index is negative.")
     val newElements = if (index < elements.length) elements else resize(index)
     val newSize = if (index + 1 > elementsSize) index + 1 else elementsSize
     newElements(index) = element

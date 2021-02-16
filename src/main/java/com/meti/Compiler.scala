@@ -12,14 +12,13 @@ object Compiler {
   private def isInteger(input: Input) = input.stream.allMatch(_.isDigit)
 
   @throws[CompileException]
-  private def lex(input: Input): Token = try 
+  private def lex(input: Input): Token = try
     if (input.test) new Return(lex(input.slice(7)))
     else if (isInteger(input)) new Integer(input)
-    else (name: Attribute.Name) => new InputAttribute(new Input("int main(){return 0;}"))
-    catch {
-      case e: StreamException =>
-        throw new CompileException(e)
-    }
+    else (_: Attribute.Name) => new InputAttribute(new Input("int main(){return 0;}"))
+  catch {
+    case e: StreamException => throw CompileException(cause = e)
+  }
 
   @throws[RenderException]
   private def render(root: Token): Output = {
@@ -33,8 +32,7 @@ object Compiler {
     }
     try root.apply(Attribute.Name.Content).computeInput.asOutput
     catch {
-      case e: AttributeException =>
-        throw new RenderException("Unable to render token because no input was present.")
+      case _: AttributeException => throw RenderException("Unable to render token because no input was present.")
     }
   }
 }

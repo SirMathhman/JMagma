@@ -19,7 +19,7 @@ case class ListOutput(renderables: List[Renderable]) extends Output {
   override def render: String = try renderImpl
   catch {
     case e: EndOfStreamException =>
-      throw new RenderException(e)
+      throw RenderException(cause = e)
   }
 
   private def renderImpl = renderables

@@ -8,6 +8,6 @@ final class Integer(val input: Input) extends Token {
   override def apply(name: Attribute.Name): Attribute = name match {
     case Group => Integer
     case Content => new InputAttribute(input)
-    case _ => throw new AttributeException
+    case _ => throw AttributeException()
   }
 }
