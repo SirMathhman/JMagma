@@ -1,14 +1,12 @@
 package com.meti
 
-object ListOutput {
-  def apply: Builder = new ListOutput.Builder()
+class Builder(val renderables: List[Renderable] = ArrayList.empty) {
+  def append(renderable: Renderable) = new Builder(renderables.add(renderable))
 
-  final class Builder(val renderables: List[Renderable] = ArrayList.empty) {
-    def append(renderable: Renderable) = new Builder(renderables.add(renderable))
-
-    def complete = new ListOutput(renderables)
-  }
+  def complete = new ListOutput(renderables)
 }
+
+object ListOutput extends Builder
 
 case class ListOutput(renderables: List[Renderable]) extends Output {
   override def concat(other: Renderable) = new ListOutput(renderables.add(other))
