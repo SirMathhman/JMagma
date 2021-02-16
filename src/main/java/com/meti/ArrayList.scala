@@ -6,7 +6,7 @@ object ArrayList {
 
 class ArrayList[T](val elements: Array[Any], val elementsSize: Int) extends List[T] {
   @throws[CollectionException]
-  override def add(element: T): List[T] = set(elementsSize, element)
+  override def +(element: T): List[T] = set(elementsSize, element)
 
   @throws[CollectionException]
   override def set(index: Int, element: T): List[T] = {
