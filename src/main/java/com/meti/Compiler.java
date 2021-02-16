@@ -7,7 +7,7 @@ public class Compiler {
 	}
 
 	Output compile(Input input) throws CompileException {
-		if (input.isEmpty()) return Output.EmptyOutput;
+		if (input.isEmpty()) return MutableOutput.EmptyOutput;
 		var root = lex(input);
 		return render(root);
 	}
@@ -27,9 +27,9 @@ public class Compiler {
 	private Output render(Token root) throws RenderException {
 		try {
 			if (root.apply(Attribute.Name.Group) == Token.Group.Return) {
-				var value = render(root.apply(Attribute.Name.Value).computeToken());
-				return new Output("return ")
-						.concat(value)
+				var root1 = root.apply(Attribute.Name.Value).computeToken();
+				return new MutableOutput("return ")
+						.concat(render(root1))
 						.concat(";");
 			}
 		} catch (AttributeException e) {

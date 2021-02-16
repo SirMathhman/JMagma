@@ -12,7 +12,7 @@ public class Main {
 			var source = Paths.get(".", "Main.mg");
 			var input = Files.readString(source);
 			var target = Paths.get(".", "Main.c");
-			Files.writeString(target, Compiler_.compile(new Input(input)).getValue());
+			Files.writeString(target, Compiler_.compile(new Input(input)).compute());
 		} catch (IOException | CompileException e) {
 			e.printStackTrace();
 		}

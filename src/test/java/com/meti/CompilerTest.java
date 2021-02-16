@@ -9,11 +9,11 @@ class CompilerTest {
 
 	@Test
 	void empty() throws CompileException {
-		assertEquals("", Compiler_.compile(new Input("")).getValue());
+		assertEquals("", Compiler_.compile(new Input("")).compute());
 	}
 
 	@Test
 	void test_main() throws CompileException {
-		assertEquals("int main(){return 0;}", Compiler_.compile(new Input("def main() : I16 => {return 0;}")).getValue());
+		assertEquals("int main(){return 0;}", Compiler_.compile(new Input("def main() : I16 => {return 0;}")).compute());
 	}
 }

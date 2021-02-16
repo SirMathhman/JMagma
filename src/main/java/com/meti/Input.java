@@ -7,8 +7,8 @@ public class Input {
 		this.input = input;
 	}
 
-	Output asOutput() {
-		return new Output(getInput());
+	MutableOutput asOutput() {
+		return new MutableOutput(getInput());
 	}
 
 	boolean isEmpty() {
