@@ -1,7 +1,7 @@
 package com.meti;
 
 public interface Attribute {
-	default Field asField() throws AttributeException {
+	default Field computeField() throws AttributeException {
 		throw new AttributeException("Not a field");
 	}
 
