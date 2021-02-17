@@ -50,13 +50,13 @@ public class DefaultField implements Field {
 	}
 
 	@Override
-	public <E extends Exception> Field mapByType(F1E1<Token, Token, E> folder) throws E {
-	throw new UnsupportedOperationException();
+	public <E extends Exception> Field mapByType(F1E1<Token, Token, E> mapper) throws E {
+		return new DefaultField(mapper.apply(type), name, value);
 	}
 
 	@Override
-	public <E extends Exception> Field mapByValue(F1E1<Token, Token, E> folder) throws E {
-		throw new UnsupportedOperationException();
+	public <E extends Exception> Field mapByValue(F1E1<Token, Token, E> mapper) throws E {
+		return new DefaultField(type, name, mapper.apply(value));
 	}
 
 	@Override

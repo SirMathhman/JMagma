@@ -17,7 +17,7 @@ public class MagmaLexingStage {
 		return (token, name) -> {
 			try {
 				return token.mapByField(name, this::lexField);
-			} catch (Exception e) {
+			} catch (AttributeException e) {
 				throw new LexException(e);
 			}
 		};
@@ -36,7 +36,7 @@ public class MagmaLexingStage {
 	List<Token> lex(Input input) throws LexException {
 		var lines = new ArrayList<String>();
 		var buffer = new StringBuilder();
-		var depth = 1;
+		var depth = 0;
 		for (int i = 0; i < input.getContent().length(); i++) {
 			var c = input.getContent().charAt(i);
 			if (c == '}' && depth == 1) {
@@ -57,7 +57,8 @@ public class MagmaLexingStage {
 		lines.removeIf(String::isBlank);
 		var newLines = new ArrayList<Token>();
 		for (String line : lines) {
-			var token = lexNodeInput(new Input(line));
+			var input1 = new Input(line);
+			var token = lexInput(input1, MagmaNodeLexer_);
 			newLines.add(token);
 		}
 		return newLines;
@@ -103,15 +104,7 @@ public class MagmaLexingStage {
 		return lexContent(token, MagmaNodeLexer_);
 	}
 
-	Token lexNodeInput(Input input) throws LexException {
-		return lexInput(input, MagmaNodeLexer_);
-	}
-
 	private Token lexType(Token token) throws LexException {
 		return lexContent(token, MagmaTypeLexer_);
-	}
-
-	Token lexTypeInput(Input input) throws LexException {
-		return lexInput(input, MagmaTypeLexer_);
 	}
 }

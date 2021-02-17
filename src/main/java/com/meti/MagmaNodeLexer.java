@@ -3,6 +3,7 @@ package com.meti;
 import java.util.List;
 
 import static com.meti.DeclarationLexer.DeclarationLexer_;
+import static com.meti.IntegerLexer.IntegerLexer_;
 
 public class MagmaNodeLexer extends CompoundLexer {
 	public static final Lexer<Token> MagmaNodeLexer_ = new MagmaNodeLexer();
@@ -12,6 +13,6 @@ public class MagmaNodeLexer extends CompoundLexer {
 
 	@Override
 	public List<Lexer<Token>> listLexers() {
-		return List.of(DeclarationLexer_);
+		return List.of(DeclarationLexer_, IntegerLexer_);
 	}
 }

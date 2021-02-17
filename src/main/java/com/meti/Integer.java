@@ -31,4 +31,9 @@ public class Integer implements Token {
 		Integer integer = (Integer) o;
 		return value == integer.value;
 	}
+
+	@Override
+	public String toString() {
+		return "{\"value\":%d}".formatted(value);
+	}
 }

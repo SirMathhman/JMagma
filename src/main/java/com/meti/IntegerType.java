@@ -57,6 +57,11 @@ public abstract class IntegerType implements Token {
 			Unsigned unsigned = (Unsigned) o;
 			return bits == unsigned.bits;
 		}
+
+		@Override
+		public String toString() {
+			return "{\"signed\":false,\"bits\":%d}".formatted(bits);
+		}
 	}
 
 	private static class Signed extends IntegerType {
@@ -87,6 +92,11 @@ public abstract class IntegerType implements Token {
 			if (o == null || getClass() != o.getClass()) return false;
 			Signed signed = (Signed) o;
 			return bits == signed.bits;
+		}
+
+		@Override
+		public String toString() {
+			return "{\"signed\":true,\"bits\":%d}".formatted(bits);
 		}
 	}
 }
