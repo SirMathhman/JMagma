@@ -4,15 +4,11 @@ import java.util.Objects;
 
 import static com.meti.ListOutput.ListOutput;
 
-public class TokenOutput implements Output {
-	private final Token token;
+public abstract class TokenOutput implements Output {
+	protected final Token token;
 
-	TokenOutput(Token token) {
+	public TokenOutput(Token token) {
 		this.token = token;
-	}
-
-	public static Output TokenOutput(Token token) {
-		return new TokenOutput(token);
 	}
 
 	@Override
@@ -22,46 +18,7 @@ public class TokenOutput implements Output {
 
 	@Override
 	public String compute() throws RenderException {
-		throw new RenderException("Cannot render tokens.");
-	}
-
-	@Override
-	public Output prepend(Output output) {
-		return ListOutput()
-				.append(output)
-				.append(this);
-	}
-
-	@Override
-	public Output replaceField(F1<Field, String> replacer) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public Output replaceNode(F1<Token, String> replacer) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public Output replaceType(F1<Token, String> replacer) {
-		throw new UnsupportedOperationException();
-	}
-
-	public Output appendChar(char c) {
-		throw new UnsupportedOperationException();
-	}
-
-	public Output appendField(Field field) {
-		throw new UnsupportedOperationException();
-	}
-
-	public Output appendString(String s) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(token);
+		throw new RenderException("Cannot render token of: " + token);
 	}
 
 	@Override
@@ -73,12 +30,19 @@ public class TokenOutput implements Output {
 	}
 
 	@Override
-	public String toString() {
-		return "{}";
+	public int hashCode() {
+		return Objects.hash(token);
 	}
 
-	public Output prependChar(char c) {
-		return ((Output) ListOutput()).append(new CharOutput(c))
+	@Override
+	public Output prepend(Output output) {
+		return ListOutput()
+				.append(output)
 				.append(this);
+	}
+
+	@Override
+	public String toString() {
+		return "{}";
 	}
 }

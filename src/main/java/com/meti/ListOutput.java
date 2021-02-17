@@ -11,8 +11,27 @@ public class ListOutput implements Output {
 	private ListOutput() {
 	}
 
-	public static ListOutput ListOutput() {
+	@Override
+	public int hashCode() {
+		return Objects.hash(children);
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		ListOutput that = (ListOutput) o;
+		return Objects.equals(children, that.children);
+	}	public static ListOutput ListOutput() {
 		return new ListOutput();
+	}
+
+	@Override
+	public String toString() {
+		var childrenString = children.stream()
+				.map(Output::toString)
+				.collect(Collectors.joining(",", "[", "]"));
+		return "{\"children\":%s}".formatted(childrenString);
 	}
 
 	@Override
@@ -20,6 +39,8 @@ public class ListOutput implements Output {
 		children.add(output);
 		return this;
 	}
+
+
 
 	@Override
 	public String compute() throws RenderException {
@@ -36,39 +57,31 @@ public class ListOutput implements Output {
 		return this;
 	}
 
+
 	@Override
-	public int hashCode() {
-		return Objects.hash(children);
+	public <E extends Exception> Output replaceField(F1E1<Field, String, E> replacer) throws E {
+		Output current = ListOutput();
+		for (Output child : children) {
+			current = current.append(child.replaceField(replacer));
+		}
+		return current;
 	}
 
 	@Override
-	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
-		ListOutput that = (ListOutput) o;
-		return Objects.equals(children, that.children);
+	public <E extends Exception> Output replaceNode(F1E1<Token, String, E> replacer) throws E {
+		Output current = ListOutput();
+		for (Output child : children) {
+			current = current.append(child.replaceNode(replacer));
+		}
+		return current;
 	}
 
 	@Override
-	public Output replaceField(F1<Field, String> replacer) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public Output replaceNode(F1<Token, String> replacer) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public Output replaceType(F1<Token, String> replacer) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public String toString() {
-		var childrenString = children.stream()
-				.map(Output::toString)
-				.collect(Collectors.joining(",", "[", "]"));
-		return "{\"children\":%s}".formatted(childrenString);
+	public <E extends Exception> Output replaceType(F1E1<Token, String, E> replacer) throws E {
+		Output current = ListOutput();
+		for (Output child : children) {
+			current = current.append(child.replaceType(replacer));
+		}
+		return current;
 	}
 }

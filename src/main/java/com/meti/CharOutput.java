@@ -58,21 +58,6 @@ public class CharOutput implements Output {
 	}
 
 	@Override
-	public Output replaceField(F1<Field, String> replacer) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public Output replaceNode(F1<Token, String> replacer) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public Output replaceType(F1<Token, String> replacer) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
 	public String toString() {
 		return "{\"value\":\"%s\"}".formatted(c);
 	}

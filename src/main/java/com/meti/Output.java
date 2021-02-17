@@ -3,21 +3,19 @@ package com.meti;
 public interface Output {
 	Output append(Output output);
 
-	default String compute() throws RenderException {
-		throw new RenderException("Output isn't renderable yet.");
-	}
+	String compute() throws RenderException;
 
 	Output prepend(Output output);
 
-	default Output replaceField(F1<Field, String> replacer) {
+	default <E extends Exception> Output replaceField(F1E1<Field, String, E> replacer) throws E {
 		return this;
 	}
 
-	default Output replaceNode(F1<Token, String> replacer) {
+	default <E extends Exception> Output replaceNode(F1E1<Token, String, E> replacer) throws E {
 		return this;
 	}
 
-	default Output replaceType(F1<Token, String> replacer) {
+	default <E extends Exception> Output replaceType(F1E1<Token, String, E> replacer) throws E {
 		return this;
 	}
 }

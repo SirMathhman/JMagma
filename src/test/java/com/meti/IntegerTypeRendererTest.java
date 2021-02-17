@@ -4,11 +4,11 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Optional;
 
-import static com.meti.IntegerRenderer.IntegerRenderer_;
+import static com.meti.IntegerTypeRenderer.IntegerRenderer_;
 import static com.meti.ListOutput.ListOutput;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class IntegerRendererTest {
+class IntegerTypeRendererTest {
 	@Test
 	void render() throws RenderException {
 		var value = new Integer(420);
@@ -20,7 +20,9 @@ class IntegerRendererTest {
 	}
 
 	private Output computeOutput(Integer value) throws RenderException {
-		return ((Output) ListOutput()).append(new StringOutput("signed int x")).append(new CharOutput('='))
-				.append(new TokenOutput(value)).append(new CharOutput(';'));
+		return ListOutput()
+				.append(new StringOutput("signed int x"))
+				.append(new CharOutput('='))
+				.append(new NodeOutput(value));
 	}
 }

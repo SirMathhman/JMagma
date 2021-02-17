@@ -25,15 +25,15 @@ public abstract class PrimitiveRenderer implements Renderer<Field> {
 	}
 
 	private Output renderFooter(Field field) {
-		return field.applyToValue(TokenOutput::TokenOutput)
+		return field.applyToValue(NodeOutput::new)
 				.map(output -> output.prepend(new CharOutput('=')))
-				.orElse(EmptyOutput_).append(new CharOutput(';'));
+				.orElse(EmptyOutput_);
 	}
 
 	private String renderHeader(Field field) throws RenderException {
 		F1E1<String, String, RenderException> renderHeader = s -> {
-				var content = field.applyToTypeE1(this::computeString);
-				return content + " " + s;
+			var content = field.applyToTypeE1(this::computeString);
+			return content + " " + s;
 		};
 		return field.applyToNameE1(renderHeader);
 	}

@@ -19,6 +19,13 @@ public class FieldOutput implements Output {
 	}
 
 	@Override
+	public String compute() throws RenderException {
+		var format = "A field still exists in the pipeline: %s";
+		var message = format.formatted(field);
+		throw new RenderException(message);
+	}
+
+	@Override
 	public Output prepend(Output output) {
 		return ListOutput()
 				.append(output)
@@ -26,7 +33,7 @@ public class FieldOutput implements Output {
 	}
 
 	@Override
-	public Output replaceField(F1<Field, String> replacer) {
+	public <E extends Exception> Output replaceField(F1E1<Field, String, E> replacer) throws E {
 		return new StringOutput(replacer.apply(field));
 	}
 
