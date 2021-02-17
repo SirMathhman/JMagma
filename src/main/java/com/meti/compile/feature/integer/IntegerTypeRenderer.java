@@ -1,7 +1,7 @@
 package com.meti.compile.feature.integer;
 
-import com.meti.compile.attribute.Attribute;
-import com.meti.compile.attribute.AttributeException;
+import com.meti.compile.token.attribute.Attribute;
+import com.meti.compile.token.attribute.AttributeException;
 import com.meti.compile.feature.primitive.PrimitiveRenderer;
 import com.meti.compile.render.RenderException;
 import com.meti.compile.render.Renderer;

@@ -1,14 +1,14 @@
-package com.meti.compile.output;
+package com.meti.compile.token.output;
 
 import com.meti.compile.token.Field;
 
 import java.util.Objects;
 
-public class CharOutput implements Output {
-	private final char c;
+public class StringOutput implements Output {
+	private final String value;
 
-	public CharOutput(char c) {
-		this.c = c;
+	public StringOutput(String value) {
+		this.value = value;
 	}
 
 	public Output appendChar(char c) {
@@ -30,7 +30,7 @@ public class CharOutput implements Output {
 
 	@Override
 	public String compute() {
-		return String.valueOf(c);
+		return value;
 	}
 
 	public Output prependChar(char c) {
@@ -48,19 +48,19 @@ public class CharOutput implements Output {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(c);
+		return Objects.hash(value);
 	}
 
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
-		CharOutput that = (CharOutput) o;
-		return c == that.c;
+		StringOutput that = (StringOutput) o;
+		return Objects.equals(value, that.value);
 	}
 
 	@Override
 	public String toString() {
-		return "{\"value\":\"%s\"}".formatted(c);
+		return "{\"value\":\"%s\"}".formatted(value);
 	}
 }

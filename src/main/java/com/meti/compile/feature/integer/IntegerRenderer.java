@@ -4,10 +4,10 @@ import com.meti.compile.render.RenderException;
 import com.meti.compile.render.Renderer;
 import com.meti.compile.token.Token;
 import com.meti.compile.token.Tokens;
-import com.meti.compile.attribute.Attribute;
-import com.meti.compile.attribute.AttributeException;
-import com.meti.compile.output.Output;
-import com.meti.compile.output.StringOutput;
+import com.meti.compile.token.attribute.Attribute;
+import com.meti.compile.token.attribute.AttributeException;
+import com.meti.compile.token.output.Output;
+import com.meti.compile.token.output.StringOutput;
 
 import java.util.Optional;
 

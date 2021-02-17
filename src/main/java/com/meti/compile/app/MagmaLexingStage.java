@@ -1,7 +1,7 @@
 package com.meti.compile.app;
 
-import com.meti.compile.attribute.Attribute;
-import com.meti.compile.attribute.AttributeException;
+import com.meti.compile.token.attribute.Attribute;
+import com.meti.compile.token.attribute.AttributeException;
 import com.meti.core.F2E1;
 import com.meti.compile.lex.LexException;
 import com.meti.compile.lex.Lexer;

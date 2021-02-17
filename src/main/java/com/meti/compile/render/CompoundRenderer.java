@@ -1,6 +1,6 @@
 package com.meti.compile.render;
 
-import com.meti.compile.output.Output;
+import com.meti.compile.token.output.Output;
 
 import java.util.List;
 import java.util.Optional;

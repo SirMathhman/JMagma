@@ -1,7 +1,7 @@
 package com.meti.compile.feature.primitive;
 
-import com.meti.compile.attribute.Attribute;
-import com.meti.compile.attribute.AttributeException;
+import com.meti.compile.token.attribute.Attribute;
+import com.meti.compile.token.attribute.AttributeException;
 import com.meti.compile.token.Token;
 
 public class ImplicitType implements Token {

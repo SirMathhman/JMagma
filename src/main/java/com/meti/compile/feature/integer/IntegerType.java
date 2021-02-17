@@ -1,14 +1,14 @@
 package com.meti.compile.feature.integer;
 
 import com.meti.compile.token.Token;
-import com.meti.compile.attribute.Attribute;
-import com.meti.compile.attribute.AttributeException;
-import com.meti.compile.attribute.IntegerAttribute;
+import com.meti.compile.token.attribute.Attribute;
+import com.meti.compile.token.attribute.AttributeException;
+import com.meti.compile.token.attribute.IntegerAttribute;
 
 import java.util.Objects;
 
-import static com.meti.compile.attribute.BooleanAttribute.FalseAttribute;
-import static com.meti.compile.attribute.BooleanAttribute.TrueAttribute;
+import static com.meti.compile.token.attribute.BooleanAttribute.FalseAttribute;
+import static com.meti.compile.token.attribute.BooleanAttribute.TrueAttribute;
 
 public abstract class IntegerType implements Token {
 	public static Token unsigned(int bits) {

@@ -2,18 +2,18 @@ package com.meti.compile.feature.primitive;
 
 import com.meti.compile.token.Field;
 import com.meti.compile.token.Token;
-import com.meti.compile.attribute.AttributeException;
+import com.meti.compile.token.attribute.AttributeException;
 import com.meti.core.F1E1;
-import com.meti.compile.output.CharOutput;
-import com.meti.compile.output.NodeOutput;
-import com.meti.compile.output.Output;
-import com.meti.compile.output.StringOutput;
+import com.meti.compile.token.output.CharOutput;
+import com.meti.compile.token.output.NodeOutput;
+import com.meti.compile.token.output.Output;
+import com.meti.compile.token.output.StringOutput;
 import com.meti.compile.render.RenderException;
 import com.meti.compile.render.Renderer;
 
 import java.util.Optional;
 
-import static com.meti.compile.output.EmptyOutput.EmptyOutput_;
+import static com.meti.compile.token.output.EmptyOutput.EmptyOutput_;
 
 public abstract class PrimitiveRenderer implements Renderer<Field> {
 	@Override

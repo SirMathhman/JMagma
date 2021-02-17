@@ -1,4 +1,4 @@
-package com.meti.compile.output;
+package com.meti.compile.token.output;
 
 import com.meti.core.F1E1;
 import com.meti.compile.token.Field;
@@ -6,7 +6,7 @@ import com.meti.compile.render.RenderException;
 
 import java.util.Objects;
 
-import static com.meti.compile.output.ListOutput.ListOutput;
+import static com.meti.compile.token.output.ListOutput.ListOutput;
 
 public class FieldOutput implements Output {
 	private final Field field;

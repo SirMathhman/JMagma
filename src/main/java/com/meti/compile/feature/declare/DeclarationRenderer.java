@@ -4,15 +4,15 @@ import com.meti.compile.render.RenderException;
 import com.meti.compile.render.Renderer;
 import com.meti.compile.token.Token;
 import com.meti.compile.token.Tokens;
-import com.meti.compile.attribute.Attribute;
-import com.meti.compile.attribute.AttributeException;
-import com.meti.compile.output.CharOutput;
-import com.meti.compile.output.FieldOutput;
-import com.meti.compile.output.Output;
+import com.meti.compile.token.attribute.Attribute;
+import com.meti.compile.token.attribute.AttributeException;
+import com.meti.compile.token.output.CharOutput;
+import com.meti.compile.token.output.FieldOutput;
+import com.meti.compile.token.output.Output;
 
 import java.util.Optional;
 
-import static com.meti.compile.output.ListOutput.ListOutput;
+import static com.meti.compile.token.output.ListOutput.ListOutput;
 
 public class DeclarationRenderer implements Renderer<Token> {
 	public static final Renderer<Token> DeclarationRenderer_ = new DeclarationRenderer();

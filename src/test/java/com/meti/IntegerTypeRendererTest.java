@@ -2,10 +2,10 @@ package com.meti;
 
 import com.meti.compile.feature.integer.Integer;
 import com.meti.compile.feature.integer.IntegerType;
-import com.meti.compile.output.CharOutput;
-import com.meti.compile.output.NodeOutput;
-import com.meti.compile.output.Output;
-import com.meti.compile.output.StringOutput;
+import com.meti.compile.token.output.CharOutput;
+import com.meti.compile.token.output.NodeOutput;
+import com.meti.compile.token.output.Output;
+import com.meti.compile.token.output.StringOutput;
 import com.meti.compile.render.RenderException;
 import com.meti.compile.token.DefaultField;
 import com.meti.compile.token.Input;
@@ -14,7 +14,7 @@ import org.junit.jupiter.api.Test;
 import java.util.Optional;
 
 import static com.meti.compile.feature.integer.IntegerTypeRenderer.IntegerRenderer_;
-import static com.meti.compile.output.ListOutput.ListOutput;
+import static com.meti.compile.token.output.ListOutput.ListOutput;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class IntegerTypeRendererTest {

@@ -1,8 +1,8 @@
 package com.meti.compile.token;
 
-import com.meti.compile.attribute.Attribute;
-import com.meti.compile.attribute.AttributeException;
-import com.meti.compile.attribute.InputAttribute;
+import com.meti.compile.token.attribute.Attribute;
+import com.meti.compile.token.attribute.AttributeException;
+import com.meti.compile.token.attribute.InputAttribute;
 
 import java.util.Objects;
 

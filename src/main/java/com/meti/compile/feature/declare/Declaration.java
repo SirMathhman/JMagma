@@ -3,9 +3,9 @@ package com.meti.compile.feature.declare;
 import com.meti.core.F1E1;
 import com.meti.compile.token.Field;
 import com.meti.compile.token.Token;
-import com.meti.compile.attribute.Attribute;
-import com.meti.compile.attribute.AttributeException;
-import com.meti.compile.attribute.FieldAttribute;
+import com.meti.compile.token.attribute.Attribute;
+import com.meti.compile.token.attribute.AttributeException;
+import com.meti.compile.token.attribute.FieldAttribute;
 
 import java.util.Objects;
 import java.util.stream.Stream;

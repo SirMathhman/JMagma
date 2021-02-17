@@ -1,6 +1,6 @@
 package com.meti.compile.app;
 
-import com.meti.compile.output.Output;
+import com.meti.compile.token.output.Output;
 import com.meti.compile.render.RenderException;
 import com.meti.compile.render.Renderer;
 import com.meti.compile.token.Token;

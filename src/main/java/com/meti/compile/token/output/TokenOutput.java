@@ -1,11 +1,11 @@
-package com.meti.compile.output;
+package com.meti.compile.token.output;
 
 import com.meti.compile.render.RenderException;
 import com.meti.compile.token.Token;
 
 import java.util.Objects;
 
-import static com.meti.compile.output.ListOutput.ListOutput;
+import static com.meti.compile.token.output.ListOutput.ListOutput;
 
 public abstract class TokenOutput implements Output {
 	protected final Token token;

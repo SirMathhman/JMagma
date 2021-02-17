@@ -1,4 +1,4 @@
-package com.meti.compile.attribute;
+package com.meti.compile.token.attribute;
 
 public class IntegerAttribute implements Attribute {
 	private final int value;

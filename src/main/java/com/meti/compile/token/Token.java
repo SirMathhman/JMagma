@@ -1,7 +1,7 @@
 package com.meti.compile.token;
 
-import com.meti.compile.attribute.Attribute;
-import com.meti.compile.attribute.AttributeException;
+import com.meti.compile.token.attribute.Attribute;
+import com.meti.compile.token.attribute.AttributeException;
 import com.meti.core.F1E1;
 
 import java.util.stream.Stream;

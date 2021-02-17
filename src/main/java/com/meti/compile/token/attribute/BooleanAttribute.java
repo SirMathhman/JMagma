@@ -1,4 +1,4 @@
-package com.meti.compile.attribute;
+package com.meti.compile.token.attribute;
 
 public class BooleanAttribute implements Attribute {
 	public static final Attribute TrueAttribute = new BooleanAttribute(true);
