@@ -3,6 +3,7 @@ package com.meti;
 import java.util.Objects;
 
 public class Integer implements Token {
+	public static final Token Zero = new Integer(0);
 	private final int value;
 
 	public Integer(int value) {

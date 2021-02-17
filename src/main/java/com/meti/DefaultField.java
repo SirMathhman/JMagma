@@ -25,7 +25,7 @@ public class DefaultField implements Field {
 
 	@Override
 	public <R> R applyToType(F1<Token, R> mapper) {
-		throw new UnsupportedOperationException();
+		return mapper.apply(type);
 	}
 
 	@Override
@@ -45,7 +45,7 @@ public class DefaultField implements Field {
 
 	@Override
 	public boolean isNamed(String name) {
-		throw new UnsupportedOperationException();
+		return this.name.equals(name);
 	}
 
 	@Override

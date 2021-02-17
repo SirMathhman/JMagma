@@ -15,4 +15,10 @@ public class Declaration implements Token {
 			default -> throw new AttributeException();
 		};
 	}
+
+	@Override
+	public Token copy(Attribute.Name name, Attribute attribute) throws AttributeException {
+		if (name == Attribute.Name.Identity) return new Declaration(attribute.computeField());
+		throw new AttributeException();
+	}
 }
