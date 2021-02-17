@@ -37,7 +37,10 @@ public abstract class AbstractField implements Field {
 		return mapper.apply(type);
 	}
 
-	public abstract <E extends Exception> Field copyByType(Token newType) throws E;
+	@Override
+	public boolean isFlagged(Flag flag) {
+		return flags.contains(flag);
+	}
 
 	@Override
 	public boolean isNamed(String name) {
@@ -49,9 +52,16 @@ public abstract class AbstractField implements Field {
 		return copyByType(mapper.apply(type));
 	}
 
+	public abstract <E extends Exception> Field copyByType(Token newType) throws E;
+
 	@Override
 	public <E extends Exception> boolean testTypeE1(F1E1<Token, Boolean, E> predicate) throws E {
 		return predicate.apply(type);
+	}
+
+	@Override
+	public Field withType(Token type) {
+		return copyByType(type);
 	}
 
 	protected String joinFlags() {
@@ -59,10 +69,5 @@ public abstract class AbstractField implements Field {
 				.map(Flag::name)
 				.map(String::toLowerCase)
 				.collect(Collectors.joining(",", "[", "]"));
-	}
-
-	@Override
-	public Field withType(Token type) {
-		return copyByType(type);
 	}
 }

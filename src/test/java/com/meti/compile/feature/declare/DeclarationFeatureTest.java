@@ -8,16 +8,16 @@ import static com.meti.MagmaAssertions.assertCompileThrows;
 class DeclarationFeatureTest {
 	@Test
 	void already_exists() {
-		assertCompileThrows("x=420;x=10;");
+		assertCompileThrows("const x=420;const x=10;");
 	}
 
 	@Test
 	void implicit() {
-		assertCompile("x=420", "signed int x=420;");
+		assertCompile("const x=420", "signed int x=420;");
 	}
 
 	@Test
 	void positive() {
-		assertCompile("x : I16 = 420", "signed int x=420;");
+		assertCompile("const x : I16 = 420", "signed int x=420;");
 	}
 }
