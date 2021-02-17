@@ -1,4 +1,6 @@
-package com.meti;
+package com.meti.parse;
+
+import com.meti.Token;
 
 public class State {
 	private final Stack stack;

@@ -1,5 +1,8 @@
 package com.meti;
 
+import com.meti.parse.CompoundParser;
+import com.meti.parse.Parser;
+
 import java.util.List;
 
 import static com.meti.declare.DeclarationParser.DeclarationParser_;

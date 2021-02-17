@@ -5,6 +5,9 @@ import com.meti.attribute.AttributeException;
 import com.meti.declare.Declaration;
 import com.meti.integer.Integer;
 import com.meti.integer.IntegerType;
+import com.meti.parse.MapStack;
+import com.meti.parse.ParseException;
+import com.meti.parse.State;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;

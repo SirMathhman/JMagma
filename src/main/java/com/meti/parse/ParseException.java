@@ -1,4 +1,6 @@
-package com.meti;
+package com.meti.parse;
+
+import com.meti.CompileException;
 
 public class ParseException extends CompileException {
 	public ParseException() {
