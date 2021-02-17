@@ -7,7 +7,7 @@ import com.meti.compile.token.Input;
 import com.meti.compile.token.Token;
 import com.meti.compile.token.attribute.AttributeException;
 import com.meti.compile.token.output.CharOutput;
-import com.meti.compile.token.output.NodeOutput;
+import com.meti.compile.token.output.TokenOutput;
 import com.meti.compile.token.output.Output;
 import com.meti.compile.token.output.StringOutput;
 import com.meti.core.F1E1;
@@ -37,7 +37,7 @@ public abstract class PrimitiveRenderer implements Renderer<Field> {
 	}
 
 	private Output renderFooter(Field field) {
-		return field.applyToValue(NodeOutput::new)
+		return field.applyToValue(TokenOutput::new)
 				.map(output -> output.prepend(new CharOutput('=')))
 				.orElse(EmptyOutput_);
 	}

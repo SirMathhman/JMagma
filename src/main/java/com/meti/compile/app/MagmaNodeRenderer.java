@@ -6,6 +6,7 @@ import com.meti.compile.token.Token;
 
 import java.util.List;
 
+import static com.meti.compile.feature.assign.AssignmentRenderer.AssignmentRenderer_;
 import static com.meti.compile.feature.declare.DeclarationRenderer.DeclarationRenderer_;
 import static com.meti.compile.feature.integer.IntegerRenderer.IntegerRenderer_;
 
@@ -17,6 +18,6 @@ public class MagmaNodeRenderer extends CompoundRenderer<Token> {
 
 	@Override
 	protected List<Renderer<Token>> streamRenderers() {
-		return List.of(DeclarationRenderer_, IntegerRenderer_);
+		return List.of(AssignmentRenderer_, DeclarationRenderer_, IntegerRenderer_);
 	}
 }

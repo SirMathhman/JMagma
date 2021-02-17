@@ -3,7 +3,7 @@ package com.meti.compile.feature.integer;
 import com.meti.compile.token.Field;
 import com.meti.compile.token.RootInput;
 import com.meti.compile.token.output.CharOutput;
-import com.meti.compile.token.output.NodeOutput;
+import com.meti.compile.token.output.TokenOutput;
 import com.meti.compile.token.output.Output;
 import com.meti.compile.token.output.StringOutput;
 import com.meti.compile.render.RenderException;
@@ -32,6 +32,6 @@ class IntegerTypeRendererTest {
 		return ListOutput()
 				.append(new StringOutput("signed int x"))
 				.append(new CharOutput('='))
-				.append(new NodeOutput(value));
+				.append(new TokenOutput(value));
 	}
 }

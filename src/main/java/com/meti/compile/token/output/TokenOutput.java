@@ -1,13 +1,14 @@
 package com.meti.compile.token.output;
 
 import com.meti.compile.render.RenderException;
+import com.meti.core.F1E1;
 import com.meti.compile.token.Token;
 
 import java.util.Objects;
 
 import static com.meti.compile.token.output.ListOutput.ListOutput;
 
-public abstract class TokenOutput implements Output {
+public class TokenOutput implements Output {
 	protected final Token token;
 
 	public TokenOutput(Token token) {
@@ -42,6 +43,11 @@ public abstract class TokenOutput implements Output {
 		return ListOutput()
 				.append(output)
 				.append(this);
+	}
+
+	@Override
+	public <E extends Exception> Output replaceNode(F1E1<Token, String, E> replacer) throws E {
+		return new StringOutput(replacer.apply(token));
 	}
 
 	@Override
