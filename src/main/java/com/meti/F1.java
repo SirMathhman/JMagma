@@ -1,0 +1,5 @@
+package com.meti;
+
+public interface F1<T, R> {
+	R apply(T t);
+}
