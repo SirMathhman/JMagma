@@ -1,6 +1,6 @@
 package com.meti;
 
-public class AttributeException extends Exception {
+public class AttributeException extends CompileException {
 	public AttributeException() {
 	}
 

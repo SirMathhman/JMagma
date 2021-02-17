@@ -14,8 +14,18 @@ public class DefaultField implements Field {
 	}
 
 	@Override
+	public <R> R applyToName(F1<String, R> mapper) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
 	public <R, E extends Exception> R applyToNameE1(F1E1<String, R, E> mapper) throws E {
 		return mapper.apply(name);
+	}
+
+	@Override
+	public <R> R applyToType(F1<Token, R> mapper) {
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -41,5 +51,10 @@ public class DefaultField implements Field {
 	@Override
 	public <E extends Exception> boolean testTypeE1(F1E1<Token, Boolean, E> predicate) throws E {
 		return predicate.apply(type);
+	}
+
+	@Override
+	public Field withType(Token type) {
+		throw new UnsupportedOperationException();
 	}
 }
