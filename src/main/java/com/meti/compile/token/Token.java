@@ -29,6 +29,6 @@ public interface Token {
 	}
 
 	enum Type implements Attribute {
-		Special, Declaration, Implicit, Content, Assignment, Integer
+		Special, Declaration, Implicit, Content, Assignment, Variable, Integer
 	}
 }
