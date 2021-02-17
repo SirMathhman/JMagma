@@ -1,6 +1,7 @@
 package com.meti;
 
 import com.meti.attribute.AttributeException;
+import com.meti.integer.IntegerType;
 
 public class MagmaResolver {
 	public static MagmaResolver MagmaResolver_ = new MagmaResolver();

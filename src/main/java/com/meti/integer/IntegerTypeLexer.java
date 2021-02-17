@@ -1,4 +1,9 @@
-package com.meti;
+package com.meti.integer;
+
+import com.meti.Input;
+import com.meti.LexException;
+import com.meti.Lexer;
+import com.meti.Token;
 
 import java.util.Optional;
 

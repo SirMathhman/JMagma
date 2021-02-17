@@ -1,5 +1,7 @@
 package com.meti;
 
+import com.meti.integer.IntegerTypeRenderer;
+
 import java.util.Collections;
 import java.util.List;
 

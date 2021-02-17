@@ -1,5 +1,9 @@
-package com.meti;
+package com.meti.integer;
 
+import com.meti.RenderException;
+import com.meti.Renderer;
+import com.meti.Token;
+import com.meti.Tokens;
 import com.meti.attribute.Attribute;
 import com.meti.attribute.AttributeException;
 import com.meti.output.Output;

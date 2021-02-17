@@ -2,7 +2,7 @@ package com.meti;
 
 import java.util.List;
 
-import static com.meti.IntegerTypeLexer.IntegerTypeLexer_;
+import static com.meti.integer.IntegerTypeLexer.IntegerTypeLexer_;
 
 public class MagmaTypeLexer extends CompoundLexer {
 	public static final Lexer<Token> MagmaTypeLexer_ = new MagmaTypeLexer();

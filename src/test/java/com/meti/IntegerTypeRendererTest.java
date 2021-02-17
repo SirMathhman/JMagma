@@ -1,5 +1,7 @@
 package com.meti;
 
+import com.meti.integer.Integer;
+import com.meti.integer.IntegerType;
 import com.meti.output.CharOutput;
 import com.meti.output.NodeOutput;
 import com.meti.output.Output;
@@ -8,7 +10,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Optional;
 
-import static com.meti.IntegerTypeRenderer.IntegerRenderer_;
+import static com.meti.integer.IntegerTypeRenderer.IntegerRenderer_;
 import static com.meti.output.ListOutput.ListOutput;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

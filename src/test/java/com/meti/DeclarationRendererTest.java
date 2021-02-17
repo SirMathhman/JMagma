@@ -1,6 +1,8 @@
 package com.meti;
 
 import com.meti.declare.Declaration;
+import com.meti.integer.Integer;
+import com.meti.integer.IntegerType;
 import com.meti.output.CharOutput;
 import com.meti.output.FieldOutput;
 import org.junit.jupiter.api.Test;

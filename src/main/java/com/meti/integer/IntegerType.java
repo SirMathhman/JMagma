@@ -1,5 +1,6 @@
-package com.meti;
+package com.meti.integer;
 
+import com.meti.Token;
 import com.meti.attribute.Attribute;
 import com.meti.attribute.AttributeException;
 import com.meti.attribute.IntegerAttribute;
