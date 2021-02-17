@@ -15,9 +15,7 @@ public class DeclarationRenderer implements Renderer<Token> {
 		try {
 			if (Tokens.is(token, Token.Type.Declaration)) {
 				var identity = token.apply(Attribute.Name.Identity).computeField();
-				var field = ListOutput()
-						.appendField(identity)
-						.appendChar(';');
+				var field = ((Output) ListOutput()).append(new FieldOutput(identity)).append(new CharOutput(';'));
 				return Optional.of(field);
 			}
 		} catch (AttributeException e) {

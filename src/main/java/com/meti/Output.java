@@ -1,17 +1,23 @@
 package com.meti;
 
 public interface Output {
-	Output appendChar(char c);
+	Output append(Output output);
 
-	Output appendField(Field field);
+	default String compute() throws RenderException {
+		throw new RenderException("Output isn't renderable yet.");
+	}
 
-	Output appendOutput(Output output);
+	Output prepend(Output output);
 
-	Output appendString(String s);
+	default Output replaceField(F1<Field, String> replacer) {
+		return this;
+	}
 
-	String compute() throws RenderException;
+	default Output replaceNode(F1<Token, String> replacer) {
+		return this;
+	}
 
-	Output prependChar(char c);
-
-	Output prependString(String s);
+	default Output replaceType(F1<Token, String> replacer) {
+		return this;
+	}
 }

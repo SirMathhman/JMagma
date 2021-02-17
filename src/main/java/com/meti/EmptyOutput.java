@@ -6,22 +6,19 @@ public class EmptyOutput implements Output {
 	public EmptyOutput() {
 	}
 
-	@Override
 	public Output appendChar(char c) {
 		throw new UnsupportedOperationException();
 	}
 
-	@Override
 	public Output appendField(Field field) {
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public Output appendOutput(Output output) {
+	public Output append(Output output) {
 		throw new UnsupportedOperationException();
 	}
 
-	@Override
 	public Output appendString(String s) {
 		throw new UnsupportedOperationException();
 	}
@@ -31,13 +28,31 @@ public class EmptyOutput implements Output {
 		throw new UnsupportedOperationException();
 	}
 
-	@Override
 	public Output prependChar(char c) {
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
+	public Output prepend(Output output) {
+		throw new UnsupportedOperationException();
+	}
+
 	public Output prependString(String s) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public Output replaceField(F1<Field, String> replacer) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public Output replaceNode(F1<Token, String> replacer) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public Output replaceType(F1<Token, String> replacer) {
 		throw new UnsupportedOperationException();
 	}
 }

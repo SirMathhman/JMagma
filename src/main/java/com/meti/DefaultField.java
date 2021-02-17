@@ -80,4 +80,9 @@ public class DefaultField implements Field {
 		var sameValue = Objects.equals(value, that.value);
 		return sameType && sameName && sameValue;
 	}
+
+	@Override
+	public String toString() {
+		return "{\"type\":%s,\"name\":\"%s\",\"value\":%s}".formatted(type, name, value);
+	}
 }

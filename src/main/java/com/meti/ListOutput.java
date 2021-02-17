@@ -16,25 +16,8 @@ public class ListOutput implements Output {
 	}
 
 	@Override
-	public Output appendChar(char c) {
-		children.add(new CharOutput(c));
-		return this;
-	}
-
-	@Override
-	public Output appendField(Field field) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public Output appendOutput(Output output) {
+	public Output append(Output output) {
 		children.add(output);
-		return this;
-	}
-
-	@Override
-	public Output appendString(String s) {
-		children.add(new StringOutput(s));
 		return this;
 	}
 
@@ -48,13 +31,8 @@ public class ListOutput implements Output {
 	}
 
 	@Override
-	public Output prependChar(char c) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public Output prependString(String s) {
-		children.add(0, new StringOutput(s));
+	public Output prepend(Output output) {
+		children.add(0, output);
 		return this;
 	}
 
@@ -69,6 +47,21 @@ public class ListOutput implements Output {
 		if (o == null || getClass() != o.getClass()) return false;
 		ListOutput that = (ListOutput) o;
 		return Objects.equals(children, that.children);
+	}
+
+	@Override
+	public Output replaceField(F1<Field, String> replacer) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public Output replaceNode(F1<Token, String> replacer) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public Output replaceType(F1<Token, String> replacer) {
+		throw new UnsupportedOperationException();
 	}
 
 	@Override

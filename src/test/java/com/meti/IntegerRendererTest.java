@@ -20,10 +20,7 @@ class IntegerRendererTest {
 	}
 
 	private Output computeOutput(Integer value) throws RenderException {
-		return ListOutput()
-				.appendString("signed int x")
-				.appendChar('=')
-				.appendOutput(new TokenOutput(value))
-				.appendChar(';');
+		return ((Output) ListOutput()).append(new StringOutput("signed int x")).append(new CharOutput('='))
+				.append(new TokenOutput(value)).append(new CharOutput(';'));
 	}
 }

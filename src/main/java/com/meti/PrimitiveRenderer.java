@@ -21,14 +21,13 @@ public abstract class PrimitiveRenderer implements Renderer<Field> {
 	private Output renderValid(Field field) throws RenderException {
 		var header = renderHeader(field);
 		var footer = renderFooter(field);
-		return footer.prependString(header);
+		return footer.prepend(new StringOutput(header));
 	}
 
 	private Output renderFooter(Field field) {
 		return field.applyToValue(TokenOutput::TokenOutput)
-				.map(output -> output.prependChar('='))
-				.orElse(EmptyOutput_)
-				.appendChar(';');
+				.map(output -> output.prepend(new CharOutput('=')))
+				.orElse(EmptyOutput_).append(new CharOutput(';'));
 	}
 
 	private String renderHeader(Field field) throws RenderException {
