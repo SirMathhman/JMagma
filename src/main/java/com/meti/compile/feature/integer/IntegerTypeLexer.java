@@ -18,7 +18,7 @@ public class IntegerTypeLexer implements Lexer<Token> {
 		var isSigned = input.test(value -> value.startsWith("I"));
 		var isUnsigned = input.test(value -> value.startsWith("U"));
 		if (isSigned || isUnsigned) {
-			var bits = input.slice(1).peek(java.lang.Integer::parseInt);
+			var bits = input.slice(1).map(java.lang.Integer::parseInt);
 			var type = isSigned ?
 					IntegerType.signed(bits) :
 					IntegerType.unsigned(bits);

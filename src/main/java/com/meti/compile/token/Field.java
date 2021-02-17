@@ -18,6 +18,8 @@ public interface Field {
 
 	<R, E extends Exception> Optional<R> applyToValueE1(F1E1<Token, R, E> mapper) throws E;
 
+	boolean isFlagged(Flag flag);
+
 	boolean isNamed(String name);
 
 	<E extends Exception> Field mapByType(F1E1<Token, Token, E> mapper) throws E;
@@ -27,4 +29,9 @@ public interface Field {
 	<E extends Exception> boolean testTypeE1(F1E1<Token, Boolean, E> predicate) throws E;
 
 	Field withType(Token type);
+
+	enum Flag {
+		CONST,
+		LET
+	}
 }

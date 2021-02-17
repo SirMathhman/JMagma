@@ -1,22 +1,20 @@
 package com.meti.compile.feature.declare;
 
 import com.meti.compile.ResolutionException;
-import com.meti.compile.token.attribute.Attribute;
-import com.meti.compile.token.attribute.AttributeException;
-import com.meti.compile.token.attribute.FieldAttribute;
-import com.meti.core.F1;
-import com.meti.core.F1E1;
 import com.meti.compile.parse.ParseException;
 import com.meti.compile.parse.Parser;
 import com.meti.compile.parse.State;
 import com.meti.compile.token.Field;
 import com.meti.compile.token.Token;
 import com.meti.compile.token.Tokens;
+import com.meti.compile.token.attribute.Attribute;
+import com.meti.compile.token.attribute.AttributeException;
+import com.meti.compile.token.attribute.FieldAttribute;
 
 import java.util.Optional;
 
-import static com.meti.compile.feature.primitive.ImplicitType.ImplicitType_;
 import static com.meti.compile.app.MagmaResolver.MagmaResolver_;
+import static com.meti.compile.feature.primitive.ImplicitType.ImplicitType_;
 
 public class DeclarationParser implements Parser {
 	public static Parser DeclarationParser_ = new DeclarationParser();
@@ -37,8 +35,8 @@ public class DeclarationParser implements Parser {
 				} catch (AttributeException e) {
 					throw new ParseException(e);
 				}
-				if (identity.applyToNameE1(value -> ((F1E1<String, Boolean, RuntimeException>) stack::isDefined).apply(value.getContent()))) {
-					throw identity.applyToName(input -> ((F1<String, ParseException>) s -> new ParseException("'" + s + "' is already defined.")).apply(input.getContent()));
+				if (identity.applyToNameE1(value -> value.map(stack::isDefined))) {
+					throw identity.applyToName(input -> new ParseException(input.format("'%s' is already defined.")));
 				}
 				Field identityToUse;
 				if (identity.applyToType(token -> token == ImplicitType_)) {
