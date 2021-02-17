@@ -3,6 +3,7 @@ package com.meti;
 import com.meti.attribute.Attribute;
 import com.meti.attribute.AttributeException;
 import com.meti.output.CharOutput;
+import com.meti.output.FieldOutput;
 import com.meti.output.Output;
 
 import java.util.Optional;

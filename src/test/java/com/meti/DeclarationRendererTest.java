@@ -1,6 +1,7 @@
 package com.meti;
 
 import com.meti.output.CharOutput;
+import com.meti.output.FieldOutput;
 import org.junit.jupiter.api.Test;
 
 import static com.meti.DeclarationRenderer.DeclarationRenderer_;
