@@ -13,7 +13,7 @@ class AssignmentFeatureTest {
 
 	@Test
 	void defined() {
-		assertCompile("let x=420;x=5;", "signed int x=420;x=5");
+		assertCompile("let x=420;x=5;", "signed int x=420;x=5;");
 	}
 
 	@Test

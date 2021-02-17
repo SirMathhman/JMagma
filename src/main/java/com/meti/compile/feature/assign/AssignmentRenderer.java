@@ -29,7 +29,8 @@ public class AssignmentRenderer implements Renderer<Token> {
 				return Optional.of(ListOutput()
 						.append(new TokenOutput(destination))
 						.append(new CharOutput('='))
-						.append(new TokenOutput(source)));
+						.append(new TokenOutput(source))
+						.append(new CharOutput(';')));
 			}
 		} catch (AttributeException e) {
 			throw new RenderException(e);

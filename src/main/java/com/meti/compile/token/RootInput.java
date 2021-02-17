@@ -1,5 +1,7 @@
 package com.meti.compile.token;
 
+import com.meti.compile.token.output.Output;
+import com.meti.compile.token.output.StringOutput;
 import com.meti.core.F1;
 import com.meti.core.F1E1;
 
@@ -17,6 +19,11 @@ public class RootInput implements Input {
 	@Override
 	public char apply(int i) {
 		return content.charAt(i);
+	}
+
+	@Override
+	public Output asOutput() {
+		return new StringOutput(content);
 	}
 
 	@Override

@@ -1,5 +1,6 @@
 package com.meti.compile.token;
 
+import com.meti.compile.token.output.Output;
 import com.meti.core.F1;
 import com.meti.core.F1E1;
 
@@ -8,6 +9,8 @@ import java.util.stream.Stream;
 
 public interface Input {
 	char apply(int i);
+
+	Output asOutput();
 
 	Optional<Integer> firstChar(char c);
 
