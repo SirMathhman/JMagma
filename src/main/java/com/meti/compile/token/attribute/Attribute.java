@@ -13,12 +13,12 @@ public interface Attribute {
 		throw new AttributeException("Not a field");
 	}
 
-	default int computeInt() throws AttributeException {
-		throw new AttributeException("Not an integer.");
-	}
-
 	default Input computeInput() throws AttributeException {
 		throw new AttributeException("Not a string.");
+	}
+
+	default int computeInt() throws AttributeException {
+		throw new AttributeException("Not an integer.");
 	}
 
 	default Token computeToken() throws AttributeException {
@@ -26,12 +26,14 @@ public interface Attribute {
 	}
 
 	enum Name {
+		Destination,
+		Source,
+		Type,
 		Value,
 		Sign,
 		Bits,
 		Content,
-		Identity,
-		Type
+		Identity
 	}
 
 	enum Type {
