@@ -1,42 +1,44 @@
-package com.meti.compile.token;
+package com.meti.compile.feature.integer;
 
+import com.meti.compile.token.Token;
 import com.meti.compile.token.attribute.Attribute;
 import com.meti.compile.token.attribute.AttributeException;
-import com.meti.compile.token.attribute.InputAttribute;
+import com.meti.compile.token.attribute.IntegerAttribute;
 
 import java.util.Objects;
 
-public class Content implements Token {
-	private final Input input;
+public class Integer implements Token {
+	public static final Token Zero = new Integer(0);
+	private final int value;
 
-	public Content(Input input) {
-		this.input = input;
+	public Integer(int value) {
+		this.value = value;
 	}
 
 	@Override
 	public Attribute apply(Attribute.Name name) throws AttributeException {
 		return switch (name) {
-			case Type -> Token.Type.Content;
-			case Value -> new InputAttribute(input);
+			case Type -> Type.Integer;
+			case Value -> new IntegerAttribute(value);
 			default -> throw new AttributeException();
 		};
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(input);
+		return Objects.hash(value);
 	}
 
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
-		Content content = (Content) o;
-		return Objects.equals(input, content.input);
+		Integer integer = (Integer) o;
+		return value == integer.value;
 	}
 
 	@Override
 	public String toString() {
-		return "{\"input\":%s}".formatted(input);
+		return "{\"value\":%d}".formatted(value);
 	}
 }
