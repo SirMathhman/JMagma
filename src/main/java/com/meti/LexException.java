@@ -1,6 +1,6 @@
 package com.meti;
 
-public class LexException extends Exception {
+public class LexException extends CompileException {
 	public LexException() {
 	}
 

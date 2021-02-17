@@ -1,6 +1,6 @@
 package com.meti;
 
-public class RenderException extends Exception {
+public class RenderException extends CompileException {
 	public RenderException() {
 	}
 

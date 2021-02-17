@@ -13,10 +13,16 @@ public class MagmaLexingStage {
 	public MagmaLexingStage() {
 	}
 
+	private Token handleChildren(Token node) throws LexException {
+		var withChildren = lexAttributes(node, Attribute.Type.Node, foldFromLexer(MagmaNodeLexer_));
+		var withTypes = lexAttributes(withChildren, Attribute.Type.Type, foldFromLexer(MagmaTypeLexer_));
+		return lexAttributes(withTypes, Attribute.Type.Field, createFolder());
+	}
+
 	private F2E1<Token, Attribute.Name, Token, LexException> createFolder() {
 		return (token, name) -> {
 			try {
-				return token.mapByField(name, this::lexField);
+				return token.mapByField(name, this::handleField);
 			} catch (AttributeException e) {
 				throw new LexException(e);
 			}
@@ -31,6 +37,19 @@ public class MagmaLexingStage {
 				throw new LexException(e);
 			}
 		};
+	}
+
+	private Field handleField(Field field) throws LexException {
+		return field.mapByType(this::handleType)
+				.mapByValue(this::handleNode);
+	}
+
+	private Token handleNode(Token token) throws LexException {
+		return lexContent(token, MagmaNodeLexer_);
+	}
+
+	private Token handleType(Token token) throws LexException {
+		return lexContent(token, MagmaTypeLexer_);
 	}
 
 	List<Token> lex(Input input) throws LexException {
@@ -87,24 +106,9 @@ public class MagmaLexingStage {
 		}
 	}
 
-	private Field lexField(Field field) throws LexException {
-		return field.mapByType(this::lexType)
-				.mapByValue(this::lexNode);
-	}
-
 	private Token lexInput(Input input, Lexer<Token> lexer) throws LexException {
 		var optional = lexer.lex(input);
 		var node = optional.orElseThrow(() -> new LexException("Invalid: " + input));
-		var withChildren = lexAttributes(node, Attribute.Type.Node, foldFromLexer(MagmaNodeLexer_));
-		var withTypes = lexAttributes(withChildren, Attribute.Type.Type, foldFromLexer(MagmaTypeLexer_));
-		return lexAttributes(withTypes, Attribute.Type.Field, createFolder());
-	}
-
-	private Token lexNode(Token token) throws LexException {
-		return lexContent(token, MagmaNodeLexer_);
-	}
-
-	private Token lexType(Token token) throws LexException {
-		return lexContent(token, MagmaTypeLexer_);
+		return handleChildren(node);
 	}
 }

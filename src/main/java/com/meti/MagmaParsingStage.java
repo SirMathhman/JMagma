@@ -5,10 +5,10 @@ import java.util.List;
 
 import static com.meti.MagmaParser.MagmaParser_;
 
-public class ParsingStage {
-	public static final ParsingStage ParsingStage_ = new ParsingStage();
+public class MagmaParsingStage {
+	public static final MagmaParsingStage MagmaParsingStage_ = new MagmaParsingStage();
 
-	public ParsingStage() {
+	public MagmaParsingStage() {
 	}
 
 	List<Token> parse(List<Token> tokens) throws ParseException {
