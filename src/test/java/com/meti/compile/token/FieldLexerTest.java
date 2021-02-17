@@ -1,10 +1,6 @@
-package com.meti;
+package com.meti.compile.token;
 
 import com.meti.compile.lex.LexException;
-import com.meti.compile.token.Content;
-import com.meti.compile.token.DefaultField;
-import com.meti.compile.token.Field;
-import com.meti.compile.token.Input;
 import org.junit.jupiter.api.Test;
 
 import java.util.Optional;

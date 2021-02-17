@@ -1,6 +1,5 @@
-package com.meti;
+package com.meti.compile.feature.declare;
 
-import com.meti.compile.feature.declare.Declaration;
 import com.meti.compile.feature.integer.Integer;
 import com.meti.compile.feature.integer.IntegerType;
 import com.meti.compile.token.output.CharOutput;

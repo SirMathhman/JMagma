@@ -1,4 +1,4 @@
-package com.meti;
+package com.meti.compile.app;
 
 import com.meti.compile.feature.declare.Declaration;
 import com.meti.compile.feature.integer.Integer;

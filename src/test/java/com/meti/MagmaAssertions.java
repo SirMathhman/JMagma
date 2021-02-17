@@ -10,7 +10,7 @@ public class MagmaAssertions {
 	public MagmaAssertions() {
 	}
 
-	static void assertCompile(String expected, String source) {
+	public static void assertCompile(String expected, String source) {
 		try {
 			String result = compileImpl(source);
 			assertEquals(expected, result);
