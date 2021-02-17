@@ -10,10 +10,10 @@ public class MagmaAssertions {
 	public MagmaAssertions() {
 	}
 
-	public static void assertCompile(String expected, String source) {
+	public static void assertCompile(String from, String to) {
 		try {
-			String result = compileImpl(source);
-			assertEquals(expected, result);
+			String result = compileImpl(from);
+			assertEquals(to, result);
 		} catch (CompileException e) {
 			fail(e);
 		}

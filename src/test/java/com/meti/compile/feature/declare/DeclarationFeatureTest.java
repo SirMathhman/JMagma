@@ -13,11 +13,11 @@ class DeclarationFeatureTest {
 
 	@Test
 	void implicit() {
-		assertCompile("signed int x=420;", "x=420");
+		assertCompile("x=420", "signed int x=420;");
 	}
 
 	@Test
 	void positive() {
-		assertCompile("signed int x=420;", "x : I16 = 420");
+		assertCompile("x : I16 = 420", "signed int x=420;");
 	}
 }
