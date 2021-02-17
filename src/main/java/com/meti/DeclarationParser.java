@@ -28,21 +28,14 @@ public class DeclarationParser {
 				}
 				Field identityToUse;
 				if (identity.applyToType(token -> token == ImplicitType_)) {
-					Token value = null;
-					try {
-						value = state.getCurrent()
-								.apply(Attribute.Name.Value)
-								.computeToken();
-					} catch (AttributeException e) {
-						throw new ParseException(e);
-					}
-					var newState = state.withCurrent(value);
-					Token newType = null;
-					try {
-						newType = MagmaResolver_.resolve(newState);
-					} catch (ResolutionException e) {
-						throw new ParseException(e);
-					}
+					var newType = identity.applyToValueE1(token -> {
+						var newState = state.withCurrent(token);
+						try {
+							return MagmaResolver_.resolve(newState);
+						} catch (ResolutionException e) {
+							throw new ParseException(e);
+						}
+					}).orElseThrow();
 					identityToUse = identity.withType(newType);
 				} else {
 					identityToUse = identity;

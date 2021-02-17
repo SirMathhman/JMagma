@@ -12,7 +12,7 @@ public class Declaration implements Token {
 		return switch (name) {
 			case Type -> Type.Declaration;
 			case Identity -> new FieldAttribute(identity);
-			default -> throw new AttributeException();
+			default -> throw new AttributeException("Invalid attribute: " + name);
 		};
 	}
 

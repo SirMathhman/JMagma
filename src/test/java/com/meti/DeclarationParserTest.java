@@ -5,11 +5,10 @@ import org.junit.jupiter.api.Test;
 import java.util.List;
 
 import static com.meti.DeclarationParser.DeclarationParser_;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static com.meti.ImplicitType.ImplicitType_;
+import static org.junit.jupiter.api.Assertions.*;
 
 class DeclarationParserTest {
-
 	@Test
 	void already_defined() throws ParseException {
 		var identity = new DefaultField(IntegerType.unsigned(8), "x", Integer.Zero);
@@ -17,6 +16,18 @@ class DeclarationParserTest {
 		var current = new Declaration(identity);
 		var oldState = new State(stack, current);
 		assertThrows(ParseException.class, () -> DeclarationParser_.parse(oldState));
+	}
+
+	@Test
+	void implicit() throws ParseException, AttributeException {
+		var stack = new MapStack();
+		var identity = new DefaultField(ImplicitType_, "x", Integer.Zero);
+		var current = new Declaration(identity);
+		var oldState = new State(stack, current);
+		var newState = DeclarationParser_.parse(oldState).orElseThrow();
+		var actual = newState.getCurrent().apply(Attribute.Name.Identity).computeField();
+		var expected = new DefaultField(IntegerType.signed(16), "x", Integer.Zero);
+		assertEquals(expected, actual);
 	}
 
 	@Test

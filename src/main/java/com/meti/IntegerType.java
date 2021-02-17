@@ -1,5 +1,7 @@
 package com.meti;
 
+import java.util.Objects;
+
 import static com.meti.BooleanAttribute.FalseAttribute;
 import static com.meti.BooleanAttribute.TrueAttribute;
 
@@ -42,6 +44,19 @@ public abstract class IntegerType implements Token {
 		protected Attribute computeSign() {
 			return FalseAttribute;
 		}
+
+		@Override
+		public int hashCode() {
+			return Objects.hash(bits);
+		}
+
+		@Override
+		public boolean equals(Object o) {
+			if (this == o) return true;
+			if (o == null || getClass() != o.getClass()) return false;
+			Unsigned unsigned = (Unsigned) o;
+			return bits == unsigned.bits;
+		}
 	}
 
 	private static class Signed extends IntegerType {
@@ -59,6 +74,19 @@ public abstract class IntegerType implements Token {
 		@Override
 		protected Attribute computeSign() {
 			return TrueAttribute;
+		}
+
+		@Override
+		public int hashCode() {
+			return Objects.hash(bits);
+		}
+
+		@Override
+		public boolean equals(Object o) {
+			if (this == o) return true;
+			if (o == null || getClass() != o.getClass()) return false;
+			Signed signed = (Signed) o;
+			return bits == signed.bits;
 		}
 	}
 }

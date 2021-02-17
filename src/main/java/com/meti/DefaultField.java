@@ -1,11 +1,13 @@
 package com.meti;
 
+import java.util.Objects;
 import java.util.Optional;
 
 public class DefaultField implements Field {
 	private final Token type;
 	private final String name;
 	private final Token value;
+
 
 	public DefaultField(Token type, String name, Token value) {
 		this.type = type;
@@ -34,12 +36,12 @@ public class DefaultField implements Field {
 	}
 
 	@Override
-	public <R, E extends Exception> Optional<R> applyToValueE1(F1E1<Token, R, E> mapper) throws E {
+	public <R> Optional<R> applyToValue(F1<Token, R> mapper) {
 		return Optional.of(mapper.apply(value));
 	}
 
 	@Override
-	public <R> Optional<R> applyToValue(F1<Token, R> mapper) {
+	public <R, E extends Exception> Optional<R> applyToValueE1(F1E1<Token, R, E> mapper) throws E {
 		return Optional.of(mapper.apply(value));
 	}
 
@@ -60,6 +62,22 @@ public class DefaultField implements Field {
 
 	@Override
 	public Field withType(Token type) {
-		throw new UnsupportedOperationException();
+		return new DefaultField(type, name, value);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(type, name, value);
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		DefaultField that = (DefaultField) o;
+		var sameType = Objects.equals(type, that.type);
+		var sameName = Objects.equals(name, that.name);
+		var sameValue = Objects.equals(value, that.value);
+		return sameType && sameName && sameValue;
 	}
 }
