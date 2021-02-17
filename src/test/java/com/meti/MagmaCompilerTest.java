@@ -3,7 +3,7 @@ package com.meti;
 import com.meti.token.Input;
 import org.junit.jupiter.api.Test;
 
-import static com.meti.MagmaCompiler.MagmaCompiler_;
+import static com.meti.app.MagmaCompiler.MagmaCompiler_;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class MagmaCompilerTest {

@@ -1,4 +1,4 @@
-package com.meti;
+package com.meti.app;
 
 import com.meti.output.Output;
 import com.meti.render.RenderException;
@@ -7,8 +7,8 @@ import com.meti.token.Token;
 
 import java.util.List;
 
-import static com.meti.MagmaNodeRenderer.MagmaNodeRenderer_;
-import static com.meti.MagmaTypeRenderer.MagmaTypeRenderer_;
+import static com.meti.app.MagmaNodeRenderer.MagmaNodeRenderer_;
+import static com.meti.app.MagmaTypeRenderer.MagmaTypeRenderer_;
 
 public class MagmaRenderStage {
 	public static final MagmaRenderStage MagmaRenderStage_ = new MagmaRenderStage();

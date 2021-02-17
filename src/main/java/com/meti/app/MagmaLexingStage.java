@@ -1,4 +1,4 @@
-package com.meti;
+package com.meti.app;
 
 import com.meti.attribute.Attribute;
 import com.meti.attribute.AttributeException;
@@ -14,8 +14,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.meti.MagmaNodeLexer.MagmaNodeLexer_;
-import static com.meti.MagmaTypeLexer.MagmaTypeLexer_;
+import static com.meti.app.MagmaNodeLexer.MagmaNodeLexer_;
+import static com.meti.app.MagmaTypeLexer.MagmaTypeLexer_;
 
 public class MagmaLexingStage {
 	public static final MagmaLexingStage MagmaLexingStage_ = new MagmaLexingStage();
@@ -62,7 +62,7 @@ public class MagmaLexingStage {
 		return lexContent(token, MagmaTypeLexer_);
 	}
 
-	List<Token> lex(Input input) throws LexException {
+	public List<Token> lex(Input input) throws LexException {
 		var lines = new ArrayList<String>();
 		var buffer = new StringBuilder();
 		var depth = 0;

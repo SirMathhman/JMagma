@@ -1,4 +1,4 @@
-package com.meti;
+package com.meti.app;
 
 import com.meti.parse.MapStack;
 import com.meti.parse.ParseException;
@@ -9,7 +9,7 @@ import com.meti.token.Token;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.meti.MagmaParser.MagmaParser_;
+import static com.meti.app.MagmaParser.MagmaParser_;
 
 public class MagmaParsingStage {
 	public static final MagmaParsingStage MagmaParsingStage_ = new MagmaParsingStage();

@@ -1,4 +1,4 @@
-package com.meti;
+package com.meti.app;
 
 import java.io.IOException;
 import java.nio.file.Files;

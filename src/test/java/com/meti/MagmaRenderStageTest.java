@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Collections;
 
-import static com.meti.MagmaRenderStage.MagmaRenderStage_;
+import static com.meti.app.MagmaRenderStage.MagmaRenderStage_;
 import static org.junit.jupiter.api.Assertions.*;
 
 class MagmaRenderStageTest {

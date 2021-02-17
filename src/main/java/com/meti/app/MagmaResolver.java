@@ -1,5 +1,6 @@
-package com.meti;
+package com.meti.app;
 
+import com.meti.ResolutionException;
 import com.meti.attribute.AttributeException;
 import com.meti.integer.IntegerType;
 import com.meti.parse.State;

@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-import static com.meti.MagmaLexingStage.MagmaLexingStage_;
+import static com.meti.app.MagmaLexingStage.MagmaLexingStage_;
 import static org.junit.jupiter.api.Assertions.assertIterableEquals;
 
 class MagmaLexingStageTest {

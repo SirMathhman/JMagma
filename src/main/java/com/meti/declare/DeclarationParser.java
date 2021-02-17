@@ -16,7 +16,7 @@ import com.meti.token.Tokens;
 import java.util.Optional;
 
 import static com.meti.primitive.ImplicitType.ImplicitType_;
-import static com.meti.MagmaResolver.MagmaResolver_;
+import static com.meti.app.MagmaResolver.MagmaResolver_;
 
 public class DeclarationParser implements Parser {
 	public static Parser DeclarationParser_ = new DeclarationParser();

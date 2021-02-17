@@ -1,4 +1,4 @@
-package com.meti;
+package com.meti.app;
 
 import com.meti.parse.CompoundParser;
 import com.meti.parse.Parser;

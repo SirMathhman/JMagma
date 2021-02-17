@@ -1,4 +1,4 @@
-package com.meti;
+package com.meti.app;
 
 import com.meti.render.CompoundRenderer;
 import com.meti.render.Renderer;
