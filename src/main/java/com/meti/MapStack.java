@@ -59,7 +59,7 @@ public class MapStack implements Stack {
 
 	@Override
 	public Stack center(Script script) {
-		var scriptList = script.streamDescendants().collect(Collectors.toCollection(ArrayList::new));
+		var scriptList = script.streamAll().collect(Collectors.toCollection(ArrayList::new));
 		scriptList.add(script);
 		var contextsToRemove = contexts.stream()
 				.filter(context -> !scriptList.contains(context.createScript()))

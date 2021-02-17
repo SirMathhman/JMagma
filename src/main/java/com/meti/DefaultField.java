@@ -15,7 +15,7 @@ public class DefaultField implements Field {
 
 	@Override
 	public <R> R applyToName(F1<String, R> mapper) {
-		throw new UnsupportedOperationException();
+		return mapper.apply(name);
 	}
 
 	@Override
