@@ -5,12 +5,13 @@ import java.util.Optional;
 import static com.meti.ImplicitType.ImplicitType_;
 import static com.meti.MagmaResolver.MagmaResolver_;
 
-public class DeclarationParser {
-	public static DeclarationParser DeclarationParser_ = new DeclarationParser();
+public class DeclarationParser implements Parser {
+	public static Parser DeclarationParser_ = new DeclarationParser();
 
 	public DeclarationParser() {
 	}
 
+	@Override
 	public Optional<State> parse(State state) throws ParseException {
 		try {
 			if (Tokens.is(state.getCurrent(), Token.Type.Declaration)) {
