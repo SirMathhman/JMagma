@@ -1,11 +1,15 @@
 package com.meti;
 
+import com.meti.output.CharOutput;
+import com.meti.output.NodeOutput;
+import com.meti.output.Output;
+import com.meti.output.StringOutput;
 import org.junit.jupiter.api.Test;
 
 import java.util.Optional;
 
 import static com.meti.IntegerTypeRenderer.IntegerRenderer_;
-import static com.meti.ListOutput.ListOutput;
+import static com.meti.output.ListOutput.ListOutput;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class IntegerTypeRendererTest {

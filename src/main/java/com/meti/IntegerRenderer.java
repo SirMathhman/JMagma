@@ -1,5 +1,10 @@
 package com.meti;
 
+import com.meti.attribute.Attribute;
+import com.meti.attribute.AttributeException;
+import com.meti.output.Output;
+import com.meti.output.StringOutput;
+
 import java.util.Optional;
 
 public class IntegerRenderer implements Renderer<Token> {

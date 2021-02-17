@@ -1,5 +1,7 @@
 package com.meti;
 
+import com.meti.output.Output;
+
 import java.util.List;
 
 import static com.meti.MagmaNodeRenderer.MagmaNodeRenderer_;

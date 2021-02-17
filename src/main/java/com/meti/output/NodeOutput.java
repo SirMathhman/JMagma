@@ -1,7 +1,10 @@
-package com.meti;
+package com.meti.output;
+
+import com.meti.F1E1;
+import com.meti.Token;
 
 public class NodeOutput extends TokenOutput {
-	NodeOutput(Token token) {
+	public NodeOutput(Token token) {
 		super(token);
 	}
 

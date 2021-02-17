@@ -1,8 +1,14 @@
 package com.meti;
 
+import com.meti.attribute.AttributeException;
+import com.meti.output.CharOutput;
+import com.meti.output.NodeOutput;
+import com.meti.output.Output;
+import com.meti.output.StringOutput;
+
 import java.util.Optional;
 
-import static com.meti.EmptyOutput.EmptyOutput_;
+import static com.meti.output.EmptyOutput.EmptyOutput_;
 
 public abstract class PrimitiveRenderer implements Renderer<Field> {
 	@Override

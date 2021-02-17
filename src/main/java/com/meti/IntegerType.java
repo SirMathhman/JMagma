@@ -1,9 +1,13 @@
 package com.meti;
 
+import com.meti.attribute.Attribute;
+import com.meti.attribute.AttributeException;
+import com.meti.attribute.IntegerAttribute;
+
 import java.util.Objects;
 
-import static com.meti.BooleanAttribute.FalseAttribute;
-import static com.meti.BooleanAttribute.TrueAttribute;
+import static com.meti.attribute.BooleanAttribute.FalseAttribute;
+import static com.meti.attribute.BooleanAttribute.TrueAttribute;
 
 public abstract class IntegerType implements Token {
 	public static Token unsigned(int bits) {

@@ -1,4 +1,4 @@
-package com.meti;
+package com.meti.attribute;
 
 public class IntegerAttribute implements Attribute {
 	private final int value;

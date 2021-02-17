@@ -1,4 +1,6 @@
-package com.meti;
+package com.meti.output;
+
+import com.meti.Field;
 
 import java.util.Objects;
 

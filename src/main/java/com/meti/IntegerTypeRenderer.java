@@ -1,5 +1,8 @@
 package com.meti;
 
+import com.meti.attribute.Attribute;
+import com.meti.attribute.AttributeException;
+
 public class IntegerTypeRenderer extends PrimitiveRenderer {
 	public static final Renderer<Field> IntegerRenderer_ = new IntegerTypeRenderer();
 

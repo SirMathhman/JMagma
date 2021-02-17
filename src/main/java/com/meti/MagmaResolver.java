@@ -1,5 +1,7 @@
 package com.meti;
 
+import com.meti.attribute.AttributeException;
+
 public class MagmaResolver {
 	public static MagmaResolver MagmaResolver_ = new MagmaResolver();
 

@@ -1,8 +1,11 @@
 package com.meti;
 
+import com.meti.output.Output;
+import com.meti.output.StringOutput;
+
 import java.util.Objects;
 
-import static com.meti.ListOutput.ListOutput;
+import static com.meti.output.ListOutput.ListOutput;
 
 public class FieldOutput implements Output {
 	private final Field field;

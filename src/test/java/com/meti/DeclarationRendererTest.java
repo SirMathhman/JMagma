@@ -1,9 +1,10 @@
 package com.meti;
 
+import com.meti.output.CharOutput;
 import org.junit.jupiter.api.Test;
 
 import static com.meti.DeclarationRenderer.DeclarationRenderer_;
-import static com.meti.ListOutput.ListOutput;
+import static com.meti.output.ListOutput.ListOutput;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class DeclarationRendererTest {

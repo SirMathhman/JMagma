@@ -1,4 +1,6 @@
-package com.meti;
+package com.meti.attribute;
+
+import com.meti.Field;
 
 public class FieldAttribute implements Attribute {
 	private final Field field;
