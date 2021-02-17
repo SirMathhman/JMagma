@@ -44,6 +44,11 @@ public class DefaultField implements Field {
 	}
 
 	@Override
+	public boolean isNamed(String name) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
 	public boolean testType(F1<Token, Boolean> predicate) {
 		return predicate.apply(type);
 	}

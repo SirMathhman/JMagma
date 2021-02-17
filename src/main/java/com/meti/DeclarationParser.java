@@ -27,7 +27,7 @@ public class DeclarationParser {
 				identityToUse = identity;
 			}
 
-			var newStack = stack.define(identityToUse);
+			var newStack = stack.define(null, identityToUse);
 			var attribute = new FieldAttribute(identityToUse);
 			var newCurrent = state.getCurrent().copy(Attribute.Name.Identity, attribute);
 			return Optional.of(state.withStack(newStack).withCurrent(newCurrent));

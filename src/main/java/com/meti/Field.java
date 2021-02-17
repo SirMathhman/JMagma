@@ -15,6 +15,8 @@ public interface Field {
 
 	<R, E extends Exception> Optional<R> applyToValueE1(F1E1<Token, R, E> mapper) throws E;
 
+	boolean isNamed(String name);
+
 	boolean testType(F1<Token, Boolean> predicate);
 
 	<E extends Exception> boolean testTypeE1(F1E1<Token, Boolean, E> predicate) throws E;

@@ -7,15 +7,13 @@ public interface Stack {
 
 	Optional<Script> current();
 
-	Stack define(Field field);
+	Stack define(Script script, Field field);
 
-	Stack enter();
+	Stack enter(Script script);
 
-	Stack exit();
+	Stack exit(Script script);
 
 	boolean isDefined(String name);
 
-	Stack pop(Script script);
-
-	Stack push(Script script);
+	Stack center(Script script);
 }
