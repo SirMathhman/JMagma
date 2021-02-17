@@ -1,14 +1,11 @@
 package com.meti.compile.app;
 
+import com.meti.compile.token.*;
 import com.meti.compile.token.attribute.Attribute;
 import com.meti.compile.token.attribute.AttributeException;
 import com.meti.core.F2E1;
 import com.meti.compile.lex.LexException;
 import com.meti.compile.lex.Lexer;
-import com.meti.compile.token.Field;
-import com.meti.compile.token.Input;
-import com.meti.compile.token.Token;
-import com.meti.compile.token.Tokens;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -66,8 +63,8 @@ public class MagmaLexingStage {
 		var lines = new ArrayList<String>();
 		var buffer = new StringBuilder();
 		var depth = 0;
-		for (int i = 0; i < input.getContent().length(); i++) {
-			var c = input.getContent().charAt(i);
+		for (int i = 0; i < input.size(); i++) {
+			var c = input.apply(i);
 			if (c == '}' && depth == 1) {
 				buffer.append('}');
 				lines.add(buffer.toString());
@@ -86,14 +83,14 @@ public class MagmaLexingStage {
 		lines.removeIf(String::isBlank);
 		var newLines = new ArrayList<Token>();
 		for (String line : lines) {
-			var input1 = new Input(line);
+			var input1 = new RootInput(line);
 			var token = lexInput(input1, MagmaNodeLexer_);
 			newLines.add(token);
 		}
 		return newLines;
 	}
 
-	private <T> Token lexAttributes(Token node, Attribute.Type type, F2E1<Token, Attribute.Name, Token, LexException> folder) throws LexException {
+	private Token lexAttributes(Token node, Attribute.Type type, F2E1<Token, Attribute.Name, Token, LexException> folder) throws LexException {
 		var children = node.stream(type).collect(Collectors.toList());
 		var withChildren = node;
 		for (Attribute.Name child : children) {

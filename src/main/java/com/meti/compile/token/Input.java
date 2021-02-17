@@ -3,64 +3,26 @@ package com.meti.compile.token;
 import com.meti.core.F1;
 import com.meti.core.F1E1;
 
-import java.util.Objects;
 import java.util.stream.Stream;
 
-public class Input {
-	private final String content;
+public interface Input {
+	char apply(int i);
 
-	public Input(String content) {
-		this.content = content;
-	}
+	int firstChar(char c);
 
-	public int firstChar(char c) {
-		return getContent().indexOf(c);
-	}
+	String format(String format);
 
-	public String getContent() {
-		return content;
-	}
+	boolean is(String name);
 
-	@Override
-	public int hashCode() {
-		return Objects.hash(content);
-	}
+	<T> T map(F1<String, T> peeker);
 
-	@Override
-	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
-		Input input = (Input) o;
-		return Objects.equals(content, input.content);
-	}
+	int size();
 
-	@Override
-	public String toString() {
-		return "{\"content\":\"%s\"}".formatted(content);
-	}
+	Input slice(int from);
 
-	public <T> T peek(F1<String, T> peeker) {
-		return peeker.apply(content);
-	}
+	Input slice(int from, int to);
 
-	public Input slice(int from) {
-		return slice(from, content.length());
-	}
+	Stream<Character> stream();
 
-	Input slice(int from, int to) {
-		var typeString = getContent().substring(from, to).trim();
-		return new Input(typeString);
-	}
-
-	public Stream<Character> stream() {
-		var builder = Stream.<Character>builder();
-		for (int i = 0; i < content.length(); i++) {
-			builder.add(content.charAt(i));
-		}
-		return builder.build();
-	}
-
-	public <E extends Exception> boolean test(F1E1<String, Boolean, E> predicate) throws E {
-		return predicate.apply(content);
-	}
+	<E extends Exception> boolean test(F1E1<String, Boolean, E> predicate) throws E;
 }

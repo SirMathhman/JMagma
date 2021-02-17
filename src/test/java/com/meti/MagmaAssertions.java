@@ -1,7 +1,7 @@
 package com.meti;
 
 import com.meti.compile.CompileException;
-import com.meti.compile.token.Input;
+import com.meti.compile.token.RootInput;
 
 import static com.meti.compile.app.MagmaCompiler.MagmaCompiler_;
 import static org.junit.jupiter.api.Assertions.*;
@@ -20,7 +20,7 @@ public class MagmaAssertions {
 	}
 
 	private static String compileImpl(String source) throws CompileException {
-		var input = new Input(source);
+		var input = new RootInput(source);
 		return MagmaCompiler_.compile(input);
 	}
 

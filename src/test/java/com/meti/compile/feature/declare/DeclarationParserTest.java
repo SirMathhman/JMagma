@@ -1,6 +1,8 @@
 package com.meti.compile.feature.declare;
 
 import com.meti.compile.ResolutionException;
+import com.meti.compile.token.Field;
+import com.meti.compile.token.RootInput;
 import com.meti.compile.token.attribute.Attribute;
 import com.meti.compile.token.attribute.AttributeException;
 import com.meti.compile.feature.integer.Integer;
@@ -10,9 +12,9 @@ import com.meti.compile.parse.MapStack;
 import com.meti.compile.parse.ParseException;
 import com.meti.compile.parse.State;
 import com.meti.compile.token.DefaultField;
-import com.meti.compile.token.Input;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.meti.compile.feature.declare.DeclarationParser.DeclarationParser_;
@@ -22,7 +24,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class DeclarationParserTest {
 	@Test
 	void already_defined() throws ParseException {
-		var identity = new DefaultField(IntegerType.unsigned(8), new Input("x"), Integer.Zero);
+		var identity = new DefaultField(new ArrayList<Field.Flag>(), IntegerType.unsigned(8), new RootInput("x"), Integer.Zero);
 		var stack = new MapStack().define(new ListScript(List.of("Main")), identity);
 		var current = new Declaration(identity);
 		var oldState = new State(stack, current);
@@ -32,19 +34,19 @@ class DeclarationParserTest {
 	@Test
 	void implicit() throws ParseException, AttributeException {
 		var stack = new MapStack();
-		var identity = new DefaultField(ImplicitType_, new Input("x"), Integer.Zero);
+		var identity = new DefaultField(new ArrayList<Field.Flag>(), ImplicitType_, new RootInput("x"), Integer.Zero);
 		var current = new Declaration(identity);
 		var oldState = new State(stack, current);
 		var newState = DeclarationParser_.parse(oldState).orElseThrow();
 		var actual = newState.getCurrent().apply(Attribute.Name.Identity).computeField();
-		var expected = new DefaultField(IntegerType.signed(16), new Input("x"), Integer.Zero);
+		var expected = new DefaultField(new ArrayList<Field.Flag>(), IntegerType.signed(16), new RootInput("x"), Integer.Zero);
 		assertEquals(expected, actual);
 	}
 
 	@Test
 	void parse() throws AttributeException, ParseException, ResolutionException {
 		var stack = new MapStack();
-		var identity = new DefaultField(IntegerType.unsigned(8), new Input("x"), Integer.Zero);
+		var identity = new DefaultField(new ArrayList<Field.Flag>(), IntegerType.unsigned(8), new RootInput("x"), Integer.Zero);
 		var current = new Declaration(identity);
 		var oldState = new State(stack, current);
 		var newState = DeclarationParser_.parse(oldState).orElseThrow();

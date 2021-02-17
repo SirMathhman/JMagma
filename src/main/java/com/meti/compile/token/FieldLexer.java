@@ -3,6 +3,7 @@ package com.meti.compile.token;
 import com.meti.compile.lex.LexException;
 import com.meti.compile.lex.Lexer;
 
+import java.util.ArrayList;
 import java.util.Optional;
 
 import static com.meti.compile.feature.primitive.ImplicitType.ImplicitType_;
@@ -15,10 +16,6 @@ public class FieldLexer implements Lexer<Field> {
 
 	@Override
 	public Optional<Field> lex(Input input) throws LexException {
-		return lex1(input);
-	}
-
-	private Optional<Field> lex1(Input input) {
 		var typeSeparator = input.firstChar(':');
 		var valueSeparator = input.firstChar('=');
 		var hasType = typeSeparator != -1;
@@ -36,14 +33,14 @@ public class FieldLexer implements Lexer<Field> {
 			var type = new Content(input.slice(typeSeparator + 1, valueSeparator));
 			var name = input.slice(0, typeSeparator);
 			var value = new Content(input.slice(valueSeparator + 1));
-			field = new DefaultField(type, name, value);
+			field = new DefaultField(new ArrayList<Field.Flag>(), type, name, value);
 		} else if (hasType) {
 			//TODO: empty fields
 			throw new UnsupportedOperationException();
 		} else {
 			var name = input.slice(0, valueSeparator);
 			var value = new Content(input.slice(valueSeparator + 1));
-			field = new DefaultField(ImplicitType_, name, value);
+			field = new DefaultField(new ArrayList<Field.Flag>(), ImplicitType_, name, value);
 		}
 		return field;
 	}

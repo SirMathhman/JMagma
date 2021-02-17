@@ -1,15 +1,16 @@
 package com.meti.compile.feature.primitive;
 
+import com.meti.compile.render.RenderException;
+import com.meti.compile.render.Renderer;
 import com.meti.compile.token.Field;
+import com.meti.compile.token.Input;
 import com.meti.compile.token.Token;
 import com.meti.compile.token.attribute.AttributeException;
-import com.meti.core.F1E1;
 import com.meti.compile.token.output.CharOutput;
 import com.meti.compile.token.output.NodeOutput;
 import com.meti.compile.token.output.Output;
 import com.meti.compile.token.output.StringOutput;
-import com.meti.compile.render.RenderException;
-import com.meti.compile.render.Renderer;
+import com.meti.core.F1E1;
 
 import java.util.Optional;
 
@@ -42,11 +43,11 @@ public abstract class PrimitiveRenderer implements Renderer<Field> {
 	}
 
 	private String renderHeader(Field field) throws RenderException {
-		F1E1<String, String, RenderException> renderHeader = s -> {
-			var content = field.applyToTypeE1(this::computeString);
-			return content + " " + s;
+		F1E1<Input, String, RenderException> applyToHeader = value -> {
+			var before = field.applyToTypeE1(this::computeString) + " ";
+			return before + value.format("%s");
 		};
-		return field.applyToNameE1(value -> renderHeader.apply(value.getContent()));
+		return field.applyToNameE1(applyToHeader);
 	}
 
 	protected abstract String computeString(Token type) throws RenderException;

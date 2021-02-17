@@ -3,7 +3,7 @@ package com.meti.compile.token;
 import com.meti.compile.lex.LexException;
 import org.junit.jupiter.api.Test;
 
-import java.util.Optional;
+import java.util.List;
 
 import static com.meti.compile.token.FieldLexer.FieldLexer_;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -11,17 +11,12 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class FieldLexerTest {
 
 	@Test
-	void lex() {
-		var type = new Content(new Input("I16"));
-		var value = new Content(new Input("420"));
-		var expected = new DefaultField(type, new Input("x"), value);
-		Optional<Field> optional;
-		try {
-			optional = FieldLexer_.lex(new Input("x : I16 = 420"));
-		} catch (LexException e) {
-			e.printStackTrace();
-			optional = Optional.empty();
-		}
+	void lex() throws LexException {
+		var type = new Content(new RootInput("I16"));
+		var value = new Content(new RootInput("420"));
+		var expected = new DefaultField(List.of(Field.Flag.CONST), type, new RootInput("x"), value);
+		var input = new RootInput("const x : I16 = 420");
+		var optional = FieldLexer_.lex(input);
 		var actual = optional.orElseThrow();
 		assertEquals(expected, actual);
 	}
