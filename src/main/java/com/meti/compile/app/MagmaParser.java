@@ -5,6 +5,7 @@ import com.meti.compile.parse.Parser;
 
 import java.util.List;
 
+import static com.meti.compile.feature.assign.AssignmentParser.AssignmentParser_;
 import static com.meti.compile.feature.declare.DeclarationParser.DeclarationParser_;
 import static com.meti.compile.feature.variable.VariableParser.VariableParser_;
 
@@ -16,6 +17,6 @@ public class MagmaParser extends CompoundParser {
 
 	@Override
 	protected List<Parser> listParsers() {
-		return List.of(DeclarationParser_, VariableParser_);
+		return List.of(DeclarationParser_, VariableParser_, AssignmentParser_);
 	}
 }
