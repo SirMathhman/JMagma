@@ -19,7 +19,7 @@ public class MagmaParsingStage {
 			var optional = MagmaParser_.parse(state);
 			var newState = optional.orElse(state);
 			stack = newState.getStack();
-			newTokens.add(token);
+			newTokens.add(newState.getCurrent());
 		}
 		return newTokens;
 	}
