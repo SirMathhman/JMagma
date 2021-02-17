@@ -22,6 +22,11 @@ public class ListOutput implements Output {
 	}
 
 	@Override
+	public Output appendField(Field field) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
 	public Output appendOutput(Output output) {
 		children.add(output);
 		return this;

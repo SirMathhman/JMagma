@@ -1,6 +1,10 @@
 package com.meti;
 
 public interface Attribute {
+	default Field asField() throws AttributeException {
+		throw new AttributeException("Not a field");
+	}
+
 	default boolean computeBoolean() throws AttributeException {
 		throw new AttributeException("Not a boolean.");
 	}
@@ -18,7 +22,7 @@ public interface Attribute {
 		Sign,
 		Bits,
 		Content,
-		Type
+		Identity, Type
 	}
 
 	enum Type {

@@ -6,6 +6,6 @@ public interface Token {
 	}
 
 	enum Type implements Attribute {
-		Special, Integer
+		Special, Declaration, Integer
 	}
 }

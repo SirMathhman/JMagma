@@ -12,6 +12,11 @@ public class EmptyOutput implements Output {
 	}
 
 	@Override
+	public Output appendField(Field field) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
 	public Output appendOutput(Output output) {
 		throw new UnsupportedOperationException();
 	}
