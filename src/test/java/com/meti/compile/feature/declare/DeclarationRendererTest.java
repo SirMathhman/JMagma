@@ -20,7 +20,7 @@ class DeclarationRendererTest {
 
 	@Test
 	void render() throws RenderException {
-		var identity = new DefaultField(new ArrayList<Field.Flag>(), IntegerType.unsigned(8), new RootInput("x"), Integer.Zero);
+		var identity = new DefaultField(new ArrayList<Field.Flag>(), new RootInput("x"), IntegerType.unsigned(8), Integer.Zero);
 		var current = new Declaration(identity);
 		var actual = DeclarationRenderer_.render(current).orElseThrow();
 		var expected = ListOutput()

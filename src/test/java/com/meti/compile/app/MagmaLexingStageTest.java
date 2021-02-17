@@ -19,8 +19,8 @@ class MagmaLexingStageTest {
 
 	@Test
 	void lex() throws LexException {
-		var first = new Declaration(new DefaultField(new ArrayList<Field.Flag>(), IntegerType.signed(16), new RootInput("x"), new Integer(420)));
-		var second = new Declaration(new DefaultField(new ArrayList<Field.Flag>(), IntegerType.unsigned(32), new RootInput("y"), new Integer(100)));
+		var first = new Declaration(new DefaultField(new ArrayList<Field.Flag>(), new RootInput("x"), IntegerType.signed(16), new Integer(420)));
+		var second = new Declaration(new DefaultField(new ArrayList<Field.Flag>(), new RootInput("y"), IntegerType.unsigned(32), new Integer(100)));
 		var expected = List.of(first, second);
 		var actual = MagmaLexingStage_.lex(new RootInput("x : I16 = 420; y : U32 = 100"));
 		assertIterableEquals(expected, actual);

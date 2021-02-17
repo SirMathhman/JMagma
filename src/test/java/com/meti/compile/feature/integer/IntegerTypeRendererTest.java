@@ -23,7 +23,7 @@ class IntegerTypeRendererTest {
 		var value = new Integer(420);
 		var expected = Optional.of(computeOutput(value));
 		var type = IntegerType.signed(16);
-		var identity = new DefaultField(new ArrayList<Field.Flag>(), type, new RootInput("x"), value);
+		var identity = new DefaultField(new ArrayList<Field.Flag>(), new RootInput("x"), type, value);
 		var actual = IntegerRenderer_.render(identity);
 		assertEquals(expected, actual);
 	}

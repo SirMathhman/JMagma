@@ -24,7 +24,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class DeclarationParserTest {
 	@Test
 	void already_defined() throws ParseException {
-		var identity = new DefaultField(new ArrayList<Field.Flag>(), IntegerType.unsigned(8), new RootInput("x"), Integer.Zero);
+		var identity = new DefaultField(new ArrayList<Field.Flag>(), new RootInput("x"), IntegerType.unsigned(8), Integer.Zero);
 		var stack = new MapStack().define(new ListScript(List.of("Main")), identity);
 		var current = new Declaration(identity);
 		var oldState = new State(stack, current);
@@ -34,19 +34,19 @@ class DeclarationParserTest {
 	@Test
 	void implicit() throws ParseException, AttributeException {
 		var stack = new MapStack();
-		var identity = new DefaultField(new ArrayList<Field.Flag>(), ImplicitType_, new RootInput("x"), Integer.Zero);
+		var identity = new DefaultField(new ArrayList<Field.Flag>(), new RootInput("x"), ImplicitType_, Integer.Zero);
 		var current = new Declaration(identity);
 		var oldState = new State(stack, current);
 		var newState = DeclarationParser_.parse(oldState).orElseThrow();
 		var actual = newState.getCurrent().apply(Attribute.Name.Identity).computeField();
-		var expected = new DefaultField(new ArrayList<Field.Flag>(), IntegerType.signed(16), new RootInput("x"), Integer.Zero);
+		var expected = new DefaultField(new ArrayList<Field.Flag>(), new RootInput("x"), IntegerType.signed(16), Integer.Zero);
 		assertEquals(expected, actual);
 	}
 
 	@Test
 	void parse() throws AttributeException, ParseException, ResolutionException {
 		var stack = new MapStack();
-		var identity = new DefaultField(new ArrayList<Field.Flag>(), IntegerType.unsigned(8), new RootInput("x"), Integer.Zero);
+		var identity = new DefaultField(new ArrayList<Field.Flag>(), new RootInput("x"), IntegerType.unsigned(8), Integer.Zero);
 		var current = new Declaration(identity);
 		var oldState = new State(stack, current);
 		var newState = DeclarationParser_.parse(oldState).orElseThrow();

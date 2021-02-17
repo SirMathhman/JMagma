@@ -14,7 +14,7 @@ class FieldLexerTest {
 	void lex() throws LexException {
 		var type = new Content(new RootInput("I16"));
 		var value = new Content(new RootInput("420"));
-		var expected = new DefaultField(List.of(Field.Flag.CONST), type, new RootInput("x"), value);
+		var expected = new DefaultField(List.of(Field.Flag.CONST), new RootInput("x"), type, value);
 		var input = new RootInput("const x : I16 = 420");
 		var optional = FieldLexer_.lex(input);
 		var actual = optional.orElseThrow();

@@ -3,16 +3,21 @@ package com.meti.compile.token;
 import com.meti.core.F1;
 import com.meti.core.F1E1;
 
+import java.util.Optional;
 import java.util.stream.Stream;
 
 public interface Input {
 	char apply(int i);
 
-	int firstChar(char c);
+	Optional<Integer> firstChar(char c);
 
 	String format(String format);
 
 	boolean is(String name);
+
+	boolean isEmpty();
+
+	Optional<Integer> last(char c);
 
 	<T> T map(F1<String, T> peeker);
 

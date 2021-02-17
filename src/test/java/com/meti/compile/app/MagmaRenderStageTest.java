@@ -19,7 +19,7 @@ class MagmaRenderStageTest {
 	void render() throws RenderException {
 		var type = IntegerType.signed(16);
 		var value = Integer.Zero;
-		var identity = new DefaultField(new ArrayList<Field.Flag>(), type, new RootInput("x"), value);
+		var identity = new DefaultField(new ArrayList<Field.Flag>(), new RootInput("x"), type, value);
 		var node = new Declaration(identity);
 		var list = Collections.<Token>singletonList(node);
 		var actual = MagmaRenderStage_.render(list);
