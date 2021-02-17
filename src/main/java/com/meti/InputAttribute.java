@@ -8,7 +8,7 @@ public class InputAttribute implements Attribute {
 	}
 
 	@Override
-	public Input computeString() throws AttributeException {
+	public Input computeInput() throws AttributeException {
 		return input;
 	}
 }

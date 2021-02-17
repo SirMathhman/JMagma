@@ -13,7 +13,7 @@ public interface Attribute {
 		throw new AttributeException("Not an integer.");
 	}
 
-	default Input computeString() throws AttributeException {
+	default Input computeInput() throws AttributeException {
 		throw new AttributeException("Not a string.");
 	}
 
@@ -26,10 +26,13 @@ public interface Attribute {
 		Sign,
 		Bits,
 		Content,
-		Identity, Type
+		Identity,
+		Type
 	}
 
 	enum Type {
-
+		Node,
+		Field,
+		Type
 	}
 }

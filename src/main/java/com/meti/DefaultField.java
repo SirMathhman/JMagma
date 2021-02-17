@@ -50,6 +50,16 @@ public class DefaultField implements Field {
 	}
 
 	@Override
+	public <E extends Exception> Field mapByType(F1E1<Token, Token, E> folder) throws E {
+	throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public <E extends Exception> Field mapByValue(F1E1<Token, Token, E> folder) throws E {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
 	public <E extends Exception> boolean testTypeE1(F1E1<Token, Boolean, E> predicate) throws E {
 		return predicate.apply(type);
 	}

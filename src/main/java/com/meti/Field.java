@@ -17,6 +17,10 @@ public interface Field {
 
 	boolean isNamed(String name);
 
+	<E extends Exception> Field mapByType(F1E1<Token, Token, E> folder) throws E;
+
+	<E extends Exception> Field mapByValue(F1E1<Token, Token, E> folder) throws E;
+
 	<E extends Exception> boolean testTypeE1(F1E1<Token, Boolean, E> predicate) throws E;
 
 	Field withType(Token type);

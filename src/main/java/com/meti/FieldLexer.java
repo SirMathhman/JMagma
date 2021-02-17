@@ -11,7 +11,11 @@ public class FieldLexer implements Lexer<Field> {
 	}
 
 	@Override
-	public Optional<Field> lex(Input input) {
+	public Optional<Field> lex(Input input) throws LexException {
+		return lex1(input);
+	}
+
+	private Optional<Field> lex1(Input input) {
 		var typeSeparator = input.firstChar(':');
 		var valueSeparator = input.firstChar('=');
 		var hasType = typeSeparator != -1;
