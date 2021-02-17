@@ -1,5 +1,8 @@
 package com.meti;
 
+import com.meti.lex.LexException;
+import com.meti.lex.Lexer;
+
 import java.util.Optional;
 
 import static com.meti.ImplicitType.ImplicitType_;

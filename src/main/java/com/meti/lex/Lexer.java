@@ -1,4 +1,6 @@
-package com.meti;
+package com.meti.lex;
+
+import com.meti.Input;
 
 import java.util.Optional;
 

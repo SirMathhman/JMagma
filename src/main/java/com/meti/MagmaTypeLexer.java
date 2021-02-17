@@ -1,5 +1,8 @@
 package com.meti;
 
+import com.meti.lex.CompoundLexer;
+import com.meti.lex.Lexer;
+
 import java.util.List;
 
 import static com.meti.integer.IntegerTypeLexer.IntegerTypeLexer_;

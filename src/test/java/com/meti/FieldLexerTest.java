@@ -1,5 +1,6 @@
 package com.meti;
 
+import com.meti.lex.LexException;
 import org.junit.jupiter.api.Test;
 
 import java.util.Optional;
