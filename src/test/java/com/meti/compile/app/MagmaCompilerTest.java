@@ -1,4 +1,4 @@
-package com.meti;
+package com.meti.compile.app;
 
 import com.meti.compile.CompileException;
 import com.meti.compile.token.Input;

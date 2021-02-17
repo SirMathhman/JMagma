@@ -1,9 +1,8 @@
-package com.meti;
+package com.meti.compile.feature.declare;
 
 import com.meti.compile.ResolutionException;
 import com.meti.compile.token.attribute.Attribute;
 import com.meti.compile.token.attribute.AttributeException;
-import com.meti.compile.feature.declare.Declaration;
 import com.meti.compile.feature.integer.Integer;
 import com.meti.compile.feature.integer.IntegerType;
 import com.meti.compile.io.ListScript;

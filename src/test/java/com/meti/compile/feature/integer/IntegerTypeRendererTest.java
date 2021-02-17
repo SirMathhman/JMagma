@@ -1,7 +1,5 @@
-package com.meti;
+package com.meti.compile.feature.integer;
 
-import com.meti.compile.feature.integer.Integer;
-import com.meti.compile.feature.integer.IntegerType;
 import com.meti.compile.token.output.CharOutput;
 import com.meti.compile.token.output.NodeOutput;
 import com.meti.compile.token.output.Output;
