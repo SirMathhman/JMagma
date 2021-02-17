@@ -1,8 +1,8 @@
 package com.meti;
 
-import com.meti.compile.declare.Declaration;
-import com.meti.compile.integer.Integer;
-import com.meti.compile.integer.IntegerType;
+import com.meti.compile.feature.declare.Declaration;
+import com.meti.compile.feature.integer.Integer;
+import com.meti.compile.feature.integer.IntegerType;
 import com.meti.compile.render.RenderException;
 import com.meti.compile.token.DefaultField;
 import com.meti.compile.token.Input;

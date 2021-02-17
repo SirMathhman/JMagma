@@ -1,4 +1,4 @@
-package com.meti.compile.integer;
+package com.meti.compile.feature.integer;
 
 import com.meti.compile.render.RenderException;
 import com.meti.compile.render.Renderer;

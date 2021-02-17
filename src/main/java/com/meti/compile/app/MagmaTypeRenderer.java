@@ -1,6 +1,6 @@
 package com.meti.compile.app;
 
-import com.meti.compile.integer.IntegerTypeRenderer;
+import com.meti.compile.feature.integer.IntegerTypeRenderer;
 import com.meti.compile.render.CompoundRenderer;
 import com.meti.compile.render.Renderer;
 import com.meti.compile.token.Field;

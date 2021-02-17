@@ -6,8 +6,8 @@ import com.meti.compile.token.Token;
 
 import java.util.List;
 
-import static com.meti.compile.declare.DeclarationRenderer.DeclarationRenderer_;
-import static com.meti.compile.integer.IntegerRenderer.IntegerRenderer_;
+import static com.meti.compile.feature.declare.DeclarationRenderer.DeclarationRenderer_;
+import static com.meti.compile.feature.integer.IntegerRenderer.IntegerRenderer_;
 
 public class MagmaNodeRenderer extends CompoundRenderer<Token> {
 	public static final Renderer<Token> MagmaNodeRenderer_ = new MagmaNodeRenderer();

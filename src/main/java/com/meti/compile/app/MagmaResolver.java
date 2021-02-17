@@ -2,7 +2,7 @@ package com.meti.compile.app;
 
 import com.meti.compile.ResolutionException;
 import com.meti.compile.attribute.AttributeException;
-import com.meti.compile.integer.IntegerType;
+import com.meti.compile.feature.integer.IntegerType;
 import com.meti.compile.parse.State;
 import com.meti.compile.token.Token;
 import com.meti.compile.token.Tokens;

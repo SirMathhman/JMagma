@@ -5,7 +5,7 @@ import com.meti.compile.parse.Parser;
 
 import java.util.List;
 
-import static com.meti.compile.declare.DeclarationParser.DeclarationParser_;
+import static com.meti.compile.feature.declare.DeclarationParser.DeclarationParser_;
 
 public class MagmaParser extends CompoundParser {
 	public static final Parser MagmaParser_ = new MagmaParser();

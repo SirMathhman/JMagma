@@ -1,8 +1,8 @@
 package com.meti;
 
-import com.meti.compile.declare.Declaration;
-import com.meti.compile.integer.Integer;
-import com.meti.compile.integer.IntegerType;
+import com.meti.compile.feature.declare.Declaration;
+import com.meti.compile.feature.integer.Integer;
+import com.meti.compile.feature.integer.IntegerType;
 import com.meti.compile.output.CharOutput;
 import com.meti.compile.output.FieldOutput;
 import com.meti.compile.render.RenderException;
@@ -10,7 +10,7 @@ import com.meti.compile.token.DefaultField;
 import com.meti.compile.token.Input;
 import org.junit.jupiter.api.Test;
 
-import static com.meti.compile.declare.DeclarationRenderer.DeclarationRenderer_;
+import static com.meti.compile.feature.declare.DeclarationRenderer.DeclarationRenderer_;
 import static com.meti.compile.output.ListOutput.ListOutput;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

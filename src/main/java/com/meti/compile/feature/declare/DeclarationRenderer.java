@@ -1,4 +1,4 @@
-package com.meti.compile.declare;
+package com.meti.compile.feature.declare;
 
 import com.meti.compile.render.RenderException;
 import com.meti.compile.render.Renderer;

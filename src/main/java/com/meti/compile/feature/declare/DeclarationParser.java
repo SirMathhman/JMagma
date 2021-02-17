@@ -1,4 +1,4 @@
-package com.meti.compile.declare;
+package com.meti.compile.feature.declare;
 
 import com.meti.compile.ResolutionException;
 import com.meti.compile.attribute.Attribute;
@@ -15,7 +15,7 @@ import com.meti.compile.token.Tokens;
 
 import java.util.Optional;
 
-import static com.meti.compile.primitive.ImplicitType.ImplicitType_;
+import static com.meti.compile.feature.primitive.ImplicitType.ImplicitType_;
 import static com.meti.compile.app.MagmaResolver.MagmaResolver_;
 
 public class DeclarationParser implements Parser {

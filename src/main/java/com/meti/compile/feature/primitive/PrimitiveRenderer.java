@@ -1,4 +1,4 @@
-package com.meti.compile.primitive;
+package com.meti.compile.feature.primitive;
 
 import com.meti.compile.token.Field;
 import com.meti.compile.token.Token;

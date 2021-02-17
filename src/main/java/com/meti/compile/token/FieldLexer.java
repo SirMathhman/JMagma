@@ -5,7 +5,7 @@ import com.meti.compile.lex.Lexer;
 
 import java.util.Optional;
 
-import static com.meti.compile.primitive.ImplicitType.ImplicitType_;
+import static com.meti.compile.feature.primitive.ImplicitType.ImplicitType_;
 
 public class FieldLexer implements Lexer<Field> {
 	public static final Lexer<Field> FieldLexer_ = new FieldLexer();

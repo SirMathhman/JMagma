@@ -1,4 +1,4 @@
-package com.meti.compile.integer;
+package com.meti.compile.feature.integer;
 
 import com.meti.compile.token.Input;
 import com.meti.compile.lex.LexException;

@@ -6,8 +6,8 @@ import com.meti.compile.token.Token;
 
 import java.util.List;
 
-import static com.meti.compile.declare.DeclarationLexer.DeclarationLexer_;
-import static com.meti.compile.integer.IntegerLexer.IntegerLexer_;
+import static com.meti.compile.feature.declare.DeclarationLexer.DeclarationLexer_;
+import static com.meti.compile.feature.integer.IntegerLexer.IntegerLexer_;
 
 public class MagmaNodeLexer extends CompoundLexer {
 	public static final Lexer<Token> MagmaNodeLexer_ = new MagmaNodeLexer();

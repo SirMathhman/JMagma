@@ -3,9 +3,9 @@ package com.meti;
 import com.meti.compile.ResolutionException;
 import com.meti.compile.attribute.Attribute;
 import com.meti.compile.attribute.AttributeException;
-import com.meti.compile.declare.Declaration;
-import com.meti.compile.integer.Integer;
-import com.meti.compile.integer.IntegerType;
+import com.meti.compile.feature.declare.Declaration;
+import com.meti.compile.feature.integer.Integer;
+import com.meti.compile.feature.integer.IntegerType;
 import com.meti.compile.io.ListScript;
 import com.meti.compile.parse.MapStack;
 import com.meti.compile.parse.ParseException;
@@ -16,8 +16,8 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-import static com.meti.compile.declare.DeclarationParser.DeclarationParser_;
-import static com.meti.compile.primitive.ImplicitType.ImplicitType_;
+import static com.meti.compile.feature.declare.DeclarationParser.DeclarationParser_;
+import static com.meti.compile.feature.primitive.ImplicitType.ImplicitType_;
 import static org.junit.jupiter.api.Assertions.*;
 
 class DeclarationParserTest {

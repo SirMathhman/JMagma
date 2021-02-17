@@ -1,4 +1,4 @@
-package com.meti.compile.declare;
+package com.meti.compile.feature.declare;
 
 import com.meti.core.F1E1;
 import com.meti.compile.token.Field;

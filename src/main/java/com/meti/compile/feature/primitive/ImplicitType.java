@@ -1,4 +1,4 @@
-package com.meti.compile.primitive;
+package com.meti.compile.feature.primitive;
 
 import com.meti.compile.attribute.Attribute;
 import com.meti.compile.attribute.AttributeException;

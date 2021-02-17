@@ -6,7 +6,7 @@ import com.meti.compile.token.Token;
 
 import java.util.List;
 
-import static com.meti.compile.integer.IntegerTypeLexer.IntegerTypeLexer_;
+import static com.meti.compile.feature.integer.IntegerTypeLexer.IntegerTypeLexer_;
 
 public class MagmaTypeLexer extends CompoundLexer {
 	public static final Lexer<Token> MagmaTypeLexer_ = new MagmaTypeLexer();
