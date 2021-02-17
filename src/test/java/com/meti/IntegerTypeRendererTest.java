@@ -14,7 +14,7 @@ class IntegerTypeRendererTest {
 		var value = new Integer(420);
 		var expected = Optional.of(computeOutput(value));
 		var type = IntegerType.signed(16);
-		var identity = new DefaultField(type, "x", value);
+		var identity = new DefaultField(type, new Input("x"), value);
 		var actual = IntegerRenderer_.render(identity);
 		assertEquals(expected, actual);
 	}

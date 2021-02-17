@@ -24,8 +24,8 @@ public class DeclarationParser implements Parser {
 				} catch (AttributeException e) {
 					throw new ParseException(e);
 				}
-				if (identity.applyToNameE1(stack::isDefined)) {
-					throw identity.applyToName(s -> new ParseException("'" + s + "' is already defined."));
+				if (identity.applyToNameE1(value -> ((F1E1<String, Boolean, RuntimeException>) stack::isDefined).apply(value.getContent()))) {
+					throw identity.applyToName(input -> ((F1<String, ParseException>) s -> new ParseException("'" + s + "' is already defined.")).apply(input.getContent()));
 				}
 				Field identityToUse;
 				if (identity.applyToType(token -> token == ImplicitType_)) {

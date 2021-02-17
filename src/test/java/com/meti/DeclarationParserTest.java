@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class DeclarationParserTest {
 	@Test
 	void already_defined() throws ParseException {
-		var identity = new DefaultField(IntegerType.unsigned(8), "x", Integer.Zero);
+		var identity = new DefaultField(IntegerType.unsigned(8), new Input("x"), Integer.Zero);
 		var stack = new MapStack().define(new ListScript(List.of("Main")), identity);
 		var current = new Declaration(identity);
 		var oldState = new State(stack, current);
@@ -21,19 +21,19 @@ class DeclarationParserTest {
 	@Test
 	void implicit() throws ParseException, AttributeException {
 		var stack = new MapStack();
-		var identity = new DefaultField(ImplicitType_, "x", Integer.Zero);
+		var identity = new DefaultField(ImplicitType_, new Input("x"), Integer.Zero);
 		var current = new Declaration(identity);
 		var oldState = new State(stack, current);
 		var newState = DeclarationParser_.parse(oldState).orElseThrow();
 		var actual = newState.getCurrent().apply(Attribute.Name.Identity).computeField();
-		var expected = new DefaultField(IntegerType.signed(16), "x", Integer.Zero);
+		var expected = new DefaultField(IntegerType.signed(16), new Input("x"), Integer.Zero);
 		assertEquals(expected, actual);
 	}
 
 	@Test
 	void parse() throws AttributeException, ParseException, ResolutionException {
 		var stack = new MapStack();
-		var identity = new DefaultField(IntegerType.unsigned(8), "x", Integer.Zero);
+		var identity = new DefaultField(IntegerType.unsigned(8), new Input("x"), Integer.Zero);
 		var current = new Declaration(identity);
 		var oldState = new State(stack, current);
 		var newState = DeclarationParser_.parse(oldState).orElseThrow();

@@ -35,7 +35,7 @@ public abstract class PrimitiveRenderer implements Renderer<Field> {
 			var content = field.applyToTypeE1(this::computeString);
 			return content + " " + s;
 		};
-		return field.applyToNameE1(renderHeader);
+		return field.applyToNameE1(value -> renderHeader.apply(value.getContent()));
 	}
 
 	protected abstract String computeString(Token type) throws RenderException;

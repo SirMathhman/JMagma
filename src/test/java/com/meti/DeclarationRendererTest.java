@@ -10,7 +10,7 @@ class DeclarationRendererTest {
 
 	@Test
 	void render() throws RenderException {
-		var identity = new DefaultField(IntegerType.unsigned(8), "x", Integer.Zero);
+		var identity = new DefaultField(IntegerType.unsigned(8), new Input("x"), Integer.Zero);
 		var current = new Declaration(identity);
 		var actual = DeclarationRenderer_.render(current).orElseThrow();
 		var expected = ListOutput()

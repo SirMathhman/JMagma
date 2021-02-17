@@ -13,7 +13,7 @@ public interface Attribute {
 		throw new AttributeException("Not an integer.");
 	}
 
-	default String computeString() throws AttributeException {
+	default Input computeString() throws AttributeException {
 		throw new AttributeException("Not a string.");
 	}
 
