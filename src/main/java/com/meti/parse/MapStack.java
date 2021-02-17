@@ -1,8 +1,8 @@
 package com.meti.parse;
 
-import com.meti.F1;
-import com.meti.Field;
-import com.meti.Script;
+import com.meti.core.F1;
+import com.meti.token.Field;
+import com.meti.io.Script;
 
 import java.util.ArrayList;
 import java.util.LinkedList;

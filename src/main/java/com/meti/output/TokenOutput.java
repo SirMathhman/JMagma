@@ -1,7 +1,7 @@
 package com.meti.output;
 
-import com.meti.RenderException;
-import com.meti.Token;
+import com.meti.render.RenderException;
+import com.meti.token.Token;
 
 import java.util.Objects;
 

@@ -1,6 +1,6 @@
 package com.meti.attribute;
 
-import com.meti.Input;
+import com.meti.token.Input;
 
 public class InputAttribute implements Attribute {
 	private final Input input;

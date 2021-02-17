@@ -1,8 +1,13 @@
 package com.meti.integer;
 
-import com.meti.*;
 import com.meti.attribute.Attribute;
 import com.meti.attribute.AttributeException;
+import com.meti.primitive.PrimitiveRenderer;
+import com.meti.render.RenderException;
+import com.meti.render.Renderer;
+import com.meti.token.Field;
+import com.meti.token.Token;
+import com.meti.token.Tokens;
 
 public class IntegerTypeRenderer extends PrimitiveRenderer {
 	public static final Renderer<Field> IntegerRenderer_ = new IntegerTypeRenderer();

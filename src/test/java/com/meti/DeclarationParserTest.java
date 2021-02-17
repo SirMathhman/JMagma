@@ -5,15 +5,18 @@ import com.meti.attribute.AttributeException;
 import com.meti.declare.Declaration;
 import com.meti.integer.Integer;
 import com.meti.integer.IntegerType;
+import com.meti.io.ListScript;
 import com.meti.parse.MapStack;
 import com.meti.parse.ParseException;
 import com.meti.parse.State;
+import com.meti.token.DefaultField;
+import com.meti.token.Input;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
 import static com.meti.declare.DeclarationParser.DeclarationParser_;
-import static com.meti.ImplicitType.ImplicitType_;
+import static com.meti.primitive.ImplicitType.ImplicitType_;
 import static org.junit.jupiter.api.Assertions.*;
 
 class DeclarationParserTest {

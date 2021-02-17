@@ -1,4 +1,7 @@
-package com.meti;
+package com.meti.token;
+
+import com.meti.core.F1;
+import com.meti.core.F1E1;
 
 import java.util.Objects;
 import java.util.stream.Stream;

@@ -1,8 +1,8 @@
 package com.meti.attribute;
 
-import com.meti.Field;
-import com.meti.Input;
-import com.meti.Token;
+import com.meti.token.Field;
+import com.meti.token.Input;
+import com.meti.token.Token;
 
 public interface Attribute {
 	default boolean computeBoolean() throws AttributeException {

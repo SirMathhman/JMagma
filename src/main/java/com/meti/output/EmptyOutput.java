@@ -1,6 +1,6 @@
 package com.meti.output;
 
-import com.meti.Field;
+import com.meti.token.Field;
 
 public class EmptyOutput implements Output {
 	public static final Output EmptyOutput_ = new EmptyOutput();

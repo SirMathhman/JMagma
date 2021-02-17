@@ -3,6 +3,8 @@ package com.meti;
 import com.meti.attribute.AttributeException;
 import com.meti.integer.IntegerType;
 import com.meti.parse.State;
+import com.meti.token.Token;
+import com.meti.token.Tokens;
 
 public class MagmaResolver {
 	public static MagmaResolver MagmaResolver_ = new MagmaResolver();

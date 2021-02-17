@@ -1,7 +1,7 @@
 package com.meti.lex;
 
-import com.meti.Input;
-import com.meti.Token;
+import com.meti.token.Input;
+import com.meti.token.Token;
 
 import java.util.List;
 import java.util.Optional;

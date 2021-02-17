@@ -1,14 +1,17 @@
-package com.meti;
+package com.meti.primitive;
 
+import com.meti.token.Token;
 import com.meti.attribute.Attribute;
 import com.meti.attribute.AttributeException;
 
-public class ImplicitType implements Token {
-	public static final Token ImplicitType_ = new ImplicitType();
+public enum SpecialType implements Token {
+	Void,
+	Any,
+	Bool;
 
 	@Override
 	public Attribute apply(Attribute.Name name) throws AttributeException {
-		if (name == Attribute.Name.Type) return Token.Type.Implicit;
+		if (name == Attribute.Name.Type) return Type.Special;
 		throw new AttributeException();
 	}
 }

@@ -1,5 +1,7 @@
 package com.meti;
 
+import com.meti.token.Input;
+
 import static com.meti.MagmaCompiler.MagmaCompiler_;
 import static org.junit.jupiter.api.Assertions.*;
 

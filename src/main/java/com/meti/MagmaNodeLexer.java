@@ -2,6 +2,7 @@ package com.meti;
 
 import com.meti.lex.CompoundLexer;
 import com.meti.lex.Lexer;
+import com.meti.token.Token;
 
 import java.util.List;
 

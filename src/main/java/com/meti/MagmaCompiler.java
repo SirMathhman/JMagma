@@ -1,5 +1,7 @@
 package com.meti;
 
+import com.meti.token.Input;
+
 import static com.meti.MagmaLexingStage.MagmaLexingStage_;
 import static com.meti.MagmaParsingStage.MagmaParsingStage_;
 import static com.meti.MagmaRenderStage.MagmaRenderStage_;

@@ -1,6 +1,9 @@
 package com.meti;
 
 import com.meti.integer.IntegerTypeRenderer;
+import com.meti.render.CompoundRenderer;
+import com.meti.render.Renderer;
+import com.meti.token.Field;
 
 import java.util.Collections;
 import java.util.List;

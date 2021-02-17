@@ -1,7 +1,7 @@
 package com.meti.parse;
 
-import com.meti.Field;
-import com.meti.Script;
+import com.meti.token.Field;
+import com.meti.io.Script;
 
 import java.util.Optional;
 

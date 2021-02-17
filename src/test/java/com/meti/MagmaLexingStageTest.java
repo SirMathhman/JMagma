@@ -4,6 +4,8 @@ import com.meti.declare.Declaration;
 import com.meti.integer.Integer;
 import com.meti.integer.IntegerType;
 import com.meti.lex.LexException;
+import com.meti.token.DefaultField;
+import com.meti.token.Input;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;

@@ -1,9 +1,9 @@
 package com.meti.declare;
 
-import com.meti.RenderException;
-import com.meti.Renderer;
-import com.meti.Token;
-import com.meti.Tokens;
+import com.meti.render.RenderException;
+import com.meti.render.Renderer;
+import com.meti.token.Token;
+import com.meti.token.Tokens;
 import com.meti.attribute.Attribute;
 import com.meti.attribute.AttributeException;
 import com.meti.output.CharOutput;

@@ -1,5 +1,9 @@
 package com.meti;
 
+import com.meti.render.CompoundRenderer;
+import com.meti.render.Renderer;
+import com.meti.token.Token;
+
 import java.util.List;
 
 import static com.meti.declare.DeclarationRenderer.DeclarationRenderer_;

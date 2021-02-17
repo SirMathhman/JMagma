@@ -1,6 +1,6 @@
 package com.meti.attribute;
 
-import com.meti.Field;
+import com.meti.token.Field;
 
 public class FieldAttribute implements Attribute {
 	private final Field field;

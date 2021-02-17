@@ -1,6 +1,6 @@
 package com.meti.output;
 
-import com.meti.Field;
+import com.meti.token.Field;
 
 import java.util.Objects;
 

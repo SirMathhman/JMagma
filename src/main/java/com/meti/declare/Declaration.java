@@ -1,8 +1,8 @@
 package com.meti.declare;
 
-import com.meti.F1E1;
-import com.meti.Field;
-import com.meti.Token;
+import com.meti.core.F1E1;
+import com.meti.token.Field;
+import com.meti.token.Token;
 import com.meti.attribute.Attribute;
 import com.meti.attribute.AttributeException;
 import com.meti.attribute.FieldAttribute;

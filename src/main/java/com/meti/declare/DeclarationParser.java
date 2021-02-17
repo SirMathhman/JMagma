@@ -4,13 +4,18 @@ import com.meti.*;
 import com.meti.attribute.Attribute;
 import com.meti.attribute.AttributeException;
 import com.meti.attribute.FieldAttribute;
+import com.meti.core.F1;
+import com.meti.core.F1E1;
 import com.meti.parse.ParseException;
 import com.meti.parse.Parser;
 import com.meti.parse.State;
+import com.meti.token.Field;
+import com.meti.token.Token;
+import com.meti.token.Tokens;
 
 import java.util.Optional;
 
-import static com.meti.ImplicitType.ImplicitType_;
+import static com.meti.primitive.ImplicitType.ImplicitType_;
 import static com.meti.MagmaResolver.MagmaResolver_;
 
 public class DeclarationParser implements Parser {

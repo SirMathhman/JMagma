@@ -1,4 +1,6 @@
-package com.meti;
+package com.meti.render;
+
+import com.meti.CompileException;
 
 public class RenderException extends CompileException {
 	public RenderException() {

@@ -5,6 +5,9 @@ import com.meti.integer.Integer;
 import com.meti.integer.IntegerType;
 import com.meti.output.CharOutput;
 import com.meti.output.FieldOutput;
+import com.meti.render.RenderException;
+import com.meti.token.DefaultField;
+import com.meti.token.Input;
 import org.junit.jupiter.api.Test;
 
 import static com.meti.declare.DeclarationRenderer.DeclarationRenderer_;

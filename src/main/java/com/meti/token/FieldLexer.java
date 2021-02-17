@@ -1,11 +1,11 @@
-package com.meti;
+package com.meti.token;
 
 import com.meti.lex.LexException;
 import com.meti.lex.Lexer;
 
 import java.util.Optional;
 
-import static com.meti.ImplicitType.ImplicitType_;
+import static com.meti.primitive.ImplicitType.ImplicitType_;
 
 public class FieldLexer implements Lexer<Field> {
 	public static final Lexer<Field> FieldLexer_ = new FieldLexer();
