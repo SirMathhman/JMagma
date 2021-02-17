@@ -27,6 +27,11 @@ public class RootInput implements Input {
 	}
 
 	@Override
+	public String compute() {
+		return content;
+	}
+
+	@Override
 	public Optional<Integer> firstChar(char c) {
 		var index = content.indexOf(c);
 		if (index == -1) return Optional.empty();

@@ -12,6 +12,8 @@ public interface Input {
 
 	Output asOutput();
 
+	String compute();
+
 	Optional<Integer> firstChar(char c);
 
 	String format(String format);
