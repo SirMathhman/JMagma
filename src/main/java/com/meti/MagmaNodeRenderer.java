@@ -2,7 +2,7 @@ package com.meti;
 
 import java.util.List;
 
-import static com.meti.DeclarationRenderer.DeclarationRenderer_;
+import static com.meti.declare.DeclarationRenderer.DeclarationRenderer_;
 import static com.meti.IntegerRenderer.IntegerRenderer_;
 
 public class MagmaNodeRenderer extends CompoundRenderer<Token> {

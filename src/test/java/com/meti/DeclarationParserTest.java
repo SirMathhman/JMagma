@@ -2,11 +2,12 @@ package com.meti;
 
 import com.meti.attribute.Attribute;
 import com.meti.attribute.AttributeException;
+import com.meti.declare.Declaration;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-import static com.meti.DeclarationParser.DeclarationParser_;
+import static com.meti.declare.DeclarationParser.DeclarationParser_;
 import static com.meti.ImplicitType.ImplicitType_;
 import static org.junit.jupiter.api.Assertions.*;
 

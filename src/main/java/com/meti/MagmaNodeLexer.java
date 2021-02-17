@@ -2,7 +2,7 @@ package com.meti;
 
 import java.util.List;
 
-import static com.meti.DeclarationLexer.DeclarationLexer_;
+import static com.meti.declare.DeclarationLexer.DeclarationLexer_;
 import static com.meti.IntegerLexer.IntegerLexer_;
 
 public class MagmaNodeLexer extends CompoundLexer {

@@ -8,7 +8,7 @@ public class MagmaResolver {
 	public MagmaResolver() {
 	}
 
-	Token resolve(State state) throws ResolutionException {
+	public Token resolve(State state) throws ResolutionException {
 		try {
 			if (Tokens.is(state.getCurrent(), Token.Type.Integer)) {
 				return IntegerType.signed(16);
