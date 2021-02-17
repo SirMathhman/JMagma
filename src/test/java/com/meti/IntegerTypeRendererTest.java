@@ -1,20 +1,20 @@
 package com.meti;
 
-import com.meti.integer.Integer;
-import com.meti.integer.IntegerType;
-import com.meti.output.CharOutput;
-import com.meti.output.NodeOutput;
-import com.meti.output.Output;
-import com.meti.output.StringOutput;
-import com.meti.render.RenderException;
-import com.meti.token.DefaultField;
-import com.meti.token.Input;
+import com.meti.compile.integer.Integer;
+import com.meti.compile.integer.IntegerType;
+import com.meti.compile.output.CharOutput;
+import com.meti.compile.output.NodeOutput;
+import com.meti.compile.output.Output;
+import com.meti.compile.output.StringOutput;
+import com.meti.compile.render.RenderException;
+import com.meti.compile.token.DefaultField;
+import com.meti.compile.token.Input;
 import org.junit.jupiter.api.Test;
 
 import java.util.Optional;
 
-import static com.meti.integer.IntegerTypeRenderer.IntegerRenderer_;
-import static com.meti.output.ListOutput.ListOutput;
+import static com.meti.compile.integer.IntegerTypeRenderer.IntegerRenderer_;
+import static com.meti.compile.output.ListOutput.ListOutput;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class IntegerTypeRendererTest {

@@ -1,16 +1,16 @@
 package com.meti;
 
-import com.meti.declare.Declaration;
-import com.meti.integer.Integer;
-import com.meti.integer.IntegerType;
-import com.meti.lex.LexException;
-import com.meti.token.DefaultField;
-import com.meti.token.Input;
+import com.meti.compile.declare.Declaration;
+import com.meti.compile.integer.Integer;
+import com.meti.compile.integer.IntegerType;
+import com.meti.compile.lex.LexException;
+import com.meti.compile.token.DefaultField;
+import com.meti.compile.token.Input;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-import static com.meti.app.MagmaLexingStage.MagmaLexingStage_;
+import static com.meti.compile.app.MagmaLexingStage.MagmaLexingStage_;
 import static org.junit.jupiter.api.Assertions.assertIterableEquals;
 
 class MagmaLexingStageTest {

@@ -1,17 +1,17 @@
 package com.meti;
 
-import com.meti.declare.Declaration;
-import com.meti.integer.Integer;
-import com.meti.integer.IntegerType;
-import com.meti.render.RenderException;
-import com.meti.token.DefaultField;
-import com.meti.token.Input;
-import com.meti.token.Token;
+import com.meti.compile.declare.Declaration;
+import com.meti.compile.integer.Integer;
+import com.meti.compile.integer.IntegerType;
+import com.meti.compile.render.RenderException;
+import com.meti.compile.token.DefaultField;
+import com.meti.compile.token.Input;
+import com.meti.compile.token.Token;
 import org.junit.jupiter.api.Test;
 
 import java.util.Collections;
 
-import static com.meti.app.MagmaRenderStage.MagmaRenderStage_;
+import static com.meti.compile.app.MagmaRenderStage.MagmaRenderStage_;
 import static org.junit.jupiter.api.Assertions.*;
 
 class MagmaRenderStageTest {

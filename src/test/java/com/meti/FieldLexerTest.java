@@ -1,15 +1,15 @@
 package com.meti;
 
-import com.meti.lex.LexException;
-import com.meti.token.Content;
-import com.meti.token.DefaultField;
-import com.meti.token.Field;
-import com.meti.token.Input;
+import com.meti.compile.lex.LexException;
+import com.meti.compile.token.Content;
+import com.meti.compile.token.DefaultField;
+import com.meti.compile.token.Field;
+import com.meti.compile.token.Input;
 import org.junit.jupiter.api.Test;
 
 import java.util.Optional;
 
-import static com.meti.token.FieldLexer.FieldLexer_;
+import static com.meti.compile.token.FieldLexer.FieldLexer_;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class FieldLexerTest {

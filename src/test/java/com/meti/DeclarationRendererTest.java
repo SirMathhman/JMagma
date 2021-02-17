@@ -1,17 +1,17 @@
 package com.meti;
 
-import com.meti.declare.Declaration;
-import com.meti.integer.Integer;
-import com.meti.integer.IntegerType;
-import com.meti.output.CharOutput;
-import com.meti.output.FieldOutput;
-import com.meti.render.RenderException;
-import com.meti.token.DefaultField;
-import com.meti.token.Input;
+import com.meti.compile.declare.Declaration;
+import com.meti.compile.integer.Integer;
+import com.meti.compile.integer.IntegerType;
+import com.meti.compile.output.CharOutput;
+import com.meti.compile.output.FieldOutput;
+import com.meti.compile.render.RenderException;
+import com.meti.compile.token.DefaultField;
+import com.meti.compile.token.Input;
 import org.junit.jupiter.api.Test;
 
-import static com.meti.declare.DeclarationRenderer.DeclarationRenderer_;
-import static com.meti.output.ListOutput.ListOutput;
+import static com.meti.compile.declare.DeclarationRenderer.DeclarationRenderer_;
+import static com.meti.compile.output.ListOutput.ListOutput;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class DeclarationRendererTest {
