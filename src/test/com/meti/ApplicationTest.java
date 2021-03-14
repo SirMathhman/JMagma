@@ -31,7 +31,7 @@ class ApplicationTest {
 		return resolve("Main", extension);
 	}
 
-	private void assertContentEquals(Path source, Path target, String sourceString, String expectedTarget) throws IOException {
+	private static void assertContentEquals(Path source, Path target, String sourceString, String expectedTarget) throws IOException {
 		Files.writeString(source, sourceString);
 		var input = Files.readString(source);
 		String output;
@@ -47,15 +47,11 @@ class ApplicationTest {
 	}
 
 	@Test
-	void validate_execute() throws IOException {
-		validate(resolve("mg"), resolve("c"));
+	void validate_integer() throws IOException {
+		assertContentSame(resolve("mg"), resolve("c"), "0");
 	}
 
-	private void validate(Path source, Path target) throws IOException {
-		assertContentSame(source, target, "0");
-	}
-
-	private void assertContentSame(Path source, Path target, String content) throws IOException {
+	private static void assertContentSame(Path source, Path target, String content) throws IOException {
 		assertContentEquals(source, target, content, content);
 	}
 
@@ -64,6 +60,6 @@ class ApplicationTest {
 		var name = "test";
 		var source = resolve(name, "mg");
 		var target = resolve(name, "c");
-		validate(source, target);
+		assertContentSame(source, target, "");
 	}
 }
