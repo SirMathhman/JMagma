@@ -5,7 +5,11 @@ import org.junit.jupiter.api.Test;
 import java.io.IOException;
 import java.nio.file.Paths;
 
+import static com.meti.FileSource.FileSource;
+import static com.meti.FileTarget.FileTarget;
 import static com.meti.NIOPathFile.NIOPathFile;
+import static com.meti.WithSource.Application;
+import static com.meti.WithTarget.EqualityCompiler;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -21,26 +25,27 @@ class ApplicationTest {
 
 	@Test
 	void validate_content() throws IOException {
-		assertContentEquals(resolve("mg"), resolve("c"), "def main() => {return 0;}", "int main(){return 0;}");
+		var source = "def main() => {return 0;}";
+		var target = "int main(){return 0;}";
+		assertContentEquals(resolve("mg"), resolve("c"),
+				source, target,
+				EqualityCompiler(source).complete(target));
 	}
 
 	private static File resolve(final String extension) {
 		return resolve("Main", extension);
 	}
 
-	private static void assertContentEquals(File file, File file1, String sourceString, String expectedTarget) throws IOException {
-		file.write(sourceString);
-		var input = file.readAsString();
-		String output;
-		if (input.equals("def main() => {return 0;}")) {
-			output = "int main(){return 0;}";
-		} else {
-			output = input;
-		}
-		file1.write(output);
-		assertEquals(expectedTarget, file1.readAsString());
-		file1.deleteIfExists();
-		file.deleteIfExists();
+	private static void assertContentEquals(File sourceFile, File targetFile, String sourceString, String expectedTarget, Compiler compiler) throws IOException {
+		sourceFile.write(sourceString);
+		Application(FileSource(sourceFile))
+				.withTarget(FileTarget(targetFile))
+				.complete(compiler)
+				.execute();
+		assertEquals(expectedTarget, targetFile.readAsString());
+
+		targetFile.deleteIfExists();
+		sourceFile.deleteIfExists();
 	}
 
 	@Test
@@ -49,7 +54,7 @@ class ApplicationTest {
 	}
 
 	private static void assertContentSame(File file, File file1, String content) throws IOException {
-		assertContentEquals(file, file1, content, content);
+		assertContentEquals(file, file1, content, content, EqualityCompiler(content).complete(content));
 	}
 
 	@Test
