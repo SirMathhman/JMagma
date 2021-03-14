@@ -1,15 +1,16 @@
-package com.meti;
+package com.meti.compile.app;
 
+import com.meti.api.io.File;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.nio.file.Paths;
 
-import static com.meti.FileSource.FileSource;
-import static com.meti.FileTarget.FileTarget;
-import static com.meti.NIOPathFile.NIOPathFile;
-import static com.meti.WithSource.Application;
-import static com.meti.WithTarget.EqualityCompiler;
+import static com.meti.api.io.NIOPathFile.NIOPathFile;
+import static com.meti.compile.app.EqualityCompiler.WithTarget.EqualityCompiler;
+import static com.meti.compile.app.InlineApplication.InlineApplication;
+import static com.meti.compile.source.FileSource.FileSource;
+import static com.meti.compile.target.FileTarget.FileTarget;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -38,7 +39,7 @@ class ApplicationTest {
 
 	private static void assertContentEquals(File sourceFile, File targetFile, String sourceString, String expectedTarget, Compiler compiler) throws IOException {
 		sourceFile.write(sourceString);
-		Application(FileSource(sourceFile))
+		InlineApplication(FileSource(sourceFile))
 				.withTarget(FileTarget(targetFile))
 				.complete(compiler)
 				.execute();

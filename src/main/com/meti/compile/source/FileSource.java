@@ -1,9 +1,11 @@
-package com.meti;
+package com.meti.compile.source;
+
+import com.meti.api.io.File;
 
 import java.io.IOException;
 
 public record FileSource(File sourceFile) implements Source {
-	static FileSource FileSource(File sourceFile) {
+	public static FileSource FileSource(File sourceFile) {
 		return new FileSource(sourceFile);
 	}
 

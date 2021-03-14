@@ -1,4 +1,4 @@
-package com.meti;
+package com.meti.api.io;
 
 import java.io.IOException;
 

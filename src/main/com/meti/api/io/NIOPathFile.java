@@ -1,11 +1,11 @@
-package com.meti;
+package com.meti.api.io;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
 public record NIOPathFile(Path source) implements File {
-	static NIOPathFile NIOPathFile(Path source) {
+	public static NIOPathFile NIOPathFile(Path source) {
 		return new NIOPathFile(source);
 	}
 
